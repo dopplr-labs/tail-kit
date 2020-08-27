@@ -10,6 +10,11 @@ module.exports = {
       (rule) => rule.test.toString() !== '/\\.css$/',
     )
 
+    config.resolve.alias = {
+      components: path.resolve(__dirname, '../src/components'),
+      styles: path.resolve(__dirname, '../src/styles'),
+    }
+
     config.module.rules.push({
       test: /\.css$/,
       use: [
