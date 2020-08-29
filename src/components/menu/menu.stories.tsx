@@ -16,23 +16,25 @@ export default {
 
 export function DropdownMenu() {
   return (
-    <Menu
-      items={[
-        {
-          label: 'Share Blog',
-          icon: <ShareOutline className="w-5 h-5" />,
-        },
-        {
-          label: 'Edit Blog',
-          icon: <PencilAltOutline className="w-5 h-5" />,
-        },
-        {
-          label: 'Delete Blog',
-          icon: <TrashOutline className="w-5 h-5" />,
-        },
-      ]}
-    >
-      <Button icon={<ChevronDownOutline />} />
-    </Menu>
+    <div className="h-80">
+      <Menu
+        items={[
+          {
+            label: 'Share Blog',
+            icon: <ShareOutline className="w-5 h-5" />,
+          },
+          {
+            label: 'Edit Blog',
+            icon: <PencilAltOutline className="w-5 h-5" />,
+          },
+          {
+            label: 'Delete Blog',
+            icon: <TrashOutline className="w-5 h-5" />,
+          },
+        ]}
+      >
+        <Button icon={<ChevronDownOutline />} />
+      </Menu>
+    </div>
   )
 }
