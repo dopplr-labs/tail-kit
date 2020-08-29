@@ -7,7 +7,7 @@ import {
   TrashOutline,
   PencilAltOutline,
 } from 'components/icons'
-import Button from './button'
+import { Button } from './button'
 
 export default {
   title: 'components/button',

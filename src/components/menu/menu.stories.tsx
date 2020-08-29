@@ -7,7 +7,7 @@ import {
   TrashOutline,
   ChevronDownOutline,
 } from 'components/icons'
-import Menu from './menu'
+import { Menu } from './menu'
 
 export default {
   title: 'components/menu',

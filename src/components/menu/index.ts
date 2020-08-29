@@ -1,4 +1,4 @@
-import Menu, { Props, MenuItem } from './menu'
+import { Menu, MenuProps, MenuItem } from './menu'
 
 export default Menu
-export { Props, MenuItem }
+export { MenuProps, MenuItem }

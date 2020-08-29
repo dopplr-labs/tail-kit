@@ -29,6 +29,7 @@ rules:
     - component: true
       html: true
   react/no-unknown-property: error
+  react/prop-types: off
   import/un-resolved: off
   import/order:
     - error

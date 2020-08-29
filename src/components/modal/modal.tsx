@@ -1,25 +1,38 @@
 import React, { useRef, useCallback } from 'react'
 import { useMemoOne } from 'use-memo-one'
-import Button, { Props as ButtonProps } from 'components/button'
+import Button, { ButtonProps } from 'components/button'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 
 type ActionButtonProps = Omit<ButtonProps, 'onClick'>
 
-type Props = {
+/**
+ * Modal properties
+ */
+export type ModalProps = {
+  /** title of the modal */
   title?: string
+  /** content rendered inside the modal */
   children: React.ReactNode
+  /** function called on "OK" button click */
   onOK?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  /** function called on "Cancel" button click */
   onCancel?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  /** additional props passed to OK button excluding `onClick` */
   okButtonProps?: ActionButtonProps
+  /** additional props passed to Cancel button excluding `onClick` */
   cancelButtonProps?: ActionButtonProps
+  /** whether modal is visible or not */
   visible?: boolean
+  /** function called when the user is closing the modal, either by clicking on cancel button or overlay */
   onRequestClose?: () => void
+  /** custom actions button instead of OK and Cancel */
   actions?: React.ReactNode
+  /** parent of the portal container */
   portalParent?: HTMLElement
 }
 
-export default function Modal({
+export function Modal({
   title = '',
   children,
   onOK,
@@ -30,7 +43,7 @@ export default function Modal({
   onRequestClose,
   actions,
   portalParent = document.body,
-}: Props) {
+}: ModalProps) {
   const portalContainer = useMemoOne(() => {
     const container = document.createElement('div')
     container.classList.add('modal-portal-container')

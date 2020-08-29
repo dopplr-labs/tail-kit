@@ -7,12 +7,17 @@ export type MenuItem = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export type Props = {
+/**
+ * Menu properties
+ */
+export type MenuProps = {
+  /** trigger for opening and closing of menu */
   children: JSX.Element
+  /** items to be rendered inside menu */
   items: MenuItem[]
 }
 
-export default function Menu({ children, items }: Props) {
+export function Menu({ children, items }: MenuProps) {
   const [menuVisible, setMenuVisible] = useState(false)
 
   const menuContainer = useRef<HTMLDivElement | null>(null)

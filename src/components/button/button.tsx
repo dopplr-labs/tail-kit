@@ -1,35 +1,43 @@
 import React from 'react'
 import clsx from 'clsx'
 
-enum ButtonType {
+export enum ButtonType {
   primary = 'primary',
   default = 'default',
   danger = 'danger',
   link = 'link',
 }
 
-export type Props = Omit<
+/**
+ * Button properties
+ */
+export type ButtonProps = Omit<
   React.DetailedHTMLProps<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   >,
   'children'
 > & {
+  /** text rendered inside button */
   label?: string
+  /** icon rendered */
   icon?: JSX.Element
+  /** type of the button */
   buttonType?: ButtonType
+  /** additional class applied to button */
   className?: string
+  /** button styles */
   style?: React.CSSProperties
 }
 
-export default function Button({
+export function Button({
   label,
   icon,
   buttonType = ButtonType.default,
   className,
   style,
   ...restProps
-}: Props) {
+}: ButtonProps) {
   const iconOnlyButton = icon && !label
 
   return (
