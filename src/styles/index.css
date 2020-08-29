@@ -49,4 +49,20 @@ body {
   background-attachment: local, local, scroll, scroll;
 }
 
+.menu-enter {
+  @apply opacity-0;
+}
+
+.menu-enter-active {
+  @apply transition-opacity duration-300 ease-in-out opacity-100;
+}
+
+.menu-exit {
+  @apply opacity-100;
+}
+
+.menu-exit-active {
+  @apply transition-opacity duration-300 ease-in-out opacity-0;
+}
+
 @tailwind utilities;

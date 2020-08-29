@@ -1,1 +1,3 @@
-test('render children correctly', () => {})
+test('render children correctly', () => {
+  // TODO: Write tests for modal
+})
