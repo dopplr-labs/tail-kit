@@ -14,16 +14,35 @@ type IconProps = {
 }
 
 export function Icons() {
-  const outlineIcons = Object.keys(icons).filter((icon) =>
-    icon.endsWith('Outline'),
-  )
-  const solidIcons = Object.keys(icons).filter((icon) => icon.endsWith('Solid'))
+  const [searchText, setSearchText] = useState('')
+
+  const allIcons = Object.keys(icons)
+
+  const allOutlineIcons = allIcons.filter((icon) => icon.endsWith('Outline'))
+  const outlineIcons = searchText
+    ? allOutlineIcons.filter((icon) => icon.toLowerCase().includes(searchText))
+    : allOutlineIcons
+
+  const allSolidIcons = allIcons.filter((icon) => icon.endsWith('Solid'))
+  const solidIcons = searchText
+    ? allSolidIcons.filter((icon) => icon.toLowerCase().includes(searchText))
+    : allSolidIcons
 
   return (
-    <div className="relative space-y-8">
-      <IconsList type="Outline" iconNames={outlineIcons} />
-      <IconsList type="Solid" iconNames={solidIcons} />
-    </div>
+    <>
+      <input
+        className="block w-full px-3 py-2 mb-2 text-sm border rounded-md focus:outline-none focus:shadow-outline"
+        placeholder="Search for your icon..."
+        value={searchText}
+        onChange={(event) => {
+          setSearchText(event.target.value)
+        }}
+      />
+      <div className="relative flex-1 space-y-8">
+        <IconsList type="Outline" iconNames={outlineIcons} />
+        <IconsList type="Solid" iconNames={solidIcons} />
+      </div>
+    </>
   )
 }
 
@@ -34,7 +53,7 @@ function IconsList({ type, iconNames }: { type: string; iconNames: string[] }) {
 
   return (
     <div>
-      <div className="sticky top-0 flex items-center justify-between px-4 pt-2 pb-4 -mx-4 bg-white">
+      <div className="flex items-center justify-between px-4 pt-2 pb-4 -mx-4 bg-white">
         <h1 className="font-medium text-gray-700">{type} Icons</h1>
         <div
           className={clsx(
