@@ -13,7 +13,7 @@ export type Props = {
 }
 
 export default function Menu({ children, items }: Props) {
-  const [menuVisible, setMenuVisible] = useState(true)
+  const [menuVisible, setMenuVisible] = useState(false)
 
   const menuContainer = useRef<HTMLDivElement | null>(null)
 
