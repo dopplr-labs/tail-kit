@@ -6,11 +6,13 @@
   "license": "MIT",
   "scripts": {
     "build": "rollup src/index.ts --config --environment NODE_ENV:production",
-    "test": "jest",
+    "test": "jest --watch",
+    "test:ci": "jest --ci --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@testing-library/user-event": "^12.1.3",
     "@types/react-transition-group": "^4.4.0",
     "clsx": "^1.1.1",
     "react": "^16.13.1",
