@@ -11,9 +11,12 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@types/react-transition-group": "^4.4.0",
     "clsx": "^1.1.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-transition-group": "^4.4.1",
+    "use-memo-one": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
@@ -22,10 +25,10 @@
     "@babel/preset-typescript": "^7.10.4",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-typescript": "^5.0.2",
-    "@storybook/addon-actions": "^6.0.19",
-    "@storybook/addon-essentials": "^6.0.19",
-    "@storybook/addon-links": "^6.0.19",
-    "@storybook/react": "^6.0.19",
+    "@storybook/addon-actions": "^6.0.20",
+    "@storybook/addon-essentials": "^6.0.20",
+    "@storybook/addon-links": "^6.0.20",
+    "@storybook/react": "^6.0.20",
     "@tailwindcss/ui": "^0.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^10.4.9",
