@@ -1,3 +1,5 @@
+![tail-kit](./assets/tail-kit-logo.png)
+
 # tail-kit
 
 ![Tests](https://github.com/abinashpanda/tail-kit/workflows/tests/badge.svg)
