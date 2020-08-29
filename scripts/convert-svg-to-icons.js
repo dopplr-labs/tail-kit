@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('mz/fs')
 const path = require('path')
 const chalk = require('chalk')
 const _ = require('lodash')
@@ -22,64 +22,55 @@ createComponents('solid')
 // create index.ts files for exporting all the icons
 createExports()
 
-function createComponents(iconType) {
+async function createComponents(iconType) {
   const directory = path.resolve(__dirname, './heroicons/src', iconType)
 
-  fs.readdir(directory, (directoryReadError, directoryContent) => {
-    // read the icons directory
-    if (directoryReadError) {
-      console.error(chalk.red({ directoryReadError }))
-    } else {
-      // filter out files with svg
-      const icons = directoryContent.filter((file) => file.endsWith('.svg'))
-
-      icons.forEach((icon) => {
-        fs.readFile(
+  try {
+    const directoryContent = await fs.readdir(directory)
+    // filter out files with svg
+    const icons = directoryContent.filter((file) => file.endsWith('.svg'))
+    icons.forEach(async (icon) => {
+      try {
+        const iconContent = await fs.readFile(
           path.resolve(directory, icon),
           'utf-8',
-          (fileReadError, iconContent) => {
-            if (fileReadError) {
-              console.error(chalk.red({ fileReadError }))
-            } else {
-              // convert zoom-out.svg -> zoom-out.tsx
-              const iconComponentFileName = icon.replace('.svg', '.tsx')
-
-              const iconComponent = convertSvgToReact({
-                name: icon,
-                svg: iconContent,
-                type: _.capitalize(iconType),
-              })
-
-              fs.writeFile(
-                path.resolve(
-                  __dirname,
-                  '../src/components/icons',
-                  iconType,
-                  iconComponentFileName,
-                ),
-                iconComponent,
-                'utf-8',
-                (fileWriteError) => {
-                  if (fileWriteError) {
-                    console.error(chalk.red({ fileWriteError }))
-                  } else {
-                    console.log(
-                      chalk.green(
-                        `src/components/icons/${iconType}/${iconComponentFileName} created successfully`,
-                      ),
-                    )
-                  }
-                },
-              )
-            }
-          },
         )
-      })
-    }
-  })
+        // convert zoom-out.svg -> zoom-out.tsx
+        const iconComponentFileName = icon.replace('.svg', '.tsx')
+        const iconComponent = convertSvgToReact({
+          name: icon,
+          svg: iconContent,
+          type: _.capitalize(iconType),
+        })
+        try {
+          await fs.writeFile(
+            path.resolve(
+              __dirname,
+              '../src/components/icons',
+              iconType,
+              iconComponentFileName,
+            ),
+            iconComponent,
+            'utf-8',
+          )
+          console.log(
+            chalk.green(
+              `src/components/icons/${iconType}/${iconComponentFileName} created successfully`,
+            ),
+          )
+        } catch (fileWriteError) {
+          console.error(chalk.red({ fileWriteError }))
+        }
+      } catch (fileReadError) {
+        console.error(chalk.red({ fileReadError }))
+      }
+    })
+  } catch (directoryReadError) {
+    console.error(chalk.red({ directoryReadError }))
+  }
 }
 
-function createExports() {
+async function createExports() {
   const outlineIcons = fs
     .readdirSync(path.resolve(__dirname, './heroicons/src/outline'))
     .filter((file) => file.endsWith('.svg'))
