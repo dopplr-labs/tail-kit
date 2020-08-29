@@ -5,7 +5,10 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function CurrencyRupeeOutline({ className, style }: Props) {
+export default function CurrencyRupeeOutline({
+  className = 'w-6 h-6',
+  style,
+}: Props) {
   return (
     <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
       <path

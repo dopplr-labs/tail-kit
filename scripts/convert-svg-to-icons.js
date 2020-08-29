@@ -145,7 +145,7 @@ function convertSvgToReact({ name, svg, type }) {
     style?: React.CSSProperties
   }
 
-  export default function ${componentName}${type}({className, style}:Props) {
+  export default function ${componentName}${type}({className = 'w-6 h-6', style}:Props) {
     return ${sanitizeTags(svg).replace(
       /<svg/,
       '<svg className={className} style={style}',
@@ -165,8 +165,8 @@ function sanitizeTags(content) {
     .replace(/stroke-linejoin/g, 'strokeLinejoin')
     .replace(/stroke-width/g, 'strokeWidth')
     .replace(/stroke-linecap/g, 'strokeLinecap')
-    .replace(/stroke="#4A5568"/g, 'stroke="currentColor"')
+    .replace(/stroke="#[\w\d]+"/g, 'stroke="currentColor"')
     .replace(/fill-rule="evenodd"/g, 'fillRule="evenodd"')
     .replace(/clip-rule="evenodd"/g, 'clipRule="evenodd"')
-    .replace(/fill="#4A5568"/g, 'fill="currentColor"')
+    .replace(/fill="#[\w\d]+"/g, 'fill="currentColor"')
 }

@@ -6,7 +6,7 @@ type Props = {
 }
 
 export default function DotsCircleHorizontalOutline({
-  className,
+  className = 'w-6 h-6',
   style,
 }: Props) {
   return (

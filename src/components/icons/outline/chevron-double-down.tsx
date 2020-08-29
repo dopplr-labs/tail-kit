@@ -5,12 +5,15 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function ChevronDoubleDownOutline({ className, style }: Props) {
+export default function ChevronDoubleDownOutline({
+  className = 'w-6 h-6',
+  style,
+}: Props) {
   return (
     <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
       <path
         d="M19 13L12 20L5 13M19 5L12 12L5 5"
-        stroke="#374151"
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

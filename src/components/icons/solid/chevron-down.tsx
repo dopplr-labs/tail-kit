@@ -5,7 +5,10 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function ChevronDownSolid({ className, style }: Props) {
+export default function ChevronDownSolid({
+  className = 'w-6 h-6',
+  style,
+}: Props) {
   return (
     <svg className={className} style={style} viewBox="0 0 20 20" fill="none">
       <path

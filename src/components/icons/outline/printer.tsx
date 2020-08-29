@@ -5,7 +5,10 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function PrinterOutline({ className, style }: Props) {
+export default function PrinterOutline({
+  className = 'w-6 h-6',
+  style,
+}: Props) {
   return (
     <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
       <path

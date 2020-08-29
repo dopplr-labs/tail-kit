@@ -5,7 +5,10 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function TemplateOutline({ className, style }: Props) {
+export default function TemplateOutline({
+  className = 'w-6 h-6',
+  style,
+}: Props) {
   return (
     <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
       <path

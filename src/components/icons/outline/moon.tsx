@@ -5,7 +5,7 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function MoonOutline({ className, style }: Props) {
+export default function MoonOutline({ className = 'w-6 h-6', style }: Props) {
   return (
     <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
       <path

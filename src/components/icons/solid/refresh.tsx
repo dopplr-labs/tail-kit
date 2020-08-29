@@ -5,7 +5,7 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function RefreshSolid({ className, style }: Props) {
+export default function RefreshSolid({ className = 'w-6 h-6', style }: Props) {
   return (
     <svg className={className} style={style} viewBox="0 0 20 20" fill="none">
       <path

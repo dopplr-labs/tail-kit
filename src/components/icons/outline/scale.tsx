@@ -5,7 +5,7 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function ScaleOutline({ className, style }: Props) {
+export default function ScaleOutline({ className = 'w-6 h-6', style }: Props) {
   return (
     <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
       <path
