@@ -49,20 +49,25 @@ body {
   background-attachment: local, local, scroll, scroll;
 }
 
+.menu-portal-container {
+  @apply absolute top-0 left-0 right-0 h-0;
+  z-index: 10001;
+}
+
 .menu-enter {
-  @apply opacity-0;
+  @apply transform scale-0 opacity-0;
 }
 
 .menu-enter-active {
-  @apply transition-opacity duration-300 ease-in-out opacity-100;
+  @apply transition-all duration-200 ease-in-out transform scale-100 opacity-100;
 }
 
 .menu-exit {
-  @apply opacity-100;
+  @apply transform scale-100 opacity-100;
 }
 
 .menu-exit-active {
-  @apply transition-opacity duration-300 ease-in-out opacity-0;
+  @apply transition-all duration-200 ease-in-out transform scale-0 opacity-0;
 }
 
 @tailwind utilities;

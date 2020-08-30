@@ -16,25 +16,11 @@ export default {
 
 export function DropdownMenu() {
   return (
-    <div className="h-80">
-      <Menu
-        items={[
-          {
-            label: 'Share Blog',
-            icon: <ShareOutline className="w-5 h-5" />,
-          },
-          {
-            label: 'Edit Blog',
-            icon: <PencilAltOutline className="w-5 h-5" />,
-          },
-          {
-            label: 'Delete Blog',
-            icon: <TrashOutline className="w-5 h-5" />,
-          },
-        ]}
-      >
-        <Button icon={<ChevronDownOutline />} />
-      </Menu>
-    </div>
+    <Menu trigger={<Button icon={<ChevronDownOutline />} />}>
+      <Menu.MenuItem label="Share Blog" icon={<ShareOutline />} />
+      <Menu.MenuItem label="Edit Blog" icon={<PencilAltOutline />} />
+      <Menu.MenuDivider />
+      <Menu.MenuItem label="Delete Blog" icon={<TrashOutline />} />
+    </Menu>
   )
 }
