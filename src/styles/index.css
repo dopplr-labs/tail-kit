@@ -8,6 +8,26 @@ body {
   @apply font-sans antialiased;
 }
 
+.scrollable {
+  background: linear-gradient(white 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
+    radial-gradient(
+      farthest-side at 50% 0,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0)
+    ),
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  background-attachment: local, local, scroll, scroll;
+}
+
 .modal-portal-container {
   @apply relative;
   z-index: 10000;
@@ -27,26 +47,6 @@ body {
 
 .modal-exit-active {
   @apply transition-opacity duration-300 ease-in-out opacity-0;
-}
-
-.modal-content-container {
-  background: linear-gradient(white 30%, rgba(255, 255, 255, 0)),
-    linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
-    radial-gradient(
-      farthest-side at 50% 0,
-      rgba(0, 0, 0, 0.15),
-      rgba(0, 0, 0, 0)
-    ),
-    radial-gradient(
-        farthest-side at 50% 100%,
-        rgba(0, 0, 0, 0.15),
-        rgba(0, 0, 0, 0)
-      )
-      0 100%;
-  background-repeat: no-repeat;
-  background-color: white;
-  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-  background-attachment: local, local, scroll, scroll;
 }
 
 .menu-portal-container {

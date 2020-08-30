@@ -80,7 +80,7 @@ export function Modal({
         onClick={handleOverlayClick}
       >
         <div
-          className="flex flex-col w-full max-w-screen-sm max-h-full overflow-hidden bg-white rounded-md shadow-2xl modal-content-container"
+          className="flex flex-col w-full max-w-screen-sm max-h-full overflow-hidden bg-white rounded-md shadow-2xl"
           ref={contentContainer}
         >
           {title ? (
@@ -88,7 +88,7 @@ export function Modal({
               {title}
             </div>
           ) : null}
-          <div className="flex-1 p-4 overflow-auto text-sm text-gray-700 border-b modal-content-container">
+          <div className="flex-1 p-4 overflow-auto text-sm text-gray-700 border-b scrollable">
             {children}
           </div>
           <div className="flex items-center justify-end px-4 py-3 space-x-4">
