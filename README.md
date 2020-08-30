@@ -12,7 +12,7 @@ UI kit built using `tailwindcss`
 
 We use `yarn` to install the dependencies.
 
-```
+```sh
 yarn install
 ```
 
