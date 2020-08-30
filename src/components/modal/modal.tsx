@@ -69,14 +69,19 @@ export function Modal({
       classNames="modal"
       unmountOnExit
       onEnter={() => {
-        portalParent.appendChild(portalContainer)
+        if (!portalParent.contains(portalContainer)) {
+          portalParent.appendChild(portalContainer)
+        }
       }}
       onExited={() => {
-        portalParent.removeChild(portalContainer)
+        if (portalParent.contains(portalContainer)) {
+          portalParent.removeChild(portalContainer)
+        }
       }}
     >
       <div
         className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-75 modal-overlay"
+        data-testid="modal-overlay"
         onClick={handleOverlayClick}
       >
         <div
