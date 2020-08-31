@@ -6,13 +6,17 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint src/**/*.ts src/**/*.tsx scripts/*.js --fix",
-    "pre-commit": "npm run lint",
-    "pre-push": "npm run test:ci",
     "build": "rollup src/index.ts --config --environment NODE_ENV:production",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn test:ci"
+    }
   },
   "dependencies": {
     "@testing-library/user-event": "^12.1.3",
