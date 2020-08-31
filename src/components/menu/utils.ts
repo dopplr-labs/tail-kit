@@ -100,7 +100,6 @@ export function getMenuPosition(
   let top
   if (verticalPlacement === VerticalPlacement.TOP) {
     top = triggerBCR.top - (menuContentBCR.height + offsetVertical)
-    console.log({ triggerBCR, menuContentBCR, top })
   } else if (verticalPlacement === VerticalPlacement.BOTTOM) {
     top = triggerBCR.bottom + offsetVertical
   }

@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint src/**/*.ts src/**/*.tsx scripts/*.js --fix",
     "build": "rollup src/index.ts --config --environment NODE_ENV:production",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",

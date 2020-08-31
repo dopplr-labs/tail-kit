@@ -21,6 +21,8 @@ settings:
     node:
       path:
         - src
+  react:
+    version: detect
 rules:
   space-before-function-paren: off
   comma-dangle: off
@@ -40,3 +42,4 @@ rules:
   no-unused-vars: off
   '@typescript-eslint/no-unused-vars': error
   indent: off
+  no-console: warn

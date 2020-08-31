@@ -53,19 +53,23 @@ async function createComponents(iconType) {
             iconComponent,
             'utf-8',
           )
+          // eslint-disable-next-line no-console
           console.log(
             chalk.green(
               `src/components/icons/${iconType}/${iconComponentFileName} created successfully`,
             ),
           )
         } catch (fileWriteError) {
+          // eslint-disable-next-line no-console
           console.error(chalk.red({ fileWriteError }))
         }
       } catch (fileReadError) {
+        // eslint-disable-next-line no-console
         console.error(chalk.red({ fileReadError }))
       }
     })
   } catch (directoryReadError) {
+    // eslint-disable-next-line no-console
     console.error(chalk.red({ directoryReadError }))
   }
 }
