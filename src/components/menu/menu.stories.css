@@ -1,0 +1,11 @@
+body.sb-show-main {
+  @apply w-screen h-screen;
+}
+
+body.sb-show-main #root {
+  @apply h-full;
+}
+
+#root .all-menus-container {
+  @apply h-full;
+}

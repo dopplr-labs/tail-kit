@@ -6,16 +6,29 @@ import React, {
   useContext,
   useLayoutEffect,
 } from 'react'
+import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import { useMemoOne } from 'use-memo-one'
-import { createPortal } from 'react-dom'
+import {
+  getMenuPlacement,
+  getMenuPosition,
+  VerticalPlacement,
+  HorizontalPlacement,
+  getTransformOriginClassName,
+} from './utils'
+
+enum MenuVisibility {
+  HIDDEN = 'HIDDEN',
+  INVISIBLE = 'INVISIBLE',
+  SHOWN = 'SHOWN',
+}
 
 const MenuContext = createContext<{
-  menuVisible: boolean
-  setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>
+  menuVisible: MenuVisibility
+  setMenuVisible: React.Dispatch<React.SetStateAction<MenuVisibility>>
 }>({
-  menuVisible: false,
+  menuVisible: MenuVisibility.HIDDEN,
   setMenuVisible: () => {},
 })
 
@@ -31,6 +44,12 @@ export type MenuProps = {
   portalParent?: HTMLElement
 }
 
+/**
+ * Component to render **dropdown menu**.
+ *
+ * Use `Menu.MenuItem` and `Menu.Divider` components to render the drop down content
+ *
+ */
 export function Menu({
   trigger,
   children,
@@ -42,7 +61,26 @@ export function Menu({
     return container
   }, [])
 
-  const [menuVisible, setMenuVisible] = useState(false)
+  /**
+   * Before showing the menu, we need to find the size of the width component
+   * to compute the placement automatically.
+   *
+   * To do this
+   * 1. First render the menu with visiblity: hidden (https://codesandbox.io/s/goofy-torvalds-15wuc?file=/src/App.tsx to see why used visiblity hidden instead of display none)
+   * 2. Get the menu content BCR and trigger BCR
+   * 3. Compute the placement depending on trigger BCR and content BCR
+   * 4. Set the placement and render the menu content
+   *
+   * State
+   * menuVisiblity = 'HIDDEN' | 'INVISIBLE' | 'SHOWN'
+   * HIDDEN -> won't render the menu
+   * INVISIBLE -> render menu with visiblity: hidden
+   * SHOWN -> render menu at correct position
+   */
+
+  const [menuVisible, setMenuVisible] = useState<MenuVisibility>(
+    MenuVisibility.HIDDEN,
+  )
 
   const triggerContainer = useRef<HTMLDivElement | null>(null)
 
@@ -52,29 +90,59 @@ export function Menu({
     | {
         top: number
         left: number
+        placement: [VerticalPlacement, HorizontalPlacement]
       }
     | undefined
   >(undefined)
+
   useLayoutEffect(() => {
-    if (menuVisible) {
-      if (triggerContainer.current) {
-        const triggerBCR = triggerContainer.current.getBoundingClientRect()
+    if (menuVisible === MenuVisibility.INVISIBLE) {
+      const menuContainerBCR = menuContainer.current?.getBoundingClientRect()
+      const triggerBCR = triggerContainer.current?.getBoundingClientRect()
+      if (menuContainerBCR && triggerBCR) {
+        const placement = getMenuPlacement(triggerBCR, menuContainerBCR)
+        const { top, left } = getMenuPosition(
+          triggerBCR,
+          menuContainerBCR,
+          placement,
+        )
+        setMenuVisible(MenuVisibility.SHOWN)
         setMenuContainerPosition({
           top:
-            triggerBCR.top +
-            triggerBCR.height +
+            top +
             // take scrollY position into consideration as the BCR is with respect to viewport
-            window.scrollY +
-            // gap between the trigger and menu container
-            12,
+            window.scrollY,
           left:
-            triggerBCR.left +
+            left +
             // take scrollX position into consideration as the BCR is with respecdt to viewport
             window.scrollX,
+          placement,
         })
       }
     }
-  }, [menuVisible])
+  }, [menuVisible, trigger])
+
+  /**
+   * menu overlay is used to capture any click outside the menu, so as to close it
+   * it is a transparent background covering the entire screen
+   *
+   * it simplies the outside click behaviour as for menu item we don't have to worry about
+   * the order of menu creation, each newly created menu item's overlay would be on the top of
+   * the previous
+   *
+   * it would be easier to implement sub menu as well as menu within modal
+   */
+  const overlay = menuVisible ? (
+    <div
+      className="fixed inset-0 z-10"
+      onClick={(event) => {
+        event.stopPropagation()
+        if (!menuContainer.current?.contains(event.target as Node)) {
+          setMenuVisible(MenuVisibility.HIDDEN)
+        }
+      }}
+    />
+  ) : null
 
   const menuContent = (
     <div className="py-2 bg-white rounded-md shadow" ref={menuContainer}>
@@ -89,25 +157,28 @@ export function Menu({
       <div className="inline-block" ref={triggerContainer}>
         {cloneElement(trigger, {
           onClick: () => {
-            setMenuVisible((prevState) => !prevState)
+            setMenuVisible(
+              (prevState) =>
+                prevState === MenuVisibility.SHOWN
+                  ? MenuVisibility.HIDDEN
+                  : MenuVisibility.INVISIBLE, // instead of directly showing the menu, render it as invisible (see above for the description)
+            )
           },
         })}
       </div>
+      {menuVisible === MenuVisibility.INVISIBLE ? (
+        <div
+          className="fixed top-0 left-0 inline-block"
+          style={{ visibility: 'hidden' }}
+        >
+          {menuContent}
+        </div>
+      ) : null}
       {createPortal(
         <>
-          {menuVisible ? (
-            <div
-              className="fixed inset-0 z-10"
-              onClick={(event) => {
-                event.stopPropagation()
-                if (!menuContainer.current?.contains(event.target as Node)) {
-                  setMenuVisible(false)
-                }
-              }}
-            />
-          ) : null}
+          {overlay}
           <CSSTransition
-            in={menuVisible && !!menuContainerPosition}
+            in={menuVisible === MenuVisibility.SHOWN && !!menuContainerPosition}
             timeout={200}
             classNames="menu"
             unmountOnExit
@@ -120,7 +191,10 @@ export function Menu({
             }}
           >
             <div
-              className="absolute z-20 origin-top-left"
+              className={clsx(
+                'absolute z-20',
+                getTransformOriginClassName(menuContainerPosition?.placement),
+              )}
               style={{
                 top: menuContainerPosition?.top ?? 0,
                 left: menuContainerPosition?.left ?? 0,
@@ -136,6 +210,8 @@ export function Menu({
   )
 }
 
+Menu.VerticalPlacement = VerticalPlacement
+Menu.HorizontalPlacement = HorizontalPlacement
 Menu.MenuItem = MenuItem
 Menu.MenuDivider = MenuDivider
 
@@ -170,8 +246,9 @@ export function MenuItem({
       )}
       style={style}
       onClick={(event) => {
+        event.stopPropagation()
         onClick?.(event)
-        setMenuVisible(false)
+        setMenuVisible(MenuVisibility.HIDDEN)
       }}
     >
       {icon ? cloneElement(icon, { className: 'w-5 h-5' }) : null}
