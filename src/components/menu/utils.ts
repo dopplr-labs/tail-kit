@@ -7,26 +7,27 @@ export enum HorizontalPlacement {
   LEFT = 'LEFT',
   RIGHT = 'RIGHT',
 }
+
 /**
- * Computes the menu placement depending on the menu content size and trigger
- * position in the screen
+ * Computes the vertical placement of the menu depending on the menu
+ * content size and trigger position in the screen
  *
  * @param triggerBCR DOMRect bounding client rect of the dropdown trigger
  * @param menuContentBCR DOMRect bounding client rect of the menu content
  * @param offsetVertical number vertial gap between the menu content and trigger
- * @returns [VerticalPlacement, HorizontalPlacement] placement of the menu top-left, top-right, bottom-left, bottom-right
+ * @returns VerticalPlacement vertical placement of the menu either top or bottom
  */
-export function getMenuPlacement(
+export function getMenuVerticalPlacement(
   triggerBCR: DOMRect,
   menuContentBCR: DOMRect,
   offsetVertical: number = 12,
-): [VerticalPlacement, HorizontalPlacement] {
+): VerticalPlacement {
   const isClient =
     typeof window !== 'undefined' && typeof navigator !== 'undefined'
 
   // on node simply return the menu position to be bottom left (for SSR)
   if (!isClient) {
-    return [VerticalPlacement.BOTTOM, HorizontalPlacement.LEFT]
+    return VerticalPlacement.BOTTOM
   }
 
   let verticalPlacement
@@ -48,6 +49,29 @@ export function getMenuPlacement(
     verticalPlacement = VerticalPlacement.BOTTOM
   }
 
+  return verticalPlacement ?? VerticalPlacement.BOTTOM
+}
+
+/**
+ * Computes the horizontal placement of the menu depending on the menu content size and trigger
+ * position in the screen
+ *
+ * @param triggerBCR DOMRect bounding client rect of the dropdown trigger
+ * @param menuContentBCR DOMRect bounding client rect of the menu content
+ * @returns HorizontalPlacement horizontal placement of the menu either left or right
+ */
+export function getMenuHorizontalPlacement(
+  triggerBCR: DOMRect,
+  menuContentBCR: DOMRect,
+): HorizontalPlacement {
+  const isClient =
+    typeof window !== 'undefined' && typeof navigator !== 'undefined'
+
+  // on node simply return the menu position to be bottom left (for SSR)
+  if (!isClient) {
+    return HorizontalPlacement.LEFT
+  }
+
   let horizontalPlacement
   /**
    * If the left position of the trigger + width of the menu content is greater than window width, then there
@@ -65,10 +89,7 @@ export function getMenuPlacement(
     horizontalPlacement = HorizontalPlacement.LEFT
   }
 
-  return [
-    verticalPlacement ?? VerticalPlacement.BOTTOM,
-    horizontalPlacement ?? HorizontalPlacement.LEFT,
-  ]
+  return horizontalPlacement ?? HorizontalPlacement.LEFT
 }
 
 /**

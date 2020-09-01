@@ -16,6 +16,8 @@ import {
   VerticalPlacement,
   HorizontalPlacement,
   getTransformOriginClassName,
+  getMenuVerticalPlacement,
+  getMenuHorizontalPlacement,
 } from './utils'
 
 enum MenuVisibility {
@@ -42,6 +44,14 @@ export type MenuProps = {
   children: React.ReactNode
   /** parent of the portal container rendering the menu */
   portalParent?: HTMLElement
+  /** vertical placement of the menu item, it could be either
+   * `VerticalPlacement.TOP` (render the menu at top of the trigger)
+   * or `VerticalPlacement.BOTTOM` (render menu at bottom) */
+  verticalPlacement?: VerticalPlacement
+  /** horizontal placement of the menu item, it could be either
+   * `HorizontalPlacement.LEFT` (the left position of menu and trigger co-incide)
+   * or `HorizontalPlacement.RIGHT` (the right position of the menu and trigger co-incide) */
+  horizontalPlacement?: HorizontalPlacement
 }
 
 /**
@@ -49,11 +59,15 @@ export type MenuProps = {
  *
  * Use `Menu.MenuItem` and `Menu.Divider` components to render the drop down content
  *
+ * If `verticalPlacement` or `horizontalPlacement` is not provided, it would be computed based on the position of
+ * trigger and menu content.
  */
 export function Menu({
   trigger,
   children,
   portalParent = document.body,
+  verticalPlacement,
+  horizontalPlacement,
 }: MenuProps) {
   const portalContainer = useMemoOne(() => {
     const container = document.createElement('div')
@@ -100,7 +114,12 @@ export function Menu({
       const menuContainerBCR = menuContainer.current?.getBoundingClientRect()
       const triggerBCR = triggerContainer.current?.getBoundingClientRect()
       if (menuContainerBCR && triggerBCR) {
-        const placement = getMenuPlacement(triggerBCR, menuContainerBCR)
+        const placement = [
+          verticalPlacement ??
+            getMenuVerticalPlacement(triggerBCR, menuContainerBCR),
+          horizontalPlacement ??
+            getMenuHorizontalPlacement(triggerBCR, menuContainerBCR),
+        ] as [VerticalPlacement, HorizontalPlacement]
         const { top, left } = getMenuPosition(
           triggerBCR,
           menuContainerBCR,
@@ -120,7 +139,7 @@ export function Menu({
         })
       }
     }
-  }, [menuVisible, trigger])
+  }, [menuVisible, trigger, verticalPlacement, horizontalPlacement])
 
   /**
    * menu overlay is used to capture any click outside the menu, so as to close it

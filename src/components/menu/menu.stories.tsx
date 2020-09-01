@@ -7,6 +7,10 @@ import {
   TrashOutline,
   ChevronDownOutline,
   ChevronUpOutline,
+  DotsVerticalOutline,
+  LogoutOutline,
+  UserCircleOutline,
+  CogOutline,
 } from 'components/icons'
 import Modal from 'components/modal'
 import { Menu } from './menu'
@@ -88,5 +92,27 @@ export function MenuWithinAModal() {
         </Menu>
       </Modal>
     </>
+  )
+}
+
+export function MenuWithExplicitPlacement() {
+  return (
+    <div className="flex items-center justify-center h-80">
+      <Menu
+        trigger={
+          <Button
+            icon={<DotsVerticalOutline />}
+            buttonType={Button.ButtonType.link}
+          />
+        }
+        horizontalPlacement={Menu.HorizontalPlacement.RIGHT}
+        verticalPlacement={Menu.VerticalPlacement.TOP}
+      >
+        <Menu.MenuItem label="Profile" icon={<UserCircleOutline />} />
+        <Menu.MenuItem label="Settings" icon={<CogOutline />} />
+        <Menu.MenuDivider />
+        <Menu.MenuItem label="Logout" icon={<LogoutOutline />} />
+      </Menu>
+    </div>
   )
 }
