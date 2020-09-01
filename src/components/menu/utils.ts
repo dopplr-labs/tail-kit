@@ -1,11 +1,11 @@
 export enum VerticalPlacement {
-  TOP = 'TOP',
-  BOTTOM = 'BOTTOM',
+  top = 'top',
+  bottom = 'bottom',
 }
 
 export enum HorizontalPlacement {
-  LEFT = 'LEFT',
-  RIGHT = 'RIGHT',
+  left = 'left',
+  right = 'right',
 }
 
 /**
@@ -27,7 +27,7 @@ export function getMenuVerticalPlacement(
 
   // on node simply return the menu position to be bottom left (for SSR)
   if (!isClient) {
-    return VerticalPlacement.BOTTOM
+    return VerticalPlacement.bottom
   }
 
   let verticalPlacement
@@ -39,17 +39,17 @@ export function getMenuVerticalPlacement(
     triggerBCR.bottom + menuContentBCR.height + offsetVertical >
     window.innerHeight
   ) {
-    verticalPlacement = VerticalPlacement.TOP
+    verticalPlacement = VerticalPlacement.top
   }
   /**
    * If the space between the top position of the menu and the start of window is less than height of
    * menu content, then there is no space to render that top, the menu should be *rendered at bottom*
    */
   if (menuContentBCR.height + offsetVertical > triggerBCR.top) {
-    verticalPlacement = VerticalPlacement.BOTTOM
+    verticalPlacement = VerticalPlacement.bottom
   }
 
-  return verticalPlacement ?? VerticalPlacement.BOTTOM
+  return verticalPlacement ?? VerticalPlacement.bottom
 }
 
 /**
@@ -69,7 +69,7 @@ export function getMenuHorizontalPlacement(
 
   // on node simply return the menu position to be bottom left (for SSR)
   if (!isClient) {
-    return HorizontalPlacement.LEFT
+    return HorizontalPlacement.left
   }
 
   let horizontalPlacement
@@ -79,17 +79,17 @@ export function getMenuHorizontalPlacement(
    * (right position of menu and trigger co-incide)
    */
   if (triggerBCR.left + menuContentBCR.width > window.innerWidth) {
-    horizontalPlacement = HorizontalPlacement.RIGHT
+    horizontalPlacement = HorizontalPlacement.right
   }
   /**
    * If the right position of the trigger is less than the width of the container, then there is no space to render the
    * menu on the right side, it should be *rendered at the left* (left position of menu and trigger co-incide)
    */
   if (menuContentBCR.width > triggerBCR.right) {
-    horizontalPlacement = HorizontalPlacement.LEFT
+    horizontalPlacement = HorizontalPlacement.left
   }
 
-  return horizontalPlacement ?? HorizontalPlacement.LEFT
+  return horizontalPlacement ?? HorizontalPlacement.left
 }
 
 /**
@@ -119,16 +119,16 @@ export function getMenuPosition(
   const [verticalPlacement, horizontalPlacement] = placement
 
   let top
-  if (verticalPlacement === VerticalPlacement.TOP) {
+  if (verticalPlacement === VerticalPlacement.top) {
     top = triggerBCR.top - (menuContentBCR.height + offsetVertical)
-  } else if (verticalPlacement === VerticalPlacement.BOTTOM) {
+  } else if (verticalPlacement === VerticalPlacement.bottom) {
     top = triggerBCR.bottom + offsetVertical
   }
 
   let left
-  if (horizontalPlacement === HorizontalPlacement.LEFT) {
+  if (horizontalPlacement === HorizontalPlacement.left) {
     left = triggerBCR.left
-  } else if (horizontalPlacement === HorizontalPlacement.RIGHT) {
+  } else if (horizontalPlacement === HorizontalPlacement.right) {
     left = triggerBCR.right - menuContentBCR.width
   }
 
@@ -155,29 +155,29 @@ export function getTransformOriginClassName(
    * which means that the menu should open from bottom to top and vice-versa
    */
   if (
-    verticalPlacement === VerticalPlacement.TOP &&
-    horizontalPlacement === HorizontalPlacement.LEFT
+    verticalPlacement === VerticalPlacement.top &&
+    horizontalPlacement === HorizontalPlacement.left
   ) {
     return 'origin-bottom-left'
   }
 
   if (
-    verticalPlacement === VerticalPlacement.BOTTOM &&
-    horizontalPlacement === HorizontalPlacement.LEFT
+    verticalPlacement === VerticalPlacement.bottom &&
+    horizontalPlacement === HorizontalPlacement.left
   ) {
     return 'origin-top-left'
   }
 
   if (
-    verticalPlacement === VerticalPlacement.TOP &&
-    horizontalPlacement === HorizontalPlacement.RIGHT
+    verticalPlacement === VerticalPlacement.top &&
+    horizontalPlacement === HorizontalPlacement.right
   ) {
     return 'origin-bottom-right'
   }
 
   if (
-    verticalPlacement === VerticalPlacement.BOTTOM &&
-    horizontalPlacement === HorizontalPlacement.RIGHT
+    verticalPlacement === VerticalPlacement.bottom &&
+    horizontalPlacement === HorizontalPlacement.right
   ) {
     return 'origin-top-right'
   }

@@ -11,7 +11,6 @@ import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import { useMemoOne } from 'use-memo-one'
 import {
-  getMenuPlacement,
   getMenuPosition,
   VerticalPlacement,
   HorizontalPlacement,
