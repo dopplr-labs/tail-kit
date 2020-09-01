@@ -44,7 +44,7 @@ export function Button({
     <button
       aria-label={label || restProps['aria-label']}
       className={clsx(
-        'py-2 rounded-md focus:outline-none focus:shadow-outline border text-sm font-medium flex items-center space-x-2 transition-colors duration-300',
+        'py-2 rounded-md focus:outline-none focus:shadow-outline border text-sm font-medium flex items-center justify-center space-x-2 transition-colors duration-300',
         iconOnlyButton ? 'px-2' : 'px-3',
         buttonType === ButtonType.primary
           ? 'bg-blue-600 text-white border-transparent primary'
