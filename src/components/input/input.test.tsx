@@ -1,0 +1,1 @@
+test('render input correctly', () => {})
