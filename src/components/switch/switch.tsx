@@ -40,6 +40,7 @@ export const Switch = forwardRef(
           style={{
             transform: `translate(${checked ? 20 : 0}px)`,
           }}
+          data-testid="toggle-thumb"
         />
         <input
           checked={checked}
