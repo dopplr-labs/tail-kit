@@ -105,8 +105,8 @@ export function MenuWithExplicitPlacement() {
             buttonType={Button.ButtonType.link}
           />
         }
-        horizontalPlacement={Menu.HorizontalPlacement.RIGHT}
-        verticalPlacement={Menu.VerticalPlacement.TOP}
+        horizontalPlacement={Menu.HorizontalPlacement.right}
+        verticalPlacement={Menu.VerticalPlacement.top}
       >
         <Menu.MenuItem label="Profile" icon={<UserCircleOutline />} />
         <Menu.MenuItem label="Settings" icon={<CogOutline />} />
