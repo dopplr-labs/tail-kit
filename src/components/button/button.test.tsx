@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Button } from './button'
@@ -47,4 +47,10 @@ test('call onClick on button click', () => {
   render(<Button label="Click Here" onClick={onClick} />)
   userEvent.click(screen.getByText('Click Here'))
   expect(onClick).toHaveBeenCalled()
+})
+
+test('forward ref to the button', () => {
+  const ref = createRef<HTMLButtonElement>()
+  render(<Button label="Click Here" ref={ref} />)
+  expect(ref.current?.tagName).toBe('BUTTON')
 })
