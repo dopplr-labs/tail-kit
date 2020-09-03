@@ -53,7 +53,7 @@ const ButtonComponent = forwardRef(
           buttonType === ButtonType.primary
             ? 'bg-blue-600 text-white border-transparent primary'
             : buttonType === ButtonType.default
-            ? 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white default'
+            ? 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white default bg-white'
             : buttonType === ButtonType.danger
             ? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white danger'
             : 'border-transparent text-blue-600 link',
