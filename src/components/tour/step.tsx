@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import Button from 'components/button'
 import { ChevronLeftOutline, ChevronRightSolid } from 'components/icons'
+import { CSSTransition } from 'react-transition-group'
 import { TourStep } from './types'
 import { scrollIntoView } from './utils'
 
@@ -68,9 +69,14 @@ export function Step({ step, index, totalSteps, onPrev, onNext }: StepProps) {
           height: stepTargetPosition?.height,
         }}
       />
-      {stepTargetPosition ? (
+      <CSSTransition
+        in={!!stepTargetPosition}
+        classNames="popup"
+        timeout={200}
+        unmountOnExit
+      >
         <div
-          className="absolute max-w-xs transform -translate-y-1/2 bg-white rounded-md shadow-md"
+          className="absolute max-w-xs origin-left transform -translate-y-1/2 bg-white rounded-md shadow-md"
           style={{
             top:
               (stepTargetPosition?.top ?? 0) +
@@ -107,7 +113,7 @@ export function Step({ step, index, totalSteps, onPrev, onNext }: StepProps) {
 
           <div className="absolute left-0 w-3 h-3 transform rotate-45 -translate-x-1 -translate-y-1/2 bg-white pointer-events-none top-1/2" />
         </div>
-      ) : null}
+      </CSSTransition>
     </div>
   )
 }

@@ -197,7 +197,7 @@ export function Menu({
           {overlay}
           <CSSTransition
             in={menuVisible === MenuVisibility.SHOWN && !!menuContainerPosition}
-            timeout={200}
+            timeout={100}
             classNames="menu"
             unmountOnExit
             onEnter={() => {

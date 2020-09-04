@@ -38,6 +38,7 @@ export function Tour({ steps, portalParent = document.body }: TourProps) {
           totalSteps={steps.length}
           onPrev={onPrev}
           onNext={onNext}
+          key={activeStepIndex}
         />,
         portalContainer,
       )

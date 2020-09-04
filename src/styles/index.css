@@ -72,4 +72,21 @@ body {
   @apply transition-all duration-75 ease-in transform scale-95 opacity-0;
 }
 
+/* inspired from https://tailwindui.com/components/application-ui/elements/dropdowns */
+.popup-enter {
+  @apply transform scale-95 opacity-0;
+}
+
+.popup-enter-active {
+  @apply transition-all duration-100 ease-out transform scale-100 opacity-100;
+}
+
+.popup-exit {
+  @apply transform scale-100 opacity-100;
+}
+
+.popup-exit-active {
+  @apply transition-all duration-75 ease-in transform scale-95 opacity-0;
+}
+
 @tailwind utilities;

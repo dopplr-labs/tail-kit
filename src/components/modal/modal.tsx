@@ -4,7 +4,9 @@ import Button, { ButtonProps } from 'components/button'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 
-type ActionButtonProps = Omit<ButtonProps, 'onClick'>
+type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
+  ref: React.Ref<HTMLButtonElement>
+}
 
 /**
  * Modal properties
