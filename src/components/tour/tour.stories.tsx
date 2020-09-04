@@ -12,8 +12,8 @@ export default {
 export function DefaultTour() {
   return (
     <>
-      <div className="w-full h-80">
-        <div className="flex items-center space-x-4">
+      <div className="w-full h-40 overflow-auto">
+        <div className="flex flex-col items-start justify-between h-80">
           <Button
             label="Create Account"
             id="create-account"
