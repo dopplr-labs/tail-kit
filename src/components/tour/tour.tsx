@@ -102,7 +102,7 @@ export function TourStep({
   }, [step.target])
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-50">
       <div
         ref={cloneContainer}
         className="absolute z-10 inline-block"
