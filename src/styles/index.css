@@ -55,11 +55,11 @@ body {
 }
 
 .menu-enter {
-  @apply transform scale-0 opacity-0;
+  @apply transform scale-95 opacity-0;
 }
 
 .menu-enter-active {
-  @apply transition-all duration-200 ease-in-out transform scale-100 opacity-100;
+  @apply transition-all duration-100 ease-out transform scale-100 opacity-100;
 }
 
 .menu-exit {
@@ -67,7 +67,7 @@ body {
 }
 
 .menu-exit-active {
-  @apply transition-all duration-200 ease-in-out transform scale-0 opacity-0;
+  @apply transition-all duration-75 ease-in transform scale-95 opacity-0;
 }
 
 @tailwind utilities;

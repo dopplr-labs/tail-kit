@@ -259,7 +259,7 @@ export function MenuItem({
   return (
     <button
       className={clsx(
-        'flex w-full px-4 py-2 space-x-4 text-gray-500 transition-colors duration-300 focus:outline-none focus:shadow-outline hover:bg-gray-50 hover:shadow-inner',
+        'flex w-full px-4 py-2 space-x-4 text-gray-500 transition-colors duration-300 focus:outline-none hover:bg-gray-100',
         className,
       )}
       style={style}
