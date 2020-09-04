@@ -26,6 +26,14 @@ export function DefaultIconButton() {
   return <Button icon={<PlusOutline />} />
 }
 
+export function DefaultIconLoadingButton() {
+  return <Button icon={<PlusOutline />} loading />
+}
+
+export function DefaultLoadingButton() {
+  return <Button label="Submitting" loading />
+}
+
 export function PrimaryButton() {
   return (
     <Button buttonType={Button.ButtonType.primary} label="Create Account" />
@@ -38,6 +46,16 @@ export function PrimaryButtonWithIcon() {
       buttonType={Button.ButtonType.primary}
       label="Create Account"
       icon={<CheckCircleSolid />}
+    />
+  )
+}
+
+export function PrimaryLoadingButton() {
+  return (
+    <Button
+      label="Creating Blog"
+      loading
+      buttonType={Button.ButtonType.primary}
     />
   )
 }
@@ -58,6 +76,16 @@ export function DangerButtonWithIcon() {
   )
 }
 
+export function DangerLoadingButton() {
+  return (
+    <Button
+      buttonType={Button.ButtonType.danger}
+      label="Deleting Repository"
+      loading
+    />
+  )
+}
+
 export function LinkButtonWithIcon() {
   return (
     <Button
@@ -65,5 +93,11 @@ export function LinkButtonWithIcon() {
       label="Edit Post"
       icon={<PencilAltOutline />}
     />
+  )
+}
+
+export function LinkLoadingButton() {
+  return (
+    <Button buttonType={Button.ButtonType.link} label="Updating Post" loading />
   )
 }
