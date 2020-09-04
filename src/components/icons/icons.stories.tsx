@@ -5,7 +5,7 @@ import * as icons from './'
 import ClipboardSolid from './solid/clipboard'
 
 export default {
-  title: 'components/icons',
+  title: 'General/Icons',
 } as Meta
 
 type IconProps = {

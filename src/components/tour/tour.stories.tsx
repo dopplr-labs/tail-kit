@@ -5,7 +5,7 @@ import { PencilAltSolid } from 'components/icons'
 import { Tour } from './tour'
 
 export default {
-  title: 'components/tour',
+  title: 'Navigation/Product Tour',
   component: Tour,
 } as Meta
 

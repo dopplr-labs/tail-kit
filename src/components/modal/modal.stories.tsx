@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import Button from 'components/button'
 import { Modal } from './modal'
 
-export default { title: 'components/modal', component: Modal } as Meta
+export default { title: 'Feedback/Modal', component: Modal } as Meta
 
 export function SimpleModal() {
   const [visible, setVisible] = useState(false)

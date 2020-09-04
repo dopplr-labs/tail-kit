@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Switch } from './switch'
 
 export default {
-  title: 'components/switch',
+  title: 'Data Entry / Switch',
   component: Switch,
 } as Meta
 

@@ -10,7 +10,7 @@ import {
 import { Button } from './button'
 
 export default {
-  title: 'components/button',
+  title: 'General/Button',
   component: Button,
 } as Meta
 

@@ -17,7 +17,7 @@ import { Menu } from './menu'
 import './menu.stories.css'
 
 export default {
-  title: 'components/menu',
+  title: 'Data Entry/Menu',
   component: Menu,
 } as Meta
 

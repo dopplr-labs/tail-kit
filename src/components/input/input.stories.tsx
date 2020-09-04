@@ -5,7 +5,7 @@ import Button from 'components/button'
 import { Input } from './input'
 
 export default {
-  title: 'components/input',
+  title: 'Data Entry/Input',
   component: Input,
 } as Meta
 
