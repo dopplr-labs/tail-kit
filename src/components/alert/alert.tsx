@@ -107,7 +107,7 @@ export function Alert({
         <div className="text-sm font-semibold">{title}</div>
         {content ? <div className="text-sm">{content}</div> : null}
         <AlertContext.Provider value={{ baseColor }}>
-          <div className="flex space-x-4">{actions}</div>
+          {actions ? <div className="flex space-x-4">{actions}</div> : null}
         </AlertContext.Provider>
       </div>
       {closable ? (
