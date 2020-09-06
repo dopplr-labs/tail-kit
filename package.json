@@ -1,16 +1,22 @@
 {
-  "name": "tail-kit",
+  "name": "@tail-kit/tail-kit",
   "description": "UI-Kit made with tailwindcss",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "license": "MIT",
+  "keywords": [
+    "react",
+    "ui-kit",
+    "tailwindcss"
+  ],
   "scripts": {
     "lint": "eslint src/**/*.ts src/**/*.tsx scripts/*.js --fix",
     "build": "rollup src/index.ts --config --environment NODE_ENV:production",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepublish": "npm run build"
   },
   "husky": {
     "hooks": {
@@ -19,6 +25,7 @@
     }
   },
   "dependencies": {
+    "@rollup/plugin-commonjs": "^15.0.0",
     "@testing-library/user-event": "^12.1.3",
     "@types/react-transition-group": "^4.4.0",
     "clsx": "^1.1.1",
