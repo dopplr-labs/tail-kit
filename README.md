@@ -8,16 +8,28 @@
 
 UI kit built using `tailwindcss`
 
-## Install
+Demo - https://tail-kit.netlify.app
 
-We use `yarn` to install the dependencies.
+---
+
+## Installation
+
+Install tail-kit using
 
 ```sh
-yarn install
+yarn add @tail-kit/tail-kit
 ```
 
-## Scripts
+or
 
-- `yarn storybook` - Run storybook
-- `yarn test` - Run test in watch mode
-- `yarn test:ci` - Run test with ci mode and run coverage
+```sh
+npm install @tail-kit/tail-kit
+```
+
+## Contributing
+
+We are working on making this project fully open source. We appreciate any contributions you might make.
+
+[Bug reports](https://github.com/abinashpanda/tail-kit/issues/new?template=bug_report.md) and [feature request](https://github.com/abinashpanda/tail-kit/issues/new?template=feature_request.md) are welcome but, please use the correct template.
+
+Please check out our [Contribution Guide](./.github/contribution/README.md). It includes contribution guidelines and information on how to run and develop the project.
