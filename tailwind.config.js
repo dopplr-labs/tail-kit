@@ -4,6 +4,17 @@ const tailwindUI = require('@tailwindcss/ui')
 module.exports = {
   purge: {
     content: ['./src/**/*.tsx', './src/**/*.ts'],
+
+    // These options are passed through directly to PurgeCSS
+    // so add all the classes that could be computed using the `baseColor`
+    options: {
+      whitelist: [
+        'text-red-400',
+        'text-green-400',
+        'text-yellow-400',
+        'text-blue-400',
+      ],
+    },
   },
 
   theme: {
