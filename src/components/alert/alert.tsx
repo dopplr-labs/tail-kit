@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, cloneElement, createContext } from 'react'
 import clsx from 'clsx'
 import {
   InformationCircleSolid,
@@ -7,7 +7,7 @@ import {
   ExclamationSolid,
   XSolid,
 } from 'components/icons'
-import Button from 'components/button'
+import { AlertButton } from './alert-button'
 
 export enum AlertType {
   info = 'info',
@@ -15,6 +15,10 @@ export enum AlertType {
   warning = 'warning',
   error = 'error',
 }
+
+export const AlertContext = createContext<{ baseColor: string }>({
+  baseColor: 'string',
+})
 
 /**
  * Alert properties
@@ -34,6 +38,10 @@ export type AlertProps = {
   closable?: boolean
   /** Function to be called on pressing the (X) button */
   onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  /** Add className for custom styling */
+  className?: string
+  /** Add style object for custom styling */
+  style?: React.CSSProperties
 }
 
 /** Alert component to render `info`, `warning`, `success` and `error` messages */
@@ -45,111 +53,72 @@ export function Alert({
   actions,
   closable = false,
   onClose,
+  className,
+  style,
 }: AlertProps) {
+  // Get base color for icon and Alert.Button styles
+  const baseColor = useMemo(() => {
+    if (type === AlertType.info) {
+      return 'blue'
+    } else if (type === AlertType.success) {
+      return 'green'
+    } else if (type === AlertType.warning) {
+      return 'yellow'
+    } else if (type === AlertType.error) {
+      return 'red'
+    }
+    return 'blue'
+  }, [type])
+
   // Function to return icon, based on user input and alert type
-  const renderIcon = useMemo(() => {
+  const alertIcon = useMemo(() => {
     if (icon === false) {
-      return
+      return null
     }
 
-    if (icon) {
-      return icon
+    if (icon && typeof icon !== 'boolean') {
+      return cloneElement(icon, { className: `w-5 h-5 text-${baseColor}-400` })
     }
 
     if (type === AlertType.info) {
-      return <InformationCircleSolid className="w-6 h-6 text-blue-500" />
+      return (
+        <InformationCircleSolid className={`w-5 h-5 text-${baseColor}-400`} />
+      )
     } else if (type === AlertType.success) {
-      return <CheckCircleSolid className="w-6 h-6 text-green-500" />
+      return <CheckCircleSolid className={`w-5 h-5 text-${baseColor}-400`} />
     } else if (type === AlertType.warning) {
-      return <ExclamationSolid className="w-6 h-6 text-yellow-400" />
+      return <ExclamationSolid className={`w-5 h-5 text-${baseColor}-400`} />
     } else if (type === AlertType.error) {
-      return <XCircleSolid className="w-6 h-6 text-red-500" />
+      return <XCircleSolid className={`w-5 h-5 text-${baseColor}-400`} />
     }
-  }, [icon, type])
-
-  // function to return required background color based on Alert Type
-  const alertBackground = useMemo(() => {
-    if (type === AlertType.info) {
-      return 'bg-blue-100'
-    } else if (type === AlertType.success) {
-      return 'bg-green-100'
-    } else if (type === AlertType.warning) {
-      return 'bg-yellow-100'
-    } else if (type === AlertType.error) {
-      return 'bg-red-100'
-    }
-  }, [type])
-
-  const textColor = useMemo(() => {
-    if (type === AlertType.info) {
-      return 'text-blue-700'
-    } else if (type === AlertType.success) {
-      return 'text-green-700'
-    } else if (type === AlertType.warning) {
-      return 'text-yellow-700'
-    } else if (type === AlertType.error) {
-      return 'text-red-700'
-    }
-  }, [type])
+    return null
+  }, [icon, type, baseColor])
 
   return (
     <div
       className={clsx(
-        'px-4 py-4 space-x-2 flex items-start justify-between',
-        alertBackground,
+        `px-4 py-4 rounded-md space-x-2 flex items-start justify-between bg-${baseColor}-50`,
+        className,
       )}
+      style={style}
     >
-      <div className="flex-shrink-0">{renderIcon}</div>
-      <div className={clsx('flex-1 space-y-3', textColor)}>
+      <div className="flex-shrink-0">{alertIcon}</div>
+      <div className={clsx(`flex-1 space-y-3 text-${baseColor}-700`)}>
         <div className="text-sm font-semibold">{title}</div>
-        {content ? <div className="text-sm">{content}</div> : undefined}
-        {actions ? <div className="flex space-x-4">{actions}</div> : undefined}
+        {content ? <div className="text-sm">{content}</div> : null}
+        <AlertContext.Provider value={{ baseColor }}>
+          <div className="flex space-x-4">{actions}</div>
+        </AlertContext.Provider>
       </div>
       {closable ? (
         <button
           className="flex-shrink-0 p-1 focus:shadow-outline"
           onClick={onClose}
         >
-          <XSolid className={clsx('w-4 h-4', textColor)} />
+          <XSolid className={clsx(`w-4 h-4 text-${baseColor}-700`)} />
         </button>
-      ) : undefined}
+      ) : null}
     </div>
-  )
-}
-
-export enum ButtonType {
-  primary = 'primary',
-  default = 'default',
-  danger = 'danger',
-  link = 'link',
-}
-
-export type AlertButtonProps = {
-  type?: ButtonType
-  label?: string
-  icon?: JSX.Element
-  loading?: boolean
-  className?: string
-  style?: React.CSSProperties
-}
-
-export function AlertButton({
-  type = ButtonType.default,
-  label,
-  icon,
-  loading,
-  className,
-  style,
-}: AlertButtonProps) {
-  return (
-    <Button
-      buttonType={type}
-      icon={icon}
-      loading={loading}
-      label={label}
-      className={clsx(className)}
-      style={style}
-    />
   )
 }
 
