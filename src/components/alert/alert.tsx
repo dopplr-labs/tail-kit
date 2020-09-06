@@ -57,13 +57,13 @@ export function Alert({
     }
 
     if (type === AlertType.info) {
-      return <InformationCircleSolid className="w-6 h-6 mr-2 text-blue-500" />
+      return <InformationCircleSolid className="w-6 h-6 text-blue-500" />
     } else if (type === AlertType.success) {
-      return <CheckCircleSolid className="w-6 h-6 mr-2 text-green-500" />
+      return <CheckCircleSolid className="w-6 h-6 text-green-500" />
     } else if (type === AlertType.warning) {
-      return <ExclamationSolid className="w-6 h-6 mr-2 text-yellow-400" />
+      return <ExclamationSolid className="w-6 h-6 text-yellow-400" />
     } else if (type === AlertType.error) {
-      return <XCircleSolid className="w-6 h-6 mr-2 text-red-500" />
+      return <XCircleSolid className="w-6 h-6 text-red-500" />
     }
   }, [icon, type])
 
@@ -95,25 +95,24 @@ export function Alert({
   return (
     <div
       className={clsx(
-        'px-4 py-3 rounded-md flex items-start justify-between',
+        'px-4 py-4 space-x-2 flex items-start justify-between',
         alertBackground,
       )}
     >
-      <div className="flex items-start">
-        {renderIcon}
-        <div className={clsx(textColor)}>
-          <div className="font-semibold">{title}</div>
-          <div className="mt-1 text-sm">{content}</div>
-          {actions ? (
-            <div className="flex mt-4 space-x-4">{actions}</div>
-          ) : undefined}
-        </div>
+      <div className="flex-shrink-0">{renderIcon}</div>
+      <div className={clsx('flex-1 space-y-3', textColor)}>
+        <div className="text-sm font-semibold">{title}</div>
+        {content ? <div className="text-sm">{content}</div> : undefined}
+        {actions ? <div className="flex space-x-4">{actions}</div> : undefined}
       </div>
-      <button className="cursor-pointer" onClick={onClose}>
-        {closable ? (
+      {closable ? (
+        <button
+          className="flex-shrink-0 p-1 focus:shadow-outline"
+          onClick={onClose}
+        >
           <XSolid className={clsx('w-4 h-4', textColor)} />
-        ) : undefined}
-      </button>
+        </button>
+      ) : undefined}
     </div>
   )
 }
