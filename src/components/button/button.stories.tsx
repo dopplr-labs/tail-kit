@@ -6,6 +6,7 @@ import {
   CheckCircleSolid,
   TrashOutline,
   PencilAltOutline,
+  ChevronRightOutline,
 } from 'components/icons'
 import { Button } from './button'
 
@@ -32,6 +33,16 @@ export function DefaultIconLoadingButton() {
 
 export function DefaultLoadingButton() {
   return <Button label="Submitting" loading />
+}
+
+export function DefaultButtonWithIconAfterLabel() {
+  return (
+    <Button
+      label="Next Step"
+      icon={<ChevronRightOutline />}
+      iconPlacement={Button.IconPlacement.afterLabel}
+    />
+  )
 }
 
 export function PrimaryButton() {
