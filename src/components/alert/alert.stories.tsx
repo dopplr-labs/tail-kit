@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import { BookmarkSolid } from 'components/icons'
+import { BookmarkSolid, BellSolid } from 'components/icons'
 import { Alert, AlertType, ButtonType } from './alert'
 
 export default { title: 'Feedback/Alert', component: Alert } as Meta
@@ -31,7 +31,7 @@ export function WarningAlert() {
 export function ErrorAlert() {
   const title = 'There were 2 errors with your submission'
   const content = (
-    <ul className="list-disc">
+    <ul className="ml-4 list-disc">
       <li>Your password must be at least 8 characters</li>
       <li>
         Your password must included at least one pro wrestling finishing move
@@ -55,16 +55,28 @@ export function AlertWithCustomIcon() {
   return (
     <Alert
       type={AlertType.success}
-      icon={<BookmarkSolid className="w-6 h-6 mr-2 text-green-500" />}
+      icon={<BookmarkSolid className="w-6 h-6 text-green-500" />}
       title="This webpage is now bookmarked"
     />
   )
 }
 
 export function AlertWithAction() {
+  const content = (
+    <div className="space-y-2">
+      <p>Also you can change the message by changing the Message knob</p>
+      <ul className="ml-4 list-disc">
+        <li>623 KC will be refunded by your payment card</li>
+        <li>623 KC will be refunded by your payment card</li>
+      </ul>
+    </div>
+  )
   return (
     <Alert
-      title="How about some action"
+      title="You can change the title by changing the Title knob"
+      content={content}
+      icon={<BellSolid className="w-6 h-6 text-blue-500" />}
+      closable
       actions={
         <>
           <Alert.AlertButton label="OK" type={ButtonType.primary} />
