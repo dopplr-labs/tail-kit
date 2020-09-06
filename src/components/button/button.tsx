@@ -1,6 +1,8 @@
 import React, { forwardRef, useMemo, cloneElement } from 'react'
 import clsx from 'clsx'
+import { ButtonSpinner } from './button-spinner'
 
+/** Button types */
 export enum ButtonType {
   primary = 'primary',
   default = 'default',
@@ -8,8 +10,11 @@ export enum ButtonType {
   link = 'link',
 }
 
+/** Placement of icon with respect to button label */
 export enum IconPlacement {
+  /** icon would be render after the button text */
   afterLabel = 'afterLabel',
+  /** icon would be render before the button text */
   beforeLabel = 'beforeLabel',
 }
 
@@ -121,39 +126,24 @@ const ButtonComponent = forwardRef(
 
 ButtonComponent.displayName = 'Button'
 
+/**
+ * Base component to render **button**.
+ *
+ * `Button` can be of type
+ *
+ *   * **primary** `Button.ButtonType.primary` solid filled button (with primary background color), to be used for primary actions
+ *   * **default** `Button.ButtonType.default` bordered button (primary color) and text in primary color, to be used for secondary actions
+ *   * **danger** `Button.ButtonType.danger` bordered button with error color, to be used in case of presenting any delete action to user
+ *   * **link** `Button.ButtonType.link` button without any border, can be used to render menu icons where we don't want to show users any button border
+ *
+ *
+ *  Generally the **icon** is placed before the button label. But that can also be changed, by configuring
+ * `iconPlacement` prop to be
+ *
+ *  * `Button.IconPlacement.beforeLabel` rendering the button icon before the label
+ *  * `Button.IconPlacement.afterLabel` rendering the button icon after the label
+ */
 export const Button = Object.assign(ButtonComponent, {
   ButtonType,
   IconPlacement,
 })
-
-export type ButtonSpinnerProps = {
-  /** additional class names */
-  className?: string
-  /** additional styles */
-  style?: React.CSSProperties
-}
-
-export function ButtonSpinner({ className, style }: ButtonSpinnerProps) {
-  return (
-    <svg
-      className={clsx('w-5 h-5 animate-spin', className)}
-      style={style}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      />
-    </svg>
-  )
-}
