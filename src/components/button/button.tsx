@@ -85,14 +85,11 @@ const ButtonComponent = forwardRef(
         return 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white danger'
       }
 
-      if (buttonType === ButtonType.link) {
-        if (disabled) {
-          return 'border-transparent text-gray-400 link'
-        }
-        return 'border-transparent text-blue-600 link'
+      // if none of the above branches are satisfied, then the button is of type link
+      if (disabled) {
+        return 'border-transparent text-gray-400 link'
       }
-
-      return undefined
+      return 'border-transparent text-blue-600 link'
     }, [buttonType, disabled])
 
     const iconComponent = loading ? (

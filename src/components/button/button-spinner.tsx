@@ -14,6 +14,7 @@ export function ButtonSpinner({ className, style }: ButtonSpinnerProps) {
   return (
     <svg
       className={clsx('w-5 h-5 animate-spin', className)}
+      data-testid="button-spinner"
       style={style}
       fill="none"
       viewBox="0 0 24 24"
