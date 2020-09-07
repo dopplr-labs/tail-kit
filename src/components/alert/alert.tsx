@@ -82,7 +82,10 @@ export function Alert({
 
     if (type === AlertType.info) {
       return (
-        <InformationCircleSolid className={`w-5 h-5 text-${baseColor}-400`} />
+        <InformationCircleSolid
+          className={`w-5 h-5 text-${baseColor}-400`}
+          data-testid="info-icon"
+        />
       )
     } else if (type === AlertType.success) {
       return <CheckCircleSolid className={`w-5 h-5 text-${baseColor}-400`} />
@@ -114,6 +117,7 @@ export function Alert({
         <button
           className="flex-shrink-0 p-1 focus:shadow-outline"
           onClick={onClose}
+          data-testid="close-button"
         >
           <XSolid className={clsx(`w-4 h-4 text-${baseColor}-700`)} />
         </button>
