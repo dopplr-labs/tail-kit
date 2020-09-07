@@ -88,11 +88,26 @@ export function Alert({
         />
       )
     } else if (type === AlertType.success) {
-      return <CheckCircleSolid className={`w-5 h-5 text-${baseColor}-400`} />
+      return (
+        <CheckCircleSolid
+          className={`w-5 h-5 text-${baseColor}-400`}
+          data-testid="success-icon"
+        />
+      )
     } else if (type === AlertType.warning) {
-      return <ExclamationSolid className={`w-5 h-5 text-${baseColor}-400`} />
+      return (
+        <ExclamationSolid
+          className={`w-5 h-5 text-${baseColor}-400`}
+          data-testid="warning-icon"
+        />
+      )
     } else if (type === AlertType.error) {
-      return <XCircleSolid className={`w-5 h-5 text-${baseColor}-400`} />
+      return (
+        <XCircleSolid
+          className={`w-5 h-5 text-${baseColor}-400`}
+          data-testid="error-icon"
+        />
+      )
     }
     return null
   }, [icon, type, baseColor])
@@ -105,7 +120,10 @@ export function Alert({
       )}
       style={style}
     >
-      <div className="flex-shrink-0">{alertIcon}</div>
+      <div className="flex-shrink-0" data-testid="icon">
+        {alertIcon}
+      </div>
+
       <div className={clsx(`flex-1 space-y-3 text-${baseColor}-700`)}>
         <div className="text-sm font-semibold">{title}</div>
         {content ? <div className="text-sm">{content}</div> : null}
