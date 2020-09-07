@@ -5,9 +5,19 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function InboxInSolid({ className = 'w-6 h-6', style }: Props) {
+export default function InboxInSolid({
+  className = 'w-6 h-6',
+  style,
+  ...restProps
+}: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 20 20" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 20 20"
+      fill="none"
+    >
       <path
         d="M8.70711 7.29289C8.31658 6.90237 7.68342 6.90237 7.29289 7.29289C6.90237 7.68342 6.90237 8.31658 7.29289 8.70711L9.29289 10.7071C9.48043 10.8946 9.73478 11 10 11C10.2652 11 10.5196 10.8946 10.7071 10.7071L12.7071 8.70711C13.0976 8.31658 13.0976 7.68342 12.7071 7.29289C12.3166 6.90237 11.6834 6.90237 11.2929 7.29289L11 7.58579L11 3C11 2.44771 10.5523 2 10 2C9.44771 2 9 2.44772 9 3V7.58579L8.70711 7.29289Z"
         fill="currentColor"

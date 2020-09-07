@@ -5,9 +5,19 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function ChipSolid({ className = 'w-6 h-6', style }: Props) {
+export default function ChipSolid({
+  className = 'w-6 h-6',
+  style,
+  ...restProps
+}: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 20 20" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 20 20"
+      fill="none"
+    >
       <path d="M13 7H7V13H13V7Z" fill="currentColor" />
       <path
         fillRule="evenodd"

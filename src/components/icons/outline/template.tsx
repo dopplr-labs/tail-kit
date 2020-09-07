@@ -8,9 +8,16 @@ type Props = {
 export default function TemplateOutline({
   className = 'w-6 h-6',
   style,
+  ...restProps
 }: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M4 5C4 4.44772 4.44772 4 5 4H19C19.5523 4 20 4.44772 20 5V7C20 7.55228 19.5523 8 19 8H5C4.44772 8 4 7.55228 4 7V5Z"
         stroke="currentColor"

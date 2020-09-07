@@ -8,9 +8,16 @@ type Props = {
 export default function UserGroupSolid({
   className = 'w-6 h-6',
   style,
+  ...restProps
 }: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 20 20" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 20 20"
+      fill="none"
+    >
       <path
         d="M13 6C13 7.65685 11.6569 9 10 9C8.34315 9 7 7.65685 7 6C7 4.34315 8.34315 3 10 3C11.6569 3 13 4.34315 13 6Z"
         fill="currentColor"

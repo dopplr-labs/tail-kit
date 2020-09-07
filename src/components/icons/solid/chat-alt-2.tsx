@@ -5,9 +5,19 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function ChatAlt2Solid({ className = 'w-6 h-6', style }: Props) {
+export default function ChatAlt2Solid({
+  className = 'w-6 h-6',
+  style,
+  ...restProps
+}: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 20 20" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 20 20"
+      fill="none"
+    >
       <path
         d="M2 5C2 3.89543 2.89543 3 4 3H11C12.1046 3 13 3.89543 13 5V9C13 10.1046 12.1046 11 11 11H9L6 14V11H4C2.89543 11 2 10.1046 2 9V5Z"
         fill="currentColor"

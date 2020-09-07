@@ -8,9 +8,16 @@ type Props = {
 export default function CurrencyDollarSolid({
   className = 'w-6 h-6',
   style,
+  ...restProps
 }: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 20 20" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 20 20"
+      fill="none"
+    >
       <path
         d="M8.43338 7.41784C8.58818 7.31464 8.77939 7.2224 9 7.15101L9.00001 8.84899C8.77939 8.7776 8.58818 8.68536 8.43338 8.58216C8.06927 8.33942 8 8.1139 8 8C8 7.8861 8.06927 7.66058 8.43338 7.41784Z"
         fill="currentColor"

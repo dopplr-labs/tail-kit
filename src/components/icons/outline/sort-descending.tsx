@@ -8,9 +8,16 @@ type Props = {
 export default function SortDescendingOutline({
   className = 'w-6 h-6',
   style,
+  ...restProps
 }: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M3 4H16M3 8H12M3 12H12M17 8V20M17 20L13 16M17 20L21 16"
         stroke="currentColor"

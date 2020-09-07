@@ -5,9 +5,19 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function CubeSolid({ className = 'w-6 h-6', style }: Props) {
+export default function CubeSolid({
+  className = 'w-6 h-6',
+  style,
+  ...restProps
+}: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 20 20" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 20 20"
+      fill="none"
+    >
       <path
         d="M11 17C11 17.3466 11.1795 17.6684 11.4743 17.8507C11.7691 18.0329 12.1372 18.0494 12.4472 17.8944L16.4472 15.8944C16.786 15.725 17 15.3788 17 15V9.23607C17 8.88949 16.8205 8.56762 16.5257 8.38542C16.2309 8.20321 15.8628 8.18665 15.5528 8.34164L11.5528 10.3416C11.214 10.511 11 10.8573 11 11.2361V17Z"
         fill="currentColor"

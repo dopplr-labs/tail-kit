@@ -5,9 +5,19 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export default function CakeSolid({ className = 'w-6 h-6', style }: Props) {
+export default function CakeSolid({
+  className = 'w-6 h-6',
+  style,
+  ...restProps
+}: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 20 20" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 20 20"
+      fill="none"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"

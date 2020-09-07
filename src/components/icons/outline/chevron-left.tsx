@@ -8,9 +8,16 @@ type Props = {
 export default function ChevronLeftOutline({
   className = 'w-6 h-6',
   style,
+  ...restProps
 }: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M15 19L8 12L15 5"
         stroke="currentColor"

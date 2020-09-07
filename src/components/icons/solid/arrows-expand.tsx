@@ -8,11 +8,13 @@ type Props = {
 export default function ArrowsExpandSolid({
   className = 'w-6 h-6',
   style,
+  ...restProps
 }: Props) {
   return (
     <svg
       className={className}
       style={style}
+      {...restProps}
       width="19"
       viewBox="0 0 19 20"
       fill="none"
