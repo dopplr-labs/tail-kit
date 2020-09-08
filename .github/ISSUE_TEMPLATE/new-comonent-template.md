@@ -2,7 +2,7 @@
 name: New comonent template
 about: Suggest a new component for ui-kit
 title: "[NEW-COMPONENT]"
-labels: component
+labels: new-component
 assignees: ''
 
 ---
