@@ -8,9 +8,16 @@ type Props = {
 export default function ArrowLeftOutline({
   className = 'w-6 h-6',
   style,
+  ...restProps
 }: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M10 19L3 12M3 12L10 5M3 12L21 12"
         stroke="currentColor"

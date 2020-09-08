@@ -8,9 +8,16 @@ type Props = {
 export default function ArrowUpOutline({
   className = 'w-6 h-6',
   style,
+  ...restProps
 }: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M5 10L12 3M12 3L19 10M12 3V21"
         stroke="currentColor"

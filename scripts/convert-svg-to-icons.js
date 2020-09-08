@@ -140,11 +140,11 @@ function convertSvgToReact({ name, svg, type }) {
     style?: React.CSSProperties
   }
 
-  export default function ${componentName}${type}({className = 'w-6 h-6', style}:Props) {
+  export default function ${componentName}${type}({className = 'w-6 h-6', style, ...restProps}:Props) {
     return ${sanitizeTags(svg).replace(
-      /<svg/,
-      '<svg className={className} style={style}',
-    )}
+    /<svg/,
+    '<svg className={className} style={style} {...restProps}',
+  )}
   }
   `
   return prettier.format(componentDefinition, PRETTIER_FORMAT_OPTIONS)

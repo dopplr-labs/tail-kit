@@ -8,9 +8,16 @@ type Props = {
 export default function HashtagOutline({
   className = 'w-6 h-6',
   style,
+  ...restProps
 }: Props) {
   return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="none">
+    <svg
+      className={className}
+      style={style}
+      {...restProps}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M7 20L11 4M13 20L17 4M6 9H20M4 15H18"
         stroke="currentColor"
