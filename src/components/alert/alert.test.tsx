@@ -43,14 +43,14 @@ test('renders custom icon correctly', () => {
   expect(screen.getByTestId('custom-icon')).toBeInTheDocument()
 })
 
-test('class onClose on close button click', () => {
+test('calls onClose on close button click', () => {
   const onClose = jest.fn()
   render(<Alert title="Alert Title" onClose={onClose} closable />)
   fireEvent.click(screen.getByRole('button'))
   expect(onClose).toHaveBeenCalled()
 })
 
-test('baseColor fn result for AlertType info', () => {
+test('renders appropriate color based on alert type', () => {
   render(<Alert title="Alert Title" />)
   expect(screen.getByText('Alert Title').parentElement).toHaveClass(
     'text-blue-700',
@@ -59,11 +59,6 @@ test('baseColor fn result for AlertType info', () => {
 
 test('renders without any icon correctly ', () => {
   render(<Alert icon={false} title="Alert Title" />)
-  expect(screen.getByTestId('icon').firstChild).toBeNull()
-})
-
-test('renders with incorrect AlertType correctly ', () => {
-  render(<Alert type="random" title="Alert Title" />)
   expect(screen.getByTestId('icon').firstChild).toBeNull()
 })
 

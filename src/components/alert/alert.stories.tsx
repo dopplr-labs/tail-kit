@@ -6,7 +6,7 @@ import {
   ExclamationCircleSolid,
 } from 'components/icons'
 import { Alert, AlertType } from './alert'
-import { ButtonType } from './alert-button'
+import { AlertButton } from './alert-button'
 
 export default { title: 'Feedback/Alert', component: Alert } as Meta
 
@@ -84,7 +84,10 @@ export function AlertWithAction() {
       closable
       actions={
         <>
-          <Alert.AlertButton label="OK" buttonType={ButtonType.primary} />
+          <Alert.AlertButton
+            label="OK"
+            buttonType={AlertButton.ButtonType.primary}
+          />
           <Alert.AlertButton label="Ignore" />
         </>
       }
@@ -110,7 +113,10 @@ export function ErrorAlertWithAction() {
       icon={<ExclamationCircleSolid />}
       actions={
         <>
-          <Alert.AlertButton label="OK" buttonType={ButtonType.primary} />
+          <Alert.AlertButton
+            label="OK"
+            buttonType={Alert.AlertButton.ButtonType.primary}
+          />
           <Alert.AlertButton label="Ignore" />
         </>
       }
