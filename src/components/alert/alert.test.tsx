@@ -91,5 +91,7 @@ test('renders actions button background correctly', () => {
       }
     />,
   )
-  expect(screen.getByText('Pay Now').parentElement).toHaveClass('bg-yellow-500')
+  expect(screen.getByText('Pay Now').parentElement).toHaveClass(
+    'alert-button-primary-yellow',
+  )
 })

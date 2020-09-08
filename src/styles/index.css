@@ -89,4 +89,41 @@ body {
   @apply transition-all duration-75 ease-in transform scale-95 opacity-0;
 }
 
+/* alert action buton styles */
+.alert-button-default-red {
+  @apply border-red-500 text-red-500 !important;
+}
+
+.alert-button-default-blue {
+  @apply border-blue-500 text-blue-500 !important;
+}
+
+.alert-button-default-yellow {
+  @apply border-yellow-500 text-yellow-500 !important;
+}
+
+.alert-button-default-green {
+  @apply border-green-500 text-green-500 !important;
+}
+
+.alert-button-primary-red,
+.alert-button-default-red:hover {
+  @apply bg-red-500 text-white !important;
+}
+
+.alert-button-primary-blue,
+.alert-button-default-blue:hover {
+  @apply bg-blue-500 text-white !important;
+}
+
+.alert-button-primary-yellow,
+.alert-button-default-yellow:hover {
+  @apply bg-yellow-500 text-white !important;
+}
+
+.alert-button-primary-green,
+.alert-button-default-green:hover {
+  @apply bg-green-500 text-white !important;
+}
+
 @tailwind utilities;

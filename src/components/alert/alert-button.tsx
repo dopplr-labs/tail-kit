@@ -25,8 +25,8 @@ const AlertButtonComponent = forwardRef(
     const { baseColor } = useContext(AlertContext)
     const buttonClasses =
       buttonType === ButtonType.primary
-        ? `bg-${baseColor}-500 text-white`
-        : `text-${baseColor}-500 border-${baseColor}-500`
+        ? `alert-button-primary-${baseColor}`
+        : `alert-button-default-${baseColor}`
     return (
       <Button
         {...restProps}
