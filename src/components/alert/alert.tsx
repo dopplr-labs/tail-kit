@@ -133,7 +133,7 @@ export function Alert({
       </div>
       {closable ? (
         <button
-          className="flex-shrink-0 p-1 focus:shadow-outline"
+          className="flex-shrink-0 p-1 rounded focus:shadow-outline focus:outline-none"
           onClick={onClose}
           data-testid="close-button"
         >
