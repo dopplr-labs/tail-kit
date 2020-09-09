@@ -1,0 +1,1 @@
+test('renders checkbox correctly', () => {})
