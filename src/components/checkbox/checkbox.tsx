@@ -9,10 +9,11 @@ export type CheckboxProps = {
   checked?: boolean
   /** To show label on the right side of checkbox */
   label?: React.ReactNode
-  /** error property to render checkbox border and label text in red whenever error occurs */
+  /** Error property to render checkbox border and label text in red whenever error occurs */
   error?: boolean
+  /** Use disbaled property to disable user input in checkbox */
   disabled?: boolean
-  /** additional class applied to checkbox label */
+  /** Additional class applied to checkbox label */
   className?: string
   /** Styles property to apply on the entire Checkbox component */
   style?: React.CSSProperties
@@ -32,7 +33,7 @@ export function Checkbox({
     <label
       className={clsx(
         'inline-flex items-center space-x-2',
-        disabled ? 'cursor-not-allowed text-gray-400' : undefined,
+        disabled ? 'cursor-not-allowed text-gray-400' : 'cursor-pointer',
       )}
       style={style}
     >
@@ -42,7 +43,7 @@ export function Checkbox({
         className={clsx(
           'w-4 h-4 form-checkbox',
           error ? 'border-red-500' : undefined,
-          disabled ? 'cursor-not-allowed' : undefined,
+          disabled ? 'cursor-not-allowed' : 'cursor-pointer',
         )}
         disabled={disabled}
         {...restProps}
