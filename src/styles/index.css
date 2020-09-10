@@ -134,4 +134,21 @@ body {
   @apply bg-green-500 text-white !important;
 }
 
+.date-picker-enter {
+  @apply opacity-0;
+}
+.date-picker-enter-active {
+  @apply opacity-100;
+}
+.date-picker-exit {
+  @apply opacity-100;
+}
+.date-picker-exit-active {
+  @apply opacity-0;
+}
+.date-picker-enter-active,
+.date-picker-exit-active {
+  @apply transition-opacity duration-100 ease-in;
+}
+
 @tailwind utilities;
