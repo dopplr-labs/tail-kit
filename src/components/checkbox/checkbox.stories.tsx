@@ -8,7 +8,7 @@ export default {
 } as Meta
 
 export function DefaultCheckbox() {
-  return <Checkbox value={true} />
+  return <Checkbox value="checked" />
 }
 
 export function CheckboxWithLabel() {
@@ -38,7 +38,6 @@ export function CheckboxWithError() {
   const [termsAgreed, setTermsAgreed] = useState(false)
   return (
     <Checkbox
-      value={termsAgreed}
       onChange={() => {
         setTermsAgreed((prevState) => !prevState)
       }}
