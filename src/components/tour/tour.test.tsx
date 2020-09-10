@@ -1,1 +1,0 @@
-test('render tour correctly', () => {})
