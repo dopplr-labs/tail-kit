@@ -4,7 +4,10 @@ import clsx from 'clsx'
 /**
  * Checkbox properties
  */
-export type CheckboxProps = {
+export type CheckboxProps = React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+> & {
   /** HTML checked attribute for input element to set input status true or false */
   checked?: boolean
   /** To show label on the right side of checkbox */
