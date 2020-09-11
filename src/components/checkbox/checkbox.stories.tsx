@@ -8,10 +8,6 @@ export default {
 } as Meta
 
 export function DefaultCheckbox() {
-  return <Checkbox value="checked" />
-}
-
-export function CheckboxWithLabel() {
   const [checked, setChecked] = useState(true)
   return (
     <Checkbox
@@ -44,5 +40,33 @@ export function CheckboxWithError() {
       label="I agree to the terms and conditions"
       error={!termsAgreed}
     />
+  )
+}
+
+export function CheckboxGroup() {
+  const plainOptions = ['Apple', 'Pear', 'Orange']
+  const options = [
+    { label: 'Apple', value: 'Apple' },
+    { label: 'Pear', value: 'Pear' },
+    { label: 'Orange', value: 'Orange' },
+  ]
+  const optionsWithDisabled = [
+    { label: 'Apple', value: 'Apple' },
+    { label: 'Pear', value: 'Pear' },
+    { label: 'Orange', value: 'Orange', disabled: false },
+  ]
+  return (
+    <div className="space-y-6">
+      <Checkbox.Group
+        options={plainOptions}
+        defaultValue={['Apple', 'Orange']}
+      />
+      <Checkbox.Group options={options} defaultValue={['Pear']} />
+      <Checkbox.Group
+        options={optionsWithDisabled}
+        defaultValue={['Apple']}
+        disabled
+      />
+    </div>
   )
 }
