@@ -1,5 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
+import { CheckboxGroup } from './checkbox-group'
 
 /**
  * Checkbox properties
@@ -46,7 +47,9 @@ export function Checkbox({
         className={clsx(
           'w-4 h-4 form-checkbox',
           error ? 'border-red-500' : undefined,
-          disabled ? 'cursor-not-allowed' : 'cursor-pointer',
+          disabled
+            ? 'cursor-not-allowed bg-gray-100 text-gray-300'
+            : 'cursor-pointer',
         )}
         disabled={disabled}
         {...restProps}
@@ -65,3 +68,5 @@ export function Checkbox({
     </label>
   )
 }
+
+Checkbox.Group = CheckboxGroup
