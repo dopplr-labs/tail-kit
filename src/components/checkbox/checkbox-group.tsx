@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo } from 'react'
 import { Checkbox } from './checkbox'
 
 export type OptionType = {
@@ -8,19 +8,19 @@ export type OptionType = {
 }
 
 export type CheckboxGroupProps = {
-  options: OptionType[] | string[]
-  defaultValue?: string[]
+  options: (OptionType | string)[]
+  value?: string[]
   disabled?: boolean
   onChange?: (checkedValues: string[]) => void
 }
 
 export function CheckboxGroup({
   options,
-  defaultValue,
+  value,
   disabled,
   onChange,
 }: CheckboxGroupProps) {
-  function getOptions() {
+  const checkboxOptions = useMemo(() => {
     return (options as Array<OptionType>).map((option) => {
       if (typeof option === 'string') {
         return { label: option, value: option } as OptionType
@@ -28,27 +28,28 @@ export function CheckboxGroup({
         return option
       }
     })
-  }
-  const optionProp = getOptions()
-  const [checkedItem, setCheckedItem] = useState(defaultValue)
+  }, [options])
 
   return (
     <div className="space-x-8">
-      {optionProp?.map((option: OptionType) => (
+      {checkboxOptions?.map((option: OptionType) => (
         <Checkbox
           key={option.label}
           label={option.label}
           value={option.value}
           disabled={option?.disabled ?? disabled}
-          checked={checkedItem?.indexOf(option.value) !== -1}
-          onChange={() => {
-            setCheckedItem((prevState) =>
-              prevState?.indexOf(option.value) !== -1
-                ? prevState?.filter((item) => item !== option.value)
-                : [...prevState, option.value],
-            )
-            if (onChange && checkedItem) {
-              onChange(checkedItem)
+          checked={value?.indexOf(option.value) !== -1}
+          onChange={(event) => {
+            let selectedOptions = value ? [...value] : []
+            if (event.target.checked) {
+              selectedOptions = [...selectedOptions, event.target.value]
+            } else {
+              selectedOptions = selectedOptions.filter(
+                (item) => item !== event.target.value,
+              )
+            }
+            if (onChange) {
+              onChange(selectedOptions)
             }
           }}
         />

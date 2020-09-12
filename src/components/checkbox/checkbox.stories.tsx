@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { action } from '@storybook/addon-actions'
+import React, { useMemo, useState } from 'react'
+// import { action } from '@storybook/addon-actions'
 import { Meta } from '@storybook/react/types-6-0'
 import { Checkbox } from './checkbox'
+import { CheckboxGroup } from './checkbox-group'
 
 export default {
   title: 'Data Entry/Checkbox',
@@ -47,69 +48,96 @@ export function CheckboxWithError() {
 
 export function IndeterminateChecbox() {
   const plainOptions = ['Apple', 'Pear', 'Orange']
-
-  const [indeterminate, setIndeterminate] = useState(true)
   const [checkedValues, setCheckedValues] = useState(['Pear'])
-  const [checkAll, setCheckAll] = useState(false)
 
   function onChange(checkedList: string[]) {
     setCheckedValues(checkedList)
-    setIndeterminate(
-      !!checkedList.length && checkedList.length < plainOptions.length,
-    )
-    setCheckAll(checkedList.length === plainOptions.length)
-  }
-
-  function onCheckAllChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setCheckAll((prevState) => !prevState)
-    setIndeterminate(false)
-    setCheckedValues(event.target.checked ? plainOptions : [])
   }
   return (
     <div className="inline-block p-4 space-y-4 ">
       <Checkbox
         label="Check All"
-        indeterminate={indeterminate}
-        checked={checkAll}
-        onChange={onCheckAllChange}
+        checked={
+          checkedValues.length === plainOptions.length
+            ? true
+            : checkedValues.length === 0
+            ? false
+            : 'indeterminate'
+        }
+        onChange={(event) => {
+          event.target.checked
+            ? setCheckedValues(plainOptions)
+            : setCheckedValues([])
+        }}
       />
       <div className="border-b-2 border-gray-300" />
-      <Checkbox.Group
+      <CheckboxGroup
         options={plainOptions}
-        defaultValue={checkedValues}
+        value={checkedValues}
         onChange={onChange}
       />
     </div>
   )
 }
 
-export function CheckboxGroup() {
-  function onChange(checkedValues: string[]) {
-    action(`checked = ${checkedValues}`)
-  }
+export function WithCheckboxGroup() {
   const plainOptions = ['Apple', 'Pear', 'Orange']
+  const [firstValue, setFirstValue] = useState(['Apple', 'Orange'])
+  const firstOnChange = useMemo(
+    () => (checkedValues: string[]) => {
+      // eslint-disable-next-line no-console
+      console.log(checkedValues)
+      setFirstValue(checkedValues)
+    },
+    [],
+  )
+
   const options = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' },
   ]
+  const [secondValue, setSecondValue] = useState(['Pear'])
+  const secondOnChange = useMemo(
+    () => (checkedValues: string[]) => {
+      // eslint-disable-next-line no-console
+      console.log(checkedValues)
+      setSecondValue(checkedValues)
+    },
+    [],
+  )
+
   const optionsWithDisabled = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange', disabled: false },
   ]
+  const [thirdValue, setThirdValue] = useState(['Apple'])
+  const thirdOnChange = useMemo(
+    () => (checkedValues: string[]) => {
+      // eslint-disable-next-line no-console
+      console.log(checkedValues)
+      setThirdValue(checkedValues)
+    },
+    [],
+  )
   return (
     <div className="space-y-6">
-      <Checkbox.Group
+      <CheckboxGroup
         options={plainOptions}
-        defaultValue={['Apple', 'Orange']}
-        onChange={onChange}
+        value={firstValue}
+        onChange={firstOnChange}
       />
-      <Checkbox.Group options={options} defaultValue={['Pear']} />
-      <Checkbox.Group
+      <CheckboxGroup
+        options={options}
+        value={secondValue}
+        onChange={secondOnChange}
+      />
+      <CheckboxGroup
         options={optionsWithDisabled}
-        defaultValue={['Apple']}
+        value={thirdValue}
         disabled
+        onChange={thirdOnChange}
       />
     </div>
   )
