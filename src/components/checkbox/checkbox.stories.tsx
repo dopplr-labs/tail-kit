@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { action } from '@storybook/addon-actions'
 import { Meta } from '@storybook/react/types-6-0'
 import { Checkbox } from './checkbox'
 
@@ -44,6 +45,9 @@ export function CheckboxWithError() {
 }
 
 export function CheckboxGroup() {
+  function onChange(checkedValues: string[]) {
+    action(`checked = ${checkedValues}`)
+  }
   const plainOptions = ['Apple', 'Pear', 'Orange']
   const options = [
     { label: 'Apple', value: 'Apple' },
@@ -60,6 +64,7 @@ export function CheckboxGroup() {
       <Checkbox.Group
         options={plainOptions}
         defaultValue={['Apple', 'Orange']}
+        onChange={onChange}
       />
       <Checkbox.Group options={options} defaultValue={['Pear']} />
       <Checkbox.Group
