@@ -8,6 +8,10 @@ body {
   @apply font-sans antialiased;
 }
 
+.checkbox:focus-within > .checkbox-icon-container {
+  @apply shadow-outline;
+}
+
 .scrollable {
   background: linear-gradient(white 30%, rgba(255, 255, 255, 0)),
     linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
