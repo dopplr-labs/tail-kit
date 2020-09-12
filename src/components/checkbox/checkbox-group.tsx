@@ -3,7 +3,7 @@ import { Checkbox } from './checkbox'
 
 export type OptionType = {
   label: string
-  value?: string
+  value: string
   disabled?: boolean
 }
 
@@ -30,28 +30,25 @@ export function CheckboxGroup({
     })
   }
   const optionProp = getOptions()
-  const [checkedItem, setCheckedItem] = useState(
-    optionProp.map((option) => defaultValue?.indexOf(option.label) !== -1),
-  )
+  const [checkedItem, setCheckedItem] = useState(defaultValue)
 
   return (
     <div className="space-x-8">
-      {optionProp?.map((option: any, index) => (
+      {optionProp?.map((option: OptionType) => (
         <Checkbox
           key={option.label}
           label={option.label}
-          value={option?.value}
+          value={option.value}
           disabled={option?.disabled ?? disabled}
-          checked={checkedItem[index]}
+          checked={checkedItem?.indexOf(option.value) !== -1}
           onChange={() => {
             setCheckedItem((prevState) =>
-              prevState.map((item, id) => (id === index ? !item : item)),
+              prevState?.indexOf(option.value) !== -1
+                ? prevState?.filter((item) => item !== option.value)
+                : [...prevState, option.value],
             )
-            if (onChange) {
-              const checkedValues = optionProp
-                .filter((option, index) => checkedItem[index])
-                .map((option) => option.label)
-              onChange(checkedValues)
+            if (onChange && checkedItem) {
+              onChange(checkedItem)
             }
           }}
         />
