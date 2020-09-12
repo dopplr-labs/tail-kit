@@ -35,12 +35,51 @@ export function CheckboxWithError() {
   const [termsAgreed, setTermsAgreed] = useState(false)
   return (
     <Checkbox
+      checked={termsAgreed}
       onChange={() => {
         setTermsAgreed((prevState) => !prevState)
       }}
       label="I agree to the terms and conditions"
       error={!termsAgreed}
     />
+  )
+}
+
+export function IndeterminateChecbox() {
+  const plainOptions = ['Apple', 'Pear', 'Orange']
+
+  const [indeterminate, setIndeterminate] = useState(true)
+  const [checkedValues, setCheckedValues] = useState(['Pear'])
+  const [checkAll, setCheckAll] = useState(false)
+
+  function onChange(checkedList: string[]) {
+    setCheckedValues(checkedList)
+    setIndeterminate(
+      !!checkedList.length && checkedList.length < plainOptions.length,
+    )
+    setCheckAll(checkedList.length === plainOptions.length)
+  }
+
+  function onCheckAllChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setCheckAll((prevState) => !prevState)
+    setIndeterminate(false)
+    setCheckedValues(event.target.checked ? plainOptions : [])
+  }
+  return (
+    <div className="inline-block p-4 space-y-4 ">
+      <Checkbox
+        label="Check All"
+        indeterminate={indeterminate}
+        checked={checkAll}
+        onChange={onCheckAllChange}
+      />
+      <div className="border-b-2 border-gray-300" />
+      <Checkbox.Group
+        options={plainOptions}
+        defaultValue={checkedValues}
+        onChange={onChange}
+      />
+    </div>
   )
 }
 
