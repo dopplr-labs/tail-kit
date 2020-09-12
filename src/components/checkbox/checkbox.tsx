@@ -47,7 +47,7 @@ export const Checkbox = forwardRef(
     return (
       <label
         className={clsx(
-          'inline-flex items-center space-x-2 checkbox',
+          'group inline-flex items-center space-x-2 checkbox',
           disabled ? 'cursor-not-allowed text-gray-400' : 'cursor-pointer',
           className,
         )}
@@ -61,6 +61,9 @@ export const Checkbox = forwardRef(
               : undefined,
             disabled && !checked ? 'bg-gray-100' : undefined,
             disabled && checked ? 'bg-gray-300' : undefined,
+            checked !== true && !disabled && !error
+              ? 'group-hover:border-blue-500'
+              : undefined,
             error ? 'border-red-500' : undefined,
           )}
         >
