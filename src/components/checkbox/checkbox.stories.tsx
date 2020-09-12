@@ -64,13 +64,13 @@ export function IndeterminateChecbox() {
             ? false
             : 'indeterminate'
         }
-        onChange={(event) => {
-          event.target.checked
-            ? setCheckedValues(plainOptions)
-            : setCheckedValues([])
+        onChange={() => {
+          checkedValues.length === plainOptions.length
+            ? setCheckedValues([])
+            : setCheckedValues(plainOptions)
         }}
       />
-      <div className="border-b-2 border-gray-300" />
+      <div className="border border-gray-200" />
       <CheckboxGroup
         options={plainOptions}
         value={checkedValues}
