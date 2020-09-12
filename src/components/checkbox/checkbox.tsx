@@ -5,9 +5,12 @@ import { CheckboxGroup } from './checkbox-group'
 /**
  * Checkbox properties
  */
-export type CheckboxProps = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
+export type CheckboxProps = Omit<
+  React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >,
+  'checked' | 'disabled' | 'className' | 'style'
 > & {
   /** HTML checked attribute for input element to set input status true or false */
   checked?: boolean
