@@ -83,7 +83,10 @@ export const Checkbox = forwardRef(
           {...restProps}
         />
         {label ? (
-          <span className={clsx('text-sm', error ? 'text-red-500' : undefined)}>
+          <span
+            className={clsx('text-sm', error ? 'text-red-500' : undefined)}
+            data-testid="label"
+          >
             {label}
           </span>
         ) : null}
