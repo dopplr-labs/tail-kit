@@ -8,10 +8,18 @@ export type OptionType = {
 }
 
 export type CheckboxGroupProps = {
+  /** Specifies options of checkbox to render */
   options: (OptionType | string)[]
+  /** Default selected values */
   value?: string[]
+  /** If disable all checkboxes */
   disabled?: boolean
+  /** The callback function that is triggered when the state changes */
   onChange?: (checkedValues: string[]) => void
+  /** Additional class to apply on each individual checkbox */
+  className?: string
+  /** Apply styles on each individual checkbox */
+  style?: React.CSSProperties
 }
 
 export function CheckboxGroup({
@@ -19,9 +27,11 @@ export function CheckboxGroup({
   value,
   disabled,
   onChange,
+  className,
+  style,
 }: CheckboxGroupProps) {
   const checkboxOptions = useMemo(() => {
-    return (options as Array<OptionType>).map((option) => {
+    return options.map((option) => {
       if (typeof option === 'string') {
         return { label: option, value: option } as OptionType
       } else {
@@ -32,7 +42,7 @@ export function CheckboxGroup({
 
   return (
     <div className="space-x-8">
-      {checkboxOptions?.map((option: OptionType) => (
+      {checkboxOptions.map((option: OptionType) => (
         <Checkbox
           key={option.label}
           label={option.label}
@@ -52,6 +62,8 @@ export function CheckboxGroup({
               onChange(selectedOptions)
             }
           }}
+          className={className}
+          style={style}
         />
       ))}
     </div>
