@@ -47,7 +47,7 @@ export const Checkbox = forwardRef(
     return (
       <label
         className={clsx(
-          'group inline-flex items-center space-x-2 checkbox',
+          'group flex items-center space-x-2 checkbox',
           disabled ? 'cursor-not-allowed text-gray-400' : 'cursor-pointer',
           className,
         )}
