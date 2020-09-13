@@ -105,3 +105,9 @@ test('renders style of disabled checkbox correctly', () => {
     screen.getByText('Checkbox label').parentElement?.firstChild,
   ).toHaveClass('bg-gray-100')
 })
+
+test('renders checkbox without label correctly', () => {
+  let checked = false
+  render(<Checkbox checked={checked} onChange={() => (checked = !checked)} />)
+  expect(screen.queryByTestId('label')).toBe(null)
+})
