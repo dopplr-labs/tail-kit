@@ -41,7 +41,7 @@ export function CheckboxGroup({
   }, [options])
 
   return (
-    <div className="space-x-8">
+    <div className="flex items-center space-x-8">
       {checkboxOptions.map((option: OptionType) => (
         <Checkbox
           key={option.label}
