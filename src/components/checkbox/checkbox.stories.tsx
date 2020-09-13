@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react'
-// import { action } from '@storybook/addon-actions'
+import { action } from '@storybook/addon-actions'
 import { Meta } from '@storybook/react/types-6-0'
 import { Checkbox } from './checkbox'
 import { CheckboxGroup } from './checkbox-group'
@@ -85,8 +85,7 @@ export function WithCheckboxGroup() {
   const [firstValue, setFirstValue] = useState(['Apple', 'Orange'])
   const firstOnChange = useMemo(
     () => (checkedValues: string[]) => {
-      // eslint-disable-next-line no-console
-      console.log(checkedValues)
+      action('onChange')(...checkedValues)
       setFirstValue(checkedValues)
     },
     [],
@@ -100,8 +99,7 @@ export function WithCheckboxGroup() {
   const [secondValue, setSecondValue] = useState(['Pear'])
   const secondOnChange = useMemo(
     () => (checkedValues: string[]) => {
-      // eslint-disable-next-line no-console
-      console.log(checkedValues)
+      action('onChange')(...checkedValues)
       setSecondValue(checkedValues)
     },
     [],
@@ -115,8 +113,7 @@ export function WithCheckboxGroup() {
   const [thirdValue, setThirdValue] = useState(['Apple'])
   const thirdOnChange = useMemo(
     () => (checkedValues: string[]) => {
-      // eslint-disable-next-line no-console
-      console.log(checkedValues)
+      action('onChange')(...checkedValues)
       setThirdValue(checkedValues)
     },
     [],
