@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { hideVisually } from 'polished'
 import { CheckOutline } from 'components/icons'
+import { CheckboxGroup } from './checkbox-group'
 
 /**
  * Checkbox properties
@@ -30,10 +31,10 @@ export type CheckboxProps = Omit<
 }
 
 /** Checkbox component to render input type checkbox along with some other properties */
-export const Checkbox = forwardRef(
+export const CheckboxComponent = forwardRef(
   (
     {
-      checked,
+      checked = false,
       label,
       error,
       disabled,
@@ -95,4 +96,6 @@ export const Checkbox = forwardRef(
   },
 )
 
-Checkbox.displayName = 'Checkbox'
+CheckboxComponent.displayName = 'Checkbox'
+
+export const Checkbox = Object.assign(CheckboxComponent, { CheckboxGroup })

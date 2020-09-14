@@ -1,15 +1,13 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Checkbox } from './checkbox'
 
 test('renders checkbox label correctly', () => {
-  let checked = false
   render(
     <Checkbox
       label="Checkbox label"
-      checked={checked}
-      onChange={() => {
-        checked = !checked
+      onChange={(event) => {
+        event?.target.checked
       }}
     />,
   )
@@ -17,16 +15,11 @@ test('renders checkbox label correctly', () => {
 })
 
 test('onChange event of Checkbox working correctly', () => {
-  let checked = false
-  render(
-    <Checkbox
-      label="Checkbox label"
-      checked={checked}
-      onChange={() => (checked = !checked)}
-    />,
-  )
+  const onChange = jest.fn((event) => event.target.checked)
+  render(<Checkbox label="Checkbox label" onChange={onChange} />)
   fireEvent.click(screen.getByText('Checkbox label'))
-  expect(checked).toBe(true)
+  expect(onChange).toBeCalled()
+  expect(onChange.mock.results[0].value).toBe(true)
 })
 
 test('renders checkbox icon container style correctly', () => {
@@ -35,7 +28,9 @@ test('renders checkbox icon container style correctly', () => {
     <Checkbox
       label="Checkbox label"
       checked={checked}
-      onChange={() => (checked = !checked)}
+      onChange={(event) => {
+        checked = event?.target.checked
+      }}
     />,
   )
   expect(
@@ -49,13 +44,9 @@ test('renders indeterminate state correctly', () => {
     <Checkbox
       label="Checkbox label"
       checked={checked}
-      onChange={() =>
-        checked === 'indeterminate'
-          ? (checked = true)
-          : checked === true
-          ? (checked = false)
-          : (checked = true)
-      }
+      onChange={(event) => {
+        checked = event?.target.checked
+      }}
     />,
   )
   expect(
@@ -70,7 +61,9 @@ test('renders error checkbox style correctly', () => {
       label="Checkbox label"
       checked={checked}
       error={true}
-      onChange={() => (checked = !checked)}
+      onChange={(event) => {
+        checked = event?.target.checked
+      }}
     />,
   )
   expect(screen.getByText('Checkbox label')).toHaveClass('text-red-500')
@@ -83,7 +76,9 @@ test('renders disabled checkbox correctly', () => {
       label="Checkbox label"
       checked={checked}
       disabled
-      onChange={() => (checked = !checked)}
+      onChange={(event) => {
+        checked = event?.target.checked
+      }}
     />,
   )
   expect(screen.getByText('Checkbox label').parentElement).toHaveClass(
@@ -96,9 +91,11 @@ test('renders style of disabled checkbox correctly', () => {
   render(
     <Checkbox
       label="Checkbox label"
-      checked={checked}
       disabled
-      onChange={() => (checked = !checked)}
+      checked={checked}
+      onChange={(event) => {
+        checked = event?.target.checked
+      }}
     />,
   )
   expect(
@@ -108,6 +105,29 @@ test('renders style of disabled checkbox correctly', () => {
 
 test('renders checkbox without label correctly', () => {
   let checked = false
-  render(<Checkbox checked={checked} onChange={() => (checked = !checked)} />)
+  render(
+    <Checkbox
+      checked={checked}
+      onChange={(event) => {
+        checked = event?.target.checked
+      }}
+    />,
+  )
   expect(screen.queryByTestId('label')).toBe(null)
+})
+
+test('forward red to the checkbox', () => {
+  const ref = createRef<HTMLInputElement>()
+  let checked = false
+  render(
+    <Checkbox
+      checked={checked}
+      label="Checkbox label"
+      ref={ref}
+      onChange={(event) => {
+        checked = event?.target.checked
+      }}
+    />,
+  )
+  expect(ref.current?.tagName).toBe('INPUT')
 })

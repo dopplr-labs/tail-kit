@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react'
 import { action } from '@storybook/addon-actions'
 import { Meta } from '@storybook/react/types-6-0'
 import { Checkbox } from './checkbox'
-import { CheckboxGroup } from './checkbox-group'
 
 export default {
   title: 'Data Entry/Checkbox',
@@ -71,7 +70,7 @@ export function IndeterminateChecbox() {
         }}
       />
       <div className="border border-gray-200" />
-      <CheckboxGroup
+      <Checkbox.CheckboxGroup
         options={plainOptions}
         value={checkedValues}
         onChange={onChange}
@@ -120,17 +119,17 @@ export function WithCheckboxGroup() {
   )
   return (
     <div className="space-y-6">
-      <CheckboxGroup
+      <Checkbox.CheckboxGroup
         options={plainOptions}
         value={firstValue}
         onChange={firstOnChange}
       />
-      <CheckboxGroup
+      <Checkbox.CheckboxGroup
         options={options}
         value={secondValue}
         onChange={secondOnChange}
       />
-      <CheckboxGroup
+      <Checkbox.CheckboxGroup
         options={optionsWithDisabled}
         value={thirdValue}
         disabled
