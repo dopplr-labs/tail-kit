@@ -131,3 +131,57 @@ test('forward red to the checkbox', () => {
   )
   expect(ref.current?.tagName).toBe('INPUT')
 })
+
+test('renders checkbox-group correctly with options as string[]', () => {
+  render(<Checkbox.CheckboxGroup options={['Apple']} />)
+  expect(screen.getByText('Apple')).toBeInTheDocument()
+})
+
+test('renders checkbox-group correctly with options as OptionType[]', () => {
+  const options = [{ label: 'Apple', value: 'Apple' }]
+  render(<Checkbox.CheckboxGroup options={options} />)
+})
+
+test('onChange event of checkbox-group working correctly when checked is set to true', () => {
+  const options = [
+    { label: 'Apple', value: 'Apple' },
+    { label: 'Pear', value: 'Pear' },
+  ]
+  let checkedList: string[] = []
+  const onChange = jest.fn((checkedValues) => {
+    checkedList = checkedValues
+    return checkedValues
+  })
+  render(
+    <Checkbox.CheckboxGroup
+      options={options}
+      value={checkedList}
+      onChange={onChange}
+    />,
+  )
+  fireEvent.click(screen.getByText('Apple'))
+  expect(onChange).toBeCalled()
+  expect(onChange.mock.results[0].value).toStrictEqual(['Apple'])
+})
+
+test('onChange event of checkbox-group working correctly when checked is set to false', () => {
+  const options = [
+    { label: 'Apple', value: 'Apple' },
+    { label: 'Pear', value: 'Pear' },
+  ]
+  let checkedList: string[] = ['Apple']
+  const onChange = jest.fn((checkedValues) => {
+    checkedList = checkedValues
+    return checkedValues
+  })
+  render(
+    <Checkbox.CheckboxGroup
+      options={options}
+      value={checkedList}
+      onChange={onChange}
+    />,
+  )
+  fireEvent.click(screen.getByText('Apple'))
+  expect(onChange).toBeCalled()
+  expect(onChange.mock.results[0].value).toStrictEqual([])
+})
