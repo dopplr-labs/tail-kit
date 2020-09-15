@@ -65,7 +65,7 @@ export const CheckboxComponent = forwardRef(
             checked !== true && !disabled && !error
               ? 'group-hover:border-blue-500'
               : undefined,
-            error ? 'border-red-500' : undefined,
+            error ? 'border-red-500 error' : undefined,
           )}
         >
           {checked === true ? (

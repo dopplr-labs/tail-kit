@@ -12,6 +12,10 @@ body {
   @apply shadow-outline;
 }
 
+.checkbox:focus-within > .checkbox-icon-container.error {
+  @apply shadow-outline-red;
+}
+
 .scrollable {
   background: linear-gradient(white 30%, rgba(255, 255, 255, 0)),
     linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
