@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { isEqual } from 'lodash-es'
+import { isEqual } from 'lodash'
 import { usePrevious } from './usePrevious'
 
 export function useSyncedState<T extends any>(
