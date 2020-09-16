@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { action } from '@storybook/addon-actions'
 import { Meta } from '@storybook/react/types-6-0'
 import { Checkbox } from './checkbox'
@@ -43,9 +43,11 @@ export function IndeterminateChecbox() {
   const plainOptions = ['Apple', 'Pear', 'Orange']
   const [checkedValues, setCheckedValues] = useState(['Pear'])
 
-  function onChange(checkedList: string[]) {
+  const onChange = useCallback((checkedList: string[]) => {
+    console.log(`onChange, ${checkedList}`)
     setCheckedValues(checkedList)
-  }
+  }, [])
+
   return (
     <div className="inline-block p-4 space-y-4 ">
       <Checkbox
@@ -75,59 +77,36 @@ export function IndeterminateChecbox() {
 
 export function WithCheckboxGroup() {
   const plainOptions = ['Apple', 'Pear', 'Orange']
-  const [firstValue, setFirstValue] = useState(['Apple', 'Orange'])
-  const firstOnChange = useMemo(
-    () => (checkedValues: string[]) => {
-      action('onChange')(...checkedValues)
-      setFirstValue(checkedValues)
-    },
-    [],
-  )
 
   const options = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' },
   ]
-  const [secondValue, setSecondValue] = useState(['Pear'])
-  const secondOnChange = useMemo(
-    () => (checkedValues: string[]) => {
-      action('onChange')(...checkedValues)
-      setSecondValue(checkedValues)
-    },
-    [],
-  )
 
   const optionsWithDisabled = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange', disabled: false },
   ]
-  const [thirdValue, setThirdValue] = useState(['Apple'])
-  const thirdOnChange = useMemo(
-    () => (checkedValues: string[]) => {
-      action('onChange')(...checkedValues)
-      setThirdValue(checkedValues)
-    },
-    [],
-  )
+
+  const onChange = (checkboxGroup: string) => (args: string[]) =>
+    action(`${checkboxGroup}-onChange`)(...args)
+
   return (
     <div className="space-y-6">
       <Checkbox.CheckboxGroup
         options={plainOptions}
-        value={firstValue}
-        onChange={firstOnChange}
+        onChange={onChange('firstGroup')}
       />
       <Checkbox.CheckboxGroup
         options={options}
-        value={secondValue}
-        onChange={secondOnChange}
+        onChange={onChange('secondGroup')}
       />
       <Checkbox.CheckboxGroup
         options={optionsWithDisabled}
-        value={thirdValue}
         disabled
-        onChange={thirdOnChange}
+        onChange={onChange('thirdGroup')}
       />
     </div>
   )

@@ -1,5 +1,14 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
+import { useSyncedState } from 'hooks/useSyncedState'
+import { isEqual, isEmpty } from 'lodash'
 import { Checkbox } from './checkbox'
+
+export function isArrayEqual<T>(arr1: T[] | undefined, arr2: T[] | undefined) {
+  if (!arr1 || !arr2) {
+    return false
+  }
+  return isEqual([...arr1].sort(), [...arr2].sort())
+}
 
 export type OptionType = {
   label: string
@@ -40,6 +49,18 @@ export function CheckboxGroup({
     })
   }, [options])
 
+  const [checkedValues, setCheckedValues] = useSyncedState(value ?? [])
+
+  useEffect(() => {
+    const bothValuesEmpty = isEmpty(value) && isEmpty(checkedValues)
+    const valuesChanged =
+      !isArrayEqual(value, checkedValues) && !bothValuesEmpty
+    console.log(value, checkedValues)
+    if (onChange && valuesChanged) {
+      onChange(checkedValues)
+    }
+  }, [onChange, value, checkedValues])
+
   return (
     <div className="flex items-center space-x-8">
       {checkboxOptions.map((option: OptionType) => (
@@ -48,19 +69,19 @@ export function CheckboxGroup({
           label={option.label}
           value={option.value}
           disabled={option?.disabled ?? disabled}
-          checked={value?.indexOf(option.value) !== -1}
+          checked={checkedValues?.indexOf(option.value) !== -1}
           onChange={(event) => {
-            let selectedOptions = value ? [...value] : []
-            if (event.target.checked) {
-              selectedOptions = [...selectedOptions, event.target.value]
-            } else {
-              selectedOptions = selectedOptions.filter(
-                (item) => item !== event.target.value,
-              )
-            }
-            if (onChange) {
-              onChange(selectedOptions)
-            }
+            setCheckedValues((prevState) => {
+              let selectedOptions = [...prevState]
+              if (event.target.checked) {
+                selectedOptions = [...selectedOptions, event.target.value]
+              } else {
+                selectedOptions = selectedOptions.filter(
+                  (item) => item !== event.target.value,
+                )
+              }
+              return selectedOptions
+            })
           }}
           className={className}
           style={style}
