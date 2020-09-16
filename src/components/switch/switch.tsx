@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { hideVisually } from 'polished'
+import { useSyncedState } from '../../hooks/useSyncedState'
 
 /**
  * Switch properties
@@ -24,11 +25,12 @@ export const Switch = forwardRef(
     { checked = false, onChange, className, style }: SwitchProps,
     ref: React.Ref<HTMLInputElement>,
   ) => {
+    const [checkedState, setCheckedState] = useSyncedState(checked)
     return (
       <label
         className={clsx(
           'w-10 rounded-full h-5 transition-all duration-300 focus-within:shadow-outline relative inline-block',
-          checked ? 'bg-green-500' : 'bg-gray-300',
+          checkedState ? 'bg-green-500' : 'bg-gray-300',
           className,
         )}
         style={style}
@@ -38,13 +40,18 @@ export const Switch = forwardRef(
             'w-5 h-5 rounded-full bg-white shadow transition duration-150',
           )}
           style={{
-            transform: `translate(${checked ? 20 : 0}px)`,
+            transform: `translate(${checkedState ? 20 : 0}px)`,
           }}
           data-testid="toggle-thumb"
         />
         <input
-          checked={checked}
-          onChange={onChange}
+          checked={checkedState}
+          onChange={(event) => {
+            setCheckedState(event.target.checked)
+            if (onChange) {
+              onChange(event)
+            }
+          }}
           type="checkbox"
           style={hideVisually()}
           ref={ref}
