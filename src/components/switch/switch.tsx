@@ -9,6 +9,8 @@ import { useSyncedState } from '../../hooks/useSyncedState'
 export type SwitchProps = {
   /** whether the switch is on on | off state */
   checked?: boolean
+  /** Property to initialize switch with a particular value */
+  defaultChecked?: boolean
   /** function called when the state of switch is changed */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   /** additional class names */
@@ -22,10 +24,12 @@ export type SwitchProps = {
  */
 export const Switch = forwardRef(
   (
-    { checked = false, onChange, className, style }: SwitchProps,
+    { checked, defaultChecked, onChange, className, style }: SwitchProps,
     ref: React.Ref<HTMLInputElement>,
   ) => {
-    const [checkedState, setCheckedState] = useSyncedState(checked)
+    const [checkedState, setCheckedState] = useSyncedState(
+      checked || defaultChecked,
+    )
     return (
       <label
         className={clsx(
