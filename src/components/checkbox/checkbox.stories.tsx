@@ -9,24 +9,18 @@ export default {
 } as Meta
 
 export function DefaultCheckbox() {
-  const [checked, setChecked] = useState(true)
-  return (
-    <Checkbox
-      label="Remember Me"
-      value="rememberMe"
-      checked={checked}
-      onChange={() => {
-        setChecked((prevState) => !prevState)
-      }}
-    />
-  )
+  return <Checkbox label="Remember Me" value="rememberMe" />
 }
 
 export function DisabledCheckbox() {
   return (
     <div className="flex flex-col space-y-2">
       <Checkbox disabled={true} label="Unchecked-Disabled" />
-      <Checkbox disabled={true} checked={true} label="Checked-Disabled" />
+      <Checkbox
+        disabled={true}
+        defaultChecked={true}
+        label="Checked-Disabled"
+      />
     </div>
   )
 }
