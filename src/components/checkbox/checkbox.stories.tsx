@@ -39,12 +39,11 @@ export function CheckboxWithError() {
   )
 }
 
-export function IndeterminateChecbox() {
-  const plainOptions = ['Apple', 'Pear', 'Orange']
+export function IndeterminateCheckbox() {
+  const options = ['Apple', 'Pear', 'Orange']
   const [checkedValues, setCheckedValues] = useState(['Pear'])
 
   const onChange = useCallback((checkedList: string[]) => {
-    console.log(`onChange, ${checkedList}`)
     setCheckedValues(checkedList)
   }, [])
 
@@ -53,21 +52,23 @@ export function IndeterminateChecbox() {
       <Checkbox
         label="Check All"
         checked={
-          checkedValues.length === plainOptions.length
+          checkedValues.length === options.length
             ? true
             : checkedValues.length === 0
             ? false
             : 'indeterminate'
         }
-        onChange={() => {
-          checkedValues.length === plainOptions.length
-            ? setCheckedValues([])
-            : setCheckedValues(plainOptions)
+        onChange={(event) => {
+          if (event.target.checked) {
+            setCheckedValues(options)
+          } else {
+            setCheckedValues([])
+          }
         }}
       />
       <div className="border border-gray-200" />
       <Checkbox.CheckboxGroup
-        options={plainOptions}
+        options={options}
         value={checkedValues}
         onChange={onChange}
       />

@@ -1,14 +1,6 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useSyncedState } from 'hooks/useSyncedState'
-import { isEqual, isEmpty } from 'lodash'
 import { Checkbox } from './checkbox'
-
-export function isArrayEqual<T>(arr1: T[] | undefined, arr2: T[] | undefined) {
-  if (!arr1 || !arr2) {
-    return false
-  }
-  return isEqual([...arr1].sort(), [...arr2].sort())
-}
 
 export type OptionType = {
   label: string
@@ -51,15 +43,15 @@ export function CheckboxGroup({
 
   const [checkedValues, setCheckedValues] = useSyncedState(value ?? [])
 
-  useEffect(() => {
-    const bothValuesEmpty = isEmpty(value) && isEmpty(checkedValues)
-    const valuesChanged =
-      !isArrayEqual(value, checkedValues) && !bothValuesEmpty
-    console.log(value, checkedValues)
-    if (onChange && valuesChanged) {
-      onChange(checkedValues)
-    }
-  }, [onChange, value, checkedValues])
+  // useEffect(() => {
+  //   const bothValuesEmpty = isEmpty(value) && isEmpty(checkedValues)
+  //   const valuesChanged =
+  //     !isArrayEqual(value, checkedValues) && !bothValuesEmpty
+  //   console.log(value, checkedValues, valuesChanged)
+  //   if (onChange && valuesChanged) {
+  //     onChange(checkedValues)
+  //   }
+  // }, [onChange, value, checkedValues])
 
   return (
     <div className="flex items-center space-x-8">
@@ -71,17 +63,18 @@ export function CheckboxGroup({
           disabled={option?.disabled ?? disabled}
           checked={checkedValues?.indexOf(option.value) !== -1}
           onChange={(event) => {
-            setCheckedValues((prevState) => {
-              let selectedOptions = [...prevState]
-              if (event.target.checked) {
-                selectedOptions = [...selectedOptions, event.target.value]
-              } else {
-                selectedOptions = selectedOptions.filter(
-                  (item) => item !== event.target.value,
-                )
-              }
-              return selectedOptions
-            })
+            let selectedOptions = [...checkedValues]
+            if (event.target.checked) {
+              selectedOptions = [...selectedOptions, event.target.value]
+            } else {
+              selectedOptions = selectedOptions.filter(
+                (item) => item !== event.target.value,
+              )
+            }
+            setCheckedValues(selectedOptions)
+            if (onChange) {
+              onChange(selectedOptions)
+            }
           }}
           className={className}
           style={style}
