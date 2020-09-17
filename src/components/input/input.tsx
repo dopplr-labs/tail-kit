@@ -26,7 +26,10 @@ export const Input = forwardRef(
     }: InputProps,
     ref: React.Ref<HTMLInputElement>,
   ) => {
-    const [inputValue, setInputValue] = useSyncedState(value || defaultValue)
+    const [inputValue, setInputValue] = useSyncedState(
+      value || defaultValue || '',
+    )
+
     return (
       <div
         className={clsx(
