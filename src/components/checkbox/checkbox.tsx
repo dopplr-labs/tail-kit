@@ -50,7 +50,7 @@ export const CheckboxComponent = forwardRef(
     ref: React.Ref<HTMLInputElement>,
   ) => {
     const [checkedState, setCheckedState] = useSyncedState(
-      checked || defaultChecked || false,
+      (checked || defaultChecked) ?? false,
     )
     return (
       <label

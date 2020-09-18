@@ -27,7 +27,7 @@ export const Input = forwardRef(
     ref: React.Ref<HTMLInputElement>,
   ) => {
     const [inputValue, setInputValue] = useSyncedState(
-      value || defaultValue || '',
+      (value || defaultValue) ?? '',
     )
 
     return (
