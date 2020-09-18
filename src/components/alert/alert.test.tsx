@@ -95,3 +95,11 @@ test('renders actions button background correctly', () => {
     'alert-button-primary-yellow',
   )
 })
+
+test('renders with blue baseColor when added incorrect alert type prop', () => {
+  // @ts-expect-error
+  render(<Alert type="alert" title="Attention needed" />)
+  expect(
+    screen.getByText('Attention needed').parentElement?.parentElement,
+  ).toHaveClass('bg-blue-50')
+})
