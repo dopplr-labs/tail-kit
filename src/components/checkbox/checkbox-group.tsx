@@ -43,16 +43,6 @@ export function CheckboxGroup({
 
   const [checkedValues, setCheckedValues] = useSyncedState(value ?? [])
 
-  // useEffect(() => {
-  //   const bothValuesEmpty = isEmpty(value) && isEmpty(checkedValues)
-  //   const valuesChanged =
-  //     !isArrayEqual(value, checkedValues) && !bothValuesEmpty
-  //   console.log(value, checkedValues, valuesChanged)
-  //   if (onChange && valuesChanged) {
-  //     onChange(checkedValues)
-  //   }
-  // }, [onChange, value, checkedValues])
-
   return (
     <div className="flex items-center space-x-8">
       {checkboxOptions.map((option: OptionType) => (
