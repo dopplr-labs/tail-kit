@@ -98,14 +98,17 @@ export function WithCheckboxGroup() {
     <div className="space-y-6">
       <Checkbox.CheckboxGroup
         options={plainOptions}
+        value={['Apple', 'Orange']}
         onChange={onChange('firstGroup')}
       />
       <Checkbox.CheckboxGroup
         options={options}
+        value={['Pear']}
         onChange={onChange('secondGroup')}
       />
       <Checkbox.CheckboxGroup
         options={optionsWithDisabled}
+        value={['Apple']}
         disabled
         onChange={onChange('thirdGroup')}
       />
