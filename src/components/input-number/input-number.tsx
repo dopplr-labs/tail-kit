@@ -11,18 +11,25 @@ export type InputNumberProps = Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   >,
-  'step' | 'className'
+  'step' | 'className' | 'value' | 'defaultValue' | 'min' | 'max' | 'onChange'
 > & {
   /** The number to which the current value is increased or decreased. It can be an integer or decimal */
   step?: number
+  /** The current value */
   value?: number
+  /** The initial value */
   defaultValue?: number
+  /** The min value */
   min?: number
+  /** The max value */
   max?: number
+  /** The precision of input value */
   precision?: number
+  /** The callback triggered when the value is changed */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   /** Additional class applied to the input element */
   className?: string
+  /** Additional styles to apply */
   style?: React.CSSProperties
 }
 
@@ -31,11 +38,12 @@ export function InputNumber({
   step = 1,
   value,
   defaultValue,
-  min,
-  max,
+  min = Number.MIN_SAFE_INTEGER,
+  max = Number.MAX_SAFE_INTEGER,
   precision,
   onChange,
   className,
+  style,
   ...restProps
 }: InputNumberProps) {
   const [inputValue, setInputValue] = useSyncedState(
@@ -66,6 +74,7 @@ export function InputNumber({
         'flex group items-center justify-between border rounded-md focus-within:shadow-outline overflow-hidden',
         className,
       )}
+      style={style}
     >
       <input
         type="number"
