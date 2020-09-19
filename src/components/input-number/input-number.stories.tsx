@@ -10,3 +10,7 @@ export default {
 export function DefaultInputNumber() {
   return <InputNumber className="w-64" defaultValue={3} min={1} max={10} />
 }
+
+export function DecimalNumberInput() {
+  return <InputNumber className="w-64" min={0} max={10} step={0.1} />
+}
