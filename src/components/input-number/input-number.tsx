@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { forwardRef, useCallback, useMemo } from 'react'
 import clsx from 'clsx'
 import { ChevronDownOutline, ChevronUpOutline } from 'components/icons'
 import { useSyncedState } from 'hooks/useSyncedState'
@@ -34,111 +34,118 @@ export type InputNumberProps = Omit<
 }
 
 /** Enter a number within certain range with the mouse or keyboard. */
-export function InputNumber({
-  step = 1,
-  value,
-  defaultValue,
-  min = Number.MIN_SAFE_INTEGER,
-  max = Number.MAX_SAFE_INTEGER,
-  precision,
-  onChange,
-  className,
-  style,
-  ...restProps
-}: InputNumberProps) {
-  const [inputValue, setInputValue] = useSyncedState(
-    (value || defaultValue) ?? 0,
-  )
+export const InputNumber = forwardRef(
+  (
+    {
+      step = 1,
+      value,
+      defaultValue,
+      min = Number.MIN_SAFE_INTEGER,
+      max = Number.MAX_SAFE_INTEGER,
+      precision,
+      onChange,
+      className,
+      style,
+      ...restProps
+    }: InputNumberProps,
+    ref: React.Ref<HTMLInputElement>,
+  ) => {
+    const [inputValue, setInputValue] = useSyncedState(
+      (value || defaultValue) ?? 0,
+    )
 
-  const getPrecision = useMemo(() => {
-    if (precision) {
-      return precision
-    }
-    const stepString = String(step)
-    let stepPrecision = 0
-    if (stepString.indexOf('.') >= 0) {
-      stepPrecision = stepString.length - stepString.indexOf('.') - 1
-    }
-    const inputValueString = String(inputValue)
-    let inputValuePrecision = 0
-    if (inputValueString.indexOf('.') >= 0) {
-      inputValuePrecision =
-        inputValueString.length - inputValueString.indexOf('.') - 1
-    }
-    return Math.max(stepPrecision, inputValuePrecision)
-  }, [precision, step, inputValue])
+    // helper function to return number of digits after decimal place
+    const getPrecisionFromValue = useCallback((value) => {
+      const valueString = String(value)
+      if (valueString.indexOf('.') >= 0) {
+        return valueString.length - valueString.indexOf('.') - 1
+      } else {
+        return 0
+      }
+    }, [])
 
-  return (
-    <div
-      className={clsx(
-        'flex group items-center justify-between border rounded-md focus-within:shadow-outline overflow-hidden',
-        className,
-      )}
-      style={style}
-    >
-      <input
-        type="number"
-        className="flex-1 px-3 py-2 text-sm text-gray-800 focus:outline-none"
-        value={inputValue}
-        step={step}
-        onChange={(event) => {
-          const newValue = parseFloat(event.target.value)
-          setInputValue((prevState) =>
-            min !== undefined &&
-            newValue >= min &&
-            max !== undefined &&
-            newValue <= max
-              ? newValue
-              : prevState,
-          )
-          if (onChange) {
-            onChange(event)
-          }
-        }}
-        {...restProps}
-      />
-      <div className="flex-col items-center justify-between hidden text-gray-400 group-hover:flex">
-        <button
-          className={clsx(
-            'border focus:outline-none focus:bg-gray-100',
-            inputValue === max ? 'cursor-not-allowed' : undefined,
-          )}
-          onClick={() => {
-            setInputValue((prevState) => {
-              const newValue = parseFloat(
-                (prevState + step).toFixed(getPrecision),
-              )
-              if (max !== undefined && newValue <= max) {
-                return newValue
-              } else {
-                return prevState
-              }
-            })
+    const precisionValue = useMemo(() => {
+      if (precision) {
+        return precision
+      }
+      // using the maximum precision between step and inputValue
+      return Math.max(
+        getPrecisionFromValue(step),
+        getPrecisionFromValue(inputValue),
+      )
+    }, [precision, step, inputValue, getPrecisionFromValue])
+
+    // function to keep input value within min-max range
+    const clampValue = useCallback(
+      (value: number) => {
+        let outputValue = value
+        if (min !== undefined) {
+          outputValue = Math.max(outputValue, min)
+        }
+        if (max !== undefined) {
+          outputValue = Math.min(outputValue, max)
+        }
+        return outputValue
+      },
+      [min, max],
+    )
+
+    return (
+      <div
+        className={clsx(
+          'flex group items-center justify-between border rounded-md focus-within:shadow-outline overflow-hidden',
+          className,
+        )}
+        style={style}
+      >
+        <input
+          type="number"
+          className="flex-1 px-3 py-2 text-sm text-gray-800 focus:outline-none"
+          value={inputValue}
+          step={step}
+          onChange={(event) => {
+            const newValue = parseFloat(event.target.value)
+            setInputValue(clampValue(newValue))
+            if (onChange) {
+              onChange(event)
+            }
           }}
-        >
-          <ChevronUpOutline className="w-4 h-4" />
-        </button>
-        <button
-          className={clsx(
-            'border focus:outline-none focus:bg-gray-100',
-            inputValue === min ? 'cursor-not-allowed' : undefined,
-          )}
-          onClick={() => {
-            setInputValue((prevState) => {
+          {...restProps}
+          ref={ref}
+        />
+        <div className="flex-col items-center justify-between hidden text-gray-400 group-hover:flex">
+          <button
+            className={clsx(
+              'border focus:outline-none focus:bg-gray-100',
+              inputValue === max ? 'cursor-not-allowed' : undefined,
+            )}
+            onClick={() => {
               const newValue = parseFloat(
-                (prevState - step).toFixed(getPrecision),
+                (inputValue + step).toFixed(precisionValue),
               )
-              if (min !== undefined && newValue >= min) {
-                return newValue
-              } else {
-                return prevState
-              }
-            })
-          }}
-        >
-          <ChevronDownOutline className="w-4 h-4" />
-        </button>
+              setInputValue(clampValue(newValue))
+            }}
+          >
+            <ChevronUpOutline className="w-4 h-4" />
+          </button>
+          <button
+            className={clsx(
+              'border focus:outline-none focus:bg-gray-100',
+              inputValue === min ? 'cursor-not-allowed' : undefined,
+            )}
+            onClick={() => {
+              const newValue = parseFloat(
+                (inputValue - step).toFixed(precisionValue),
+              )
+              setInputValue(clampValue(newValue))
+            }}
+          >
+            <ChevronDownOutline className="w-4 h-4" />
+          </button>
+        </div>
       </div>
-    </div>
-  )
-}
+    )
+  },
+)
+
+InputNumber.displayName = 'InputNumber'
