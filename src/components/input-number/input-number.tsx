@@ -100,7 +100,7 @@ export const InputNumber = forwardRef(
       >
         <input
           type="number"
-          className="flex-1 px-3 py-2 text-sm text-gray-800 focus:outline-none"
+          className="w-full px-3 py-2 text-sm text-gray-800 focus:outline-none"
           value={inputValue}
           step={step}
           onChange={(event) => {
@@ -113,10 +113,10 @@ export const InputNumber = forwardRef(
           {...restProps}
           ref={ref}
         />
-        <div className="flex-col items-center justify-between hidden text-gray-400 group-hover:flex">
+        <div className="flex-col items-center hidden mr-1 text-gray-400 group-hover:flex ">
           <button
             className={clsx(
-              'border focus:outline-none focus:bg-gray-100',
+              'focus:outline-none',
               inputValue === max ? 'cursor-not-allowed' : undefined,
             )}
             onClick={() => {
@@ -130,7 +130,7 @@ export const InputNumber = forwardRef(
           </button>
           <button
             className={clsx(
-              'border focus:outline-none focus:bg-gray-100',
+              'focus:outline-none',
               inputValue === min ? 'cursor-not-allowed' : undefined,
             )}
             onClick={() => {
