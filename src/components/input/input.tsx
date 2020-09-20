@@ -1,5 +1,6 @@
 import React, { cloneElement, forwardRef } from 'react'
 import clsx from 'clsx'
+import { useSyncedState } from 'hooks/useSyncedState'
 
 export type InputProps = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -18,10 +19,17 @@ export const Input = forwardRef(
       style,
       inputClassName,
       inputStyle,
+      value,
+      defaultValue,
+      onChange,
       ...restProps
     }: InputProps,
     ref: React.Ref<HTMLInputElement>,
   ) => {
+    const [inputValue, setInputValue] = useSyncedState(
+      (value || defaultValue) ?? '',
+    )
+
     return (
       <div
         className={clsx(
@@ -37,6 +45,13 @@ export const Input = forwardRef(
             inputClassName,
           )}
           style={inputStyle}
+          value={inputValue}
+          onChange={(event) => {
+            setInputValue(event.target.value)
+            if (onChange) {
+              onChange(event)
+            }
+          }}
           {...restProps}
           ref={ref}
         />

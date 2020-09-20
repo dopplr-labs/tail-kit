@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { useSyncedState } from 'hooks/useSyncedState'
 import { Checkbox } from './checkbox'
 
 export type OptionType = {
@@ -40,6 +41,8 @@ export function CheckboxGroup({
     })
   }, [options])
 
+  const [checkedValues, setCheckedValues] = useSyncedState(value ?? [])
+
   return (
     <div className="flex items-center space-x-8">
       {checkboxOptions.map((option: OptionType) => (
@@ -48,9 +51,9 @@ export function CheckboxGroup({
           label={option.label}
           value={option.value}
           disabled={option?.disabled ?? disabled}
-          checked={value?.indexOf(option.value) !== -1}
+          checked={checkedValues?.indexOf(option.value) !== -1}
           onChange={(event) => {
-            let selectedOptions = value ? [...value] : []
+            let selectedOptions = [...checkedValues]
             if (event.target.checked) {
               selectedOptions = [...selectedOptions, event.target.value]
             } else {
@@ -58,6 +61,7 @@ export function CheckboxGroup({
                 (item) => item !== event.target.value,
               )
             }
+            setCheckedValues(selectedOptions)
             if (onChange) {
               onChange(selectedOptions)
             }

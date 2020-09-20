@@ -8,6 +8,10 @@ export default {
 } as Meta
 
 export function DefaultSwitch() {
+  return <Switch />
+}
+
+export function ControlledSwitch() {
   const [checked, setChecked] = useState(false)
   return (
     <Switch
