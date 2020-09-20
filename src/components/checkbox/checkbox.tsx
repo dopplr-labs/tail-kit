@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { hideVisually } from 'polished'
 import { CheckOutline } from 'components/icons'
+import { useSyncedState } from 'hooks/useSyncedState'
 import { CheckboxGroup } from './checkbox-group'
-import { useSyncedState } from '../../hooks/useSyncedState'
 
 /**
  * Checkbox properties

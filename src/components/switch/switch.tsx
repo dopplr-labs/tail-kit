@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { hideVisually } from 'polished'
-import { useSyncedState } from '../../hooks/useSyncedState'
+import { useSyncedState } from 'hooks/useSyncedState'
 
 /**
  * Switch properties
