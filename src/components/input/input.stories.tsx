@@ -26,3 +26,7 @@ export function InputWithIcon() {
     </div>
   )
 }
+
+export function InputWithDefaultValue() {
+  return <Input defaultValue="My name is " className="w-80" />
+}
