@@ -2,6 +2,7 @@ import React, { forwardRef, useCallback, useMemo } from 'react'
 import clsx from 'clsx'
 import { ChevronDownOutline, ChevronUpOutline } from 'components/icons'
 import { useSyncedState } from 'hooks/useSyncedState'
+import { useLongPress } from 'hooks/useLongPress'
 
 /**
  * InputNumber properties
@@ -90,6 +91,19 @@ export const InputNumber = forwardRef(
       [min, max],
     )
 
+    const increment = () => {
+      const newValue = parseFloat((inputValue + step).toFixed(precisionValue))
+      setInputValue(clampValue(newValue))
+    }
+
+    const decrement = () => {
+      const newValue = parseFloat((inputValue - step).toFixed(precisionValue))
+      setInputValue(clampValue(newValue))
+    }
+
+    const incrementRef = useLongPress<HTMLButtonElement>({ onPress: increment })
+    const decrementRef = useLongPress<HTMLButtonElement>({ onPress: decrement })
+
     return (
       <div
         className={clsx(
@@ -113,18 +127,14 @@ export const InputNumber = forwardRef(
           {...restProps}
           ref={ref}
         />
-        <div className="flex-col items-center hidden mr-1 text-gray-400 group-hover:flex ">
+        <div className="flex flex-col items-center mr-1 text-gray-400 transition-opacity duration-500 opacity-0 group-hover:opacity-100 ">
           <button
             className={clsx(
               'focus:outline-none',
               inputValue === max ? 'cursor-not-allowed' : undefined,
             )}
-            onClick={() => {
-              const newValue = parseFloat(
-                (inputValue + step).toFixed(precisionValue),
-              )
-              setInputValue(clampValue(newValue))
-            }}
+            ref={incrementRef}
+            onClick={increment}
           >
             <ChevronUpOutline className="w-4 h-4" />
           </button>
@@ -133,12 +143,8 @@ export const InputNumber = forwardRef(
               'focus:outline-none',
               inputValue === min ? 'cursor-not-allowed' : undefined,
             )}
-            onClick={() => {
-              const newValue = parseFloat(
-                (inputValue - step).toFixed(precisionValue),
-              )
-              setInputValue(clampValue(newValue))
-            }}
+            ref={decrementRef}
+            onClick={decrement}
           >
             <ChevronDownOutline className="w-4 h-4" />
           </button>
