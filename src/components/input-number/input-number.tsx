@@ -26,6 +26,8 @@ export type InputNumberProps = Omit<
   max?: number
   /** The precision of input value */
   precision?: number
+  /** To disable input number component */
+  disabled?: boolean
   /** The callback triggered when the value is changed */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   /** Additional class applied to the input element */
@@ -44,6 +46,7 @@ export const InputNumber = forwardRef(
       min = Number.MIN_SAFE_INTEGER,
       max = Number.MAX_SAFE_INTEGER,
       precision,
+      disabled,
       onChange,
       className,
       style,
@@ -108,13 +111,17 @@ export const InputNumber = forwardRef(
       <div
         className={clsx(
           'flex group items-center justify-between border rounded-md focus-within:shadow-outline overflow-hidden',
+          disabled ? 'cursor-not-allowed' : undefined,
           className,
         )}
         style={style}
       >
         <input
           type="number"
-          className="w-full px-3 py-2 text-sm text-gray-800 focus:outline-none"
+          className={clsx(
+            'w-full px-3 py-2 text-sm text-gray-800 focus:outline-none',
+            disabled ? 'cursor-not-allowed' : undefined,
+          )}
           value={inputValue}
           step={step}
           onChange={(event) => {
@@ -124,10 +131,16 @@ export const InputNumber = forwardRef(
               onChange(event)
             }
           }}
+          disabled={disabled}
           {...restProps}
           ref={ref}
         />
-        <div className="flex flex-col items-center mr-1 text-gray-400 transition-opacity duration-500 opacity-0 group-hover:opacity-100 ">
+        <div
+          className={clsx(
+            'flex flex-col items-center mr-1 text-gray-400 transition-opacity duration-500 opacity-0 group-hover:opacity-100 ',
+            disabled ? 'hidden' : undefined,
+          )}
+        >
           <button
             className={clsx(
               'focus:outline-none',
