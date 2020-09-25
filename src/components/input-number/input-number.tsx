@@ -132,6 +132,7 @@ export const InputNumber = forwardRef(
             }
           }}
           disabled={disabled}
+          data-testid="input-number"
           {...restProps}
           ref={ref}
         />
