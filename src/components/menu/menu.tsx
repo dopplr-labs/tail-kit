@@ -10,6 +10,7 @@ import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import { useMemoOne } from 'use-memo-one'
+import { useOutsideClick } from 'hooks/useOutsideClick'
 import {
   getMenuPosition,
   VerticalPlacement,
@@ -140,27 +141,14 @@ export function Menu({
     }
   }, [menuVisible, trigger, verticalPlacement, horizontalPlacement])
 
-  /**
-   * menu overlay is used to capture any click outside the menu, so as to close it
-   * it is a transparent background covering the entire screen
-   *
-   * it simplies the outside click behaviour as for menu item we don't have to worry about
-   * the order of menu creation, each newly created menu item's overlay would be on the top of
-   * the previous
-   *
-   * it would be easier to implement sub menu as well as menu within modal
-   */
-  const overlay = menuVisible ? (
-    <div
-      className="fixed inset-0 z-10"
-      onClick={(event) => {
-        event.stopPropagation()
-        if (!menuContainer.current?.contains(event.target as Node)) {
-          setMenuVisible(MenuVisibility.HIDDEN)
-        }
-      }}
-    />
-  ) : null
+  useOutsideClick({
+    container: menuContainer,
+    whitelistContainers: [triggerContainer],
+    activate: menuVisible === MenuVisibility.SHOWN,
+    onClick: () => {
+      setMenuVisible(MenuVisibility.HIDDEN)
+    },
+  })
 
   const menuContent = (
     <div className="py-2 bg-white rounded-md shadow" ref={menuContainer}>
@@ -172,17 +160,19 @@ export function Menu({
 
   return (
     <>
-      <div className="inline-block" ref={triggerContainer}>
-        {cloneElement(trigger, {
-          onClick: () => {
-            setMenuVisible(
-              (prevState) =>
-                prevState === MenuVisibility.SHOWN
-                  ? MenuVisibility.HIDDEN
-                  : MenuVisibility.INVISIBLE, // instead of directly showing the menu, render it as invisible (see above for the description)
-            )
-          },
-        })}
+      <div
+        className="inline-block"
+        ref={triggerContainer}
+        onClick={() => {
+          setMenuVisible(
+            (prevState) =>
+              prevState === MenuVisibility.SHOWN
+                ? MenuVisibility.HIDDEN
+                : MenuVisibility.INVISIBLE, // instead of directly showing the menu, render it as invisible (see above for the description)
+          )
+        }}
+      >
+        {trigger}
       </div>
       {menuVisible === MenuVisibility.INVISIBLE ? (
         <div
@@ -194,7 +184,6 @@ export function Menu({
       ) : null}
       {createPortal(
         <>
-          {overlay}
           <CSSTransition
             in={menuVisible === MenuVisibility.SHOWN && !!menuContainerPosition}
             timeout={100}

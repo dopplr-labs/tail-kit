@@ -1,8 +1,9 @@
-import React, { useRef, useCallback } from 'react'
+import React, { useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 import Button, { ButtonProps } from 'components/button'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
+import { useOutsideClick } from 'hooks/useOutsideClick'
 
 type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
   ref: React.Ref<HTMLButtonElement>
@@ -54,15 +55,13 @@ export function Modal({
 
   const contentContainer = useRef<HTMLDivElement | null>(null)
 
-  const handleOverlayClick = useCallback(
-    (event) => {
-      event.stopPropagation()
-      if (!contentContainer.current?.contains(event.target as HTMLElement)) {
-        onRequestClose?.()
-      }
+  useOutsideClick({
+    container: contentContainer,
+    activate: visible ?? false,
+    onClick: () => {
+      onRequestClose?.()
     },
-    [onRequestClose],
-  )
+  })
 
   return createPortal(
     <CSSTransition
@@ -84,7 +83,6 @@ export function Modal({
       <div
         className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-75 modal-overlay"
         data-testid="modal-overlay"
-        onClick={handleOverlayClick}
       >
         <div
           className="flex flex-col w-full max-w-screen-sm max-h-full overflow-hidden bg-white rounded-md shadow-2xl"
