@@ -8,6 +8,13 @@ body {
   @apply font-sans antialiased;
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+
 .checkbox:focus-within > .checkbox-icon-container {
   @apply shadow-outline;
 }
