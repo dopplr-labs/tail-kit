@@ -142,9 +142,8 @@ export function Menu({
   }, [menuVisible, trigger, verticalPlacement, horizontalPlacement])
 
   useOutsideClick({
-    container: menuContainer,
-    whitelistContainers: [triggerContainer],
-    activate: menuVisible === MenuVisibility.SHOWN,
+    containers: [menuContainer, triggerContainer],
+    active: menuVisible === MenuVisibility.SHOWN,
     onClick: () => {
       setMenuVisible(MenuVisibility.HIDDEN)
     },

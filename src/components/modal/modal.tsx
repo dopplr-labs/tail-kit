@@ -56,8 +56,8 @@ export function Modal({
   const contentContainer = useRef<HTMLDivElement | null>(null)
 
   useOutsideClick({
-    container: contentContainer,
-    activate: visible ?? false,
+    containers: [contentContainer],
+    active: visible ?? false,
     onClick: () => {
       onRequestClose?.()
     },
