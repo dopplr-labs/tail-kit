@@ -1,8 +1,40 @@
-import React, { forwardRef, useCallback, useMemo } from 'react'
+import React, { forwardRef, useMemo } from 'react'
 import clsx from 'clsx'
 import { ChevronDownOutline, ChevronUpOutline } from 'components/icons'
 import useSyncedState from 'hooks/use-synced-states'
-import { useLongPress } from 'hooks/useLongPress'
+import useLongPress from 'hooks/use-long-press'
+
+/**
+ * Helper function to compute precision
+ *
+ * @param value The number for which the precision is computed
+ */
+function getPrecision(value: number): number {
+  const valueString = String(value)
+  if (valueString.indexOf('.') >= 0) {
+    return valueString.length - valueString.indexOf('.') - 1
+  } else {
+    return 0
+  }
+}
+
+/**
+ * Helper function to clamp the value between a min and max boundary
+ *
+ * @param value The value to be clamped
+ * @param min The min boundary value
+ * @param max The max boundary value
+ */
+function clamp(value: number, min?: number, max?: number) {
+  let outputValue = value
+  if (typeof min !== 'undefined') {
+    outputValue = Math.max(outputValue, min)
+  }
+  if (typeof max !== 'undefined') {
+    outputValue = Math.min(outputValue, max)
+  }
+  return outputValue
+}
 
 /**
  * InputNumber properties
@@ -45,7 +77,7 @@ export const InputNumber = forwardRef(
       defaultValue,
       min = Number.MIN_SAFE_INTEGER,
       max = Number.MAX_SAFE_INTEGER,
-      precision,
+      precision: precisionProp,
       disabled,
       onChange,
       className,
@@ -58,50 +90,22 @@ export const InputNumber = forwardRef(
       (value || defaultValue) ?? 0,
     )
 
-    // helper function to return number of digits after decimal place
-    const getPrecisionFromValue = useCallback((value) => {
-      const valueString = String(value)
-      if (valueString.indexOf('.') >= 0) {
-        return valueString.length - valueString.indexOf('.') - 1
-      } else {
-        return 0
-      }
-    }, [])
-
-    const precisionValue = useMemo(() => {
-      if (precision) {
-        return precision
+    const precision = useMemo(() => {
+      if (precisionProp) {
+        return precisionProp
       }
       // using the maximum precision between step and inputValue
-      return Math.max(
-        getPrecisionFromValue(step),
-        getPrecisionFromValue(inputValue),
-      )
-    }, [precision, step, inputValue, getPrecisionFromValue])
+      return Math.max(getPrecision(step), getPrecision(inputValue))
+    }, [precisionProp, step, inputValue])
 
-    // function to keep input value within min-max range
-    const clampValue = useCallback(
-      (value: number) => {
-        let outputValue = value
-        if (min !== undefined) {
-          outputValue = Math.max(outputValue, min)
-        }
-        if (max !== undefined) {
-          outputValue = Math.min(outputValue, max)
-        }
-        return outputValue
-      },
-      [min, max],
-    )
-
-    const increment = () => {
-      const newValue = parseFloat((inputValue + step).toFixed(precisionValue))
-      setInputValue(clampValue(newValue))
+    function increment() {
+      const newValue = parseFloat((inputValue + step).toFixed(precision))
+      setInputValue(clamp(newValue, min, max))
     }
 
-    const decrement = () => {
-      const newValue = parseFloat((inputValue - step).toFixed(precisionValue))
-      setInputValue(clampValue(newValue))
+    function decrement() {
+      const newValue = parseFloat((inputValue - step).toFixed(precision))
+      setInputValue(clamp(newValue, min, max))
     }
 
     const incrementRef = useLongPress<HTMLButtonElement>({ onPress: increment })
@@ -126,7 +130,7 @@ export const InputNumber = forwardRef(
           step={step}
           onChange={(event) => {
             const newValue = parseFloat(event.target.value)
-            setInputValue(clampValue(newValue))
+            setInputValue(clamp(newValue, min, max))
             if (onChange) {
               onChange(event)
             }
