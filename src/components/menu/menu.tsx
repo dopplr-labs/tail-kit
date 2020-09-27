@@ -4,33 +4,27 @@ import React, {
   useRef,
   createContext,
   useContext,
-  useLayoutEffect,
 } from 'react'
-import { createPortal } from 'react-dom'
-import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
+import Portal from 'components/portal'
 import { useMemoOne } from 'use-memo-one'
 import useOutsideClick from 'hooks/use-outside-click'
-import {
-  getMenuPosition,
-  VerticalPlacement,
-  HorizontalPlacement,
-  getTransformOriginClassName,
-  getMenuVerticalPlacement,
-  getMenuHorizontalPlacement,
-} from './utils'
 
-enum MenuVisibility {
-  HIDDEN = 'HIDDEN',
-  INVISIBLE = 'INVISIBLE',
-  SHOWN = 'SHOWN',
+export enum VerticalPlacement {
+  top = 'top',
+  bottom = 'bottom',
+}
+
+export enum HorizontalPlacement {
+  left = 'left',
+  right = 'right',
 }
 
 const MenuContext = createContext<{
-  menuVisible: MenuVisibility
-  setMenuVisible: React.Dispatch<React.SetStateAction<MenuVisibility>>
+  menuVisible: boolean
+  setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>
 }>({
-  menuVisible: MenuVisibility.HIDDEN,
+  menuVisible: false,
   setMenuVisible: () => {},
 })
 
@@ -69,85 +63,11 @@ export function Menu({
   verticalPlacement,
   horizontalPlacement,
 }: MenuProps) {
-  const portalContainer = useMemoOne(() => {
-    const container = document.createElement('div')
-    container.classList.add('menu-portal-container')
-    return container
-  }, [])
-
-  /**
-   * Before showing the menu, we need to find the size of the width component
-   * to compute the placement automatically.
-   *
-   * To do this
-   * 1. First render the menu with visiblity: hidden (https://codesandbox.io/s/goofy-torvalds-15wuc?file=/src/App.tsx to see why used visiblity hidden instead of display none)
-   * 2. Get the menu content BCR and trigger BCR
-   * 3. Compute the placement depending on trigger BCR and content BCR
-   * 4. Set the placement and render the menu content
-   *
-   * State
-   * menuVisiblity = 'HIDDEN' | 'INVISIBLE' | 'SHOWN'
-   * HIDDEN -> won't render the menu
-   * INVISIBLE -> render menu with visiblity: hidden
-   * SHOWN -> render menu at correct position
-   */
-
-  const [menuVisible, setMenuVisible] = useState<MenuVisibility>(
-    MenuVisibility.HIDDEN,
-  )
+  const [menuVisible, setMenuVisible] = useState(false)
 
   const triggerContainer = useRef<HTMLDivElement | null>(null)
 
   const menuContainer = useRef<HTMLDivElement | null>(null)
-
-  const [menuContainerPosition, setMenuContainerPosition] = useState<
-    | {
-        top: number
-        left: number
-        placement: [VerticalPlacement, HorizontalPlacement]
-      }
-    | undefined
-  >(undefined)
-
-  useLayoutEffect(() => {
-    if (menuVisible === MenuVisibility.INVISIBLE) {
-      const menuContainerBCR = menuContainer.current?.getBoundingClientRect()
-      const triggerBCR = triggerContainer.current?.getBoundingClientRect()
-      if (menuContainerBCR && triggerBCR) {
-        const placement = [
-          verticalPlacement ??
-            getMenuVerticalPlacement(triggerBCR, menuContainerBCR),
-          horizontalPlacement ??
-            getMenuHorizontalPlacement(triggerBCR, menuContainerBCR),
-        ] as [VerticalPlacement, HorizontalPlacement]
-        const { top, left } = getMenuPosition(
-          triggerBCR,
-          menuContainerBCR,
-          placement,
-        )
-        setMenuVisible(MenuVisibility.SHOWN)
-        setMenuContainerPosition({
-          top:
-            top +
-            // take scrollY position into consideration as the BCR is with respect to viewport
-            window.scrollY,
-          left:
-            left +
-            // take scrollX position into consideration as the BCR is with respecdt to viewport
-            window.scrollX,
-          placement,
-        })
-      }
-    }
-  }, [menuVisible, trigger, verticalPlacement, horizontalPlacement])
-
-  useOutsideClick({
-    containers: useMemoOne(() => [menuContainer, triggerContainer], []),
-    active: menuVisible === MenuVisibility.SHOWN,
-    onClick: () => {
-      setMenuVisible(MenuVisibility.HIDDEN)
-    },
-  })
 
   const menuContent = (
     <div className="py-2 bg-white rounded-md shadow" ref={menuContainer}>
@@ -157,61 +77,34 @@ export function Menu({
     </div>
   )
 
+  useOutsideClick({
+    containers: useMemoOne(() => [menuContainer, triggerContainer], []),
+    active: menuVisible,
+    onClick: () => {
+      setMenuVisible(false)
+    },
+  })
+
   return (
     <>
       <div
         className="inline-block"
         ref={triggerContainer}
         onClick={() => {
-          setMenuVisible(
-            (prevState) =>
-              prevState === MenuVisibility.SHOWN
-                ? MenuVisibility.HIDDEN
-                : MenuVisibility.INVISIBLE, // instead of directly showing the menu, render it as invisible (see above for the description)
-          )
+          setMenuVisible((prevState) => !prevState)
         }}
       >
         {trigger}
       </div>
-      {menuVisible === MenuVisibility.INVISIBLE ? (
-        <div
-          className="fixed top-0 left-0 inline-block"
-          style={{ visibility: 'hidden' }}
-        >
-          {menuContent}
-        </div>
-      ) : null}
-      {createPortal(
-        <>
-          <CSSTransition
-            in={menuVisible === MenuVisibility.SHOWN && !!menuContainerPosition}
-            timeout={100}
-            classNames="menu"
-            unmountOnExit
-            onEnter={() => {
-              portalParent.appendChild(portalContainer)
-            }}
-            onExited={() => {
-              portalParent.removeChild(portalContainer)
-              setMenuContainerPosition(undefined)
-            }}
-          >
-            <div
-              className={clsx(
-                'absolute z-20',
-                getTransformOriginClassName(menuContainerPosition?.placement),
-              )}
-              style={{
-                top: menuContainerPosition?.top ?? 0,
-                left: menuContainerPosition?.left ?? 0,
-              }}
-            >
-              {menuContent}
-            </div>
-          </CSSTransition>
-        </>,
-        portalContainer,
-      )}
+      <Portal
+        triggerRef={triggerContainer}
+        visible={menuVisible}
+        portalParent={portalParent}
+        verticalPlacement={verticalPlacement}
+        horizontalPlacement={horizontalPlacement}
+      >
+        {menuContent}
+      </Portal>
     </>
   )
 }
@@ -254,7 +147,7 @@ export function MenuItem({
       onClick={(event) => {
         event.stopPropagation()
         onClick?.(event)
-        setMenuVisible(MenuVisibility.HIDDEN)
+        setMenuVisible(false)
       }}
     >
       {icon ? cloneElement(icon, { className: 'w-5 h-5' }) : null}
