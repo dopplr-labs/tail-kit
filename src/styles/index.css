@@ -58,25 +58,25 @@ body {
   @apply transition-all duration-200 ease-in transform scale-95 opacity-0;
 }
 
-.menu-portal-container {
+.portal-container {
   @apply absolute top-0 left-0 right-0 h-0;
   z-index: 10001;
 }
 
 /* inspired from https://tailwindui.com/components/application-ui/elements/dropdowns */
-.menu-enter {
+.portal-content-enter {
   @apply transform scale-95 opacity-0;
 }
 
-.menu-enter-active {
+.portal-content-enter-active {
   @apply transition-all duration-100 ease-out transform scale-100 opacity-100;
 }
 
-.menu-exit {
+.portal-content-exit {
   @apply transform scale-100 opacity-100;
 }
 
-.menu-exit-active {
+.portal-content-exit-active {
   @apply transition-all duration-75 ease-in transform scale-95 opacity-0;
 }
 
