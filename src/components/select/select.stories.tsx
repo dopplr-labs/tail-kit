@@ -10,12 +10,12 @@ export default {
 export function DefaultSelect() {
   return (
     <Select defaultValue="Spiderman" className="w-48">
-      <Option>Black Widow</Option>
-      <Option>Hulk</Option>
-      <Option>Spiderman</Option>
-      <Option>Captian America</Option>
-      <Option>Doctor Strange</Option>
-      <Option>Hawk Eye</Option>
+      <Option value="Black Widow">Black Widow</Option>
+      <Option value="Hulk">Hulk</Option>
+      <Option value="Spiderman">Spiderman</Option>
+      <Option value="Captain America">Captian America</Option>
+      <Option value="Doctor Strange">Doctor Strange</Option>
+      <Option value="Hawk Eye">Hawk Eye</Option>
     </Select>
   )
 }
