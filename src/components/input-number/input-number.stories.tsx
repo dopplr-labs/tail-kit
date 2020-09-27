@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
+import Button from 'components/button'
 import { InputNumber } from './input-number'
 
 export default {
@@ -8,9 +9,24 @@ export default {
 } as Meta
 
 export function DefaultInputNumber() {
-  return <InputNumber className="w-64" defaultValue={3} min={1} max={10} />
+  return <InputNumber className="w-32" defaultValue={3} min={1} max={10} />
 }
 
 export function DecimalNumberInput() {
-  return <InputNumber className="w-64" min={0} max={10} step={0.1} />
+  return <InputNumber className="w-32" min={0} max={10} step={0.1} />
+}
+
+export function DisabledNumberInput() {
+  const [disable, setDisable] = useState(true)
+  return (
+    <div className="flex space-x-4">
+      <InputNumber className="w-32" disabled={disable} defaultValue={3} />
+      <Button
+        label="Toggle disabled"
+        onClick={() => {
+          setDisable((prevState) => !prevState)
+        }}
+      />
+    </div>
+  )
 }
