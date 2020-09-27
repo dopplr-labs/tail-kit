@@ -126,7 +126,7 @@ export const InputNumber = forwardRef(
             'w-full px-3 py-2 text-sm focus:outline-none',
             disabled ? 'cursor-not-allowed text-gray-600' : 'text-gray-800',
           )}
-          value={inputValue}
+          value={!isNaN(inputValue) ? inputValue : ''}
           step={step}
           onChange={(event) => {
             const newValue = parseFloat(event.target.value)
