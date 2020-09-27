@@ -3,7 +3,7 @@ import { useMemoOne } from 'use-memo-one'
 import Button, { ButtonProps } from 'components/button'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
-import { useOutsideClick } from 'hooks/useOutsideClick'
+import useOutsideClick from 'hooks/use-outside-click'
 
 type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
   ref: React.Ref<HTMLButtonElement>

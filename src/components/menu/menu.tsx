@@ -10,7 +10,7 @@ import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import { useMemoOne } from 'use-memo-one'
-import { useOutsideClick } from 'hooks/useOutsideClick'
+import useOutsideClick from 'hooks/use-outside-click'
 import {
   getMenuPosition,
   VerticalPlacement,
