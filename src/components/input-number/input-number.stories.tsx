@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import Button from 'components/button'
+import Switch from 'components/switch'
 import { InputNumber } from './input-number'
 
 export default {
@@ -19,14 +19,14 @@ export function DecimalNumberInput() {
 export function DisabledNumberInput() {
   const [disable, setDisable] = useState(true)
   return (
-    <div className="flex space-x-4">
+    <div className="flex items-center space-x-4">
       <InputNumber className="w-32" disabled={disable} defaultValue={3} />
-      <Button
-        label="Toggle disabled"
-        onClick={() => {
+      <Switch
+        onChange={() => {
           setDisable((prevState) => !prevState)
         }}
       />
+      <div className="text-sm text-gray-800">Toggle Disabled Input</div>
     </div>
   )
 }
