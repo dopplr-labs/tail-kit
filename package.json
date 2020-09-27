@@ -30,6 +30,7 @@
     "@types/lodash-es": "^4.17.3",
     "@types/react-transition-group": "^4.4.0",
     "clsx": "^1.1.1",
+    "downshift": "^6.0.6",
     "lodash-es": "^4.17.15",
     "polished": "^3.6.6",
     "react": "^16.13.1",
