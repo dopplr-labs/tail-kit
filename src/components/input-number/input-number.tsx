@@ -123,8 +123,8 @@ export const InputNumber = forwardRef(
         <input
           type="number"
           className={clsx(
-            'w-full px-3 py-2 text-sm text-gray-800 focus:outline-none',
-            disabled ? 'cursor-not-allowed' : undefined,
+            'w-full px-3 py-2 text-sm focus:outline-none',
+            disabled ? 'cursor-not-allowed text-gray-600' : 'text-gray-800',
           )}
           value={inputValue}
           step={step}
