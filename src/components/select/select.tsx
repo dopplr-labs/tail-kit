@@ -1,30 +1,27 @@
-import React, { createContext, useContext, useState } from 'react'
-import { CheckOutline, ChevronDownOutline } from 'components/icons'
+import React from 'react'
+import { useSelect } from 'downshift'
 import clsx from 'clsx'
-
-const OptionContext = createContext<{
-  showOptions: boolean
-  setShowOptions: React.Dispatch<React.SetStateAction<boolean>>
-  selectedOption: string | undefined
-  setSelectedOption: React.Dispatch<React.SetStateAction<string | undefined>>
-}>({
-  showOptions: false,
-  setShowOptions: () => {},
-  selectedOption: '',
-  setSelectedOption: () => {},
-})
+import { CheckOutline, ChevronDownOutline } from 'components/icons'
 
 /** Select component properties */
 export type SelectProps = {
-  defaultValue?: string
-  children: React.ReactNode
+  /** Options to render in dropdown */
+  options: Array<string>
+  /** Intial label in toggle button */
+  label: string
+  /** Apply class to Select component */
   className?: string
 }
-export function Select({ defaultValue, children, className }: SelectProps) {
-  const [showOptions, setShowOptions] = useState<boolean>(false)
-  const [selectedOption, setSelectedOption] = useState<string | undefined>(
-    defaultValue,
-  )
+export function Select({ options, label, className }: SelectProps) {
+  // Using useSelect hook from downshift to handle logical part of Select
+  const {
+    isOpen,
+    selectedItem,
+    getToggleButtonProps,
+    getMenuProps,
+    highlightedIndex,
+    getItemProps,
+  } = useSelect({ items: options })
 
   return (
     <>
@@ -35,55 +32,36 @@ export function Select({ defaultValue, children, className }: SelectProps) {
             className,
           )}
           type="button"
-          onClick={() => setShowOptions((prevState) => !prevState)}
+          {...getToggleButtonProps()}
         >
-          {selectedOption}
+          {selectedItem ?? label}
           <ChevronDownOutline className="w-4 h-4" />
         </button>
-        {showOptions ? (
-          <>
-            <div className="absolute w-full mt-1 overflow-y-auto text-sm rounded-md shadow">
-              <OptionContext.Provider
-                value={{
-                  showOptions,
-                  setShowOptions,
-                  selectedOption,
-                  setSelectedOption,
-                }}
+        <ul
+          className="w-full mt-1 overflow-y-auto text-sm rounded-md shadow focus:outline-none"
+          {...getMenuProps()}
+        >
+          {isOpen &&
+            options.map((item, index) => (
+              <li
+                className={clsx(
+                  'px-3 py-2 flex items-center justify-between',
+                  highlightedIndex === index
+                    ? 'bg-blue-600 text-white'
+                    : undefined,
+                  selectedItem === item ? 'font-semibold' : undefined,
+                )}
+                key={`${item}${index}`}
+                {...getItemProps({ item, index })}
               >
-                {children}
-              </OptionContext.Provider>
-            </div>
-          </>
-        ) : null}
+                {item}
+                {selectedItem === item ? (
+                  <CheckOutline className="w-5 h-5" />
+                ) : null}
+              </li>
+            ))}
+        </ul>
       </div>
     </>
-  )
-}
-
-/** Option component properties */
-export type OptionType = {
-  value: string
-  children: string
-}
-
-export function Option({ value, children }: OptionType) {
-  const { setShowOptions, selectedOption, setSelectedOption } = useContext(
-    OptionContext,
-  )
-  return (
-    <button
-      className={clsx(
-        'w-full px-3 py-2 text-left flex items-center justify-between text-gray-800 focus:outline-none hover:bg-blue-600 hover:text-white',
-        value === selectedOption ? 'font-bold' : undefined,
-      )}
-      onClick={() => {
-        setSelectedOption(value)
-        setShowOptions(false)
-      }}
-    >
-      {children}
-      {value === selectedOption ? <CheckOutline className="w-5 h-5" /> : null}
-    </button>
   )
 }
