@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useMemoOne } from 'use-memo-one'
 
 const containerIds: string[] = []
 
@@ -8,6 +9,9 @@ type HookProps = {
   /**
    * Array of containers to be whitelisted. If any click event is triggered outside these containers,
    * then the handler owuld be called
+   *
+   * Make sure that this doesn't change during the runtime
+   * use useMemoOne hook to set the containers
    */
   containers: ContainerRef[]
   /** Whether to listen for outside click or not */
@@ -35,8 +39,33 @@ type HookProps = {
  * 4. if step 3 is correct, then check if the element is triggered out the list of containers passed
  * 5. if step 4 is incorrect, then call the outside click handler
  *
- * NOTE: Right now, we are starting with the assumption that the element rendered last would
- * be the top most element, which helds true for all the edge cases (atleast for now).
+ * **VERY VERY IMPORTANT NOTE**
+ * From the above implementation details, you would have get a feeling that something is wrong. The
+ * order of the elements are not determined semantically. If the parent element gets activated after the
+ * child element, then the outside click handler of the parent would get fired, instead of the children. This might
+ * seem very odd, but this is not a bug, but a feature.
+ *
+ * In our UI Kit, most of the elements which have to listen for the outside click to change their state
+ * are rendered within a portal (which is appended directly inside the body), so checking if the element is present
+ * inside the parent won't work as expected. For example
+ *
+ * <Modal>
+ *  <Select>
+ *  </Select>
+ * </Modal>
+ *
+ * Both the Modal as well as Select would be rendered in a portal, so if you try to find the
+ * children of select are present inside the Modal it won't work.
+ *
+ * This leaves us to our assumption that the select would be activated after the modal as rendered
+ * (as the activation of Select would happen when it is opened, which can only happen after the Modal is opened).
+ *
+ *
+ * So for now we rely on the activation order, rather than the semantic parent child relationship. If this assumption
+ * breaks in future, we have to rethink this implementation.
+ *
+ * Best of Luck to the future maintainer. May you find an elegant implementation than this.
+ *
  */
 export function useOutsideClick(
   { containers, active, onClick }: HookProps,
@@ -48,10 +77,16 @@ export function useOutsideClick(
   elements: string[] = containerIds,
 ) {
   // generate a random container id
-  const containerId = useMemo(() => Math.random().toString(36).substring(7), [])
+  const containerId = useMemoOne(
+    () => Math.random().toString(36).substring(7),
+    [],
+  )
 
   const callback = useRef<(event: MouseEvent) => void>()
   callback.current = onClick
+
+  const elementsRef = useRef(elements)
+  elementsRef.current = elements
 
   useEffect(() => {
     function handleClick(event: MouseEvent) {
@@ -67,7 +102,7 @@ export function useOutsideClick(
 
       if (
         // check if the current element is the top most element
-        containerId === elements[0] &&
+        containerId === elementsRef.current[0] &&
         !containers.some((container) =>
           elementInsideContainer(event.target as Node, container),
         )
@@ -76,16 +111,21 @@ export function useOutsideClick(
       }
     }
 
-    if (active) {
-      elements.unshift(containerId)
+    if (
+      active &&
+      // if the element is present in the containerIds means that it was activated prior to this
+      // we don't want to do it again
+      !elementsRef.current.includes(containerId)
+    ) {
+      elementsRef.current.unshift(containerId)
       window.addEventListener('mousedown', handleClick)
     }
 
     return () => {
-      if (active) {
-        elements.shift()
+      if (containerId === elementsRef.current[0]) {
+        elementsRef.current.shift()
         window.removeEventListener('mousedown', handleClick)
       }
     }
-  }, [containers, active, elements, containerId])
+  }, [containers, active, elementsRef, containerId])
 }
