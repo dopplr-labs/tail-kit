@@ -1,6 +1,6 @@
 import React, { cloneElement, forwardRef } from 'react'
 import clsx from 'clsx'
-import { useSyncedState } from 'hooks/useSyncedState'
+import useSyncedState from 'hooks/use-synced-states'
 
 export type InputProps = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
