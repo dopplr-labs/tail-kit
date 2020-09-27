@@ -1,4 +1,4 @@
-![tail-kit](./assets/tail-kit-logo.png)
+<img src="./assets/tail-kit-logo.png" width="100px" />
 
 # tail-kit
 
