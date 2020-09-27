@@ -1,18 +1,45 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useSelect } from 'downshift'
 import clsx from 'clsx'
 import { CheckOutline, ChevronDownOutline } from 'components/icons'
 
+export type optionType = {
+  label: string
+  value: string
+  icon?: React.ReactNode
+}
 /** Select component properties */
 export type SelectProps = {
   /** Options to render in dropdown */
-  options: Array<string>
+  options: (optionType | string)[]
   /** Intial label in toggle button */
-  label: string
+  placeholder: string
+  /** Disable select component */
+  disabled?: boolean
+  /** The callback function that is trigered when an item is selected */
+  onChange?: (value: string | optionType | null) => void
   /** Apply class to Select component */
   className?: string
 }
-export function Select({ options, label, className }: SelectProps) {
+export function Select({
+  options,
+  placeholder,
+  disabled,
+  onChange,
+  className,
+}: SelectProps) {
+  const selectOptions = useMemo(() => {
+    return options.map((option) => {
+      if (typeof option === 'string') {
+        return { label: option, value: option } as optionType
+      } else {
+        return option
+      }
+    })
+  }, [options])
+
+  const itemToString = (item: optionType | null) => (item ? item.label : '')
+
   // Using useSelect hook from downshift to handle logical part of Select
   const {
     isOpen,
@@ -21,20 +48,25 @@ export function Select({ options, label, className }: SelectProps) {
     getMenuProps,
     highlightedIndex,
     getItemProps,
-  } = useSelect({ items: options })
+  } = useSelect({ items: selectOptions, itemToString })
 
   return (
     <>
       <div className="relative inline-block">
         <button
           className={clsx(
-            'flex px-3 py-2 items-center text-sm cursor-pointer text-gray-800 justify-between overflow-hidden border rounded-md focus:shadow-outline focus:outline-none',
+            'flex px-3 py-2 items-center text-sm cursor-pointer justify-between overflow-hidden border rounded-md focus:shadow-outline focus:outline-none',
+            disabled
+              ? 'cursor-not-allowed bg-gray-100 text-gray-400'
+              : 'text-gray-800',
             className,
           )}
           type="button"
+          disabled={disabled}
+          onChange={onChange?.(selectedItem)}
           {...getToggleButtonProps()}
         >
-          {selectedItem ?? label}
+          {selectedItem ? itemToString(selectedItem) : placeholder}
           <ChevronDownOutline className="w-4 h-4" />
         </button>
         <ul
@@ -42,7 +74,7 @@ export function Select({ options, label, className }: SelectProps) {
           {...getMenuProps()}
         >
           {isOpen &&
-            options.map((item, index) => (
+            selectOptions.map((item, index) => (
               <li
                 className={clsx(
                   'px-3 py-2 flex items-center justify-between',
@@ -51,10 +83,14 @@ export function Select({ options, label, className }: SelectProps) {
                     : undefined,
                   selectedItem === item ? 'font-semibold' : undefined,
                 )}
-                key={`${item}${index}`}
-                {...getItemProps({ item, index })}
+                key={`${item.label}${index}`}
+                {...getItemProps({ item: item, index })}
               >
-                {item}
+                <div className="flex items-center space-x-2">
+                  <span>{item?.icon}</span>
+                  <span>{item.label}</span>
+                </div>
+
                 {selectedItem === item ? (
                   <CheckOutline className="w-5 h-5" />
                 ) : null}
