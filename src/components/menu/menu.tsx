@@ -142,7 +142,7 @@ export function Menu({
   }, [menuVisible, trigger, verticalPlacement, horizontalPlacement])
 
   useOutsideClick({
-    containers: [menuContainer, triggerContainer],
+    containers: useMemoOne(() => [menuContainer, triggerContainer], []),
     active: menuVisible === MenuVisibility.SHOWN,
     onClick: () => {
       setMenuVisible(MenuVisibility.HIDDEN)

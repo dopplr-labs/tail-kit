@@ -56,7 +56,7 @@ export function Modal({
   const contentContainer = useRef<HTMLDivElement | null>(null)
 
   useOutsideClick({
-    containers: [contentContainer],
+    containers: useMemoOne(() => [contentContainer], []),
     active: visible ?? false,
     onClick: () => {
       onRequestClose?.()
