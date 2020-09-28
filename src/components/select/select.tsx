@@ -3,27 +3,37 @@ import { useSelect } from 'downshift'
 import clsx from 'clsx'
 import { CheckOutline, ChevronDownOutline } from 'components/icons'
 
-export type optionType = {
+export type OptionType = {
   label: string
   value: string
   icon?: React.ReactNode
 }
-/** Select component properties */
+
+/**
+ * Select component properties
+ */
 export type SelectProps = {
   /** Options to render in dropdown */
-  options: (optionType | string)[]
+  options: (OptionType | string)[]
   /** Intial label in toggle button */
-  placeholder: string
+  placeholder?: string
+  /** Define default selection for Select component */
+  defaultValue?: string
   /** Disable select component */
   disabled?: boolean
   /** The callback function that is trigered when an item is selected */
-  onChange?: (value: string | optionType | null) => void
+  onChange?: ({
+    selectedItem,
+  }: {
+    selectedItem: OptionType | undefined
+  }) => void
   /** Apply class to Select component */
   className?: string
 }
 export function Select({
   options,
   placeholder,
+  defaultValue,
   disabled,
   onChange,
   className,
@@ -31,14 +41,14 @@ export function Select({
   const selectOptions = useMemo(() => {
     return options.map((option) => {
       if (typeof option === 'string') {
-        return { label: option, value: option } as optionType
+        return { label: option, value: option } as OptionType
       } else {
         return option
       }
     })
   }, [options])
 
-  const itemToString = (item: optionType | null) => (item ? item.label : '')
+  const itemToString = (item: OptionType | null) => (item ? item.label : '')
 
   // Using useSelect hook from downshift to handle logical part of Select
   const {
@@ -48,7 +58,16 @@ export function Select({
     getMenuProps,
     highlightedIndex,
     getItemProps,
-  } = useSelect({ items: selectOptions, itemToString })
+  } = useSelect<OptionType>({
+    items: selectOptions,
+    itemToString,
+    initialSelectedItem: selectOptions.find(
+      (item) => item.value === defaultValue,
+    ),
+    onSelectedItemChange: ({ selectedItem }) => {
+      onChange?.({ selectedItem: selectedItem ?? undefined })
+    },
+  })
 
   return (
     <>
@@ -63,10 +82,9 @@ export function Select({
           )}
           type="button"
           disabled={disabled}
-          onChange={onChange?.(selectedItem)}
           {...getToggleButtonProps()}
         >
-          {selectedItem ? itemToString(selectedItem) : placeholder}
+          <span>{selectedItem ? itemToString(selectedItem) : placeholder}</span>
           <ChevronDownOutline className="w-4 h-4" />
         </button>
         <ul

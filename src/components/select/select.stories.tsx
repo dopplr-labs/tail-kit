@@ -7,7 +7,7 @@ import {
   ChipOutline,
   ClipboardListOutline,
 } from 'components/icons'
-import { optionType, Select } from './select'
+import { OptionType, Select } from './select'
 
 export default {
   title: 'Data Entry/Select',
@@ -23,12 +23,16 @@ export function DefaultSelect() {
     'Doctor Strange',
     'Hawk Eye',
   ]
-  function handleChange(selectedItem: string | optionType | null) {
+  function handleChange({
+    selectedItem,
+  }: {
+    selectedItem: OptionType | undefined
+  }) {
     action('selected option')(selectedItem)
   }
   return (
     <Select
-      placeholder="Select Avenger"
+      defaultValue="Spiderman"
       options={options}
       onChange={handleChange}
       className="w-48"
@@ -66,5 +70,19 @@ export function SelectWithListIcons() {
       icon: <ClipboardListOutline />,
     },
   ]
-  return <Select options={options} placeholder="Select SVG" className="w-56" />
+  function handleChange({
+    selectedItem,
+  }: {
+    selectedItem: OptionType | undefined
+  }) {
+    action('selected option')(selectedItem)
+  }
+  return (
+    <Select
+      options={options}
+      placeholder="Select SVG"
+      onChange={handleChange}
+      className="w-56"
+    />
+  )
 }
