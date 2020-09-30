@@ -8,6 +8,7 @@ import {
   ClipboardListOutline,
 } from 'components/icons'
 import { OptionType, Select } from './select'
+import { SearchSelect } from './search-select'
 
 export default {
   title: 'Data Entry/Select',
@@ -85,4 +86,16 @@ export function SelectWithListIcons() {
       className="w-56"
     />
   )
+}
+
+export function SelectWithSearch() {
+  const options = [
+    'Black Widow',
+    'Hulk',
+    'Spiderman',
+    'Captain America',
+    'Doctor Strange',
+    'Hawk Eye',
+  ]
+  return <SearchSelect placeholder="Search Avenger" options={options} />
 }
