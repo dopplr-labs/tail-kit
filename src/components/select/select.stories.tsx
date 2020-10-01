@@ -9,6 +9,7 @@ import {
 } from 'components/icons'
 import { OptionType, Select } from './select'
 import { SearchSelect } from './search-select'
+import { MultiSelect } from './multi-select'
 
 export default {
   title: 'Data Entry/Select',
@@ -98,4 +99,22 @@ export function SelectWithSearch() {
     'Hawk Eye',
   ]
   return <SearchSelect placeholder="Search Avenger" options={options} />
+}
+
+export function MultipleSelection() {
+  const options = [
+    'Black Widow',
+    'Hulk',
+    'Spiderman',
+    'Captain America',
+    'Doctor Strange',
+    'Hawk Eye',
+  ]
+  return (
+    <MultiSelect
+      options={options}
+      placeholder="Select Avengers"
+      className="w-80"
+    />
+  )
 }
