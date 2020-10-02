@@ -90,7 +90,7 @@ export function SelectWithListIcons() {
 }
 
 export function SelectWithSearch() {
-  const options = [
+  const plainOptions = [
     'Black Widow',
     'Hulk',
     'Spiderman',
@@ -98,7 +98,23 @@ export function SelectWithSearch() {
     'Doctor Strange',
     'Hawk Eye',
   ]
-  return <SearchSelect placeholder="Search Avenger" options={options} />
+  const options = [
+    { label: 'Beaker', value: 'beaker', icon: <BeakerOutline /> },
+    { label: 'Calculator', value: 'calculator', icon: <CalculatorOutline /> },
+    { label: 'Chip', value: 'chip', icon: <ChipOutline /> },
+    {
+      label: 'Clipboard List',
+      value: 'clipboard-list',
+      icon: <ClipboardListOutline />,
+    },
+  ]
+  return (
+    <div className="flex space-x-4">
+      {/* Remove flex from above after Portal implementation */}
+      <SearchSelect placeholder="Search Avenger" options={plainOptions} />
+      <SearchSelect placeholder="Search SVGs" options={options} />
+    </div>
+  )
 }
 
 export function MultipleSelection() {
