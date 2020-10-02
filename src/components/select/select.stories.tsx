@@ -118,7 +118,7 @@ export function SelectWithSearch() {
 }
 
 export function MultipleSelection() {
-  const options = [
+  const plainOptions = [
     'Black Widow',
     'Hulk',
     'Spiderman',
@@ -126,12 +126,29 @@ export function MultipleSelection() {
     'Doctor Strange',
     'Hawk Eye',
   ]
+  const options = [
+    { label: 'Beaker', value: 'beaker', icon: <BeakerOutline /> },
+    { label: 'Calculator', value: 'calculator', icon: <CalculatorOutline /> },
+    { label: 'Chip', value: 'chip', icon: <ChipOutline /> },
+    {
+      label: 'Clipboard List',
+      value: 'clipboard-list',
+      icon: <ClipboardListOutline />,
+    },
+  ]
   return (
-    <MultiSelect
-      options={options}
-      placeholder="Select Avengers"
-      initialSelectedItems={['Hulk']}
-      className="w-80"
-    />
+    <div className="flex space-x-4">
+      <MultiSelect
+        options={plainOptions}
+        placeholder="Select Avengers"
+        defaultValue={['Hulk']}
+        className="w-80"
+      />
+      <MultiSelect
+        options={options}
+        placeholder="Search and select SVG"
+        className="w-80"
+      />
+    </div>
   )
 }
