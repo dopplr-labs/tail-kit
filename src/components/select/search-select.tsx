@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useCombobox } from 'downshift'
+import matchSorter from 'match-sorter'
 import clsx from 'clsx'
 import Input from 'components/input'
 
@@ -20,11 +21,7 @@ export function SearchSelect({ options, placeholder }: SearchSelectProps) {
   } = useCombobox({
     items: inputItems,
     onInputValueChange: ({ inputValue }) => {
-      setInputItems(
-        options.filter((item) =>
-          item.toLowerCase().startsWith(inputValue?.toLowerCase() ?? ''),
-        ),
-      )
+      setInputItems(matchSorter(options, inputValue ?? ''))
     },
   })
 

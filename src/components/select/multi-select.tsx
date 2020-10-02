@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react'
 import { useCombobox, useMultipleSelection } from 'downshift'
 import clsx from 'clsx'
 import { XOutline } from 'components/icons'
+import matchSorter from 'match-sorter'
 
 export type MultiSelectProps = {
   options: string[]
@@ -27,11 +28,12 @@ export function MultiSelect({
   } = useMultipleSelection({ initialSelectedItems })
 
   const filteredItems = useMemo(() => {
-    return options.filter(
-      (item) =>
-        selectedItems.indexOf(item) < 0 &&
-        item.toLowerCase().startsWith(inputValue?.toLowerCase() ?? ''),
+    // remove already selected items from array
+    const unselectedItems = options.filter(
+      (item) => selectedItems.indexOf(item) < 0,
     )
+    // search based on user input using matchSorter
+    return matchSorter(unselectedItems, inputValue ?? '')
   }, [inputValue, options, selectedItems])
 
   const {
