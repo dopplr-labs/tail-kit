@@ -1,7 +1,11 @@
 import React, { useMemo } from 'react'
 import { useSelect } from 'downshift'
 import clsx from 'clsx'
-import { CheckOutline, ChevronDownOutline } from 'components/icons'
+import {
+  CheckOutline,
+  ChevronDownOutline,
+  XCircleSolid,
+} from 'components/icons'
 
 export type OptionType = {
   label: string
@@ -10,7 +14,7 @@ export type OptionType = {
 }
 
 /**
- * Select component properties
+ * Select component propertie
  */
 export type SelectProps = {
   /** Options to render in dropdown */
@@ -21,6 +25,8 @@ export type SelectProps = {
   defaultValue?: string
   /** Disable select component */
   disabled?: boolean
+  /** Show clear button to clear selection */
+  allowClear?: boolean
   /** The callback function that is trigered when an item is selected */
   onChange?: ({
     selectedItem,
@@ -35,6 +41,7 @@ export function Select({
   placeholder,
   defaultValue,
   disabled,
+  allowClear = false,
   onChange,
   className,
 }: SelectProps) {
@@ -54,6 +61,7 @@ export function Select({
   const {
     isOpen,
     selectedItem,
+    selectItem,
     getToggleButtonProps,
     getMenuProps,
     highlightedIndex,
@@ -73,7 +81,7 @@ export function Select({
     <div className="inline-block">
       <button
         className={clsx(
-          'flex px-3 py-2 items-center text-sm cursor-pointer justify-between overflow-hidden border rounded-md focus:shadow-outline focus:outline-none',
+          'flex px-3 py-2 group items-center text-sm cursor-pointer justify-between overflow-hidden border rounded-md focus:shadow-outline focus:outline-none',
           disabled
             ? 'cursor-not-allowed bg-gray-100 text-gray-400'
             : 'text-gray-800',
@@ -84,7 +92,24 @@ export function Select({
         {...getToggleButtonProps()}
       >
         <span>{selectedItem ? itemToString(selectedItem) : placeholder}</span>
-        <ChevronDownOutline className="w-4 h-4" />
+        {allowClear && selectedItem ? (
+          <button
+            className="opacity-0 focus:outline-none group-hover:opacity-100"
+            onClick={(event) => {
+              event.stopPropagation()
+              // @ts-ignore: selectItem is not accepting null argument type
+              selectItem(null)
+            }}
+          >
+            <XCircleSolid className="w-4 h-4 text-gray-400" />
+          </button>
+        ) : null}
+        <ChevronDownOutline
+          className={clsx(
+            'w-4 h-4',
+            allowClear && selectedItem ? 'group-hover:hidden' : null,
+          )}
+        />
       </button>
       <ul
         className="w-full mt-1 overflow-y-auto text-sm rounded-md shadow focus:outline-none"
