@@ -34,6 +34,8 @@ export function DefaultSelect() {
   }
   return (
     <Select
+      placeholder="Select Avenger"
+      allowClear
       defaultValue="Spiderman"
       options={options}
       onChange={handleChange}
