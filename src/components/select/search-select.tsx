@@ -1,15 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useCombobox } from 'downshift'
 import matchSorter from 'match-sorter'
 import clsx from 'clsx'
 import Input from 'components/input'
+import { OptionType } from './select'
 
 export type SearchSelectProps = {
-  options: string[]
+  /** Options to render in dropdown */
+  options: (OptionType | string)[]
+  /** Intial label in select input field */
   placeholder: string
 }
 export function SearchSelect({ options, placeholder }: SearchSelectProps) {
-  const [inputItems, setInputItems] = useState(options)
+  const selectOptions = useMemo(() => {
+    return options.map((option) => {
+      if (typeof option === 'string') {
+        return { label: option, value: option } as OptionType
+      } else {
+        return option
+      }
+    })
+  }, [options])
+
+  const [inputItems, setInputItems] = useState(selectOptions)
+
+  const itemToString = (item: OptionType | null) => (item ? item.label : '')
+
   const {
     isOpen,
     getMenuProps,
@@ -20,8 +36,17 @@ export function SearchSelect({ options, placeholder }: SearchSelectProps) {
     getItemProps,
   } = useCombobox({
     items: inputItems,
+    itemToString,
     onInputValueChange: ({ inputValue }) => {
-      setInputItems(matchSorter(options, inputValue ?? ''))
+      // creating array of labels after filteration using matchSorter
+      const filteredArray = matchSorter(
+        selectOptions.map((item) => item.label),
+        inputValue ?? '',
+      )
+      // render filtered array in select dropdown
+      setInputItems(
+        selectOptions.filter((item) => filteredArray.indexOf(item.label) >= 0),
+      )
     },
   })
 
@@ -47,10 +72,13 @@ export function SearchSelect({ options, placeholder }: SearchSelectProps) {
                   ? 'bg-blue-600 text-white'
                   : undefined,
               )}
-              key={`${item}${index}`}
+              key={`${item.label}${index}`}
               {...getItemProps({ item, index })}
             >
-              {item}
+              <div className="flex items-center space-x-2">
+                <span>{item?.icon}</span>
+                <span>{item.label}</span>
+              </div>
             </li>
           ))}
       </ul>
