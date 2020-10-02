@@ -3,20 +3,35 @@ import { useCombobox, useMultipleSelection } from 'downshift'
 import clsx from 'clsx'
 import { XOutline } from 'components/icons'
 import matchSorter from 'match-sorter'
+import { OptionType } from './select'
 
 export type MultiSelectProps = {
-  options: string[]
-  initialSelectedItems?: string[]
+  /** Options to render in dropdown */
+  options: (OptionType | string)[]
+  /** Intial label in select input field */
   placeholder?: string
+  /** default selections for Select component */
+  defaultValue?: string[]
+  /** Apply class to Select component */
   className?: string
 }
 
 export function MultiSelect({
   options,
-  initialSelectedItems = [],
+  defaultValue = [],
   placeholder,
   className,
 }: MultiSelectProps) {
+  const selectOptions = useMemo(() => {
+    return options.map((option) => {
+      if (typeof option === 'string') {
+        return { label: option, value: option } as OptionType
+      } else {
+        return option
+      }
+    })
+  }, [options])
+
   const [inputValue, setInputValue] = useState<string | undefined>('')
 
   const {
@@ -25,16 +40,16 @@ export function MultiSelect({
     addSelectedItem,
     removeSelectedItem,
     selectedItems,
-  } = useMultipleSelection({ initialSelectedItems })
+  } = useMultipleSelection({ initialSelectedItems: defaultValue })
 
   const filteredItems = useMemo(() => {
     // remove already selected items from array
-    const unselectedItems = options.filter(
-      (item) => selectedItems.indexOf(item) < 0,
+    const unselectedItems = selectOptions.filter(
+      (item) => selectedItems.indexOf(item.label) < 0,
     )
     // search based on user input using matchSorter
-    return matchSorter(unselectedItems, inputValue ?? '')
-  }, [inputValue, options, selectedItems])
+    return matchSorter(unselectedItems, inputValue ?? '', { keys: ['label'] })
+  }, [inputValue, selectOptions, selectedItems])
 
   const {
     isOpen,
@@ -71,7 +86,7 @@ export function MultiSelect({
         case useCombobox.stateChangeTypes.InputBlur:
           if (selectedItem) {
             setInputValue('')
-            addSelectedItem(selectedItem)
+            addSelectedItem(selectedItem.label)
           }
           break
         default:
@@ -90,7 +105,7 @@ export function MultiSelect({
         <div className="flex flex-wrap items-center -m-1">
           {selectedItems.map((selectedItem, index) => (
             <div
-              className="flex items-center px-2 py-1 m-1 text-sm text-blue-700 bg-blue-100 rounded-md gap-x-2 focus:outline-none"
+              className="flex items-center px-2 m-1 text-sm text-blue-700 bg-blue-100 rounded-md gap-x-2 focus:outline-none"
               key={`selected-item-${index}`}
               {...getSelectedItemProps({ selectedItem, index })}
             >
@@ -128,10 +143,13 @@ export function MultiSelect({
                   ? 'bg-blue-600 text-white'
                   : undefined,
               )}
-              key={`${item}${index}`}
+              key={`${item.label}${index}`}
               {...getItemProps({ item, index })}
             >
-              {item}
+              <div className="flex items-center space-x-2">
+                <span>{item?.icon}</span>
+                <span>{item.label}</span>
+              </div>
             </li>
           ))}
       </ul>
