@@ -114,6 +114,7 @@ export function MultipleSelection() {
     <MultiSelect
       options={options}
       placeholder="Select Avengers"
+      initialSelectedItems={['Hulk']}
       className="w-80"
     />
   )
