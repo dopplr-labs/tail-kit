@@ -38,14 +38,9 @@ export function SearchSelect({ options, placeholder }: SearchSelectProps) {
     items: inputItems,
     itemToString,
     onInputValueChange: ({ inputValue }) => {
-      // creating array of labels after filteration using matchSorter
-      const filteredArray = matchSorter(
-        selectOptions.map((item) => item.label),
-        inputValue ?? '',
-      )
-      // render filtered array in select dropdown
+      // render filtered result in select dropdown based on user input using matchSorter
       setInputItems(
-        selectOptions.filter((item) => filteredArray.indexOf(item.label) >= 0),
+        matchSorter(selectOptions, inputValue ?? '', { keys: ['label'] }),
       )
     },
   })
