@@ -110,10 +110,21 @@ export function SelectWithSearch() {
       icon: <ClipboardListOutline />,
     },
   ]
+  function handleChange({
+    selectedItem,
+  }: {
+    selectedItem: OptionType | undefined
+  }) {
+    action('selected option')(selectedItem)
+  }
   return (
     <div className="flex space-x-4">
       {/* Remove flex from above after Portal implementation */}
-      <SearchSelect placeholder="Search Avenger" options={plainOptions} />
+      <SearchSelect
+        placeholder="Search Avenger"
+        options={plainOptions}
+        onChange={handleChange}
+      />
       <SearchSelect placeholder="Search SVGs" options={options} />
     </div>
   )

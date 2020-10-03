@@ -10,6 +10,12 @@ export type SearchSelectProps = {
   options: (OptionType | string)[]
   /** Intial label in select input field */
   placeholder: string
+  /** The callback function that is trigered when an item is selected */
+  onChange?: ({
+    selectedItem,
+  }: {
+    selectedItem: OptionType | undefined
+  }) => void
   /** Apply class to Select component */
   className?: string
   /** Add style object for custom styling */
@@ -18,6 +24,7 @@ export type SearchSelectProps = {
 export function SearchSelect({
   options,
   placeholder,
+  onChange,
   className,
   style,
 }: SearchSelectProps) {
@@ -51,6 +58,9 @@ export function SearchSelect({
       setInputItems(
         matchSorter(selectOptions, inputValue ?? '', { keys: ['label'] }),
       )
+    },
+    onSelectedItemChange: ({ selectedItem }) => {
+      onChange?.({ selectedItem: selectedItem ?? undefined })
     },
   })
 
