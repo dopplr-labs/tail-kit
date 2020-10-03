@@ -143,6 +143,7 @@ export function MultipleSelection() {
       <MultiSelect
         options={plainOptions}
         placeholder="Select Avengers"
+        allowClear
         defaultValue={['Hulk']}
         className="w-80"
       />
