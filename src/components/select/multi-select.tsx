@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { useCombobox, useMultipleSelection } from 'downshift'
 import clsx from 'clsx'
-import { XOutline } from 'components/icons'
+import { XCircleSolid, XOutline } from 'components/icons'
 import matchSorter from 'match-sorter'
 import { OptionType } from './select'
 
@@ -12,14 +12,17 @@ export type MultiSelectProps = {
   placeholder?: string
   /** default selections for Select component */
   defaultValue?: string[]
+  /** Show clear button to clear selection */
+  allowClear?: boolean
   /** Apply class to Select component */
   className?: string
 }
 
 export function MultiSelect({
   options,
-  defaultValue = [],
   placeholder,
+  defaultValue = [],
+  allowClear = false,
   className,
 }: MultiSelectProps) {
   const selectOptions = useMemo(() => {
@@ -98,11 +101,11 @@ export function MultiSelect({
     <div className="inline-block">
       <div
         className={clsx(
-          'px-3 py-2 border rounded-md focus-within:shadow-outline',
+          'group flex items-center justify-between px-3 py-2 border rounded-md focus-within:shadow-outline',
           className,
         )}
       >
-        <div className="flex flex-wrap items-center -m-1">
+        <div className="flex flex-wrap items-center flex-1 -m-1">
           {selectedItems.map((selectedItem, index) => (
             <div
               className="flex items-center px-2 m-1 text-sm text-blue-700 bg-blue-100 rounded-md gap-x-2 focus:outline-none"
@@ -129,6 +132,18 @@ export function MultiSelect({
             />
           </div>
         </div>
+        {allowClear && (selectedItems?.length !== 0 || inputValue) ? (
+          <button
+            className="opacity-0 focus:outline-none group-hover:opacity-100"
+            onClick={(event) => {
+              event.stopPropagation()
+              selectedItems.forEach((item) => removeSelectedItem(item))
+              setInputValue('')
+            }}
+          >
+            <XCircleSolid className="w-4 h-4 text-gray-400" />
+          </button>
+        ) : null}
       </div>
       <ul
         className="w-full mt-1 overflow-y-auto text-sm rounded-md shadow focus:outline-none"
