@@ -35,6 +35,8 @@ export type SelectProps = {
   }) => void
   /** Apply class to Select component */
   className?: string
+  /** Add style object for custom styling */
+  style?: React.CSSProperties
 }
 export function Select({
   options,
@@ -44,6 +46,7 @@ export function Select({
   allowClear = false,
   onChange,
   className,
+  style,
 }: SelectProps) {
   const selectOptions = useMemo(() => {
     return options.map((option) => {
@@ -89,6 +92,7 @@ export function Select({
         )}
         type="button"
         disabled={disabled}
+        style={style}
         {...getToggleButtonProps()}
       >
         <span>{selectedItem ? itemToString(selectedItem) : placeholder}</span>

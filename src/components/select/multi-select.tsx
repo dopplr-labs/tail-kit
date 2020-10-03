@@ -16,6 +16,8 @@ export type MultiSelectProps = {
   allowClear?: boolean
   /** Apply class to Select component */
   className?: string
+  /** Add style object for custom styling */
+  style?: React.CSSProperties
 }
 
 export function MultiSelect({
@@ -24,6 +26,7 @@ export function MultiSelect({
   defaultValue = [],
   allowClear = false,
   className,
+  style,
 }: MultiSelectProps) {
   const selectOptions = useMemo(() => {
     return options.map((option) => {
@@ -104,6 +107,7 @@ export function MultiSelect({
           'group flex items-center justify-between px-3 py-2 border rounded-md focus-within:shadow-outline',
           className,
         )}
+        style={style}
       >
         <div className="flex flex-wrap items-center flex-1 -m-1">
           {selectedItems.map((selectedItem, index) => (

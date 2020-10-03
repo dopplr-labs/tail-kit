@@ -10,8 +10,17 @@ export type SearchSelectProps = {
   options: (OptionType | string)[]
   /** Intial label in select input field */
   placeholder: string
+  /** Apply class to Select component */
+  className?: string
+  /** Add style object for custom styling */
+  style?: React.CSSProperties
 }
-export function SearchSelect({ options, placeholder }: SearchSelectProps) {
+export function SearchSelect({
+  options,
+  placeholder,
+  className,
+  style,
+}: SearchSelectProps) {
   const selectOptions = useMemo(() => {
     return options.map((option) => {
       if (typeof option === 'string') {
@@ -50,6 +59,8 @@ export function SearchSelect({ options, placeholder }: SearchSelectProps) {
       <div {...getComboboxProps()}>
         <Input
           placeholder={placeholder}
+          className={className}
+          style={style}
           {...getInputProps()}
           {...getToggleButtonProps()}
         />
