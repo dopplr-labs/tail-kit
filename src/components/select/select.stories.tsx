@@ -149,6 +149,15 @@ export function MultipleSelection() {
       icon: <ClipboardListOutline />,
     },
   ]
+  function handleChange({
+    selectedItem,
+  }: {
+    selectedItem: string[] | undefined
+  }) {
+    if (selectedItem) {
+      action('selected option')(...selectedItem)
+    }
+  }
   return (
     <div className="flex space-x-4">
       <MultiSelect
@@ -157,6 +166,7 @@ export function MultipleSelection() {
         allowClear
         defaultValue={['Hulk']}
         className="w-80"
+        onChange={handleChange}
       />
       <MultiSelect
         options={options}

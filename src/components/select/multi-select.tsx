@@ -14,6 +14,8 @@ export type MultiSelectProps = {
   defaultValue?: string[]
   /** Show clear button to clear selection */
   allowClear?: boolean
+  /** The callback function that is trigered when an item is selected */
+  onChange?: ({ selectedItem }: { selectedItem: string[] | undefined }) => void
   /** Apply class to Select component */
   className?: string
   /** Add style object for custom styling */
@@ -25,6 +27,7 @@ export function MultiSelect({
   placeholder,
   defaultValue = [],
   allowClear = false,
+  onChange,
   className,
   style,
 }: MultiSelectProps) {
@@ -46,7 +49,12 @@ export function MultiSelect({
     addSelectedItem,
     removeSelectedItem,
     selectedItems,
-  } = useMultipleSelection({ initialSelectedItems: defaultValue })
+  } = useMultipleSelection({
+    initialSelectedItems: defaultValue,
+    onSelectedItemsChange: ({ selectedItems }) => {
+      onChange?.({ selectedItem: selectedItems ?? undefined })
+    },
+  })
 
   const filteredItems = useMemo(() => {
     // remove already selected items from array
