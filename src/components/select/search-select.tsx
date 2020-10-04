@@ -9,7 +9,7 @@ export type SearchSelectProps = {
   /** Options to render in dropdown */
   options: (OptionType | string)[]
   /** Intial label in select input field */
-  placeholder: string
+  placeholder?: string
   /** Disable select component */
   disabled?: boolean
   /** Show clear button to clear selection */
@@ -86,7 +86,7 @@ export function SearchSelect({
           placeholder={placeholder}
           className={clsx(
             'flex-1 min-w-0 font-sans text-sm text-gray-800 placeholder-gray-400 focus:outline-none',
-            disabled ? 'cursor-not-allowed' : undefined,
+            disabled ? 'cursor-not-allowed bg-gray-100' : undefined,
           )}
           disabled={disabled}
           {...getInputProps()}

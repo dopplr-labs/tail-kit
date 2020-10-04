@@ -170,7 +170,7 @@ export function MultipleSelection() {
     }
   }
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-4 ">
       <MultiSelect
         options={plainOptions}
         placeholder="Select Avengers"
@@ -182,6 +182,13 @@ export function MultipleSelection() {
       <MultiSelect
         options={options}
         placeholder="Search and select SVG"
+        className="w-80"
+      />
+      <MultiSelect
+        options={plainOptions}
+        disabled
+        defaultValue={['Spiderman', 'Black Widow']}
+        placeholder="Select Avengers"
         className="w-80"
       />
     </div>

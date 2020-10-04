@@ -12,6 +12,8 @@ export type MultiSelectProps = {
   placeholder?: string
   /** default selections for Select component */
   defaultValue?: string[]
+  /** Disable select component */
+  disabled?: boolean
   /** Show clear button to clear selection */
   allowClear?: boolean
   /** The callback function that is trigered when an item is selected */
@@ -26,6 +28,7 @@ export function MultiSelect({
   options,
   placeholder,
   defaultValue = [],
+  disabled = false,
   allowClear = false,
   onChange,
   className,
@@ -113,6 +116,7 @@ export function MultiSelect({
       <div
         className={clsx(
           'group flex items-center justify-between px-3 py-2 border rounded-md focus-within:shadow-outline',
+          disabled ? 'bg-gray-100 cursor-not-allowed' : undefined,
           className,
         )}
         style={style}
@@ -120,31 +124,44 @@ export function MultiSelect({
         <div className="flex flex-wrap items-center flex-1 -m-1">
           {selectedItems.map((selectedItem, index) => (
             <div
-              className="flex items-center px-2 m-1 text-sm text-blue-700 bg-blue-100 rounded-md gap-x-2 focus:outline-none"
+              className={clsx(
+                'flex items-center px-2 m-1 text-sm rounded-md gap-x-2 focus:outline-none',
+                disabled
+                  ? 'bg-gray-200 text-gray-700'
+                  : 'bg-blue-100 text-blue-700',
+              )}
               key={`selected-item-${index}`}
               {...getSelectedItemProps({ selectedItem, index })}
             >
               {selectedItem}
-              <button
-                className="focus:outline-none"
-                onClick={() => {
-                  removeSelectedItem(selectedItem)
-                }}
-              >
-                <XOutline className="w-4 h-4" />
-              </button>
+              {!disabled ? (
+                <button
+                  className="focus:outline-none"
+                  onClick={() => {
+                    removeSelectedItem(selectedItem)
+                  }}
+                >
+                  <XOutline className="w-4 h-4" />
+                </button>
+              ) : null}
             </div>
           ))}
           <div className="flex-1 min-w-0" {...getComboboxProps()}>
             <input
               placeholder={selectedItems.length === 0 ? placeholder : ''}
-              className="w-full m-1 text-sm focus:outline-none"
+              className={clsx(
+                'w-full m-1 text-sm focus:outline-none',
+                disabled ? 'cursor-not-allowed bg-gray-100' : undefined,
+              )}
+              disabled={disabled}
               {...getInputProps(getDropdownProps({ preventKeyAction: isOpen }))}
               {...getToggleButtonProps()}
             />
           </div>
         </div>
-        {allowClear && (selectedItems?.length !== 0 || inputValue) ? (
+        {allowClear &&
+        (selectedItems?.length !== 0 || inputValue) &&
+        !disabled ? (
           <button
             className="opacity-0 focus:outline-none group-hover:opacity-100"
             onClick={(event) => {

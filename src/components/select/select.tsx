@@ -42,7 +42,7 @@ export function Select({
   options,
   placeholder,
   defaultValue,
-  disabled,
+  disabled = false,
   allowClear = false,
   onChange,
   className,
