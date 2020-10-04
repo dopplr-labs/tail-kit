@@ -122,10 +122,16 @@ export function SelectWithSearch() {
       {/* Remove flex from above after Portal implementation */}
       <SearchSelect
         placeholder="Search Avenger"
+        allowClear
         options={plainOptions}
         onChange={handleChange}
+        className="w-56"
       />
-      <SearchSelect placeholder="Search SVGs" options={options} />
+      <SearchSelect
+        placeholder="Search SVGs"
+        options={options}
+        className="w-56"
+      />
     </div>
   )
 }

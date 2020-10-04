@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { useCombobox } from 'downshift'
 import matchSorter from 'match-sorter'
 import clsx from 'clsx'
-import Input from 'components/input'
+import { XCircleSolid } from 'components/icons'
 import { OptionType } from './select'
 
 export type SearchSelectProps = {
@@ -10,6 +10,8 @@ export type SearchSelectProps = {
   options: (OptionType | string)[]
   /** Intial label in select input field */
   placeholder: string
+  /** Show clear button to clear selection */
+  allowClear?: boolean
   /** The callback function that is trigered when an item is selected */
   onChange?: ({
     selectedItem,
@@ -24,6 +26,7 @@ export type SearchSelectProps = {
 export function SearchSelect({
   options,
   placeholder,
+  allowClear = false,
   onChange,
   className,
   style,
@@ -44,6 +47,7 @@ export function SearchSelect({
 
   const {
     isOpen,
+    selectItem,
     getMenuProps,
     getInputProps,
     getComboboxProps,
@@ -66,14 +70,32 @@ export function SearchSelect({
 
   return (
     <div className="inline-block">
-      <div {...getComboboxProps()}>
-        <Input
+      <div
+        className={clsx(
+          'group px-3 py-2 focus-within:shadow-outline rounded-md border flex items-center text-gray-400',
+          className,
+        )}
+        style={style}
+        {...getComboboxProps()}
+      >
+        <input
           placeholder={placeholder}
-          className={className}
-          style={style}
+          className="flex-1 min-w-0 font-sans text-sm text-gray-800 placeholder-gray-400 focus:outline-none"
           {...getInputProps()}
           {...getToggleButtonProps()}
         />
+        {allowClear ? (
+          <button
+            className="opacity-0 focus:outline-none group-hover:opacity-100"
+            onClick={(event) => {
+              event.stopPropagation()
+              // @ts-ignore: selectItem is not accepting null argument type
+              selectItem(null)
+            }}
+          >
+            <XCircleSolid className="w-4 h-4 text-gray-400" />
+          </button>
+        ) : null}
       </div>
       <ul
         className="w-full mt-1 overflow-y-auto text-sm rounded-md shadow focus:outline-none"
