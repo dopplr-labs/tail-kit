@@ -10,6 +10,8 @@ export type SearchSelectProps = {
   options: (OptionType | string)[]
   /** Intial label in select input field */
   placeholder: string
+  /** Disable select component */
+  disabled?: boolean
   /** Show clear button to clear selection */
   allowClear?: boolean
   /** The callback function that is trigered when an item is selected */
@@ -26,6 +28,7 @@ export type SearchSelectProps = {
 export function SearchSelect({
   options,
   placeholder,
+  disabled = false,
   allowClear = false,
   onChange,
   className,
@@ -73,6 +76,7 @@ export function SearchSelect({
       <div
         className={clsx(
           'group px-3 py-2 focus-within:shadow-outline rounded-md border flex items-center text-gray-400',
+          disabled ? 'cursor-not-allowed bg-gray-100' : undefined,
           className,
         )}
         style={style}
@@ -80,11 +84,15 @@ export function SearchSelect({
       >
         <input
           placeholder={placeholder}
-          className="flex-1 min-w-0 font-sans text-sm text-gray-800 placeholder-gray-400 focus:outline-none"
+          className={clsx(
+            'flex-1 min-w-0 font-sans text-sm text-gray-800 placeholder-gray-400 focus:outline-none',
+            disabled ? 'cursor-not-allowed' : undefined,
+          )}
+          disabled={disabled}
           {...getInputProps()}
           {...getToggleButtonProps()}
         />
-        {allowClear ? (
+        {allowClear && !disabled ? (
           <button
             className="opacity-0 focus:outline-none group-hover:opacity-100"
             onClick={(event) => {

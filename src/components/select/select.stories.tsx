@@ -132,6 +132,11 @@ export function SelectWithSearch() {
         options={options}
         className="w-56"
       />
+      <SearchSelect
+        options={plainOptions}
+        placeholder="Search Avenger"
+        disabled
+      />
     </div>
   )
 }
