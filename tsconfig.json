@@ -10,6 +10,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     // allow absolute imports
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "declaration": true
   }
 }

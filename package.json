@@ -1,8 +1,9 @@
 {
   "name": "@tail-kit/tail-kit",
   "description": "UI-Kit made with tailwindcss",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "keywords": [
     "react",
@@ -11,12 +12,13 @@
   ],
   "scripts": {
     "lint": "eslint src/**/*.ts src/**/*.tsx scripts/*.js --fix",
+    "prebuild": "rimraf dist",
     "build": "rollup src/index.ts --config --environment NODE_ENV:production",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "husky": {
     "hooks": {
@@ -43,7 +45,6 @@
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
     "@rollup/plugin-node-resolve": "^9.0.0",
-    "@rollup/plugin-typescript": "^5.0.2",
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-essentials": "^6.0.21",
     "@storybook/addon-links": "^6.0.21",
@@ -77,9 +78,11 @@
     "prettier": "^2.1.1",
     "react-is": "^16.13.1",
     "react-test-renderer": "^16.13.1",
+    "rimraf": "^3.0.2",
     "rollup": "^2.26.5",
     "rollup-plugin-includepaths": "^0.2.4",
     "rollup-plugin-postcss": "^3.1.6",
+    "rollup-plugin-typescript2": "^0.27.3",
     "tailwindcss": "^1.7.3",
     "typescript": "^4.0.2"
   }
