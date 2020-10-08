@@ -95,7 +95,10 @@ export function Select({
         style={style}
         {...getToggleButtonProps()}
       >
-        <span>{selectedItem ? itemToString(selectedItem) : placeholder}</span>
+        <div className='flex items-center gap-x-2'>
+          {selectedItem ? selectedItem.icon : null}
+          {selectedItem ? itemToString(selectedItem) : placeholder}
+        </div>
         {allowClear && selectedItem ? (
           <button
             className="opacity-0 focus:outline-none group-hover:opacity-100"
