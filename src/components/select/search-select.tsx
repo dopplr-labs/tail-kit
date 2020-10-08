@@ -51,6 +51,7 @@ export function SearchSelect({
   const {
     isOpen,
     selectItem,
+    selectedItem,
     getMenuProps,
     getInputProps,
     getComboboxProps,
@@ -75,13 +76,14 @@ export function SearchSelect({
     <div className="inline-block">
       <div
         className={clsx(
-          'group px-3 py-2 focus-within:shadow-outline rounded-md border flex items-center text-gray-400',
+          'group px-3 py-2 focus-within:shadow-outline rounded-md border flex items-center gap-x-2',
           disabled ? 'cursor-not-allowed bg-gray-100' : undefined,
           className,
         )}
         style={style}
         {...getComboboxProps()}
       >
+        {selectedItem ? selectedItem.icon : null }
         <input
           placeholder={placeholder}
           className={clsx(
@@ -92,7 +94,7 @@ export function SearchSelect({
           {...getInputProps()}
           {...getToggleButtonProps()}
         />
-        {allowClear && !disabled ? (
+        {allowClear && !disabled && selectedItem ? (
           <button
             className="opacity-0 focus:outline-none group-hover:opacity-100"
             onClick={(event) => {
