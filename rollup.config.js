@@ -1,11 +1,11 @@
-import typescript from 'rollup-plugin-typescript2'
+import typescript from '@rollup/plugin-typescript'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import postcss from 'rollup-plugin-postcss'
 import includePaths from 'rollup-plugin-includepaths'
 
 export default {
-  input: 'src/index.js',
+  input: './src/index.ts',
 
   output: {
     dir: 'dist',
