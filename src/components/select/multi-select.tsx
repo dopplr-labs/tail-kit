@@ -70,10 +70,10 @@ export function MultiSelect({
 
   const {
     isOpen,
+    openMenu,
     getMenuProps,
     getInputProps,
     getComboboxProps,
-    getToggleButtonProps,
     highlightedIndex,
     getItemProps,
   } = useCombobox({
@@ -154,8 +154,17 @@ export function MultiSelect({
                 disabled ? 'cursor-not-allowed bg-gray-100' : undefined,
               )}
               disabled={disabled}
-              {...getInputProps(getDropdownProps({ preventKeyAction: isOpen }))}
-              {...getToggleButtonProps()}
+              {...getInputProps(
+                getDropdownProps({
+                  onFocus: () => {
+                    // the !isOpen check is necessary, otherwise items can no longer be selected from the menu,
+                    // seems like openMenu() aborts other pending events inside downshift
+                    if (!isOpen) {
+                      openMenu()
+                    }
+                  },
+                }),
+              )}
             />
           </div>
         </div>

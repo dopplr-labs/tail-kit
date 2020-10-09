@@ -50,12 +50,12 @@ export function SearchSelect({
 
   const {
     isOpen,
+    openMenu,
     selectItem,
     selectedItem,
     getMenuProps,
     getInputProps,
     getComboboxProps,
-    getToggleButtonProps,
     highlightedIndex,
     getItemProps,
   } = useCombobox({
@@ -83,7 +83,7 @@ export function SearchSelect({
         style={style}
         {...getComboboxProps()}
       >
-        {selectedItem ? selectedItem.icon : null }
+        {selectedItem ? selectedItem.icon : null}
         <input
           placeholder={placeholder}
           className={clsx(
@@ -91,8 +91,15 @@ export function SearchSelect({
             disabled ? 'cursor-not-allowed bg-gray-100' : undefined,
           )}
           disabled={disabled}
-          {...getInputProps()}
-          {...getToggleButtonProps()}
+          {...getInputProps({
+            onFocus: () => {
+              // the !isOpen check is necessary, otherwise items can no longer be selected from the menu,
+              // seems like openMenu() aborts other pending events inside downshift
+              if (!isOpen) {
+                openMenu()
+              }
+            },
+          })}
         />
         {allowClear && !disabled && selectedItem ? (
           <button
