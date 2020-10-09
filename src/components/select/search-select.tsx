@@ -10,6 +10,8 @@ export type SearchSelectProps = {
   options: (OptionType | string)[]
   /** Intial label in select input field */
   placeholder?: string
+  /** Define default selection for Select component */
+  defaultValue?: string
   /** Disable select component */
   disabled?: boolean
   /** Show clear button to clear selection */
@@ -28,6 +30,7 @@ export type SearchSelectProps = {
 export function SearchSelect({
   options,
   placeholder,
+  defaultValue,
   disabled = false,
   allowClear = false,
   onChange,
@@ -60,6 +63,9 @@ export function SearchSelect({
     getItemProps,
   } = useCombobox({
     items: inputItems,
+    initialSelectedItem: selectOptions.find(
+      (item) => item.value === defaultValue,
+    ),
     itemToString,
     onInputValueChange: ({ inputValue }) => {
       // render filtered result in select dropdown based on user input using matchSorter
