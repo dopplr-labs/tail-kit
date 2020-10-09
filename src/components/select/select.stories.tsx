@@ -122,6 +122,7 @@ export function SelectWithSearch() {
       {/* Remove flex from above after Portal implementation */}
       <SearchSelect
         placeholder="Search Avenger"
+        defaultValue="Hawk Eye"
         allowClear
         options={plainOptions}
         onChange={handleChange}
@@ -129,6 +130,7 @@ export function SelectWithSearch() {
       />
       <SearchSelect
         placeholder="Search SVGs"
+        allowClear
         options={options}
         className="w-56"
       />
