@@ -137,6 +137,7 @@ export function MultiSelect({
               {!disabled ? (
                 <button
                   className="focus:outline-none"
+                  data-testid="chip-button"
                   onClick={() => {
                     removeSelectedItem(selectedItem)
                   }}
@@ -173,6 +174,7 @@ export function MultiSelect({
         !disabled ? (
           <button
             className="opacity-0 focus:outline-none group-hover:opacity-100"
+            data-testid="clear-button"
             onClick={(event) => {
               event.stopPropagation()
               selectedItems.forEach((item) => removeSelectedItem(item))

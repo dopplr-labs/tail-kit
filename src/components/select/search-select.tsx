@@ -110,6 +110,7 @@ export function SearchSelect({
         {allowClear && !disabled && selectedItem ? (
           <button
             className="opacity-0 focus:outline-none group-hover:opacity-100"
+            data-testid="clear-button"
             onClick={(event) => {
               event.stopPropagation()
               // @ts-ignore: selectItem is not accepting null argument type

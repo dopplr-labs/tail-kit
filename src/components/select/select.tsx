@@ -95,13 +95,14 @@ export function Select({
         style={style}
         {...getToggleButtonProps()}
       >
-        <div className='flex items-center gap-x-2'>
+        <div className="flex items-center gap-x-2">
           {selectedItem ? selectedItem.icon : null}
           {selectedItem ? itemToString(selectedItem) : placeholder}
         </div>
         {allowClear && selectedItem ? (
           <button
             className="opacity-0 focus:outline-none group-hover:opacity-100"
+            data-testid="clear-button"
             onClick={(event) => {
               event.stopPropagation()
               // @ts-ignore: selectItem is not accepting null argument type
