@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import { BasicSelect } from './basic-select'
-import { MultiSelect } from './multi-select'
-import { SearchSelect } from './search-select'
+import { BasicSelect } from './components/basic-select'
+import { MultiSelect } from './components/multi-select'
+import { SearchSelect } from './components/search-select'
 
 export type OptionType = {
   label: string

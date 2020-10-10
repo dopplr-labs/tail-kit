@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
-import { useCombobox } from 'downshift'
-import matchSorter from 'match-sorter'
+import React from 'react'
+import { useSelect } from 'downshift'
 import clsx from 'clsx'
-import { XCircleSolid } from 'components/icons'
-import { OptionType } from './select'
+import {
+  CheckOutline,
+  ChevronDownOutline,
+  XCircleSolid,
+} from 'components/icons'
+import { OptionType } from '../select'
 
-export type SearchSelectProps = {
+/**
+ * BasicSelect component properties
+ */
+export type BasicSelectProps = {
   /** Options to render in dropdown */
   options: OptionType[]
-  /** Intial label in select input field */
+  /** Intial label in toggle button */
   placeholder?: string
   /** Define default selection for Select component */
   defaultValue?: string
@@ -20,14 +26,14 @@ export type SearchSelectProps = {
   onChange?: ({
     selectedItem,
   }: {
-    selectedItem: OptionType | string[] | undefined
+    selectedItem: OptionType | undefined
   }) => void
   /** Apply class to Select component */
   className?: string
   /** Add style object for custom styling */
   style?: React.CSSProperties
 }
-export function SearchSelect({
+export function BasicSelect({
   options,
   placeholder,
   defaultValue,
@@ -36,29 +42,22 @@ export function SearchSelect({
   onChange,
   className,
   style,
-}: SearchSelectProps) {
-  const [inputItems, setInputItems] = useState(options)
-
+}: BasicSelectProps) {
   const itemToString = (item: OptionType | null) => (item ? item.label : '')
 
+  // Using useSelect hook from downshift to handle logical part of Select
   const {
     isOpen,
-    openMenu,
-    selectItem,
     selectedItem,
+    selectItem,
+    getToggleButtonProps,
     getMenuProps,
-    getInputProps,
-    getComboboxProps,
     highlightedIndex,
     getItemProps,
-  } = useCombobox({
-    items: inputItems,
-    initialSelectedItem: options.find((item) => item.value === defaultValue),
+  } = useSelect<OptionType>({
+    items: options,
     itemToString,
-    onInputValueChange: ({ inputValue }) => {
-      // render filtered result in select dropdown based on user input using matchSorter
-      setInputItems(matchSorter(options, inputValue ?? '', { keys: ['label'] }))
-    },
+    initialSelectedItem: options.find((item) => item.value === defaultValue),
     onSelectedItemChange: ({ selectedItem }) => {
       onChange?.({ selectedItem: selectedItem ?? undefined })
     },
@@ -68,32 +67,22 @@ export function SearchSelect({
     <div className="inline-block">
       <div
         className={clsx(
-          'group px-3 py-2 focus-within:shadow-outline rounded-md border flex items-center gap-x-2',
-          disabled ? 'cursor-not-allowed bg-gray-100' : undefined,
+          'flex px-3 py-2 group items-center text-sm cursor-pointer justify-between overflow-hidden border rounded-md focus:shadow-outline focus:outline-none',
+          disabled
+            ? 'cursor-not-allowed bg-gray-100 text-gray-400'
+            : 'text-gray-800',
           className,
         )}
+        role="button"
+        disabled={disabled}
         style={style}
-        {...getComboboxProps()}
+        {...getToggleButtonProps()}
       >
-        {selectedItem ? selectedItem.icon : null}
-        <input
-          placeholder={placeholder}
-          className={clsx(
-            'flex-1 min-w-0 font-sans text-sm text-gray-800 placeholder-gray-400 focus:outline-none',
-            disabled ? 'cursor-not-allowed bg-gray-100' : undefined,
-          )}
-          disabled={disabled}
-          {...getInputProps({
-            onFocus: () => {
-              // the !isOpen check is necessary, otherwise items can no longer be selected from the menu,
-              // seems like openMenu() aborts other pending events inside downshift
-              if (!isOpen) {
-                openMenu()
-              }
-            },
-          })}
-        />
-        {allowClear && !disabled && selectedItem ? (
+        <div className="flex items-center gap-x-2">
+          {selectedItem ? selectedItem.icon : null}
+          {selectedItem ? itemToString(selectedItem) : placeholder}
+        </div>
+        {allowClear && selectedItem ? (
           <button
             className="opacity-0 focus:outline-none group-hover:opacity-100"
             data-testid="clear-button"
@@ -106,27 +95,38 @@ export function SearchSelect({
             <XCircleSolid className="w-5 h-5 text-gray-400" />
           </button>
         ) : null}
+        <ChevronDownOutline
+          className={clsx(
+            'w-4 h-4',
+            allowClear && selectedItem ? 'group-hover:hidden' : null,
+          )}
+        />
       </div>
       <ul
         className="w-full mt-1 overflow-y-auto text-sm rounded-md shadow focus:outline-none"
         {...getMenuProps()}
       >
         {isOpen &&
-          inputItems.map((item, index) => (
+          options.map((item, index) => (
             <li
               className={clsx(
                 'px-3 py-2 flex items-center justify-between',
                 highlightedIndex === index
                   ? 'bg-blue-600 text-white'
                   : undefined,
+                selectedItem === item ? 'font-semibold' : undefined,
               )}
               key={`${item.label}${index}`}
-              {...getItemProps({ item, index })}
+              {...getItemProps({ item: item, index })}
             >
               <div className="flex items-center space-x-2">
                 <span>{item?.icon}</span>
                 <span>{item.label}</span>
               </div>
+
+              {selectedItem === item ? (
+                <CheckOutline className="w-5 h-5" />
+              ) : null}
             </li>
           ))}
       </ul>

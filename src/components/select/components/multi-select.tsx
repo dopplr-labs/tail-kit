@@ -3,7 +3,7 @@ import { useCombobox, useMultipleSelection } from 'downshift'
 import clsx from 'clsx'
 import { XCircleSolid, XOutline } from 'components/icons'
 import matchSorter from 'match-sorter'
-import { OptionType } from './select'
+import { OptionType } from '../select'
 
 export type MultiSelectProps = {
   /** Options to render in dropdown */
