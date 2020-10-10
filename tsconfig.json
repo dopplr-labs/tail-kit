@@ -9,6 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
     // allow absolute imports
     "baseUrl": "src"
   }

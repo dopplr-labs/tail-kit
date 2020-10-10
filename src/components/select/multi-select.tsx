@@ -7,7 +7,7 @@ import { OptionType } from './select'
 
 export type MultiSelectProps = {
   /** Options to render in dropdown */
-  options: (OptionType | string)[]
+  options: OptionType[]
   /** Intial label in select input field */
   placeholder?: string
   /** default selections for Select component */
@@ -17,7 +17,11 @@ export type MultiSelectProps = {
   /** Show clear button to clear selection */
   allowClear?: boolean
   /** The callback function that is trigered when an item is selected */
-  onChange?: ({ selectedItem }: { selectedItem: string[] | undefined }) => void
+  onChange?: ({
+    selectedItem,
+  }: {
+    selectedItem: OptionType | string[] | undefined
+  }) => void
   /** Apply class to Select component */
   className?: string
   /** Add style object for custom styling */
@@ -34,16 +38,6 @@ export function MultiSelect({
   className,
   style,
 }: MultiSelectProps) {
-  const selectOptions = useMemo(() => {
-    return options.map((option) => {
-      if (typeof option === 'string') {
-        return { label: option, value: option } as OptionType
-      } else {
-        return option
-      }
-    })
-  }, [options])
-
   const [inputValue, setInputValue] = useState<string | undefined>('')
 
   const {
@@ -61,12 +55,12 @@ export function MultiSelect({
 
   const filteredItems = useMemo(() => {
     // remove already selected items from array
-    const unselectedItems = selectOptions.filter(
+    const unselectedItems = options.filter(
       (item) => selectedItems.indexOf(item.label) < 0,
     )
     // search based on user input using matchSorter
     return matchSorter(unselectedItems, inputValue ?? '', { keys: ['label'] })
-  }, [inputValue, selectOptions, selectedItems])
+  }, [inputValue, options, selectedItems])
 
   const {
     isOpen,

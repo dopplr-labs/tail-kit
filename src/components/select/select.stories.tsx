@@ -8,8 +8,6 @@ import {
   ClipboardListOutline,
 } from 'components/icons'
 import { OptionType, Select } from './select'
-import { SearchSelect } from './search-select'
-import { MultiSelect } from './multi-select'
 
 export default {
   title: 'Data Entry/Select',
@@ -28,7 +26,7 @@ export function DefaultSelect() {
   function handleChange({
     selectedItem,
   }: {
-    selectedItem: OptionType | undefined
+    selectedItem: OptionType | string[] | undefined
   }) {
     action('selected option')(selectedItem)
   }
@@ -77,7 +75,7 @@ export function SelectWithListIcons() {
   function handleChange({
     selectedItem,
   }: {
-    selectedItem: OptionType | undefined
+    selectedItem: OptionType | string[] | undefined
   }) {
     action('selected option')(selectedItem)
   }
@@ -113,14 +111,15 @@ export function SelectWithSearch() {
   function handleChange({
     selectedItem,
   }: {
-    selectedItem: OptionType | undefined
+    selectedItem: OptionType | string[] | undefined
   }) {
     action('selected option')(selectedItem)
   }
   return (
     <div className="flex space-x-4">
       {/* Remove flex from above after Portal implementation */}
-      <SearchSelect
+      <Select
+        mode="search"
         placeholder="Search Avenger"
         defaultValue="Hawk Eye"
         allowClear
@@ -128,13 +127,15 @@ export function SelectWithSearch() {
         onChange={handleChange}
         className="w-56"
       />
-      <SearchSelect
+      <Select
+        mode="search"
         placeholder="Search SVGs"
         allowClear
         options={options}
         className="w-56"
       />
-      <SearchSelect
+      <Select
+        mode="search"
         options={plainOptions}
         placeholder="Search Avenger"
         disabled
@@ -165,7 +166,7 @@ export function MultipleSelection() {
   function handleChange({
     selectedItem,
   }: {
-    selectedItem: string[] | undefined
+    selectedItem: OptionType | string[] | undefined
   }) {
     if (selectedItem) {
       action('selected option')(...selectedItem)
@@ -173,7 +174,8 @@ export function MultipleSelection() {
   }
   return (
     <div className="flex space-x-4 ">
-      <MultiSelect
+      <Select
+        mode="multiple"
         options={plainOptions}
         placeholder="Select Avengers"
         allowClear
@@ -181,12 +183,14 @@ export function MultipleSelection() {
         className="w-80"
         onChange={handleChange}
       />
-      <MultiSelect
+      <Select
+        mode="multiple"
         options={options}
         placeholder="Search and select SVG"
         className="w-80"
       />
-      <MultiSelect
+      <Select
+        mode="multiple"
         options={plainOptions}
         disabled
         defaultValue={['Spiderman', 'Black Widow']}

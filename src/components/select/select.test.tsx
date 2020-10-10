@@ -8,8 +8,6 @@ import {
   ClipboardListOutline,
 } from 'components/icons'
 import { Select } from './select'
-import { SearchSelect } from './search-select'
-import { MultiSelect } from './multi-select'
 
 const plainOptions = [
   'Black Widow',
@@ -87,14 +85,21 @@ test('Disabled prop of Select component working correctly', () => {
 
 // Tests for SearchSelect component
 test('SearchSelect component renders correctly', () => {
-  render(<SearchSelect options={plainOptions} placeholder="Search Avenger" />)
+  render(
+    <Select
+      mode="search"
+      options={plainOptions}
+      placeholder="Search Avenger"
+    />,
+  )
   expect(screen.getByPlaceholderText('Search Avenger')).toBeInTheDocument()
 })
 
 test('onChange event of SearchSelect component working correctly', () => {
   const onChange = jest.fn(({ selectedItem }) => selectedItem)
   render(
-    <SearchSelect
+    <Select
+      mode="search"
       options={options}
       onChange={onChange}
       placeholder="Search SVG"
@@ -113,7 +118,8 @@ test('onChange event of SearchSelect component working correctly', () => {
 test('Clear button of SearchSelect component working correctly', () => {
   const onChange = jest.fn(({ selectedItem }) => selectedItem)
   render(
-    <SearchSelect
+    <Select
+      mode="search"
       options={plainOptions}
       defaultValue="Hawk Eye"
       allowClear
@@ -128,7 +134,8 @@ test('Clear button of SearchSelect component working correctly', () => {
 
 test('Disabled prop of SearchSelect component working correctly', () => {
   render(
-    <SearchSelect
+    <Select
+      mode="search"
       options={plainOptions}
       disabled
       placeholder="Search Avenger"
@@ -140,7 +147,9 @@ test('Disabled prop of SearchSelect component working correctly', () => {
 })
 
 test('Highlighed item in SearchSelect component renders correctly', () => {
-  render(<SearchSelect options={plainOptions} defaultValue="Hawk Eye" />)
+  render(
+    <Select mode="search" options={plainOptions} defaultValue="Hawk Eye" />,
+  )
   fireEvent.focus(screen.getByDisplayValue('Hawk Eye'))
   expect(screen.getByText('Hawk Eye').parentElement?.parentElement).toHaveClass(
     'bg-blue-600',
@@ -148,21 +157,34 @@ test('Highlighed item in SearchSelect component renders correctly', () => {
 })
 
 test('Filter in SearchSelect component working correctly', () => {
-  render(<SearchSelect options={plainOptions} placeholder="Search Avenger" />)
+  render(
+    <Select
+      mode="search"
+      options={plainOptions}
+      placeholder="Search Avenger"
+    />,
+  )
   userEvent.type(screen.getByPlaceholderText('Search Avenger'), 'doc')
   expect(screen.getByText('Doctor Strange')).toBeInTheDocument()
 })
 
 // Tests for MultiSelect component
 test('MultiSelect component renders correctly', () => {
-  render(<MultiSelect options={plainOptions} placeholder="Select Avengers" />)
+  render(
+    <Select
+      mode="multiple"
+      options={plainOptions}
+      placeholder="Select Avengers"
+    />,
+  )
   expect(screen.getByPlaceholderText('Select Avengers')).toBeInTheDocument()
 })
 
 test('Clear button of MultiSelect component works correctly', () => {
   const onChange = jest.fn(({ selectedItem }) => selectedItem)
   render(
-    <MultiSelect
+    <Select
+      mode="multiple"
       options={options}
       allowClear
       defaultValue={['Hulk', 'Hawk Eye']}
@@ -175,7 +197,13 @@ test('Clear button of MultiSelect component works correctly', () => {
 })
 
 test('Dropdown of MultiSelect component opens correctly on input focus', () => {
-  render(<MultiSelect placeholder="Select Avengers" options={plainOptions} />)
+  render(
+    <Select
+      mode="multiple"
+      placeholder="Select Avengers"
+      options={plainOptions}
+    />,
+  )
   fireEvent.focus(screen.getByPlaceholderText('Select Avengers'))
   expect(screen.getByText('Black Widow')).toBeInTheDocument()
 })
@@ -183,7 +211,8 @@ test('Dropdown of MultiSelect component opens correctly on input focus', () => {
 test('Unselection through chips of MultiSelect component working correctly', () => {
   const onChange = jest.fn(({ selectedItem }) => selectedItem)
   render(
-    <MultiSelect
+    <Select
+      mode="multiple"
       options={plainOptions}
       defaultValue={['Hulk']}
       onChange={onChange}
@@ -198,7 +227,8 @@ test('Unselection through chips of MultiSelect component working correctly', () 
 test('Item selection from dropdown of MultiSelect component working correctly', () => {
   const onChange = jest.fn(({ selectedItem }) => selectedItem)
   render(
-    <MultiSelect
+    <Select
+      mode="multiple"
       options={plainOptions}
       placeholder="Select Avengers"
       onChange={onChange}
@@ -212,14 +242,21 @@ test('Item selection from dropdown of MultiSelect component working correctly', 
 })
 
 test('Filter in MultiSelect component working correctly', () => {
-  render(<MultiSelect options={plainOptions} placeholder="Select Avengers" />)
+  render(
+    <Select
+      mode="multiple"
+      options={plainOptions}
+      placeholder="Select Avengers"
+    />,
+  )
   userEvent.type(screen.getByPlaceholderText('Select Avengers'), 'bla')
   expect(screen.getByText('Black Widow')).toBeInTheDocument()
 })
 
 test('Disabled prop of MultiSelect component working correctly', () => {
   render(
-    <MultiSelect
+    <Select
+      mode="multiple"
       options={plainOptions}
       placeholder="Select Avengers"
       disabled
@@ -232,7 +269,12 @@ test('Disabled prop of MultiSelect component working correctly', () => {
 
 test('Chips in MultiSelect component renders correctly with disabled prop', () => {
   render(
-    <MultiSelect options={plainOptions} disabled defaultValue={['Hulk']} />,
+    <Select
+      mode="multiple"
+      options={plainOptions}
+      disabled
+      defaultValue={['Hulk']}
+    />,
   )
   expect(screen.getByText('Hulk')).toHaveClass('bg-gray-200')
 })
