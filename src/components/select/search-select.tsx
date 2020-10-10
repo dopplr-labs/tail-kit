@@ -117,7 +117,7 @@ export function SearchSelect({
               selectItem(null)
             }}
           >
-            <XCircleSolid className="w-4 h-4 text-gray-400" />
+            <XCircleSolid className="w-5 h-5 text-gray-400" />
           </button>
         ) : null}
       </div>

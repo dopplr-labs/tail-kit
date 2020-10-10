@@ -142,7 +142,7 @@ export function MultiSelect({
                     removeSelectedItem(selectedItem)
                   }}
                 >
-                  <XOutline className="w-4 h-4" />
+                  <XOutline className="w-3 h-3" />
                 </button>
               ) : null}
             </div>
@@ -181,7 +181,7 @@ export function MultiSelect({
               setInputValue('')
             }}
           >
-            <XCircleSolid className="w-4 h-4 text-gray-400" />
+            <XCircleSolid className="w-5 h-5 text-gray-400" />
           </button>
         ) : null}
       </div>

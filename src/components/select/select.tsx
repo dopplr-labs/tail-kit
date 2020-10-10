@@ -82,7 +82,7 @@ export function Select({
 
   return (
     <div className="inline-block">
-      <button
+      <div
         className={clsx(
           'flex px-3 py-2 group items-center text-sm cursor-pointer justify-between overflow-hidden border rounded-md focus:shadow-outline focus:outline-none',
           disabled
@@ -90,7 +90,7 @@ export function Select({
             : 'text-gray-800',
           className,
         )}
-        type="button"
+        role="button"
         disabled={disabled}
         style={style}
         {...getToggleButtonProps()}
@@ -109,7 +109,7 @@ export function Select({
               selectItem(null)
             }}
           >
-            <XCircleSolid className="w-4 h-4 text-gray-400" />
+            <XCircleSolid className="w-5 h-5 text-gray-400" />
           </button>
         ) : null}
         <ChevronDownOutline
@@ -118,7 +118,7 @@ export function Select({
             allowClear && selectedItem ? 'group-hover:hidden' : null,
           )}
         />
-      </button>
+      </div>
       <ul
         className="w-full mt-1 overflow-y-auto text-sm rounded-md shadow focus:outline-none"
         {...getMenuProps()}
