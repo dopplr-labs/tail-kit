@@ -1,7 +1,7 @@
 {
   "name": "@tail-kit/tail-kit",
   "description": "UI-Kit made with tailwindcss",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "test:ci": "jest --ci --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "prepare": "npm run build"
+    "prepare": "yarn build"
   },
   "husky": {
     "hooks": {
