@@ -55,7 +55,14 @@ test('onChange event of Select component working correctly', () => {
 
 test('Clear button of Select component working correctly', () => {
   const onChange = jest.fn(({ selectedItem }) => selectedItem)
-  render(<Select options={plainOptions} allowClear defaultValue="Hawk Eye" />)
+  render(
+    <Select
+      options={plainOptions}
+      allowClear
+      defaultValue="Hawk Eye"
+      onChange={onChange}
+    />,
+  )
   fireEvent.click(screen.getByTestId('clear-button'))
   expect(onChange).toBeCalled()
   expect(onChange.mock.results[0].value).toStrictEqual(undefined)
