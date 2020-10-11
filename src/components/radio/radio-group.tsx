@@ -50,7 +50,7 @@ export function RadioGroup({
           value={option.value}
           disabled={option?.disabled ?? disabled}
           checked={checkedValue === option.value}
-          onChange={(event) => {
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setCheckedValue(event.target.value)
             onChange?.(event.target.value)
           }}

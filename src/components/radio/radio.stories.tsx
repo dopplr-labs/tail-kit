@@ -3,7 +3,6 @@ import { action } from '@storybook/addon-actions'
 import { Meta } from '@storybook/react/types-6-0'
 import Switch from 'components/switch'
 import { Radio } from './radio'
-import { RadioGroup } from './radio-group'
 
 export default {
   title: 'Data Entry/Radio',
@@ -47,12 +46,12 @@ export function WithRadioGroup() {
   }
   return (
     <div className="space-y-5">
-      <RadioGroup
+      <Radio.RadioGroup
         options={plainOptions}
         defaultValue="Option A"
         onChange={onChange('firstGroup')}
       />
-      <RadioGroup
+      <Radio.RadioGroup
         options={options}
         defaultValue="3"
         onChange={onChange('secondGroup')}
