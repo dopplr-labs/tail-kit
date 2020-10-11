@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { hideVisually } from 'polished'
 import useSyncedState from 'hooks/use-synced-states'
+import { RadioGroup } from 'components/radio/radio-group'
 
 /**
  * Radio properties
@@ -25,57 +26,67 @@ export type RadioProps = {
   style?: React.CSSProperties
 }
 
-export function Radio({
-  checked = false,
-  defaultChecked = false,
-  label,
-  value,
-  disabled = false,
-  onChange,
-  className,
-  style,
-}: RadioProps) {
-  const [checkedState, setCheckedState] = useSyncedState(
-    checked || defaultChecked,
-  )
-  return (
-    <label
-      className={clsx(
-        'flex items-center space-x-2',
-        disabled ? 'cursor-not-allowed text-gray-400' : 'cursor-pointer',
-        className,
-      )}
-      style={style}
-    >
-      <div
+export const RadioComponent = forwardRef(
+  (
+    {
+      checked = false,
+      defaultChecked = false,
+      label,
+      value,
+      disabled = false,
+      onChange,
+      className,
+      style,
+    }: RadioProps,
+    ref: React.Ref<HTMLInputElement>,
+  ) => {
+    const [checkedState, setCheckedState] = useSyncedState(
+      checked || defaultChecked,
+    )
+    return (
+      <label
         className={clsx(
-          'flex items-center justify-center w-4 h-4 border rounded-full ',
-          checkedState && !disabled ? 'border-blue-500' : undefined,
-          checkedState && disabled ? 'border-gray-400' : undefined,
-          !checkedState && !disabled ? 'hover:border-blue-500' : undefined,
+          'flex items-center space-x-2',
+          disabled ? 'cursor-not-allowed text-gray-400' : 'cursor-pointer',
+          className,
         )}
+        style={style}
       >
-        {checkedState ? (
-          <div
-            className={clsx(
-              'w-2 h-2 rounded-full',
-              disabled ? 'bg-gray-400' : 'bg-blue-500',
-            )}
-          />
-        ) : null}
-      </div>
-      <input
-        type="radio"
-        checked={checkedState}
-        value={value}
-        onChange={(event) => {
-          setCheckedState(event.target.checked)
-          onChange?.(event)
-        }}
-        disabled={disabled}
-        style={hideVisually()}
-      />
-      {label ? <span className="text-sm">{label}</span> : null}
-    </label>
-  )
-}
+        <div
+          className={clsx(
+            'flex items-center justify-center w-4 h-4 border rounded-full ',
+            checkedState && !disabled ? 'border-blue-500' : undefined,
+            checkedState && disabled ? 'border-gray-400' : undefined,
+            !checkedState && !disabled ? 'hover:border-blue-500' : undefined,
+          )}
+        >
+          {checkedState ? (
+            <div
+              className={clsx(
+                'w-2 h-2 rounded-full',
+                disabled ? 'bg-gray-400' : 'bg-blue-500',
+              )}
+            />
+          ) : null}
+        </div>
+        <input
+          type="radio"
+          checked={checkedState}
+          value={value}
+          onChange={(event) => {
+            setCheckedState(event.target.checked)
+            onChange?.(event)
+          }}
+          disabled={disabled}
+          style={hideVisually()}
+          ref={ref}
+        />
+        {label ? <span className="text-sm">{label}</span> : null}
+      </label>
+    )
+  },
+)
+
+RadioComponent.displayName = 'Radio'
+
+export const Radio = Object.assign(RadioComponent, { RadioGroup })
