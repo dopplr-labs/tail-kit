@@ -5,6 +5,11 @@ export declare enum ContentVisibility {
     INVISIBLE = "INVISIBLE",
     SHOWN = "SHOWN"
 }
+declare type ContentContainerPosition = {
+    top: number;
+    left: number;
+    placement: [VerticalPlacement, HorizontalPlacement];
+};
 declare type UsePortalProps = {
     /** Visibility of the portal content */
     visible: boolean;
@@ -34,5 +39,7 @@ export declare function usePortalPosition({ visible, trigger, contentContainer, 
     contentVisibility: ContentVisibility;
     contentStyle: React.CSSProperties;
     containerPlacement?: [VerticalPlacement, HorizontalPlacement];
+    contentContainerPosition?: ContentContainerPosition;
+    setContentContainerPosition: React.Dispatch<React.SetStateAction<ContentContainerPosition | undefined>>;
 };
 export {};

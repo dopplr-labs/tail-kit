@@ -14,6 +14,10 @@ declare type PortalProps = {
   verticalPlacement?: VerticalPlacement
   /** Default horizontal placement. If provided, the portal won't calculate the horizontal position */
   horizontalPlacement?: HorizontalPlacement
+  /** Handler function called when the portal children is rendered in the correct position */
+  onContentMount?: () => void
+  /** Handler function called when the portal children is unmounted */
+  onContentUnmount?: () => void
   /** parent of the portal container rendering the menu */
   portalParent?: HTMLElement
 }
@@ -23,6 +27,8 @@ export declare function Portal({
   children,
   verticalPlacement,
   horizontalPlacement,
+  onContentMount,
+  onContentUnmount,
   portalParent,
 }: PortalProps): JSX.Element
 export {}

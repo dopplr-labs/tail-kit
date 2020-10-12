@@ -30,11 +30,13 @@
     }
   },
   "dependencies": {
+    "@reach/rect": "^0.11.2",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@testing-library/user-event": "^12.1.3",
     "@types/lodash-es": "^4.17.3",
     "@types/react-transition-group": "^4.4.0",
     "clsx": "^1.1.1",
+    "compute-scroll-into-view": "^1.0.16",
     "lodash-es": "^4.17.15",
     "polished": "^3.6.6",
     "postcss-cli": "^8.1.0",
