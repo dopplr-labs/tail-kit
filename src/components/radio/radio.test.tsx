@@ -23,9 +23,27 @@ test('disable property of radio working correctly', () => {
   )
 })
 
+test('disable property of radio does not trigger onChange', () => {
+  const onChange = jest.fn((event) => event.target.checked)
+  render(<Radio disabled label="Radio" onChange={onChange} />)
+  fireEvent.click(screen.getByText('Radio'))
+  expect(onChange).toBeCalledTimes(0)
+})
+
 test('renders radio without label correctly', () => {
   render(<Radio />)
   expect(screen.queryByTestId('label')).toBe(null)
+})
+
+test('renders error radio style correctly', () => {
+  render(<Radio label="Radio" error checked />)
+  expect(screen.getByText('Radio')).toHaveClass('text-red-700')
+  expect(screen.getByText('Radio').parentElement?.firstChild).toHaveClass(
+    'border-red-500',
+  )
+  expect(
+    screen.getByText('Radio').parentElement?.firstChild?.firstChild,
+  ).toHaveClass('bg-red-500')
 })
 
 test('forward ref to the radio', () => {
