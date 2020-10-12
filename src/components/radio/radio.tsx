@@ -18,6 +18,7 @@ export type RadioProps = {
   value?: string | number
   /** Use disabled property to disable user input in radio */
   disabled?: boolean
+  error?: boolean
   /** The callback function that is triggered when the state changes */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   /** Additional class applied to radio */
@@ -34,6 +35,7 @@ export const RadioComponent = forwardRef(
       label,
       value,
       disabled = false,
+      error = false,
       onChange,
       className,
       style,
@@ -47,7 +49,9 @@ export const RadioComponent = forwardRef(
       <label
         className={clsx(
           'flex items-center space-x-2',
-          disabled ? 'cursor-not-allowed text-gray-400' : 'cursor-pointer',
+          disabled
+            ? 'cursor-not-allowed text-gray-400'
+            : 'cursor-pointer text-gray-800',
           className,
         )}
         style={style}
@@ -55,19 +59,26 @@ export const RadioComponent = forwardRef(
         <div
           className={clsx(
             'flex items-center justify-center w-4 h-4 border rounded-full ',
-            checkedState && !disabled ? 'border-blue-500' : undefined,
+            checkedState && !disabled && !error ? 'border-blue-500' : undefined,
+            !checkedState && !disabled && !error
+              ? 'hover:border-blue-500'
+              : undefined,
+            !disabled && error ? 'border-red-500' : undefined,
             checkedState && disabled ? 'border-gray-400' : undefined,
-            !checkedState && !disabled ? 'hover:border-blue-500' : undefined,
           )}
         >
-          {checkedState ? (
-            <div
-              className={clsx(
-                'w-2 h-2 rounded-full',
-                disabled ? 'bg-gray-400' : 'bg-blue-500',
-              )}
-            />
-          ) : null}
+          <div
+            className={clsx(
+              'w-2 h-2 rounded-full opacity-0 transition-opacity duration-300',
+              checkedState && !disabled && !error
+                ? 'bg-blue-500 opacity-100'
+                : undefined,
+              checkedState && error && !disabled
+                ? 'bg-red-500 opacity-100'
+                : undefined,
+              checkedState && disabled ? 'bg-gray-400 opacity-100' : undefined,
+            )}
+          />
         </div>
         <input
           type="radio"
@@ -82,7 +93,10 @@ export const RadioComponent = forwardRef(
           ref={ref}
         />
         {label ? (
-          <span className="text-sm" data-testid="label">
+          <span
+            className={clsx('text-sm', error ? 'text-red-700' : undefined)}
+            data-testid="label"
+          >
             {label}
           </span>
         ) : null}
