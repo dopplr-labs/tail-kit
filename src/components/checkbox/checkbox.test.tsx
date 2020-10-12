@@ -75,7 +75,7 @@ test('renders checkbox without label correctly', () => {
   expect(screen.queryByTestId('label')).toBe(null)
 })
 
-test('forward red to the checkbox', () => {
+test('forward ref to the checkbox', () => {
   const ref = createRef<HTMLInputElement>()
   render(<Checkbox label="Checkbox label" ref={ref} readOnly />)
   expect(ref.current?.tagName).toBe('INPUT')
@@ -89,6 +89,7 @@ test('renders checkbox-group correctly with options as string[]', () => {
 test('renders checkbox-group correctly with options as OptionType[]', () => {
   const options = [{ label: 'Apple', value: 'Apple' }]
   render(<Checkbox.CheckboxGroup options={options} />)
+  expect(screen.getByText('Apple')).toBeInTheDocument()
 })
 
 test('onChange event of checkbox-group working correctly when checked is set to true', () => {
