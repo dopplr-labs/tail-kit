@@ -7,6 +7,10 @@ export type RadioOptions = {
   value: string
   disabled?: boolean
 }
+
+/**
+ * RadioGroup properties
+ */
 export type RadioGroupProps = {
   /** Specifies options of radio to render */
   options: (RadioOptions | string)[]
@@ -21,6 +25,7 @@ export type RadioGroupProps = {
   /** Apply styles on each individual radio */
   style?: React.CSSProperties
 }
+
 export function RadioGroup({
   options,
   defaultValue,
