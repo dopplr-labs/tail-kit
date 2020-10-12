@@ -33,6 +33,14 @@ export function DisabledRadio() {
   )
 }
 
+export function RadioWithError() {
+  return (
+    <div>
+      <Radio label="Option A" error />
+    </div>
+  )
+}
+
 export function WithRadioGroup() {
   const plainOptions = ['Option A', 'Option B', 'Option C', 'Option D']
   const options = [
