@@ -81,7 +81,11 @@ export const RadioComponent = forwardRef(
           style={hideVisually()}
           ref={ref}
         />
-        {label ? <span className="text-sm">{label}</span> : null}
+        {label ? (
+          <span className="text-sm" data-testid="label">
+            {label}
+          </span>
+        ) : null}
       </label>
     )
   },
