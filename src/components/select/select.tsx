@@ -123,15 +123,15 @@ export function Select({
   }
 
   function handleListKeyDown(event: React.KeyboardEvent) {
-    event.preventDefault()
-
     switch (event.key) {
       case Keys.Enter:
       case Keys.Space:
+        event.preventDefault()
         selectOptionAndCloseMenu(optionsList[highlightedIndex])
         break
 
       case Keys.ArrowDown: {
+        event.preventDefault()
         let nextIndex = findNextIndex(optionsList, highlightedIndex)
         // if the nextIndex is same as the highlightedIndex, that means are
         // no more options after it which are enabled, so we can go to the
@@ -144,6 +144,7 @@ export function Select({
       }
 
       case Keys.ArrowUp: {
+        event.preventDefault()
         let nextIndex = findPrevIndex(optionsList, highlightedIndex)
         // if the nextIndex is same as the highlightedIndex, that means are
         // no more options before it which are enabled, so we can go to the
@@ -156,6 +157,7 @@ export function Select({
       }
 
       case Keys.Escape:
+        event.preventDefault()
         closeMenu()
         break
     }
