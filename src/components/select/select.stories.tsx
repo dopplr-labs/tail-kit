@@ -6,6 +6,7 @@ import {
   CalculatorOutline,
   CalendarOutline,
   ClipboardOutline,
+  DatabaseOutline,
 } from 'components/icons'
 import { Select } from './select'
 
@@ -198,13 +199,18 @@ export function SelectWithDisabledOptions() {
     <Select
       placeholder="Select Icon"
       className="w-64"
+      allowClear
       options={[
-        { value: 'beaker', label: 'Beaker', icon: <BeakerOutline /> },
+        {
+          value: 'beaker',
+          label: 'Beaker',
+          icon: <BeakerOutline />,
+          disabled: true,
+        },
         {
           value: 'calculator',
           label: 'Calculator',
           icon: <CalculatorOutline />,
-          disabled: true,
         },
         {
           value: 'book-open',
@@ -213,12 +219,35 @@ export function SelectWithDisabledOptions() {
           disabled: true,
         },
         { value: 'calendar', label: 'Calendar', icon: <CalendarOutline /> },
+        { value: 'database', label: 'Database', icon: <DatabaseOutline /> },
         {
           value: 'clipboard',
           label: 'Clipboard',
           icon: <ClipboardOutline />,
+          disabled: true,
         },
       ]}
+    />
+  )
+}
+
+export function SelectWithAllDisabledOptions() {
+  return (
+    <Select
+      placeholder="Select Icon"
+      className="w-64"
+      options={users.map((user) => ({
+        value: user.id,
+        label: user.name,
+        icon: (
+          <img
+            src={user.profileImage}
+            className="object-cover w-6 h-6 rounded-full"
+            alt={user.name}
+          />
+        ),
+        disabled: true,
+      }))}
     />
   )
 }

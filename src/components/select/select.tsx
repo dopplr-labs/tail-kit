@@ -8,7 +8,7 @@ import useOutsideClick from 'hooks/use-outside-click'
 import useSyncedState from 'hooks/use-synced-states'
 import { Keys } from 'utils/keyboard'
 import clsx from 'clsx'
-import { ActionType, initialState, reducer } from './reducer'
+import { ActionType, reducer } from './reducer'
 import { OptionType } from './types'
 import { SelectOption } from './components/select-option'
 import { findNextIndex, findPrevIndex } from './utils'
@@ -65,14 +65,20 @@ export function Select({
   const [selectedValue, setSelectedValue] = useSyncedState<
     OptionType | undefined
   >(optionsList.find((option) => option.value === (value || defaultValue)))
-  const selectedOptionIndex = optionsList.findIndex(
+  let selectedOptionIndex = optionsList.findIndex(
     (option) => option.value === selectedValue?.value,
   )
+  // if we can't find the selected option index, then it should be the first
+  // non-disabled option
+  selectedOptionIndex =
+    selectedOptionIndex === -1
+      ? findNextIndex(optionsList, -1)
+      : selectedOptionIndex
 
-  const [{ open, highlightedIndex }, dispatch] = useReducer(
-    reducer,
-    initialState,
-  )
+  const [{ open, highlightedIndex }, dispatch] = useReducer(reducer, {
+    open: false,
+    highlightedIndex: selectedOptionIndex,
+  })
 
   const triggerContainer = useRef<HTMLButtonElement | null>(null)
   const triggerRect = useRect(triggerContainer)
@@ -126,19 +132,25 @@ export function Select({
         break
 
       case Keys.ArrowDown: {
-        const nextIndex =
-          highlightedIndex === options.length - 1
-            ? findNextIndex(optionsList, -1)
-            : findNextIndex(optionsList, highlightedIndex)
+        let nextIndex = findNextIndex(optionsList, highlightedIndex)
+        // if the nextIndex is same as the highlightedIndex, that means are
+        // no more options after it which are enabled, so we can go to the
+        // circular navigation, by starting from the top
+        if (nextIndex === highlightedIndex) {
+          nextIndex = findNextIndex(optionsList, -1)
+        }
         highlightOptionWithIndex(nextIndex)
         break
       }
 
       case Keys.ArrowUp: {
-        const nextIndex =
-          highlightedIndex === 0
-            ? findPrevIndex(optionsList, optionsList.length)
-            : findPrevIndex(optionsList, highlightedIndex)
+        let nextIndex = findPrevIndex(optionsList, highlightedIndex)
+        // if the nextIndex is same as the highlightedIndex, that means are
+        // no more options before it which are enabled, so we can go to the
+        // circular navigation, by starting from the bottom
+        if (nextIndex === highlightedIndex) {
+          nextIndex = findPrevIndex(optionsList, optionsList.length)
+        }
         highlightOptionWithIndex(nextIndex)
         break
       }

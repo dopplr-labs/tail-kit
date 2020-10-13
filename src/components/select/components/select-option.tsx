@@ -26,7 +26,7 @@ export function SelectOption({
         'px-3 py-2 text-sm flex items-center space-x-3',
         highlighted ? 'bg-blue-500 text-white' : undefined,
         option.disabled
-          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+          ? 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-75'
           : undefined,
         !highlighted && !option.disabled ? 'text-gray-800' : undefined,
         className,
