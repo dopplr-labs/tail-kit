@@ -184,7 +184,9 @@ export function ControlledSelectComponent() {
       />
       {valueSelected ? (
         <div>
-          <div className="text-xs font-bold text-gray-900">Selected User</div>
+          <div className="text-xs font-semibold text-blue-500">
+            Selected User
+          </div>
           <div className="text-sm text-gray-800">
             {users.find((user) => user.id === valueSelected)?.name}
           </div>
@@ -234,7 +236,7 @@ export function SelectWithDisabledOptions() {
 export function SelectWithAllDisabledOptions() {
   return (
     <Select
-      placeholder="Select Icon"
+      placeholder="Select User"
       className="w-64"
       options={users.map((user) => ({
         value: user.id,
