@@ -76,3 +76,7 @@ We are working on making this project fully open source. We appreciate any contr
 [Bug reports](https://github.com/abinashpanda/tail-kit/issues/new?template=bug_report.md) and [feature request](https://github.com/abinashpanda/tail-kit/issues/new?template=feature_request.md) are welcome but, please use the correct template.
 
 Please check out our [Contribution Guide](./.github/contribution/README.md). It includes contribution guidelines and information on how to run and develop the project.
+
+## Logo
+
+<a href='https://www.freepik.com/vectors/logo'>Logo vector created by sentavio - www.freepik.com</a>
