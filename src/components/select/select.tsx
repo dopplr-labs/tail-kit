@@ -3,7 +3,6 @@ import { useMemoOne } from 'use-memo-one'
 import { useRect } from '@reach/rect'
 import { SelectorOutline, XCircleSolid } from 'components/icons'
 import Portal from 'components/portal'
-import { mod } from 'utils/mod'
 import { scrollIntoView } from 'utils/dom'
 import useOutsideClick from 'hooks/use-outside-click'
 import useSyncedState from 'hooks/use-synced-states'
@@ -12,6 +11,7 @@ import clsx from 'clsx'
 import { ActionType, initialState, reducer } from './reducer'
 import { OptionType } from './types'
 import { SelectOption } from './components/select-option'
+import { findNextIndex, findPrevIndex } from './utils'
 
 export type SelectProps = {
   /** The default selected value */
@@ -58,7 +58,7 @@ export function Select({
   className,
   style,
 }: SelectProps) {
-  const optionsList = options.map((option) =>
+  const optionsList: OptionType[] = options.map((option) =>
     typeof option === 'string' ? { value: option, label: option } : option,
   )
 
@@ -94,14 +94,12 @@ export function Select({
   }
 
   function highlightOptionWithIndex(index: number) {
-    return () => {
-      dispatch({
-        type: ActionType.HIGHLIGHT,
-        payload: {
-          index,
-        },
-      })
-    }
+    dispatch({
+      type: ActionType.HIGHLIGHT,
+      payload: {
+        index,
+      },
+    })
   }
 
   function reset(event: React.MouseEvent<HTMLDivElement>) {
@@ -127,13 +125,23 @@ export function Select({
         selectOptionAndCloseMenu(optionsList[highlightedIndex])
         break
 
-      case Keys.ArrowDown:
-        highlightOptionWithIndex(mod(highlightedIndex + 1, options.length))()
+      case Keys.ArrowDown: {
+        const nextIndex =
+          highlightedIndex === options.length - 1
+            ? findNextIndex(optionsList, -1)
+            : findNextIndex(optionsList, highlightedIndex)
+        highlightOptionWithIndex(nextIndex)
         break
+      }
 
-      case Keys.ArrowUp:
-        highlightOptionWithIndex(mod(highlightedIndex - 1, options.length))()
+      case Keys.ArrowUp: {
+        const nextIndex =
+          highlightedIndex === 0
+            ? findPrevIndex(optionsList, optionsList.length)
+            : findPrevIndex(optionsList, highlightedIndex)
+        highlightOptionWithIndex(nextIndex)
         break
+      }
 
       case Keys.Escape:
         closeMenu()
@@ -250,7 +258,11 @@ export function Select({
               option={option}
               highlighted={index === highlightedIndex}
               selected={option.value === selectedValue?.value}
-              onMouseEnter={highlightOptionWithIndex(index)}
+              onMouseEnter={() => {
+                if (!option.disabled) {
+                  highlightOptionWithIndex(index)
+                }
+              }}
               onClick={() => {
                 selectOptionAndCloseMenu(option)
               }}

@@ -192,3 +192,33 @@ export function ControlledSelectComponent() {
     </div>
   )
 }
+
+export function SelectWithDisabledOptions() {
+  return (
+    <Select
+      placeholder="Select Icon"
+      className="w-64"
+      options={[
+        { value: 'beaker', label: 'Beaker', icon: <BeakerOutline /> },
+        {
+          value: 'calculator',
+          label: 'Calculator',
+          icon: <CalculatorOutline />,
+          disabled: true,
+        },
+        {
+          value: 'book-open',
+          label: 'Book Open',
+          icon: <BookOpenOutline />,
+          disabled: true,
+        },
+        { value: 'calendar', label: 'Calendar', icon: <CalendarOutline /> },
+        {
+          value: 'clipboard',
+          label: 'Clipboard',
+          icon: <ClipboardOutline />,
+        },
+      ]}
+    />
+  )
+}

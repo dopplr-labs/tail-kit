@@ -24,7 +24,11 @@ export function SelectOption({
     <li
       className={clsx(
         'px-3 py-2 text-sm flex items-center space-x-3',
-        highlighted ? 'bg-blue-500 text-white' : 'text-gray-800',
+        highlighted ? 'bg-blue-500 text-white' : undefined,
+        option.disabled
+          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+          : undefined,
+        !highlighted && !option.disabled ? 'text-gray-800' : undefined,
         className,
       )}
       style={style}
