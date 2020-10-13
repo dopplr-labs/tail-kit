@@ -1,119 +1,208 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import React, { useLayoutEffect, useReducer, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 import { useRect } from '@reach/rect'
-import clsx from 'clsx'
-import { CheckOutline, SelectorOutline, XCircleSolid } from 'components/icons'
+import { SelectorOutline, XCircleSolid } from 'components/icons'
 import Portal from 'components/portal'
 import { mod } from 'utils/mod'
 import { scrollIntoView } from 'utils/dom'
 import useOutsideClick from 'hooks/use-outside-click'
 import useSyncedState from 'hooks/use-synced-states'
-
-enum KeyCodes {
-  enter = 13,
-  space = 32,
-  down = 40,
-  up = 38,
-}
-
-type OptionType = {
-  value: string
-  label: string
-  icon?: JSX.Element
-}
+import { Keys } from 'utils/keyboard'
+import clsx from 'clsx'
+import { ActionType, initialState, reducer } from './reducer'
+import { OptionType } from './types'
+import { SelectOption } from './components/select-option'
 
 export type SelectProps = {
-  defaultValue?: OptionType
-  value?: OptionType
-  options: OptionType[]
+  /** The default selected value */
+  defaultValue?: string
+  /**
+   * The value of the selected option. To be used in conjunction with `onChange` when
+   * using with select as a controlled component.
+   * */
+  value?: string
+  /** Handler function called when the selected option is changed */
+  onChange?: (selectedOption: string | undefined) => void
+  /** Intial label in toggle button */
+  placeholder?: string
+  /** Options to render in dropdown */
+  options: (OptionType | string)[]
+  /** Disable select component */
+  disabled?: boolean
+  /** Show clear button to clear selection */
+  allowClear?: boolean
+  /** Additional classes applied to the select component */
   className?: string
+  /** Additional styles applied to the select component */
   style?: React.CSSProperties
 }
 
-export function Select({ options, className, style }: SelectProps) {
+/**
+ * Component to render **select menu**.
+ *
+ * This component can be used either as a controlled component by passing both `onChange` and `value` or
+ * as uncontrolled component. When using as an uncontrolled copmonent, a `defaultValue` can be provided to
+ * set the initial selected value.
+ *
+ * This is a basic select menu which can render a label, a icon for an option. The compononent can take options
+ * in the form of `OptionType` or `string`.
+ */
+export function Select({
+  defaultValue,
+  value,
+  onChange,
+  options,
+  placeholder = 'Select Option',
+  disabled = false,
+  allowClear = false,
+  className,
+  style,
+}: SelectProps) {
+  const optionsList = options.map((option) =>
+    typeof option === 'string' ? { value: option, label: option } : option,
+  )
+
   const [selectedValue, setSelectedValue] = useSyncedState<
     OptionType | undefined
-  >(undefined)
+  >(optionsList.find((option) => option.value === (value || defaultValue)))
+  const selectedOptionIndex = optionsList.findIndex(
+    (option) => option.value === selectedValue?.value,
+  )
 
-  const [opened, setOpened] = useState(false)
-
-  const [hightlightIndex, setHighlightIndex] = useState(0)
+  const [{ open, highlightedIndex }, dispatch] = useReducer(
+    reducer,
+    initialState,
+  )
 
   const triggerContainer = useRef<HTMLButtonElement | null>(null)
   const triggerRect = useRect(triggerContainer)
 
   const listContainer = useRef<HTMLUListElement | null>(null)
 
-  function handleKeyDown(event: React.KeyboardEvent) {
+  function selectOptionAndCloseMenu(option: OptionType | undefined) {
+    setSelectedValue(option)
+    onChange?.(option?.value)
+    closeMenu()
+  }
+
+  function openMenu() {
+    dispatch({ type: ActionType.OPEN, payload: { selectedOptionIndex } })
+  }
+
+  function closeMenu() {
+    dispatch({ type: ActionType.CLOSE })
+  }
+
+  function highlightOptionWithIndex(index: number) {
+    return () => {
+      dispatch({
+        type: ActionType.HIGHLIGHT,
+        payload: {
+          index,
+        },
+      })
+    }
+  }
+
+  function reset(event: React.MouseEvent<HTMLDivElement>) {
+    event.stopPropagation()
+
+    selectOptionAndCloseMenu(undefined)
+    highlightOptionWithIndex(0)
+  }
+
+  function handleButtonKeyDown(event: React.KeyboardEvent) {
+    if (event.key === Keys.ArrowDown || event.key === Keys.ArrowUp) {
+      event.preventDefault()
+      openMenu()
+    }
+  }
+
+  function handleListKeyDown(event: React.KeyboardEvent) {
     event.preventDefault()
-    switch (event.keyCode) {
-      case KeyCodes.enter:
-      case KeyCodes.space:
-        setSelectedValue(options[hightlightIndex])
-        setOpened(false)
+
+    switch (event.key) {
+      case Keys.Enter:
+      case Keys.Space:
+        selectOptionAndCloseMenu(optionsList[highlightedIndex])
         break
 
-      case KeyCodes.down:
-        setHighlightIndex((prevState) => mod(prevState + 1, options.length))
+      case Keys.ArrowDown:
+        highlightOptionWithIndex(mod(highlightedIndex + 1, options.length))()
         break
-      case KeyCodes.up:
-        setHighlightIndex((prevState) => mod(prevState - 1, options.length))
+
+      case Keys.ArrowUp:
+        highlightOptionWithIndex(mod(highlightedIndex - 1, options.length))()
+        break
+
+      case Keys.Escape:
+        closeMenu()
         break
     }
   }
 
-  function onOptionsMount() {
+  function scrollOptionWithIndexIntoView(index: number) {
     if (listContainer.current) {
       listContainer.current.focus()
-      scrollOptionIntoView()
+      const listItem = listContainer.current.querySelector(
+        `li:nth-of-type(${index + 1})`,
+      ) as HTMLLIElement
+      if (listItem) {
+        scrollIntoView(listItem, listContainer.current)
+      }
     }
   }
 
+  /**
+   * Callback function to be called when the options are mounted in the portal.
+   *
+   * This focuses on the list container(<ul>element</ul>), so that the keyboard events are handled by
+   * keyboard event listener on the list container.
+   * It also scrolls the highlighted option into the view as well.
+   */
+  function onOptionsMount() {
+    listContainer.current?.focus()
+    scrollOptionWithIndexIntoView(selectedOptionIndex)
+  }
+
+  /**
+   * Callback function to be called when the options are unmounted from the portal.
+   *
+   * This focuses on trigger button again.
+   */
   function onOptionsUnmount() {
     if (triggerContainer.current) {
       triggerContainer.current.focus()
     }
   }
 
-  const scrollOptionIntoView = useCallback(() => {
-    if (listContainer.current) {
-      const listItem = listContainer.current.querySelector(
-        `li:nth-of-type(${hightlightIndex + 1})`,
-      ) as HTMLLIElement
-      if (listItem) {
-        scrollIntoView(listItem, listContainer.current)
-      }
-    }
-  }, [hightlightIndex])
-
+  // As the highlighted index changes, scroll to the highlighted option
+  // into view
   useLayoutEffect(() => {
-    scrollOptionIntoView()
-  }, [scrollOptionIntoView])
+    scrollOptionWithIndexIntoView(highlightedIndex)
+  }, [highlightedIndex])
 
   useOutsideClick({
     containers: useMemoOne(() => [triggerContainer, listContainer], []),
-    active: opened,
-    onClick: () => {
-      setOpened(false)
-    },
+    active: open,
+    onClick: closeMenu,
   })
 
   return (
-    <div className={className} style={style}>
+    <>
       <button
-        className="flex items-center w-full px-3 py-2 space-x-3 text-sm text-gray-800 border rounded-md focus:outline-none focus:shadow-outline"
-        onClick={() => {
-          setOpened((prevState) => !prevState)
-        }}
-        onKeyDown={(event) => {
-          if (
-            event.keyCode === KeyCodes.down ||
-            event.keyCode === KeyCodes.up
-          ) {
-            setOpened(true)
-          }
-        }}
+        className={clsx(
+          'flex items-center px-3 py-2 space-x-3 text-sm border rounded-md focus:outline-none focus:shadow-outline',
+          disabled
+            ? 'bg-gray-100 cursor-not-allowed text-gray-400'
+            : 'text-gray-800 ',
+          className,
+        )}
+        style={style}
+        onClick={openMenu}
+        onKeyDown={handleButtonKeyDown}
         ref={triggerContainer}
+        disabled={disabled}
       >
         {selectedValue ? (
           <>
@@ -121,19 +210,19 @@ export function Select({ options, className, style }: SelectProps) {
             <span>{selectedValue.label}</span>
           </>
         ) : (
-          <span>Select User</span>
+          <span>{placeholder}</span>
         )}
+
         <span className="flex-1" />
-        {selectedValue ? (
-          <button
-            className="py-0.5 focus:outline-none"
-            onClick={(event) => {
-              event.stopPropagation()
-              setSelectedValue(undefined)
-            }}
+
+        {selectedValue && allowClear ? (
+          <div
+            className="py-0.5 focus:outline-none cursor-pointer"
+            role="button"
+            onClick={reset}
           >
             <XCircleSolid className="w-5 h-5 text-gray-400" />
-          </button>
+          </div>
         ) : (
           <span className="py-0.5">
             <SelectorOutline className="w-5 h-5 text-gray-400" />
@@ -142,49 +231,33 @@ export function Select({ options, className, style }: SelectProps) {
       </button>
       <Portal
         triggerRef={triggerContainer}
-        visible={opened}
+        visible={open}
         onContentMount={onOptionsMount}
         onContentUnmount={onOptionsUnmount}
       >
         <ul
           tabIndex={-1}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleListKeyDown}
           className="overflow-auto bg-white rounded-md shadow max-h-80 focus:outline-none"
           ref={listContainer}
-          onMouseLeave={() => {}}
           style={{
             width: triggerRect?.width,
           }}
         >
-          {options.map((option, index) => (
-            <li
-              className={clsx(
-                'px-3 py-2 text-sm flex items-center space-x-3',
-                index === hightlightIndex
-                  ? 'bg-blue-500 text-white'
-                  : 'text-gray-800',
-              )}
+          {optionsList.map((option, index) => (
+            <SelectOption
               key={option.value}
-              onMouseEnter={() => {
-                setHighlightIndex(index)
-              }}
-              tabIndex={-1}
+              option={option}
+              highlighted={index === highlightedIndex}
+              selected={option.value === selectedValue?.value}
+              onMouseEnter={highlightOptionWithIndex(index)}
               onClick={() => {
-                setSelectedValue(option)
-                setOpened(false)
+                selectOptionAndCloseMenu(option)
               }}
-              role="option"
-            >
-              {option.icon}
-              <span>{option.value}</span>
-              <span className="flex-1" />
-              {option.value === selectedValue?.value ? (
-                <CheckOutline className="w-4 h-4" />
-              ) : null}
-            </li>
+            />
           ))}
         </ul>
       </Portal>
-    </div>
+    </>
   )
 }
