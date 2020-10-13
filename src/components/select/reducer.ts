@@ -3,11 +3,6 @@ export type State = {
   open: boolean
 }
 
-export const initialState: State = {
-  highlightedIndex: 0,
-  open: false,
-}
-
 export enum ActionType {
   OPEN = 'OPEN',
   CLOSE = 'CLOSE',
@@ -50,10 +45,7 @@ export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case ActionType.OPEN: {
       return {
-        highlightedIndex:
-          action.payload.selectedOptionIndex === -1
-            ? 0
-            : action.payload.selectedOptionIndex,
+        highlightedIndex: action.payload.selectedOptionIndex,
         open: true,
       }
     }
