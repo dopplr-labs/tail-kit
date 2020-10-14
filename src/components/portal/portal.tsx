@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import usePortalPosition from 'hooks/use-portal-position'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useMemoOne } from 'use-memo-one'
@@ -53,6 +53,14 @@ export function Portal({
     container.classList.add('portal-container')
     return container
   }, [])
+
+  useEffect(() => {
+    return () => {
+      if (portalParent.contains(portalContainer)) {
+        portalParent.removeChild(portalContainer)
+      }
+    }
+  }, [portalContainer, portalParent])
 
   const contentContainer = useRef<HTMLDivElement | null>(null)
 

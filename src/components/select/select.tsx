@@ -35,6 +35,8 @@ export type SelectProps = {
   className?: string
   /** Additional styles applied to the select component */
   style?: React.CSSProperties
+  /** parent of the portal container rendering the menu */
+  portalParent?: HTMLElement
 }
 
 /**
@@ -57,6 +59,7 @@ export function Select({
   allowClear = false,
   className,
   style,
+  portalParent,
 }: SelectProps) {
   const optionsList: OptionType[] = options.map((option) =>
     typeof option === 'string' ? { value: option, label: option } : option,
@@ -250,6 +253,7 @@ export function Select({
             className="py-0.5 focus:outline-none cursor-pointer"
             role="button"
             onClick={reset}
+            data-testid="clear-all"
           >
             <XCircleSolid className="w-5 h-5 text-gray-400" />
           </div>
@@ -264,6 +268,7 @@ export function Select({
         visible={open}
         onContentMount={onOptionsMount}
         onContentUnmount={onOptionsUnmount}
+        portalParent={portalParent}
       >
         <ul
           tabIndex={-1}
@@ -273,6 +278,7 @@ export function Select({
           style={{
             width: triggerRect?.width,
           }}
+          role="listbox"
         >
           {optionsList.map((option, index) => (
             <SelectOption

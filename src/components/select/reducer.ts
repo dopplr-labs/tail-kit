@@ -6,7 +6,6 @@ export type State = {
 export enum ActionType {
   OPEN = 'OPEN',
   CLOSE = 'CLOSE',
-  TOGGLE = 'TOGGLE',
   HIGHLIGHT = 'HIGHLIGHT',
 }
 
@@ -19,10 +18,6 @@ type OpenAction = {
 
 type CloseAction = {
   type: ActionType.CLOSE
-}
-
-type ToggleAction = {
-  type: ActionType.TOGGLE
 }
 
 type HightlightAction = {
@@ -39,7 +34,7 @@ type SelectAction = {
   }
 }
 
-export type Action = OpenAction | CloseAction | ToggleAction | HightlightAction
+export type Action = OpenAction | CloseAction | HightlightAction
 
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -54,13 +49,6 @@ export function reducer(state: State, action: Action): State {
       return {
         ...state,
         open: false,
-      }
-    }
-
-    case ActionType.TOGGLE: {
-      return {
-        ...state,
-        open: !state.open,
       }
     }
 
