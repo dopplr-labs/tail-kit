@@ -34,6 +34,7 @@ export function SelectOption({
       style={style}
       key={option.value}
       tabIndex={-1}
+      role="option"
       {...restProps}
     >
       {option.icon}
