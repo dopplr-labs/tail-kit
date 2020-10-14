@@ -99,6 +99,14 @@ export function Select({
     dispatch({ type: ActionType.CLOSE })
   }
 
+  function toggleMenu() {
+    if (open) {
+      closeMenu()
+    } else {
+      openMenu()
+    }
+  }
+
   function highlightOptionWithIndex(index: number) {
     dispatch({
       type: ActionType.HIGHLIGHT,
@@ -221,7 +229,7 @@ export function Select({
           className,
         )}
         style={style}
-        onClick={openMenu}
+        onClick={toggleMenu}
         onKeyDown={handleButtonKeyDown}
         ref={triggerContainer}
         disabled={disabled}
