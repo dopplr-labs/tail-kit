@@ -54,6 +54,7 @@ export default function Pagination({
         <ChevronLeftOutline className="w-4 h-4" />
         Previous
       </button>
+
       {range(1, totalPages + 1).map((page) => (
         <button
           key={page}
@@ -71,6 +72,7 @@ export default function Pagination({
           {page}
         </button>
       ))}
+
       <button
         className="flex items-center px-3 py-2 text-sm text-blue-700 border border-transparent rounded-md gap-x-1 hover:border-gray-300 focus:outline-none focus:shadow-outline"
         onClick={() => {
