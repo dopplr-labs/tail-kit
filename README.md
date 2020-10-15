@@ -4,7 +4,6 @@
 
 ![Tests](https://github.com/abinashpanda/tail-kit/workflows/tests/badge.svg)
 [![codecov](https://codecov.io/gh/abinashpanda/tail-kit/branch/develop/graph/badge.svg)](https://codecov.io/gh/abinashpanda/tail-kit)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9f27e877eec4440fb493f6b76c720292)](https://www.codacy.com/manual/abinashpanda/tail-kit?utm_source=github.com&utm_medium=referral&utm_content=abinashpanda/tail-kit&utm_campaign=Badge_Grade)
 [![NPM ](https://img.shields.io/npm/v/@tail-kit/tail-kit)](https://www.npmjs.com/package/@tail-kit/tail-kit)
 
 UI kit built using `tailwindcss`
