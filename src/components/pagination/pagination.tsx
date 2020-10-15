@@ -59,6 +59,20 @@ export function Pagination({
     setSelected((prevState) => prevState + 1)
   }
 
+  function PageButton({ page }: { page: number }) {
+    return (
+      <Button
+        label={page.toString()}
+        buttonType={
+          selected === page ? Button.ButtonType.primary : Button.ButtonType.link
+        }
+        onClick={() => {
+          setSelected(page)
+        }}
+      />
+    )
+  }
+
   return (
     <div className="flex items-center gap-x-2">
       <Button
@@ -68,20 +82,53 @@ export function Pagination({
         disabled={selected === 1}
         onClick={handleDecrement}
       />
-      {range(1, totalPages + 1).map((page) => (
-        <Button
-          key={page}
-          label={page.toString()}
-          buttonType={
-            selected === page
-              ? Button.ButtonType.primary
-              : Button.ButtonType.link
-          }
-          onClick={() => {
-            setSelected(page)
-          }}
-        />
-      ))}
+      {totalPages < 8 ? (
+        range(1, totalPages + 1).map((page) => (
+          <PageButton key={page} page={page} />
+        ))
+      ) : (
+        <>
+          <PageButton page={1} />
+          {selected > 4 ? (
+            <>
+              <span>...</span>
+              {totalPages - selected < 3 ? (
+                range(totalPages - 3, totalPages).map((page) => (
+                  <PageButton key={page} page={page} />
+                ))
+              ) : totalPages - selected === 3 ? (
+                <>
+                  {range(selected - 1, totalPages).map((page) => (
+                    <PageButton key={page} page={page} />
+                  ))}
+                </>
+              ) : (
+                <>
+                  {range(selected - 1, selected + 2).map((page) => (
+                    <PageButton key={page} page={page} />
+                  ))}
+                  <span>...</span>
+                </>
+              )}
+            </>
+          ) : selected === 4 ? (
+            <>
+              {range(2, 6).map((page) => (
+                <PageButton key={page} page={page} />
+              ))}
+              <span>...</span>
+            </>
+          ) : (
+            <>
+              {range(2, 5).map((page) => (
+                <PageButton key={page} page={page} />
+              ))}
+              <span>...</span>
+            </>
+          )}
+          <PageButton page={totalPages} />
+        </>
+      )}
       <Button
         label="Next"
         buttonType={Button.ButtonType.link}

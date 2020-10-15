@@ -12,5 +12,5 @@ export function DefaultPagination() {
 }
 
 export function WithSizeChanger() {
-  return <Pagination total={80} showSizeChanger />
+  return <Pagination total={100} defaultCurrent={3} showSizeChanger />
 }
