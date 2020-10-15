@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { range } from 'lodash-es'
-import clsx from 'clsx'
+import Button from 'components/button'
 import Select from 'components/select'
 import { ChevronLeftOutline, ChevronRightOutline } from '../icons'
 
@@ -16,7 +16,16 @@ export type PaginationProps = {
   showSizeChanger?: boolean
 }
 
-export default function Pagination({
+/**
+ * A long list can be divided into several pages using Pagination, and only one page will be loaded at a time.
+ *
+ * ### When To Use
+ *
+ * * When it will take a long time to load/render all items.
+ * * If you want to browse the data by navigating through pages.
+ */
+
+export function Pagination({
   defaultCurrent = 1,
   total,
   showSizeChanger = false,
@@ -42,47 +51,45 @@ export default function Pagination({
     setTotalPages(Math.ceil(total / newPageSize))
   }
 
+  function handleDecrement() {
+    setSelected((prevState) => prevState - 1)
+  }
+
+  function handleIncrement() {
+    setSelected((prevState) => prevState + 1)
+  }
+
   return (
     <div className="flex items-center gap-x-2">
-      <button
-        className="flex items-center px-3 py-2 text-sm text-blue-700 border border-transparent rounded-md gap-x-1 hover:border-gray-300 focus:outline-none focus:shadow-outline"
+      <Button
+        label="Previous"
+        buttonType={Button.ButtonType.link}
+        icon={<ChevronLeftOutline />}
         disabled={selected === 1}
-        onClick={() => {
-          setSelected((prevState) => prevState - 1)
-        }}
-      >
-        <ChevronLeftOutline className="w-4 h-4" />
-        Previous
-      </button>
-
+        onClick={handleDecrement}
+      />
       {range(1, totalPages + 1).map((page) => (
-        <button
+        <Button
           key={page}
-          value={page}
-          className={clsx(
-            'px-3 py-1 text-sm rounded-md border border-transparent focus:outline-none',
+          label={page.toString()}
+          buttonType={
             selected === page
-              ? 'bg-blue-600 text-white font-semibold'
-              : 'text-gray-800 hover:border-gray-200',
-          )}
+              ? Button.ButtonType.primary
+              : Button.ButtonType.link
+          }
           onClick={() => {
             setSelected(page)
           }}
-        >
-          {page}
-        </button>
+        />
       ))}
-
-      <button
-        className="flex items-center px-3 py-2 text-sm text-blue-700 border border-transparent rounded-md gap-x-1 hover:border-gray-300 focus:outline-none focus:shadow-outline"
-        onClick={() => {
-          setSelected((prevState) => prevState + 1)
-        }}
+      <Button
+        label="Next"
+        buttonType={Button.ButtonType.link}
+        icon={<ChevronRightOutline />}
+        iconPlacement={Button.IconPlacement.afterLabel}
         disabled={selected === totalPages}
-      >
-        Next
-        <ChevronRightOutline className="w-4 h-4" />
-      </button>
+        onClick={handleIncrement}
+      />
       {showSizeChanger ? (
         <Select options={options} defaultValue="10" onChange={handlePageSize} />
       ) : null}

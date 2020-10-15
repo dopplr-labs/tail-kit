@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import Pagination from './pagination'
+import { Pagination } from './pagination'
 
 export default {
   title: 'Navigation/Pagination',
