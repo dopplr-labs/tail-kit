@@ -14,3 +14,7 @@ export function DefaultPagination() {
 export function WithSizeChanger() {
   return <Pagination total={100} defaultCurrent={3} showSizeChanger />
 }
+
+export function WithPageJumper() {
+  return <Pagination total={500} showSizeChanger showQuickJumper />
+}
