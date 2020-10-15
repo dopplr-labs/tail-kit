@@ -32,33 +32,41 @@ export function DefaultTabs() {
   )
 }
 
+const tabs = [
+  {
+    title: 'My Account',
+    content: 'Account Details',
+    icon: <UserCircleSolid />,
+    key: 'my-account',
+  },
+  {
+    title: 'Company',
+    content: 'Company Details',
+    key: 'company',
+    icon: <OfficeBuildingSolid />,
+  },
+  {
+    title: 'Team Members',
+    content: 'Team Members Details',
+    key: 'team-members',
+    icon: <UsersSolid />,
+  },
+  {
+    title: 'Billing',
+    content: 'Billing Details',
+    key: 'billing',
+    icon: <CreditCardSolid />,
+  },
+]
+
 export function TabsWithIcon() {
   return (
     <Tabs>
-      <Tabs.TabPane
-        title="My Account"
-        key="my-account"
-        icon={<UserCircleSolid />}
-      >
-        <div className="text-sm text-gray-700">Account Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane
-        title="Company"
-        key="company"
-        icon={<OfficeBuildingSolid />}
-      >
-        <div className="text-sm text-gray-700">Company Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane
-        title="Team Members"
-        key="team-members"
-        icon={<UsersSolid />}
-      >
-        <div className="text-sm text-gray-700">Team Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane title="Billing" key="billing" icon={<CreditCardSolid />}>
-        <div className="text-sm text-gray-700">Billing Details</div>
-      </Tabs.TabPane>
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
     </Tabs>
   )
 }
@@ -75,63 +83,27 @@ export function TabsWithExtraContent() {
           value={activeTab}
           onChange={setActiveTab}
           className="w-48"
-          options={[
-            {
-              label: 'My Account',
-              value: 'my-account',
-              icon: <UserCircleSolid />,
-            },
-            {
-              label: 'Company',
-              value: 'company',
-              icon: <OfficeBuildingSolid />,
-            },
-            {
-              label: 'Team Members',
-              value: 'team-members',
-              icon: <UsersSolid />,
-            },
-            {
-              label: 'Billing',
-              value: 'billing',
-              icon: <CreditCardSolid />,
-            },
-          ]}
+          options={tabs.map((tab) => ({
+            label: tab.title,
+            value: tab.key,
+            icon: tab.icon,
+          }))}
           placeholder="Select Tab"
         />
       }
     >
-      <Tabs.TabPane
-        title="My Account"
-        key="my-account"
-        icon={<UserCircleSolid />}
-      >
-        <div className="text-sm text-gray-700">Account Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane
-        title="Company"
-        key="company"
-        icon={<OfficeBuildingSolid />}
-      >
-        <div className="text-sm text-gray-700">Company Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane
-        title="Team Members"
-        key="team-members"
-        icon={<UsersSolid />}
-      >
-        <div className="text-sm text-gray-700">Team Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane title="Billing" key="billing" icon={<CreditCardSolid />}>
-        <div className="text-sm text-gray-700">Billing Details</div>
-      </Tabs.TabPane>
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
     </Tabs>
   )
 }
 
 export function TabsInPills() {
   return (
-    <Tabs type="pill">
+    <Tabs type={Tabs.TabTypes.pill}>
       <Tabs.TabPane title="Tab 1" key="tab-1">
         <div className="text-sm text-gray-700">Tab Content 1</div>
       </Tabs.TabPane>
@@ -147,31 +119,12 @@ export function TabsInPills() {
 
 export function TabsWithIconInPills() {
   return (
-    <Tabs type="pill">
-      <Tabs.TabPane
-        title="My Account"
-        key="my-account"
-        icon={<UserCircleSolid />}
-      >
-        <div className="text-sm text-gray-700">Account Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane
-        title="Company"
-        key="company"
-        icon={<OfficeBuildingSolid />}
-      >
-        <div className="text-sm text-gray-700">Company Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane
-        title="Team Members"
-        key="team-members"
-        icon={<UsersSolid />}
-      >
-        <div className="text-sm text-gray-700">Team Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane title="Billing" key="billing" icon={<CreditCardSolid />}>
-        <div className="text-sm text-gray-700">Billing Details</div>
-      </Tabs.TabPane>
+    <Tabs type={Tabs.TabTypes.pill}>
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
     </Tabs>
   )
 }
@@ -181,7 +134,7 @@ export function TabsInPillsWithExtraContent() {
 
   return (
     <Tabs
-      type="pill"
+      type={Tabs.TabTypes.pill}
       tab={activeTab}
       onTabChange={setActiveTab}
       extraContent={
@@ -189,56 +142,150 @@ export function TabsInPillsWithExtraContent() {
           value={activeTab}
           onChange={setActiveTab}
           className="w-48"
-          options={[
-            {
-              label: 'My Account',
-              value: 'my-account',
-              icon: <UserCircleSolid />,
-            },
-            {
-              label: 'Company',
-              value: 'company',
-              icon: <OfficeBuildingSolid />,
-            },
-            {
-              label: 'Team Members',
-              value: 'team-members',
-              icon: <UsersSolid />,
-            },
-            {
-              label: 'Billing',
-              value: 'billing',
-              icon: <CreditCardSolid />,
-            },
-          ]}
+          options={tabs.map((tab) => ({
+            label: tab.title,
+            value: tab.key,
+            icon: tab.icon,
+          }))}
           placeholder="Select Tab"
         />
       }
     >
-      <Tabs.TabPane
-        title="My Account"
-        key="my-account"
-        icon={<UserCircleSolid />}
-      >
-        <div className="text-sm text-gray-700">Account Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane
-        title="Company"
-        key="company"
-        icon={<OfficeBuildingSolid />}
-      >
-        <div className="text-sm text-gray-700">Company Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane
-        title="Team Members"
-        key="team-members"
-        icon={<UsersSolid />}
-      >
-        <div className="text-sm text-gray-700">Team Details</div>
-      </Tabs.TabPane>
-      <Tabs.TabPane title="Billing" key="billing" icon={<CreditCardSolid />}>
-        <div className="text-sm text-gray-700">Billing Details</div>
-      </Tabs.TabPane>
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
+    </Tabs>
+  )
+}
+
+export function TabsAtBottom() {
+  const [activeTab, setActiveTab] = useState<string | undefined>('my-account')
+
+  return (
+    <Tabs
+      position={Tabs.TabPosition.bottom}
+      tab={activeTab}
+      onTabChange={setActiveTab}
+      extraContent={
+        <Select
+          value={activeTab}
+          onChange={setActiveTab}
+          className="w-48"
+          options={tabs.map((tab) => ({
+            label: tab.title,
+            value: tab.key,
+            icon: tab.icon,
+          }))}
+          placeholder="Select Tab"
+        />
+      }
+    >
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
+    </Tabs>
+  )
+}
+
+export function TabsInPillsAtBottom() {
+  return (
+    <Tabs position={Tabs.TabPosition.bottom} type={Tabs.TabTypes.pill}>
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
+    </Tabs>
+  )
+}
+
+export function TabsAtLeft() {
+  return (
+    <Tabs position={Tabs.TabPosition.left}>
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
+    </Tabs>
+  )
+}
+
+export function TabsInPillsAtLeft() {
+  const [activeTab, setActiveTab] = useState<string | undefined>('my-account')
+
+  return (
+    <Tabs
+      tab={activeTab}
+      onTabChange={setActiveTab}
+      position={Tabs.TabPosition.left}
+      type={Tabs.TabTypes.pill}
+      extraContent={
+        <Select
+          value={activeTab}
+          onChange={setActiveTab}
+          className="w-48"
+          options={tabs.map((tab) => ({
+            label: tab.title,
+            value: tab.key,
+            icon: tab.icon,
+          }))}
+          placeholder="Select Tab"
+        />
+      }
+    >
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
+    </Tabs>
+  )
+}
+
+export function TabsAtRight() {
+  const [activeTab, setActiveTab] = useState<string | undefined>('my-account')
+
+  return (
+    <Tabs
+      position={Tabs.TabPosition.right}
+      tab={activeTab}
+      onTabChange={setActiveTab}
+      extraContent={
+        <Select
+          value={activeTab}
+          onChange={setActiveTab}
+          className="w-48"
+          options={tabs.map((tab) => ({
+            label: tab.title,
+            value: tab.key,
+            icon: tab.icon,
+          }))}
+          placeholder="Select Tab"
+        />
+      }
+    >
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
+    </Tabs>
+  )
+}
+
+export function TabsInPillsAtRight() {
+  return (
+    <Tabs position={Tabs.TabPosition.right} type={Tabs.TabTypes.pill}>
+      {tabs.map((tab) => (
+        <Tabs.TabPane title={tab.title} key={tab.key} icon={tab.icon}>
+          <div className="text-sm text-gray-700">{tab.content}</div>
+        </Tabs.TabPane>
+      ))}
     </Tabs>
   )
 }
