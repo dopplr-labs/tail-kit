@@ -14,7 +14,7 @@
     "lint": "eslint src/**/*.ts src/**/*.tsx scripts/*.js --fix",
     "prebuild": "rimraf dist types",
     "build-lib": "rollup --config --environment NODE_ENV:production",
-    "build-types": "tsc --jsx react --declaration --emitDeclarationOnly --esModuleInterop --allowSyntheticDefaultImports --moduleResolution node --baseUrl src --outDir types src/index.ts",
+    "build-types": "tsc --jsx react --declaration --emitDeclarationOnly --esModuleInterop --allowSyntheticDefaultImports --moduleResolution node --baseUrl src --outDir types src/index.ts && prettier --write types/",
     "build-css": "postcss src/styles/index.css -o dist/tail-kit.css",
     "build": "concurrently yarn:build-lib yarn:build-types yarn:build-css",
     "test": "jest --watch",
