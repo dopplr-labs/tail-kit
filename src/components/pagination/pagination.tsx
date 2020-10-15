@@ -107,7 +107,7 @@ export function Pagination({
                   {range(selected - 1, selected + 2).map((page) => (
                     <PageButton key={page} page={page} />
                   ))}
-                  <span>...</span>
+                  <span className="text-blue-600">...</span>
                 </>
               )}
             </>
@@ -116,14 +116,14 @@ export function Pagination({
               {range(2, 6).map((page) => (
                 <PageButton key={page} page={page} />
               ))}
-              <span>...</span>
+              <span className="text-blue-600">...</span>
             </>
           ) : (
             <>
               {range(2, 5).map((page) => (
                 <PageButton key={page} page={page} />
               ))}
-              <span>...</span>
+              <span className="text-blue-600">...</span>
             </>
           )}
           <PageButton page={totalPages} />
