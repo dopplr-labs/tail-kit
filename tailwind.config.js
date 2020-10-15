@@ -1,3 +1,4 @@
+const defaultConfig = require('tailwindcss/defaultConfig')
 const defaultTheme = require('tailwindcss/defaultTheme')
 const tailwindUI = require('@tailwindcss/ui')
 
@@ -34,6 +35,11 @@ module.exports = {
         0.5: '0.125rem',
       },
     },
+  },
+
+  variants: {
+    borderColor: ['group-hover', ...defaultConfig.variants.borderColor],
+    opacity: ['group-hover', ...defaultConfig.variants.opacity],
   },
 
   plugins: [tailwindUI],
