@@ -10,6 +10,8 @@ export { default as InputNumber } from './components/input-number'
 export { default as Menu } from './components/menu'
 export { default as Modal } from './components/modal'
 export { default as Portal } from './components/portal'
+export { default as Radio } from './components/radio'
+export { default as Select } from './components/select'
 export { default as Switch } from './components/switch'
 
 // hooks

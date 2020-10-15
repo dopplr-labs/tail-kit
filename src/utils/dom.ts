@@ -1,0 +1,16 @@
+import computeScrollIntoView from 'compute-scroll-into-view'
+
+/**
+ * Helper function to scroll node into view
+ */
+export function scrollIntoView(node: HTMLElement, menuNode: HTMLElement) {
+  const actions = computeScrollIntoView(node, {
+    boundary: menuNode,
+    block: 'nearest',
+    scrollMode: 'if-needed',
+  })
+  actions.forEach(({ el, top, left }) => {
+    el.scrollTop = top
+    el.scrollLeft = left
+  })
+}
