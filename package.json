@@ -19,8 +19,8 @@
     "build": "concurrently yarn:build-lib yarn:build-types yarn:build-css",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "storybook": "start-storybook -p 6006 -s ./.storybook",
+    "build-storybook": "build-storybook -s ./.storybook",
     "prepare": "yarn build"
   },
   "husky": {
