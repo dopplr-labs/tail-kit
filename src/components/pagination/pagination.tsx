@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import clsx from 'clsx'
 import { range } from 'lodash-es'
 import Button from 'components/button'
 import Select from 'components/select'
@@ -64,6 +65,11 @@ export function Pagination({
     setSelected((prevState) => prevState + 1)
   }
 
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const newValue = event.target.value
+    setInputValue(newValue)
+  }
+
   function handlePageJump() {
     const jumpValue = parseFloat(inputValue ?? '')
     if (typeof jumpValue === 'number') {
@@ -78,6 +84,38 @@ export function Pagination({
     setInputValue('')
   }
 
+  function handleEnterKeyPress(event: React.KeyboardEvent) {
+    if (event.key === 'Enter') {
+      handlePageJump()
+    }
+  }
+
+  const firstPageButton = (
+    <PageButton page={1} selected={selected} onClick={() => setSelected(1)} />
+  )
+
+  const renderButtons = useCallback(
+    (x, y) => {
+      return range(x, y).map((page) => (
+        <PageButton
+          key={page}
+          page={page}
+          selected={selected}
+          onClick={() => setSelected(page)}
+        />
+      ))
+    },
+    [selected],
+  )
+
+  const lastPageButton = (
+    <PageButton
+      page={totalPages}
+      selected={selected}
+      onClick={() => setSelected(totalPages)}
+    />
+  )
+
   return (
     <div className="flex items-center gap-x-2">
       {/* Previous Button */}
@@ -90,88 +128,36 @@ export function Pagination({
       />
 
       {totalPages < 8 ? (
-        range(1, totalPages + 1).map((page) => (
-          <PageButton
-            key={page}
-            page={page}
-            selected={selected}
-            onClick={() => setSelected(page)}
-          />
-        ))
+        renderButtons(1, totalPages + 1)
       ) : (
         <>
-          <PageButton
-            page={1}
-            selected={selected}
-            onClick={() => setSelected(1)}
-          />
-          {selected > 4 ? (
-            <>
-              <span>...</span>
-              {totalPages - selected < 3 ? (
-                range(totalPages - 3, totalPages).map((page) => (
-                  <PageButton
-                    key={page}
-                    page={page}
-                    selected={selected}
-                    onClick={() => setSelected(page)}
-                  />
-                ))
-              ) : totalPages - selected === 3 ? (
-                <>
-                  {range(selected - 1, totalPages).map((page) => (
-                    <PageButton
-                      key={page}
-                      page={page}
-                      selected={selected}
-                      onClick={() => setSelected(page)}
-                    />
-                  ))}
-                </>
-              ) : (
-                <>
-                  {range(selected - 1, selected + 2).map((page) => (
-                    <PageButton
-                      key={page}
-                      page={page}
-                      selected={selected}
-                      onClick={() => setSelected(page)}
-                    />
-                  ))}
-                  <span className="text-blue-600">...</span>
-                </>
-              )}
-            </>
-          ) : selected === 4 ? (
-            <>
-              {range(2, 6).map((page) => (
-                <PageButton
-                  key={page}
-                  page={page}
-                  selected={selected}
-                  onClick={() => setSelected(page)}
-                />
-              ))}
-              <span className="text-blue-600">...</span>
-            </>
-          ) : (
-            <>
-              {range(2, 5).map((page) => (
-                <PageButton
-                  key={page}
-                  page={page}
-                  selected={selected}
-                  onClick={() => setSelected(page)}
-                />
-              ))}
-              <span className="text-blue-600">...</span>
-            </>
-          )}
-          <PageButton
-            page={totalPages}
-            selected={selected}
-            onClick={() => setSelected(totalPages)}
-          />
+          {firstPageButton}
+          <span
+            className={clsx(
+              'text-blue-600',
+              selected > 4 ? 'inline' : 'hidden',
+            )}
+          >
+            ...
+          </span>
+          {selected < 4
+            ? renderButtons(2, 5)
+            : selected === 4
+            ? renderButtons(2, 6)
+            : totalPages - selected < 3
+            ? renderButtons(totalPages - 3, totalPages)
+            : totalPages - selected === 3
+            ? renderButtons(totalPages - 4, totalPages)
+            : renderButtons(selected - 1, selected + 2)}
+          <span
+            className={clsx(
+              'text-blue-600',
+              totalPages - selected > 3 ? 'inline' : 'hidden',
+            )}
+          >
+            ...
+          </span>
+          {lastPageButton}
         </>
       )}
 
@@ -185,6 +171,7 @@ export function Pagination({
         onClick={handleIncrement}
       />
 
+      {/* Select component to change number of data to render in a page */}
       {showSizeChanger ? (
         <Select options={options} defaultValue="10" onChange={handlePageSize} />
       ) : null}
@@ -196,16 +183,9 @@ export function Pagination({
           <input
             className="w-16 px-3 py-1 border rounded-md focus:outline-none focus:shadow-outline"
             value={inputValue}
-            onChange={(event) => {
-              const newValue = event.target.value
-              setInputValue(newValue)
-            }}
+            onChange={handleChange}
             onBlur={handlePageJump}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                handlePageJump()
-              }
-            }}
+            onKeyDown={handleEnterKeyPress}
           />
         </div>
       ) : null}
