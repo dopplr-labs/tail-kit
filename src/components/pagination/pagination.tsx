@@ -6,7 +6,7 @@ import { ChevronLeftOutline, ChevronRightOutline } from '../icons'
 import PageButton from './components/page-button'
 
 /**
- * Pagination component propertie
+ * Pagination component properties
  */
 export type PaginationProps = {
   /** Default initial page number */
@@ -36,7 +36,7 @@ export function Pagination({
 }: PaginationProps) {
   const [totalPages, setTotalPages] = useState(Math.ceil(total / 10))
   const [selected, setSelected] = useState(defaultCurrent)
-  const [inputValue, setInputValue] = useState<number | string | undefined>()
+  const [inputValue, setInputValue] = useState<string>('')
 
   const options = [
     { label: '10 / page', value: '10' },
@@ -65,11 +65,19 @@ export function Pagination({
   }
 
   function handlePageJump() {
-    if (inputValue && typeof inputValue === 'number') {
-      setSelected(inputValue)
+    const jumpValue = parseFloat(inputValue ?? '')
+    if (typeof jumpValue === 'number') {
+      if (jumpValue < 1) {
+        setSelected(1)
+      } else if (jumpValue > totalPages) {
+        setSelected(totalPages)
+      } else {
+        setSelected(jumpValue)
+      }
     }
     setInputValue('')
   }
+
   return (
     <div className="flex items-center gap-x-2">
       {/* Previous Button */}
@@ -189,10 +197,15 @@ export function Pagination({
             className="w-16 px-3 py-1 border rounded-md focus:outline-none focus:shadow-outline"
             value={inputValue}
             onChange={(event) => {
-              const newValue = parseFloat(event.target.value)
+              const newValue = event.target.value
               setInputValue(newValue)
             }}
             onBlur={handlePageJump}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                handlePageJump()
+              }
+            }}
           />
         </div>
       ) : null}
