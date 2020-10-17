@@ -16,5 +16,5 @@ export function WithSizeChanger() {
 }
 
 export function WithPageJumper() {
-  return <Pagination total={500} showSizeChanger showQuickJumper />
+  return <Pagination total={500} showQuickJumper />
 }

@@ -1,9 +1,7 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react'
-import clsx from 'clsx'
-import { range } from 'lodash-es'
+import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import Button from 'components/button'
 import Select from 'components/select'
-import { ChevronLeftOutline, ChevronRightOutline } from '../icons'
+import { ChevronLeftOutline, ChevronRightOutline } from 'components/icons'
 import PageButton from './components/page-button'
 
 /**
@@ -56,17 +54,17 @@ export function Pagination({
     }
   }, [selected, totalPages])
 
-  function handlePageSize(selectedOption: string | undefined) {
-    const newPageSize = parseFloat(selectedOption ?? pageSizeOptions[0])
-    setTotalPages(Math.ceil(total / newPageSize))
-  }
-
   function handleDecrement() {
     setSelected((prevState) => prevState - 1)
   }
 
   function handleIncrement() {
     setSelected((prevState) => prevState + 1)
+  }
+
+  function handlePageSize(selectedOption: string | undefined) {
+    const newPageSize = parseFloat(selectedOption ?? pageSizeOptions[0])
+    setTotalPages(Math.ceil(total / newPageSize))
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -94,35 +92,91 @@ export function Pagination({
     }
   }
 
-  const firstPageButton = (
-    <PageButton page={1} selected={selected} onClick={() => setSelected(1)} />
-  )
-
-  const renderButtons = useCallback(
-    (x, y) => {
-      return range(x, y).map((page) => (
-        <PageButton
-          key={page}
-          page={page}
-          selected={selected}
-          onClick={() => setSelected(page)}
-        />
-      ))
-    },
+  const createPageView = useCallback(
+    (page: number) => (
+      <PageButton
+        key={page}
+        page={page}
+        selected={selected}
+        onClick={() => setSelected(page)}
+      />
+    ),
     [selected],
   )
 
-  const lastPageButton = (
-    <PageButton
-      page={totalPages}
-      selected={selected}
-      onClick={() => setSelected(totalPages)}
-    />
-  )
+  const MARGIN_PAGES_DISPLAYED = 2
+  const PAGE_RANGE_DISPLAYED = 5
+
+  const renderButtons = useMemo(() => {
+    const items = []
+
+    if (totalPages <= PAGE_RANGE_DISPLAYED) {
+      for (let page = 1; page <= totalPages; page++) {
+        items.push(createPageView(page))
+      }
+    } else {
+      let leftSide = PAGE_RANGE_DISPLAYED / 2
+      let rightSide = PAGE_RANGE_DISPLAYED - leftSide
+
+      // If the selected page index is on the default right side of the pagination,
+      // we consider that the new right side is made up of it (= only one break element).
+      // If the selected page index is on the default left side of the pagination,
+      // we consider that the new left side is made up of it (= only one break element).
+      if (selected > totalPages - PAGE_RANGE_DISPLAYED / 2) {
+        rightSide = totalPages - selected
+        leftSide = PAGE_RANGE_DISPLAYED - rightSide
+      } else if (selected < PAGE_RANGE_DISPLAYED / 2) {
+        leftSide = selected
+        rightSide = PAGE_RANGE_DISPLAYED - leftSide
+      }
+
+      let breakView
+
+      for (let page = 1; page <= totalPages; page++) {
+        // If the page index is lower than the margin defined,
+        // the page has to be displayed on the left side of
+        // the pagination.
+        if (page <= MARGIN_PAGES_DISPLAYED) {
+          items.push(createPageView(page))
+          continue
+        }
+
+        // If the page index is greater than the page count
+        // minus the margin defined, the page has to be
+        // displayed on the right side of the pagination.
+        if (page > totalPages - MARGIN_PAGES_DISPLAYED) {
+          items.push(createPageView(page))
+          continue
+        }
+
+        // If the page index is near the selected page index
+        // and inside the defined range (PAGE_RANDE_DISPLAYED)
+        // we have to display it (it will create the center
+        // part of the pagination).
+        if (page >= selected - leftSide && page <= selected + rightSide) {
+          items.push(createPageView(page))
+          continue
+        }
+
+        // If the page index doesn't meet any of the conditions above,
+        // we check if the last item of the current "items" array
+        // is a break element. If not, we add a break element, else,
+        // we do nothing (because we don't want to display the page).
+        if (items[items.length - 1] !== breakView) {
+          breakView = (
+            <span key={page} className="text-blue-600">
+              ...
+            </span>
+          )
+          items.push(breakView)
+        }
+      }
+    }
+    return items
+  }, [totalPages, createPageView, selected])
 
   return (
     <div className="flex items-center gap-x-2">
-      {/* Previous Button */}
       <Button
         label="Previous"
         buttonType={Button.ButtonType.link}
@@ -130,42 +184,7 @@ export function Pagination({
         disabled={selected === 1}
         onClick={handleDecrement}
       />
-
-      {totalPages < 8 ? (
-        renderButtons(1, totalPages + 1)
-      ) : (
-        <>
-          {firstPageButton}
-          <span
-            className={clsx(
-              'text-blue-600',
-              selected > 4 ? 'inline' : 'hidden',
-            )}
-          >
-            ...
-          </span>
-          {selected < 4
-            ? renderButtons(2, 5)
-            : selected === 4
-            ? renderButtons(2, 6)
-            : totalPages - selected < 3
-            ? renderButtons(totalPages - 3, totalPages)
-            : totalPages - selected === 3
-            ? renderButtons(totalPages - 4, totalPages)
-            : renderButtons(selected - 1, selected + 2)}
-          <span
-            className={clsx(
-              'text-blue-600',
-              totalPages - selected > 3 ? 'inline' : 'hidden',
-            )}
-          >
-            ...
-          </span>
-          {lastPageButton}
-        </>
-      )}
-
-      {/* Next Button */}
+      {renderButtons}
       <Button
         label="Next"
         buttonType={Button.ButtonType.link}
