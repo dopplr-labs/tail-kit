@@ -38,8 +38,9 @@ module.exports = {
   },
 
   variants: {
-    borderColor: ['group-hover', ...defaultConfig.variants.borderColor],
-    opacity: ['group-hover', ...defaultConfig.variants.opacity],
+    borderColor: [...defaultConfig.variants.borderColor, 'group-hover'],
+    opacity: [...defaultConfig.variants.opacity, 'group-hover'],
+    boxShadow: [...defaultConfig.variants.boxShadow, 'focus-within'],
   },
 
   plugins: [tailwindUI],

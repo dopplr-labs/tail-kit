@@ -1,15 +1,14 @@
-import React, { Children } from 'react'
+import React from 'react'
 import clsx from 'clsx'
 import useSyncedState from 'hooks/use-synced-states'
 import { useMemoOne } from 'use-memo-one'
-import { TabPane, TabPaneProps } from './components/tab-pane'
 
 let count = 0
 function getTabId() {
   return count++
 }
 
-export enum TabTypes {
+export enum TabType {
   pill = 'pill',
   underline = 'underline',
 }
@@ -21,6 +20,17 @@ export enum TabPosition {
   right = 'right',
 }
 
+export type Tab = {
+  /** Title of the tab */
+  title: string
+  /** Icon to be rendered along with the tab title */
+  icon?: JSX.Element
+  /** Unique key to identify the tab */
+  key: string
+  /** Tab content */
+  content: React.ReactNode
+}
+
 /** Tabs properties */
 export type TabsProps = {
   /** Key of the tab selected */
@@ -28,23 +38,21 @@ export type TabsProps = {
   /**
    * Key of the default tab selected. This should be used when the Tab component is used in uncontrolled way
    * */
-  defaultTab?: number
+  defaultTab?: string
   /** Callback function called when the active tab is changed. */
   onTabChange?: (activeTabKey: string) => void
   /**
    * The type of the tab item rendered inside the tabs list. If it is pill, then it would render
    * the tab title and icon with pills and else the active tab would be underlined
    */
-  type?: TabTypes
+  type?: TabType
   /**
    * The position of the tabs list with respect to the content.
    * By default the tabs list would be rendered over the top of the content.
    */
   position?: TabPosition
-  /** List of `TabPane`s to be rendered */
-  children:
-    | React.ReactElement<TabPaneProps>
-    | React.ReactElement<TabPaneProps>[]
+
+  tabs: Tab[]
   /**
    * Extra content to be rendered in the tabs list.
    * It would be rendered at the end of the tabs list. It won't scroll even if the tabs list might scroll
@@ -69,9 +77,9 @@ export function Tabs({
   tab: tabKey,
   defaultTab: defaultTabKey,
   onTabChange,
-  type = TabTypes.underline,
+  tabs,
+  type = TabType.underline,
   position = TabPosition.top,
-  children,
   extraContent,
   className,
   style,
@@ -80,25 +88,13 @@ export function Tabs({
 }: TabsProps) {
   const _tabId = useMemoOne(() => getTabId(), [])
 
-  const tabsList = Children.map(
-    children,
-    (node: React.ReactElement<TabPaneProps>, index) => {
-      const key = String(node.key || index)
-      return {
-        ...node.props,
-        key,
-      }
-    },
-  )
-
   const [activeTab, setActiveTab] = useSyncedState(
-    tabKey || defaultTabKey || tabsList[0].key,
+    tabKey || defaultTabKey || tabs[0].key,
   )
 
-  const activeTabContent = tabsList.find((tab) => tab.key === activeTab)
-    ?.children
+  const activeTabContent = tabs.find((tab) => tab.key === activeTab)?.content
 
-  const tabContainerClassNames = {
+  const tabsContainerClassName = {
     [TabPosition.top]: 'flex flex-col',
     [TabPosition.bottom]: 'flex flex-col flex-col-reverse',
     [TabPosition.left]: 'flex flex-row',
@@ -124,7 +120,7 @@ export function Tabs({
   }
 
   const tabClassNames = {
-    [TabTypes.underline]: {
+    [TabType.underline]: {
       base: undefined,
       active: 'border-blue-500 text-blue-600 focus:border-blue-700',
       inactive:
@@ -134,7 +130,7 @@ export function Tabs({
       [TabPosition.left]: 'pr-4 border-r-2 -mr-px',
       [TabPosition.right]: 'pl-4 border-l-2 -ml-px',
     },
-    [TabTypes.pill]: {
+    [TabType.pill]: {
       base: 'px-3 py-2 rounded-md',
       active: 'bg-blue-50 text-blue-600 focus:bg-blue-100',
       inactive: 'hover:bg-gray-100 text-gray-500 focus:bg-gray-100',
@@ -154,16 +150,20 @@ export function Tabs({
 
   return (
     <div
-      className={clsx(tabContainerClassNames[position], className)}
+      className={clsx(tabsContainerClassName[position], className)}
       style={style}
+      data-testid="tabs-container"
     >
-      <div className={tabsListContainerClassNames[position]}>
+      <div
+        className={tabsListContainerClassNames[position]}
+        data-testid="tabslist-container"
+      >
         <div
           className={clsx(tabsListClassNames[position], tabBarClassName)}
           style={tabBarStyle}
           role="tablist"
         >
-          {tabsList.map((tab) => (
+          {tabs.map((tab) => (
             <button
               key={tab.key}
               role="tab"
@@ -204,6 +204,5 @@ export function Tabs({
   )
 }
 
-Tabs.TabPane = TabPane
-Tabs.TabTypes = TabTypes
+Tabs.TabType = TabType
 Tabs.TabPosition = TabPosition
