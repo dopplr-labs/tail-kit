@@ -55,7 +55,7 @@ export function Week({
           <button
             key={day.valueOf()}
             className={clsx(
-              'p-1 text-sm rounded focus:outline-none focus:shadow-outline font-medium transition-colors duration-100',
+              'py-1 text-sm rounded focus:outline-none focus:shadow-outline font-medium transition-colors duration-100 w-7',
               buttonClassName,
             )}
             onClick={(event) => {
