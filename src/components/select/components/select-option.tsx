@@ -38,7 +38,7 @@ export function SelectOption({
       {...restProps}
     >
       {option.icon}
-      <span>{option.label}</span>
+      <span className="truncate whitespace-no-wrap">{option.label}</span>
       <span className="flex-1" />
       {selected ? <CheckOutline className="w-4 h-4" /> : null}
     </li>

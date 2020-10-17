@@ -240,7 +240,9 @@ export function Select({
         {selectedValue ? (
           <>
             {selectedValue.icon}
-            <span>{selectedValue.label}</span>
+            <span className="truncate whitespace-no-wrap">
+              {selectedValue.label}
+            </span>
           </>
         ) : (
           <span>{placeholder}</span>
