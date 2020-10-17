@@ -16,6 +16,7 @@ export default function PageButton({
       buttonType={
         selected === page ? Button.ButtonType.primary : Button.ButtonType.link
       }
+      className="page-button"
       onClick={onClick}
     />
   )
