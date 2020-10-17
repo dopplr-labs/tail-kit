@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import clsx from 'clsx'
 import { range } from 'lodash-es'
 import Button from 'components/button'
@@ -18,6 +18,8 @@ export type PaginationProps = {
   showSizeChanger?: boolean
   /** Determine whether you can jump to pages directly */
   showQuickJumper?: boolean
+  /** Specify the sizeChanger options */
+  pageSizeOptions?: string[]
 }
 
 /**
@@ -34,17 +36,19 @@ export function Pagination({
   total,
   showSizeChanger = false,
   showQuickJumper = false,
+  pageSizeOptions = ['10', '20', '50', '100'],
 }: PaginationProps) {
-  const [totalPages, setTotalPages] = useState(Math.ceil(total / 10))
-  const [selected, setSelected] = useState(defaultCurrent)
+  const [totalPages, setTotalPages] = useState<number>(
+    Math.ceil(total / parseFloat(pageSizeOptions[0])),
+  )
+  const [selected, setSelected] = useState<number>(defaultCurrent)
   const [inputValue, setInputValue] = useState<string>('')
 
-  const options = [
-    { label: '10 / page', value: '10' },
-    { label: '20 / page', value: '20' },
-    { label: '50 / page', value: '50' },
-    { label: '100 / page', value: '100' },
-  ]
+  const options = useMemo(() => {
+    return pageSizeOptions.map((size) => {
+      return { label: `${size} / page`, value: size }
+    })
+  }, [pageSizeOptions])
 
   useEffect(() => {
     if (selected > totalPages) {
@@ -53,7 +57,7 @@ export function Pagination({
   }, [selected, totalPages])
 
   function handlePageSize(selectedOption: string | undefined) {
-    const newPageSize = parseFloat(selectedOption ?? '10')
+    const newPageSize = parseFloat(selectedOption ?? pageSizeOptions[0])
     setTotalPages(Math.ceil(total / newPageSize))
   }
 
@@ -71,8 +75,8 @@ export function Pagination({
   }
 
   function handlePageJump() {
-    const jumpValue = parseFloat(inputValue ?? '')
-    if (typeof jumpValue === 'number') {
+    const jumpValue = parseFloat(inputValue)
+    if (!isNaN(jumpValue) && typeof jumpValue === 'number') {
       if (jumpValue < 1) {
         setSelected(1)
       } else if (jumpValue > totalPages) {
