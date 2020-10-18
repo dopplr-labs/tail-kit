@@ -1,4 +1,5 @@
 import React from 'react'
+import { range } from 'lodash-es'
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Pagination from '.'
@@ -78,4 +79,61 @@ test('invalid entries in page jumper working correctly', () => {
   userEvent.type(input, 'abc')
   fireEvent.keyDown(input, { key: 'Enter', code: 13 })
   expect(screen.getByText('5').parentElement).toHaveClass('bg-blue-600')
+})
+
+/** Test cases for page wrap in pagination component */
+test('No breakview for total pages upto 7', () => {
+  render(<Pagination total={70} />)
+  expect(screen.queryByText('...')).not.toBeInTheDocument()
+})
+
+test('Breakview exists when total pages are greater than 7', () => {
+  render(<Pagination total={100} />)
+  expect(screen.queryByText('...')).toBeInTheDocument()
+  range(1, 11).forEach((page) => {
+    if (page > 5 && page < 9) {
+      expect(screen.queryByText(page.toString())).not.toBeInTheDocument()
+    } else {
+      expect(screen.queryByText(page.toString())).toBeInTheDocument()
+    }
+  })
+})
+
+test('Page wrap on both side working correclty', () => {
+  render(<Pagination total={500} defaultCurrent={10} />)
+  range(1, 51).forEach((page) => {
+    if ((page > 2 && page < 8) || (page > 12 && page < 49)) {
+      expect(screen.queryByText(page.toString())).not.toBeInTheDocument()
+    } else {
+      expect(screen.queryByText(page.toString())).toBeInTheDocument()
+    }
+  })
+
+  fireEvent.click(screen.getByText('12'))
+  range(1, 51).forEach((page) => {
+    if ((page > 2 && page < 10) || (page > 14 && page < 49)) {
+      expect(screen.queryByText(page.toString())).not.toBeInTheDocument()
+    } else {
+      expect(screen.queryByText(page.toString())).toBeInTheDocument()
+    }
+  })
+})
+
+test('Breakview on the left side working correctly', () => {
+  render(<Pagination total={500} defaultCurrent={49} />)
+  range(1, 51).forEach((page) => {
+    if (page > 2 && page < 45) {
+      expect(screen.queryByText(page.toString())).not.toBeInTheDocument()
+    } else {
+      expect(screen.queryByText(page.toString())).toBeInTheDocument()
+    }
+  })
+})
+
+test('Breakview vanishes when total pages become less than 8', () => {
+  render(<Pagination total={100} showSizeChanger />)
+  expect(screen.getByText('...')).toBeInTheDocument()
+  fireEvent.click(screen.getByText('10 / page'))
+  fireEvent.click(screen.getByText('20 / page'))
+  expect(screen.queryByText('...')).not.toBeInTheDocument()
 })
