@@ -4,6 +4,7 @@ import Button from 'components/button'
 import Select from 'components/select'
 import { ChevronLeftOutline, ChevronRightOutline } from 'components/icons'
 import useSyncedState from 'hooks/use-synced-states'
+import { Keys } from 'utils/keyboard'
 import PageButton from './components/page-button'
 
 export type OnChangeType = (page: number, pageSize: number) => void
@@ -128,7 +129,7 @@ export function Pagination({
 
   // Enter key shortcut used in pageJumper
   function handleEnterKeyPress(event: React.KeyboardEvent) {
-    if (event.key === 'Enter') {
+    if (event.key === Keys.Enter) {
       handlePageJump()
     }
   }
