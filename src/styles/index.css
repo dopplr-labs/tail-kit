@@ -140,4 +140,8 @@ input[type='number']::-webkit-outer-spin-button {
   @apply bg-green-500 text-white !important;
 }
 
+.page-button {
+  @apply transition-none !important;
+}
+
 @tailwind utilities;
