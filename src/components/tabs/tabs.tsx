@@ -94,46 +94,51 @@ export function Tabs({
 
   const activeTabContent = tabs.find((tab) => tab.key === activeTab)?.content
 
+  // tabsContainer wraps the tab list and the content
+  // by default the tab container is of type flex
+  // with the first element being tab list and the second being the container
+  // so it can be styled with basic flex properties
   const tabsContainerClassName = {
-    [TabPosition.top]: 'flex flex-col',
-    [TabPosition.bottom]: 'flex flex-col flex-col-reverse',
-    [TabPosition.left]: 'flex flex-row',
-    [TabPosition.right]: 'flex flex-row-reverse',
+    [TabPosition.top]: 'flex-col',
+    // use col-reverse to render the content at top
+    [TabPosition.bottom]: 'flex-col-reverse',
+    [TabPosition.left]: 'flex-row',
+    // use row-reverse to render the content at left
+    [TabPosition.right]: 'flex-row-reverse',
   }
 
+  // tabs list container contians the tabs list and the extra content
+  // as the border should be present both below the tabs list and extra content
+  // it makes sense to wrap them in another list container
   const tabsListContainerClassNames = {
-    [TabPosition.top]:
-      'flex flex-1 space-x-8 items-end mb-4 bg-white border-b border-gray-200',
-    [TabPosition.bottom]:
-      'flex items-top mt-4 bg-white border-t border-gray-200',
-    [TabPosition.left]:
-      'flex flex-col space-y-6 mr-4 bg-white border-r border-gray-200',
-    [TabPosition.right]:
-      'flex flex-col space-y-6 ml-4 border-l border-gray-200',
+    [TabPosition.top]: 'space-x-8 items-end mb-4 border-b ',
+    [TabPosition.bottom]: 'space-x-8 items-top mt-4 border-t',
+    [TabPosition.left]: 'flex-col items-start space-y-6 mr-4 border-r ',
+    [TabPosition.right]: 'flex-col items-start space-y-6 ml-4 border-l',
   }
 
   const tabsListClassNames = {
-    [TabPosition.top]: 'flex flex-1 space-x-8',
-    [TabPosition.bottom]: 'flex flex-1 space-x-8 ',
-    [TabPosition.left]: 'flex flex-col space-y-6',
-    [TabPosition.right]: 'flex flex-col space-y-6',
+    [TabPosition.top]: 'space-x-8',
+    [TabPosition.bottom]: 'space-x-8 ',
+    [TabPosition.left]: 'flex-col w-full space-y-6',
+    [TabPosition.right]: 'flex-col w-full space-y-6',
   }
 
   const tabClassNames = {
     [TabType.underline]: {
       base: undefined,
-      active: 'border-blue-500 text-blue-600 focus:border-blue-700',
+      active: 'text-blue-600 border-blue-500 focus:border-blue-700',
       inactive:
-        'border-transparent text-gray-500 hover:text-gray-700 focus:text-gray-700',
-      [TabPosition.top]: 'px-1 pb-3 border-b-2 border-transparent -mb-px',
-      [TabPosition.bottom]: 'px-1 pt-3 border-t-2 border-transparent -mt-px',
-      [TabPosition.left]: 'pr-4 border-r-2 -mr-px',
-      [TabPosition.right]: 'pl-4 border-l-2 -ml-px',
+        'text-gray-500 border-transparent hover:text-gray-700 focus:text-gray-700',
+      [TabPosition.top]: 'px-1 pb-3 border-b-2 -mb-px',
+      [TabPosition.bottom]: 'px-1 pt-3 border-t-2 -mt-px',
+      [TabPosition.left]: 'py-1 pr-4 border-r-2 -mr-px',
+      [TabPosition.right]: 'py-1 pl-4 border-l-2 -ml-px',
     },
     [TabType.pill]: {
       base: 'px-3 py-2 rounded-md',
       active: 'bg-blue-50 text-blue-600 focus:bg-blue-100',
-      inactive: 'hover:bg-gray-100 text-gray-500 focus:bg-gray-100',
+      inactive: 'text-gray-500 hover:bg-gray-100 focus:bg-gray-100',
       [TabPosition.top]: 'mb-3',
       [TabPosition.bottom]: 'mt-3',
       [TabPosition.left]: 'mr-4',
@@ -150,16 +155,23 @@ export function Tabs({
 
   return (
     <div
-      className={clsx(tabsContainerClassName[position], className)}
+      className={clsx('flex', tabsContainerClassName[position], className)}
       style={style}
       data-testid="tabs-container"
     >
       <div
-        className={tabsListContainerClassNames[position]}
+        className={clsx(
+          'flex bg-white border-gray-200',
+          tabsListContainerClassNames[position],
+        )}
         data-testid="tabslist-container"
       >
         <div
-          className={clsx(tabsListClassNames[position], tabBarClassName)}
+          className={clsx(
+            'flex flex-1',
+            tabsListClassNames[position],
+            tabBarClassName,
+          )}
           style={tabBarStyle}
           role="tablist"
         >
