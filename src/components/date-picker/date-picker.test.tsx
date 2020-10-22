@@ -27,31 +27,29 @@ test('shows selected date', () => {
 test('toggles calendar visibilty on clicking on the placeholder', async () => {
   render(<DatePicker />)
   fireEvent.click(screen.getByText(/select date/i))
-  expect(screen.getByTestId('dates-container')).toBeInTheDocument()
+  expect(screen.getByLabelText('calendar')).toBeInTheDocument()
   fireEvent.click(screen.getByText(/select date/i))
-  await waitForElementToBeRemoved(() => screen.getByTestId('dates-container'))
+  await waitForElementToBeRemoved(() => screen.getByLabelText('calendar'))
 })
 
 test('opens calendar on press down arrow key', () => {
   render(<DatePicker />)
   fireEvent.focus(screen.getByRole('button'))
   fireEvent.keyDown(screen.getByRole('button'), { key: 'ArrowDown' })
-  expect(screen.getByTestId('dates-container')).toBeInTheDocument()
+  expect(screen.getByLabelText('calendar')).toBeInTheDocument()
 })
 
 test('opens calendar on press up arrow key', () => {
   render(<DatePicker />)
   fireEvent.focus(screen.getByRole('button'))
   fireEvent.keyDown(screen.getByRole('button'), { key: 'ArrowUp' })
-  expect(screen.getByTestId('dates-container')).toBeInTheDocument()
+  expect(screen.getByLabelText('calendar')).toBeInTheDocument()
 })
 
 test('focuses on the date selected button on opening the calendar', () => {
   render(<DatePicker date={new Date(2020, 10, 10)} />)
   fireEvent.click(screen.getByText('10 Nov 2020'))
-  // we have use data-testid instead of using getByText because there
-  // might be 2 values for a same date (one for the current month, other for next or previous month)
-  expect(document.activeElement).toEqual(screen.getByTestId('10-11-2020'))
+  expect(document.activeElement).toEqual(screen.getByLabelText('10 Nov 2020'))
 })
 
 test('select date correctly on clicking on date button', async () => {
@@ -59,16 +57,14 @@ test('select date correctly on clicking on date button', async () => {
 
   render(<DatePicker />)
   fireEvent.click(screen.getByText(/select date/i))
-  // we have use data-testid instead of using getByText because there
-  // might be 2 values for a same date (one for the current month, other for next or previous month)
-  fireEvent.click(screen.getByTestId(today.format('DD-MM-YYYY')))
+  fireEvent.click(screen.getByLabelText(today.format('DD MMM YYYY')))
 
   // the date is selected
   await waitFor(() => {
     expect(screen.getByText(today.format('DD MMM YYYY'))).toBeInTheDocument()
   })
   // the calendar is closed
-  await waitForElementToBeRemoved(() => screen.getByTestId('dates-container'))
+  await waitForElementToBeRemoved(() => screen.getByLabelText('calendar'))
 })
 
 test("select today's date on click on the today button", async () => {
@@ -83,14 +79,14 @@ test("select today's date on click on the today button", async () => {
     expect(screen.getByText(today.format('DD MMM YYYY'))).toBeInTheDocument()
   })
   // the calendar is closed
-  await waitForElementToBeRemoved(() => screen.getByTestId('dates-container'))
+  await waitForElementToBeRemoved(() => screen.getByLabelText('calendar'))
 })
 
 test('clears the date on click on the clear button', async () => {
   render(<DatePicker allowClear />)
   fireEvent.click(screen.getByText(/select date/i))
   fireEvent.click(screen.getByText(/today/i))
-  fireEvent.click(screen.getByTestId('clear-date'))
+  fireEvent.click(screen.getByLabelText('clear date'))
 
   await waitFor(() => {
     expect(screen.getByText(/select date/i)).toBeInTheDocument()
@@ -107,7 +103,7 @@ test('shows current month', () => {
 
   expect(screen.getByText(today.format('MMM YYYY'))).toBeInTheDocument()
   for (let day = startOfMonth; day <= endOfMonth; day = day.add(1, 'day')) {
-    expect(screen.getByTestId(day.format('DD-MM-YYYY'))).toBeInTheDocument()
+    expect(screen.getByLabelText(day.format('DD MMM YYYY'))).toBeInTheDocument()
   }
 })
 
@@ -116,7 +112,7 @@ test('shows calendar for previous month on "<" button click', async () => {
 
   render(<DatePicker allowClear />)
   fireEvent.click(screen.getByText(/select date/i))
-  fireEvent.click(screen.getByTestId('move-to-prev-month'))
+  fireEvent.click(screen.getByLabelText('move to previous month'))
 
   await waitFor(() => {
     expect(
@@ -130,7 +126,7 @@ test('shows calendar for previous year on "<<" button click', async () => {
 
   render(<DatePicker allowClear />)
   fireEvent.click(screen.getByText(/select date/i))
-  fireEvent.click(screen.getByTestId('move-to-prev-year'))
+  fireEvent.click(screen.getByLabelText('move to previous year'))
 
   await waitFor(() => {
     expect(
@@ -144,7 +140,7 @@ test('shows calendar for next month on ">" button click', async () => {
 
   render(<DatePicker allowClear />)
   fireEvent.click(screen.getByText(/select date/i))
-  fireEvent.click(screen.getByTestId('move-to-next-month'))
+  fireEvent.click(screen.getByLabelText('move to next month'))
 
   await waitFor(() => {
     expect(
@@ -158,7 +154,7 @@ test('shows calendar for next year on ">>" button click', async () => {
 
   render(<DatePicker allowClear />)
   fireEvent.click(screen.getByText(/select date/i))
-  fireEvent.click(screen.getByTestId('move-to-next-year'))
+  fireEvent.click(screen.getByLabelText('move to next year'))
 
   await waitFor(() => {
     expect(
@@ -173,7 +169,7 @@ test('calls onChange method on date change', () => {
 
   render(<DatePicker allowClear onChange={onChange} />)
   fireEvent.click(screen.getByText(/select date/i))
-  fireEvent.click(screen.getByTestId(today.format('DD-MM-YYYY')))
+  fireEvent.click(screen.getByLabelText(today.format('DD MMM YYYY')))
 
   expect(onChange).toBeCalled()
   expect(dayjs(onChange.mock.results[0].value).format('DD-MM-YYYY')).toBe(

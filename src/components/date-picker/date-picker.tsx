@@ -15,30 +15,7 @@ import { Keys } from 'utils/keyboard'
 import usePrevious from 'hooks/use-previous'
 import { Week } from './components/week'
 import { ActionType, reducer } from './reducer'
-
-/**
- * Helper function to compare dates
- *
- * @param dateA First date
- * @param dateB Second date
- * @param comparatorFunction Comparator function to compare dates
- */
-function isDateEqual(
-  dateA: Date | undefined,
-  dateB: Date | undefined,
-  comparatorFunction: (date: Date) => number = (date) =>
-    dayjs(date).startOf('day').valueOf(),
-): boolean {
-  if (typeof dateA === 'undefined' && typeof dateB === 'undefined') {
-    return true
-  }
-
-  if (!dateA || !dateB) {
-    return false
-  }
-
-  return comparatorFunction(dateA) === comparatorFunction(dateB)
-}
+import { isDateEqual } from './utils'
 
 type OnChangeType = (dateSelected: Date | undefined) => void
 
@@ -166,12 +143,12 @@ export function DatePicker({
         </span>
         {dateSelected && allowClear ? (
           <div
+            aria-label="clear date"
             role="button"
             onClick={(event) => {
               event.stopPropagation()
               dispatch({ type: ActionType.CLEAR_DATE })
             }}
-            data-testid="clear-date"
           >
             <XCircleSolid className="w-5 h-5" />
           </div>
@@ -185,9 +162,7 @@ export function DatePicker({
         onContentMount={() => {
           if (dateSelected) {
             ;(datesContainer.current?.querySelector(
-              `button[data-testid="${dayjs(dateSelected).format(
-                'DD-MM-YYYY',
-              )}"]`,
+              `button[data-date="${dayjs(dateSelected).format('DD-MM-YYYY')}"]`,
             ) as HTMLButtonElement | undefined)?.focus()
           } else {
             datesContainer.current?.focus()
@@ -198,27 +173,27 @@ export function DatePicker({
         }}
       >
         <ul
+          aria-label="calendar"
           className="bg-white rounded-md shadow-md w-72 focus:outline-none"
           ref={datesContainer}
           tabIndex={0}
-          data-testid="dates-container"
         >
           <div className="flex items-center px-4 py-2 border-b border-gray-100">
             <button
+              aria-label="move to previous year"
               className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_PREV_YEAR })
               }}
-              data-testid="move-to-prev-year"
             >
               <ChevronDoubleLeftOutline className="w-5 h-5" />
             </button>
             <button
+              aria-label="move to previous month"
               className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_PREV_MONTH })
               }}
-              data-testid="move-to-prev-month"
             >
               <ChevronLeftOutline className="w-5 h-5" />
             </button>
@@ -228,20 +203,20 @@ export function DatePicker({
             </div>
             <div className="flex-1" />
             <button
+              aria-label="move to next month"
               className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_NEXT_MONTH })
               }}
-              data-testid="move-to-next-month"
             >
               <ChevronRightOutline className="w-5 h-5" />
             </button>
             <button
+              aria-label="move to next year"
               className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_NEXT_YEAR })
               }}
-              data-testid="move-to-next-year"
             >
               <ChevronDoubleRightOutline className="w-5 h-5" />
             </button>
