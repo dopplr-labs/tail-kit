@@ -51,8 +51,9 @@ export function Week({
 
         return (
           <button
+            aria-label={day.format('DD MMM YYYY')}
             key={day.valueOf()}
-            data-testid={day.format('DD-MM-YYYY')}
+            data-date={day.format('DD-MM-YYYY')}
             className={clsx(
               'py-1 text-sm rounded focus:outline-none focus:shadow-outline font-medium transition-colors duration-100 w-7',
               buttonClassName,
