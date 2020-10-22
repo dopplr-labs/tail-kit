@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
+import dayjs from 'dayjs'
 import { DatePicker } from './date-picker'
 
 export default {
@@ -9,4 +10,27 @@ export default {
 
 export function DefaultDatePicker() {
   return <DatePicker className="w-64" allowClear />
+}
+
+export function ControllerDatePicker() {
+  const [dateSelected, setDateSelected] = useState<Date | undefined>(undefined)
+
+  return (
+    <div className="flex items-center space-x-4">
+      <DatePicker
+        className="w-64"
+        allowClear
+        date={dateSelected}
+        onChange={setDateSelected}
+      />
+      {dateSelected ? (
+        <div>
+          <div className="text-xs font-medium text-blue-500">Date Selected</div>
+          <div className="text-sm txt-gray-800">
+            {dayjs(dateSelected).format('DD-MM-YYYY')}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  )
 }

@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useReducer, useRef } from 'react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import useSyncedState from 'hooks/use-synced-states'
 import {
   CalendarOutline,
   ChevronDoubleLeftOutline,
@@ -13,7 +12,9 @@ import {
 import Portal from 'components/portal'
 import useOutsideClick from 'hooks/use-outside-click'
 import { Keys } from 'utils/keyboard'
+import usePrevious from 'hooks/use-previous'
 import { Week } from './components/week'
+import { ActionType, reducer } from './reducer'
 
 /**
  * Helper function to compare dates
@@ -22,7 +23,7 @@ import { Week } from './components/week'
  * @param dateB Second date
  * @param comparatorFunction Comparator function to compare dates
  */
-function compareDates(
+function isDateEqual(
   dateA: Date | undefined,
   dateB: Date | undefined,
   comparatorFunction: (date: Date) => number = (date) =>
@@ -75,22 +76,40 @@ export function DatePicker({
   className,
   style,
 }: DatePickerProps) {
-  const [dateSelected, setDateSelected] = useSyncedState<Date | undefined>(
-    date || defaultDate,
-  )
+  const [{ open, dateSelected, activeMonth }, dispatch] = useReducer(reducer, {
+    open: false,
+    dateSelected: date || defaultDate,
+    activeMonth: date || defaultDate || new Date(),
+  })
 
-  const [activeMonth, setActiveMonth] = useState(
-    dayjs(date || defaultDate || new Date()).startOf('month'),
-  )
+  const prevDate = usePrevious(date)
 
   const onChangeCb = useRef<OnChangeType | undefined>(undefined)
   onChangeCb.current = onChange
 
   useEffect(() => {
-    if (compareDates(date || defaultDate, dateSelected)) {
-      onChangeCb.current?.(dateSelected)
+    // if date is not same as the dateSelected (local state) that means
+    // either the date has changed or dateSelected has change
+    // and based on which variable changed the consequence should be different
+    if (!isDateEqual(date, dateSelected)) {
+      // if the date is not equal to the prevDate, that means that the date variable
+      // has changed
+      if (!isDateEqual(date, prevDate)) {
+        // set or clear date depending on the date value
+        if (date) {
+          dispatch({ type: ActionType.SELECT_DATE, payload: { date } })
+        } else {
+          dispatch({ type: ActionType.CLEAR_DATE })
+        }
+      } else {
+        // if the date and prevDate are same that means that dateSelected (local state)
+        // has changed, then we should call the onChange callback
+        onChangeCb.current?.(dateSelected)
+      }
     }
-  }, [date, defaultDate, dateSelected])
+  }, [date, prevDate, dateSelected])
+
+  useEffect(() => {}, [date, prevDate])
 
   const weeks = useMemo(() => {
     const monthStartWeek = dayjs(activeMonth)
@@ -101,8 +120,8 @@ export function DatePicker({
       .clone()
       .endOf('month')
       .startOf('week')
-    const monthWeeks = []
 
+    const monthWeeks = []
     for (
       let date = monthStartWeek;
       date <= monthEndWeek;
@@ -114,16 +133,14 @@ export function DatePicker({
     return monthWeeks
   }, [activeMonth])
 
-  const [calendarOpen, setCalendarOpen] = useState(false)
-
   const trigger = useRef<HTMLButtonElement | null>(null)
   const datesContainer = useRef<HTMLUListElement | null>(null)
 
   useOutsideClick({
     containers: [trigger, datesContainer],
-    active: calendarOpen,
+    active: open,
     onClick: () => {
-      setCalendarOpen(false)
+      dispatch({ type: ActionType.CLOSE })
     },
   })
 
@@ -133,12 +150,12 @@ export function DatePicker({
         className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-300 border rounded-md focus:outline-none focus:shadow-outline"
         ref={trigger}
         onClick={() => {
-          setCalendarOpen((prevState) => !prevState)
+          dispatch({ type: ActionType.TOGGLE_OPEN })
         }}
         onKeyDown={(event) => {
           if (event.key === Keys.ArrowDown || event.key === Keys.ArrowUp) {
             event.preventDefault()
-            setCalendarOpen(true)
+            dispatch({ type: ActionType.OPEN })
           }
         }}
       >
@@ -152,8 +169,7 @@ export function DatePicker({
             role="button"
             onClick={(event) => {
               event.stopPropagation()
-              setDateSelected(undefined)
-              setActiveMonth(dayjs())
+              dispatch({ type: ActionType.CLEAR_DATE })
             }}
           >
             <XCircleSolid className="w-5 h-5" />
@@ -163,10 +179,18 @@ export function DatePicker({
         )}
       </button>
       <Portal
-        visible={calendarOpen}
+        visible={open}
         triggerRef={trigger}
         onContentMount={() => {
-          datesContainer.current?.focus()
+          if (dateSelected) {
+            ;(datesContainer.current?.querySelector(
+              `button[data-testid="${dayjs(dateSelected).format(
+                'DD-MM-YYYY',
+              )}"]`,
+            ) as HTMLButtonElement | undefined)?.focus()
+          } else {
+            datesContainer.current?.focus()
+          }
         }}
         onContentUnmount={() => {
           trigger.current?.focus()
@@ -181,7 +205,7 @@ export function DatePicker({
             <button
               className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
               onClick={() => {
-                setActiveMonth((prevState) => prevState.subtract(1, 'year'))
+                dispatch({ type: ActionType.MOVE_TO_PREV_YEAR })
               }}
             >
               <ChevronDoubleLeftOutline className="w-5 h-5" />
@@ -189,20 +213,20 @@ export function DatePicker({
             <button
               className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
               onClick={() => {
-                setActiveMonth((prevState) => prevState.subtract(1, 'month'))
+                dispatch({ type: ActionType.MOVE_TO_PREV_MONTH })
               }}
             >
               <ChevronLeftOutline className="w-5 h-5" />
             </button>
             <div className="flex-1" />
             <div className="text-sm font-medium text-gray-700">
-              {activeMonth.format('MMM YYYY')}
+              {dayjs(activeMonth).format('MMM YYYY')}
             </div>
             <div className="flex-1" />
             <button
               className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
               onClick={() => {
-                setActiveMonth((prevState) => prevState.add(1, 'month'))
+                dispatch({ type: ActionType.MOVE_TO_NEXT_MONTH })
               }}
             >
               <ChevronRightOutline className="w-5 h-5" />
@@ -210,7 +234,7 @@ export function DatePicker({
             <button
               className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
               onClick={() => {
-                setActiveMonth((prevState) => prevState.add(1, 'year'))
+                dispatch({ type: ActionType.MOVE_TO_NEXT_YEAR })
               }}
             >
               <ChevronDoubleRightOutline className="w-5 h-5" />
@@ -223,10 +247,8 @@ export function DatePicker({
                 weekStartDate={weekStartDate}
                 activeMonth={activeMonth}
                 dateSelected={dateSelected ? dayjs(dateSelected) : undefined}
-                onDateClick={(day) => {
-                  setActiveMonth(day)
-                  setDateSelected(day.toDate())
-                  setCalendarOpen(false)
+                onDateClick={(date) => {
+                  dispatch({ type: ActionType.SELECT_DATE, payload: { date } })
                 }}
               />
             ))}
@@ -234,9 +256,10 @@ export function DatePicker({
           <button
             className="w-full px-4 py-2 text-sm font-medium text-blue-500 focus:shadow-outline rounded-b-md focus:outline-none"
             onClick={() => {
-              setActiveMonth(dayjs())
-              setDateSelected(dayjs().toDate())
-              setCalendarOpen(false)
+              dispatch({
+                type: ActionType.SELECT_DATE,
+                payload: { date: dayjs().toDate() },
+              })
             }}
           >
             Today
