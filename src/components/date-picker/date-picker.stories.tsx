@@ -34,3 +34,29 @@ export function ControllerDatePicker() {
     </div>
   )
 }
+
+export function DatePickerWithDateRange() {
+  const delta = 10
+  return (
+    <DatePicker
+      className="w-64"
+      allowClear
+      startDate={dayjs().subtract(delta, 'day').toDate()}
+      endDate={dayjs().add(delta, 'day').toDate()}
+    />
+  )
+}
+
+export function WeekdaysOnlyDatePicker() {
+  return (
+    <DatePicker
+      className="w-64"
+      allowClear
+      placeholder="Select Week Day"
+      disableDate={(date) => {
+        const day = dayjs(date).day()
+        return day === 6 || day === 0
+      }}
+    />
+  )
+}

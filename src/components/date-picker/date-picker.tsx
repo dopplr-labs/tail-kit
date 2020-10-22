@@ -15,7 +15,7 @@ import { Keys } from 'utils/keyboard'
 import usePrevious from 'hooks/use-previous'
 import { Week } from './components/week'
 import { ActionType, reducer } from './reducer'
-import { isDateEqual } from './utils'
+import { getWeeksForMonth, isDateDisabled, isDateEqual } from './utils'
 
 type OnChangeType = (dateSelected: Date | undefined) => void
 
@@ -37,6 +37,22 @@ export type DatePickerProps = {
   placeholder?: string
   /** Show clear button when a date is selected */
   allowClear?: boolean
+  /**
+   * Start date for the date picker.
+   * All the dates before the start date would be disabled
+   */
+  startDate?: Date
+  /**
+   * End date for the date picker
+   * All the dates after the end date would be disabled
+   */
+  endDate?: Date
+  /**
+   * Function to determine whether a particular date should be disabled or not
+   * It is helpful in the cases where we want to disable dates based on a custom
+   * logic rather than range values specfied by `startDate` and `endDate` prop
+   */
+  disableDate?: (date: Date) => boolean
   /** Addtional classes to style date picker */
   className?: string
   /** Additional styles for date picker */
@@ -50,6 +66,9 @@ export function DatePicker({
   onChange,
   placeholder = 'Select Date',
   allowClear = false,
+  startDate,
+  endDate,
+  disableDate,
   className,
   style,
 }: DatePickerProps) {
@@ -88,28 +107,6 @@ export function DatePicker({
 
   useEffect(() => {}, [date, prevDate])
 
-  const weeks = useMemo(() => {
-    const monthStartWeek = dayjs(activeMonth)
-      .clone()
-      .startOf('month')
-      .startOf('week')
-    const monthEndWeek = dayjs(activeMonth)
-      .clone()
-      .endOf('month')
-      .startOf('week')
-
-    const monthWeeks = []
-    for (
-      let date = monthStartWeek;
-      date <= monthEndWeek;
-      date = dayjs(date).add(1, 'week')
-    ) {
-      monthWeeks.push(date)
-    }
-
-    return monthWeeks
-  }, [activeMonth])
-
   const trigger = useRef<HTMLButtonElement | null>(null)
   const datesContainer = useRef<HTMLUListElement | null>(null)
 
@@ -120,6 +117,15 @@ export function DatePicker({
       dispatch({ type: ActionType.CLOSE })
     },
   })
+
+  const weeks = useMemo(() => getWeeksForMonth(activeMonth), [activeMonth])
+
+  const isTodayDisabled = isDateDisabled(
+    dayjs().toDate(),
+    startDate,
+    endDate,
+    disableDate,
+  )
 
   return (
     <div className={clsx(className)} style={style}>
@@ -222,6 +228,16 @@ export function DatePicker({
             </button>
           </div>
           <div className="px-4 py-2 space-y-2 border-b">
+            <div className="flex items-center justify-between space-x-2">
+              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+                <div
+                  className="flex-1 text-xs font-medium text-center text-gray-400"
+                  key={day}
+                >
+                  {day}
+                </div>
+              ))}
+            </div>
             {weeks.map((weekStartDate) => (
               <Week
                 key={weekStartDate.valueOf()}
@@ -231,17 +247,26 @@ export function DatePicker({
                 onDateClick={(date) => {
                   dispatch({ type: ActionType.SELECT_DATE, payload: { date } })
                 }}
+                startDate={startDate}
+                endDate={endDate}
+                disableDate={disableDate}
               />
             ))}
           </div>
           <button
-            className="w-full px-4 py-2 text-sm font-medium text-blue-500 focus:shadow-outline rounded-b-md focus:outline-none"
+            className={clsx(
+              'w-full px-4 py-2 text-sm font-medium focus:shadow-outline rounded-b-md focus:outline-none',
+              isTodayDisabled
+                ? 'text-gray-400 cursor-not-allowed'
+                : 'text-blue-500',
+            )}
             onClick={() => {
               dispatch({
                 type: ActionType.SELECT_DATE,
                 payload: { date: dayjs().toDate() },
               })
             }}
+            disabled={isTodayDisabled}
           >
             Today
           </button>
