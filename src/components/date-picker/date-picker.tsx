@@ -171,6 +171,7 @@ export function DatePicker({
               event.stopPropagation()
               dispatch({ type: ActionType.CLEAR_DATE })
             }}
+            data-testid="clear-date"
           >
             <XCircleSolid className="w-5 h-5" />
           </div>
@@ -200,6 +201,7 @@ export function DatePicker({
           className="bg-white rounded-md shadow-md w-72 focus:outline-none"
           ref={datesContainer}
           tabIndex={0}
+          data-testid="dates-container"
         >
           <div className="flex items-center px-4 py-2 border-b border-gray-100">
             <button
@@ -207,6 +209,7 @@ export function DatePicker({
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_PREV_YEAR })
               }}
+              data-testid="move-to-prev-year"
             >
               <ChevronDoubleLeftOutline className="w-5 h-5" />
             </button>
@@ -215,6 +218,7 @@ export function DatePicker({
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_PREV_MONTH })
               }}
+              data-testid="move-to-prev-month"
             >
               <ChevronLeftOutline className="w-5 h-5" />
             </button>
@@ -228,6 +232,7 @@ export function DatePicker({
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_NEXT_MONTH })
               }}
+              data-testid="move-to-next-month"
             >
               <ChevronRightOutline className="w-5 h-5" />
             </button>
@@ -236,6 +241,7 @@ export function DatePicker({
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_NEXT_YEAR })
               }}
+              data-testid="move-to-next-year"
             >
               <ChevronDoubleRightOutline className="w-5 h-5" />
             </button>
