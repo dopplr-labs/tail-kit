@@ -5,12 +5,9 @@ import { range } from 'lodash-es'
 
 export type WeekProps = {
   weekStartDate: dayjs.Dayjs
-  activeMonth: dayjs.Dayjs
+  activeMonth: Date
   dateSelected?: dayjs.Dayjs
-  onDateClick: (
-    date: dayjs.Dayjs,
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => void
+  onDateClick: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void
   className?: string
   style?: React.CSSProperties
 }
@@ -24,6 +21,7 @@ export function Week({
   style,
 }: WeekProps) {
   const weekDays = range(7).map((val) => weekStartDate.add(val, 'day'))
+
   return (
     <li
       className={clsx('flex items-center space-x-2 justify-between', className)}
@@ -31,7 +29,7 @@ export function Week({
     >
       {weekDays.map((day) => {
         const isActive =
-          day.format('MMM YYYY') === activeMonth.format('MMM YYYY')
+          day.format('MMM YYYY') === dayjs(activeMonth).format('MMM YYYY')
         const isSelected = dateSelected
           ? dateSelected.format('DD MMM YYYY') === day.format('DD MMM YYYY')
           : false
@@ -54,12 +52,13 @@ export function Week({
         return (
           <button
             key={day.valueOf()}
+            data-testid={day.format('DD-MM-YYYY')}
             className={clsx(
               'py-1 text-sm rounded focus:outline-none focus:shadow-outline font-medium transition-colors duration-100 w-7',
               buttonClassName,
             )}
             onClick={(event) => {
-              onDateClick(day, event)
+              onDateClick(day.toDate(), event)
             }}
           >
             {day.format('DD')}
