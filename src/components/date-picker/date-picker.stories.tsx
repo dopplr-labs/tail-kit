@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import dayjs from 'dayjs'
+import Button from 'components/button'
+import Modal from 'components/modal'
+import Alert from 'components/alert'
+import Select from 'components/select'
 import { DatePicker } from './date-picker'
 
 export default {
@@ -58,5 +62,66 @@ export function WeekdaysOnlyDatePicker() {
         return day === 6 || day === 0
       }}
     />
+  )
+}
+
+export function DatePickerWithModal() {
+  const [modalVisible, setModalVisible] = useState(false)
+
+  return (
+    <>
+      <Button
+        label="Click To Open Modal"
+        onClick={() => {
+          setModalVisible(true)
+        }}
+      />
+      <Modal
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false)
+        }}
+        title="Cron Job"
+      >
+        <Alert
+          title="Job Runner"
+          content="Schedule the job to run in a weekday as you won't want to spend your weekend on debugging"
+          className="mb-4"
+        />
+        <div className="flex space-x-4">
+          <Select
+            placeholder="Select Schedule"
+            options={[
+              {
+                label: 'Every Minute (* * * * *)',
+                value: '* * * * *',
+              },
+              {
+                label: 'Every 15 minutes (*/15 * * * *)',
+                value: '*/15 * * * *',
+              },
+              {
+                label: 'Every Hour (0 * * * *)',
+                value: '0 * * * *',
+              },
+              {
+                label: 'Every 2 Hours (0 */2 * * *)',
+                value: '0 */2 * * *',
+              },
+            ]}
+            className="flex-1"
+          />
+          <DatePicker
+            allowClear
+            placeholder="Select Day"
+            disableDate={(date) => {
+              const day = dayjs(date).day()
+              return day === 6 || day === 0
+            }}
+            className="flex-1"
+          />
+        </div>
+      </Modal>
+    </>
   )
 }
