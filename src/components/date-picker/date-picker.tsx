@@ -130,7 +130,7 @@ export function DatePicker({
   return (
     <div className={clsx(className)} style={style}>
       <button
-        className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-300 border rounded-md focus:outline-none focus:shadow-outline"
+        className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-300 bg-white border rounded-md focus:outline-none focus:shadow-outline"
         ref={trigger}
         onClick={() => {
           dispatch({ type: ActionType.TOGGLE_OPEN })
