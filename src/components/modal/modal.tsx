@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 import Button, { ButtonProps } from 'components/button'
 import { createPortal } from 'react-dom'
@@ -62,6 +62,16 @@ export function Modal({
       onRequestClose?.()
     },
   })
+
+  useLayoutEffect(() => {
+    if (visible) {
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  }, [visible])
 
   return createPortal(
     <CSSTransition
