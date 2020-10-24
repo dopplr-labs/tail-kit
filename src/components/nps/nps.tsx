@@ -10,6 +10,7 @@ export type NPSProps = {
   title?: string
   /** Callback function which is triggered when a user selects score */
   onSubmit?: (score: number) => void
+  /** Message to show after score selection by user */
   message?: (score: number) => React.ReactNode
   /** Additional classes to apply on NPSInput component */
   className?: string
