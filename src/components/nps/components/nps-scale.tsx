@@ -25,7 +25,9 @@ export function NPSScale({ onSubmit }: { onSubmit?: (value: number) => void }) {
           onMouseLeave={() => {
             setValue(null)
           }}
-          onClick={() => onSelect(num)}
+          onClick={() => {
+            onSelect(num)
+          }}
         >
           <button
             className={clsx(
