@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
-import { range } from 'lodash-es'
 import clsx from 'clsx'
+import { NPSScale } from './components/nps-scale'
 
 /**
  * NPS widget properties
  */
 export type NPSProps = {
   /** Title message to show above NPS scale */
-  message?: string
+  title?: string
   /** Callback function which is triggered when a user selects score */
-  onSubmit?: (value: number) => void
+  onSubmit?: (score: number) => void
+  message?: (score: number) => React.ReactNode
   /** Additional classes to apply on NPSInput component */
   className?: string
   /** Additional styles to apply on NPSInput component */
@@ -29,16 +30,19 @@ export type NPSProps = {
  * Finally, NPS score can be easily calculated using a mathematical formula
  * ** ((Promoters - Detractors) / Respondents) * 100 **
  */
+
 export function NPSInput({
-  message = 'How likely are you to recommend us to your friends and colleagues?',
+  title = 'How likely are you to recommend us to your friends and colleagues?',
   onSubmit,
+  message = () => 'Thank you for your feedback!',
   className,
   style,
 }: NPSProps) {
-  const [npsScore, setNpsScore] = useState<number | null>(null)
+  const [score, setScore] = useState<number | null>(null)
 
-  function onSelect(value: number) {
-    onSubmit?.(value)
+  function handleSubmit(score: number) {
+    setScore(score)
+    onSubmit?.(score)
   }
 
   return (
@@ -49,41 +53,20 @@ export function NPSInput({
       )}
       style={style}
     >
-      <div className="font-medium text-gray-700">{message}</div>
-      <div className="space-y-2">
-        <div className="flex items-center justify-center">
-          {range(0, 11).map((value) => (
-            <div
-              className="px-1"
-              key={value}
-              role="button"
-              onMouseEnter={() => {
-                setNpsScore(value)
-              }}
-              onMouseLeave={() => {
-                setNpsScore(null)
-              }}
-              onClick={() => onSelect(value)}
-            >
-              <button
-                className={clsx(
-                  'flex items-center justify-center transform w-8 h-8 text-xs font-semibold rounded-full transition-transform duration-300 focus:outline-none',
-                  npsScore !== null && value <= npsScore
-                    ? 'bg-blue-500 text-white'
-                    : 'text-gray-600 bg-gray-200 opacity-75',
-                  value === npsScore ? 'scale-125' : 'scale-100',
-                )}
-              >
-                {value}
-              </button>
+      {score ? (
+        <div className="text-sm text-gray-800">{message?.(score)}</div>
+      ) : (
+        <>
+          <div className="font-medium text-gray-700">{title}</div>
+          <div className="space-y-2">
+            <NPSScale onSubmit={handleSubmit} />
+            <div className="flex items-center justify-between w-full">
+              <span className="text-xs text-gray-500">Not at all likely</span>
+              <span className="text-xs text-gray-500">Extremely likely</span>
             </div>
-          ))}
-        </div>
-        <div className="flex items-center justify-between w-full">
-          <span className="text-xs text-gray-500">Not at all likely</span>
-          <span className="text-xs text-gray-500">Extremely likely</span>
-        </div>
-      </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
