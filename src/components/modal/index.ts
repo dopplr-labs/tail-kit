@@ -1,4 +1,3 @@
-import { Modal, ModalProps } from './modal'
+import { Modal } from './modal'
 
 export default Modal
-export { ModalProps }

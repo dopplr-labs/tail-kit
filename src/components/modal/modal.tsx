@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
-import Button, { ButtonProps } from 'components/button'
+import Button from 'components/button'
+import { ButtonProps } from 'components/button/button'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import useOutsideClick from 'hooks/use-outside-click'
