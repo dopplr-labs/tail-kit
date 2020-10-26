@@ -176,3 +176,36 @@ test('calls onChange method on date change', () => {
     today.format('DD-MM-YYYY'),
   )
 })
+
+test('disables date before start date', () => {
+  const startDate = dayjs().startOf('month').add(10, 'day')
+  const onChange = jest.fn()
+  render(<DatePicker startDate={startDate.toDate()} onChange={onChange} />)
+
+  fireEvent.click(screen.getByText(/select date/i))
+  fireEvent.click(screen.getByText(startDate.subtract(1, 'day').format('DD')))
+  expect(onChange).not.toHaveBeenCalled()
+})
+
+test('disables date after end date', () => {
+  const endDate = dayjs().startOf('month').add(10, 'day')
+  const onChange = jest.fn()
+  render(<DatePicker endDate={endDate.toDate()} onChange={onChange} />)
+
+  fireEvent.click(screen.getByText(/select date/i))
+  fireEvent.click(screen.getByText(endDate.add(1, 'day').format('DD')))
+  expect(onChange).not.toHaveBeenCalled()
+})
+
+test('disables date using disableDate function', () => {
+  // disalbes current date
+  function disableDate(date: Date) {
+    return dayjs(date).format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY')
+  }
+  const onChange = jest.fn()
+  render(<DatePicker disableDate={disableDate} onChange={onChange} />)
+
+  fireEvent.click(screen.getByText(/select date/i))
+  fireEvent.click(screen.getByText(dayjs().format('DD')))
+  expect(onChange).not.toHaveBeenCalled()
+})
