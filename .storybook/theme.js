@@ -6,7 +6,7 @@ export default create({
   base: 'light',
 
   fontBase: 'Inter',
-  fontCode: 'Fira Mono',
+  fontCode: '"Fira Mono"',
 
   brandTitle: 'tail-kit',
   brandImage: logo,
