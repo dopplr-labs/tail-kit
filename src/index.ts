@@ -16,6 +16,7 @@ export { default as Radio } from './components/radio'
 export { default as Select } from './components/select'
 export { default as Switch } from './components/switch'
 export { default as Tabs } from './components/tabs'
+export { default as NPS } from './components/nps'
 
 // hooks
 export { default as useLongPress } from './hooks/use-long-press'
