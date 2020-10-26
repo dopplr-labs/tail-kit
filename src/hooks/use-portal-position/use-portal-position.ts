@@ -96,7 +96,7 @@ export function usePortalPosition({
   }, [visible])
 
   useEffect(() => {
-    if (contentVisibility === ContentVisibility.INVISIBLE) {
+    function setPortalPosition() {
       const contentContainerBCR = contentContainer.current?.getBoundingClientRect()
       const triggerBCR = trigger.current?.getBoundingClientRect()
       if (contentContainerBCR && triggerBCR) {
@@ -124,6 +124,18 @@ export function usePortalPosition({
           placement,
         })
       }
+    }
+
+    if (contentVisibility === ContentVisibility.INVISIBLE) {
+      setPortalPosition()
+    }
+
+    if (contentVisibility === ContentVisibility.SHOWN) {
+      window.addEventListener('resize', setPortalPosition)
+    }
+
+    return () => {
+      window.removeEventListener('resize', setPortalPosition)
     }
   }, [
     contentVisibility,
