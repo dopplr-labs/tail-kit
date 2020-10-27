@@ -10,8 +10,13 @@ export default {
 
 export function BasicDrawer() {
   const [visible, setVisible] = useState(false)
+
   function showDrawer() {
     setVisible(true)
+  }
+
+  function onClose() {
+    setVisible(false)
   }
   return (
     <>
@@ -20,7 +25,7 @@ export function BasicDrawer() {
         buttonType={Button.ButtonType.primary}
         onClick={showDrawer}
       />
-      <Drawer visible={visible} />
+      <Drawer visible={visible} onRequestClose={onClose} />
     </>
   )
 }

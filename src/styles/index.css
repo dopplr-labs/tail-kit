@@ -144,4 +144,9 @@ input[type='number']::-webkit-outer-spin-button {
   @apply transition-none !important;
 }
 
+.drawer-portal-container {
+  @apply relative;
+  z-index: 100;
+}
+
 @tailwind utilities;
