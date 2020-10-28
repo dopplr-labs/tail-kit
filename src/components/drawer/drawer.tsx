@@ -4,10 +4,12 @@ import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import useOutsideClick from 'hooks/use-outside-click'
+import { XOutline } from 'components/icons'
 
 export type DrawerProps = {
   /** content rendered inside the modal */
   children: React.ReactNode
+  closable?: boolean
   /** function called when the user is closing the drawer, either by clicking on cancel button or overlay */
   onRequestClose?: () => void
   /** title of the drawer */
@@ -21,6 +23,7 @@ export type DrawerProps = {
 
 export function Drawer({
   children,
+  closable = false,
   onRequestClose,
   placement = 'right',
   portalParent = document.body,
@@ -72,7 +75,7 @@ export function Drawer({
       >
         <div
           className={clsx(
-            'bg-white shadow-2xl',
+            'bg-white shadow-2xl relative',
             placement === 'left' || placement === 'right'
               ? 'w-64 h-full'
               : 'w-full h-64',
@@ -83,6 +86,14 @@ export function Drawer({
             <div className="px-4 py-3 font-medium text-gray-900 border-b">
               {title}
             </div>
+          ) : null}
+          {closable ? (
+            <button
+              className="absolute top-0 right-0 p-1 mt-3 mr-3 rounded-md focus:outline-none focus:shadow-outline"
+              onClick={onRequestClose}
+            >
+              <XOutline className="w-4 h-4" />
+            </button>
           ) : null}
           <div className="p-4 overflow-auto text-sm text-gray-700 scrollable">
             {children}

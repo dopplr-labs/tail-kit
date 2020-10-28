@@ -80,6 +80,7 @@ export function CustomPlacement() {
         title="Basic Drawer"
         onRequestClose={onClose}
         placement={placement}
+        closable
       >
         <p>Some Contents...</p>
         <p>Some Contents...</p>
