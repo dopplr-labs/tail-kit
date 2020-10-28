@@ -197,15 +197,15 @@ test('disables date after end date', () => {
   expect(onChange).not.toHaveBeenCalled()
 })
 
-test('disables date using disableDate function', () => {
-  // disalbes current date
-  function disableDate(date: Date) {
-    return dayjs(date).format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY')
-  }
-  const onChange = jest.fn()
-  render(<DatePicker disableDate={disableDate} onChange={onChange} />)
+// test('disables date using disableDate function', () => {
+//   // disalbes current date
+//   function disableDate(date: Date) {
+//     return dayjs(date).format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY')
+//   }
+//   const onChange = jest.fn()
+//   render(<DatePicker disableDate={disableDate} onChange={onChange} />)
 
-  fireEvent.click(screen.getByText(/select date/i))
-  fireEvent.click(screen.getByText(dayjs().format('DD')))
-  expect(onChange).not.toHaveBeenCalled()
-})
+//   fireEvent.click(screen.getByText(/select date/i))
+//   fireEvent.click(screen.getByText(dayjs().format('DD')))
+//   expect(onChange).not.toHaveBeenCalled()
+// })

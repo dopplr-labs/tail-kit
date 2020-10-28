@@ -6,20 +6,26 @@ import clsx from 'clsx'
 import useOutsideClick from 'hooks/use-outside-click'
 
 export type DrawerProps = {
-  /** whether drawer is visible or not */
-  visible: boolean
-  placement?: 'left' | 'right' | 'top' | 'bottom'
+  /** content rendered inside the modal */
+  children: React.ReactNode
   /** function called when the user is closing the drawer, either by clicking on cancel button or overlay */
   onRequestClose?: () => void
+  /** title of the drawer */
+  title?: string
+  placement?: 'left' | 'right' | 'top' | 'bottom'
   /** parent of the portal container */
   portalParent?: HTMLElement
+  /** whether drawer is visible or not */
+  visible: boolean
 }
 
 export function Drawer({
-  visible,
-  placement = 'right',
+  children,
   onRequestClose,
+  placement = 'right',
   portalParent = document.body,
+  title = '',
+  visible,
 }: DrawerProps) {
   const portalContainer = useMemoOne(() => {
     const container = document.createElement('div')
@@ -56,15 +62,32 @@ export function Drawer({
     >
       <div
         className={clsx(
-          'fixed inset-0 flex justify-start w-full h-full bg-black bg-opacity-75',
+          'fixed inset-0 flex w-full h-full bg-black bg-opacity-75',
           placement === 'right'
             ? 'justify-end'
-            : placement === 'left'
+            : placement === 'left' || placement === 'top'
             ? 'justify-start'
-            : undefined,
+            : 'flex-col justify-end',
         )}
       >
-        <div className="w-64 h-full bg-white" ref={contentContainer} />
+        <div
+          className={clsx(
+            'bg-white shadow-2xl',
+            placement === 'left' || placement === 'right'
+              ? 'w-64 h-full'
+              : 'w-full h-64',
+          )}
+          ref={contentContainer}
+        >
+          {title ? (
+            <div className="px-4 py-3 font-medium text-gray-900 border-b">
+              {title}
+            </div>
+          ) : null}
+          <div className="p-4 overflow-auto text-sm text-gray-700 scrollable">
+            {children}
+          </div>
+        </div>
       </div>
     </CSSTransition>,
     portalContainer,
