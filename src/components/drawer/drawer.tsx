@@ -47,38 +47,39 @@ export function Drawer({
   })
 
   return createPortal(
-    <CSSTransition
-      in={visible}
-      timeout={300}
-      classNames="modal"
-      unmountOnExit
-      onEnter={() => {
-        if (!portalParent.contains(portalContainer)) {
-          portalParent.appendChild(portalContainer)
-        }
-      }}
-      onExited={() => {
-        if (portalParent.contains(portalContainer)) {
-          portalParent.removeChild(portalContainer)
-        }
-      }}
-    >
+    <>
       <div
         className={clsx(
-          'fixed inset-0 flex w-full h-full bg-black bg-opacity-75',
-          placement === 'right'
-            ? 'justify-end'
-            : placement === 'left' || placement === 'top'
-            ? 'justify-start'
-            : 'flex-col justify-end',
+          'fixed inset-0 flex w-full h-full transition-opacity duration-500 bg-black',
+          visible ? 'bg-opacity-50' : 'bg-opacity-0',
         )}
+      />
+      <CSSTransition
+        in={visible}
+        timeout={300}
+        classNames={`drawer-${placement}`}
+        unmountOnExit
+        onEnter={() => {
+          if (!portalParent.contains(portalContainer)) {
+            portalParent.appendChild(portalContainer)
+          }
+        }}
+        onExited={() => {
+          if (portalParent.contains(portalContainer)) {
+            portalParent.removeChild(portalContainer)
+          }
+        }}
       >
         <div
           className={clsx(
-            'bg-white shadow-2xl relative',
-            placement === 'left' || placement === 'right'
-              ? 'w-64 h-full'
-              : 'w-full h-64',
+            'bg-white shadow-2xl fixed',
+            placement === 'right'
+              ? 'top-0 right-0 w-64 h-full'
+              : placement === 'left'
+              ? 'top-0 left-0 w-64 h-full'
+              : placement === 'top'
+              ? 'top-0 left-0 w-full h-64'
+              : 'bottom-0 left-0 w-full h-64',
           )}
           ref={contentContainer}
         >
@@ -99,8 +100,8 @@ export function Drawer({
             {children}
           </div>
         </div>
-      </div>
-    </CSSTransition>,
+      </CSSTransition>
+    </>,
     portalContainer,
   )
 }

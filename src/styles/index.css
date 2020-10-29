@@ -64,6 +64,54 @@ input[type='number']::-webkit-outer-spin-button {
   @apply transition-all duration-200 ease-in transform scale-95 opacity-0;
 }
 
+.drawer-right-enter {
+  @apply transform translate-x-full;
+}
+
+.drawer-right-enter-active {
+  @apply transition-transform duration-500 ease-in-out transform;
+}
+
+.drawer-right-exit-active {
+  @apply transition-transform duration-500 transform translate-x-full;
+}
+
+.drawer-left-enter {
+  @apply transform -translate-x-full;
+}
+
+.drawer-left-enter-active {
+  @apply transition-transform duration-500 ease-in-out transform;
+}
+
+.drawer-left-exit-active {
+  @apply transition-transform duration-500 transform -translate-x-full;
+}
+
+.drawer-top-enter {
+  @apply transform -translate-y-full;
+}
+
+.drawer-top-enter-active {
+  @apply transition-transform duration-500 ease-in-out transform;
+}
+
+.drawer-top-exit-active {
+  @apply transition-transform duration-500 transform -translate-y-full;
+}
+
+.drawer-bottom-enter {
+  @apply transform translate-y-full;
+}
+
+.drawer-bottom-enter-active {
+  @apply transition-transform duration-500 ease-in-out transform;
+}
+
+.drawer-bottom-exit-active {
+  @apply transition-transform duration-500 transform translate-y-full;
+}
+
 .portal-container {
   @apply absolute top-0 left-0 right-0 h-0;
   z-index: 10001;
