@@ -197,15 +197,25 @@ test('disables date after end date', () => {
   expect(onChange).not.toHaveBeenCalled()
 })
 
-// test('disables date using disableDate function', () => {
-//   // disalbes current date
-//   function disableDate(date: Date) {
-//     return dayjs(date).format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY')
-//   }
-//   const onChange = jest.fn()
-//   render(<DatePicker disableDate={disableDate} onChange={onChange} />)
+test('disables date using disableDate function', () => {
+  // disables current date
+  function disableDate(date: Date) {
+    return dayjs(date).format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY')
+  }
 
-//   fireEvent.click(screen.getByText(/select date/i))
-//   fireEvent.click(screen.getByText(dayjs().format('DD')))
-//   expect(onChange).not.toHaveBeenCalled()
-// })
+  const onChange = jest.fn()
+  render(<DatePicker disableDate={disableDate} onChange={onChange} />)
+
+  fireEvent.click(screen.getByText(/select date/i))
+  const currentDateButtons = screen.getAllByText(dayjs().format('DD'))
+  const currentDateButton =
+    currentDateButtons.length > 1
+      ? currentDateButtons.find(
+          // if there are multiple buttons for the current date because of the same date
+          // repeating in the next or previous month, then select the button with data-date value
+          (node) => node.dataset.date === dayjs().format('DD-MM-YYYY'),
+        )
+      : currentDateButtons[0]
+  fireEvent.click(currentDateButton as Node)
+  expect(onChange).not.toHaveBeenCalled()
+})
