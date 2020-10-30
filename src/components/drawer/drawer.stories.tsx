@@ -94,7 +94,7 @@ export function CustomPlacement() {
 }
 
 export function SubmitFormInDrawer() {
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
 
   function showDrawer() {
     setVisible(true)
