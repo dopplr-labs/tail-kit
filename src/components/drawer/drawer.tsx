@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
@@ -60,40 +60,44 @@ export function Drawer({
     },
   })
 
+  useEffect(() => {
+    portalParent.appendChild(portalContainer)
+
+    return () => {
+      portalParent.removeChild(portalContainer)
+    }
+  }, [portalContainer, portalParent])
+
+  const placementClasses =
+    placement === 'right'
+      ? 'top-0 right-0 w-64 h-full'
+      : placement === 'left'
+      ? 'top-0 left-0 w-64 h-full'
+      : placement === 'top'
+      ? 'top-0 left-0 w-full h-64'
+      : 'bottom-0 left-0 w-full h-64'
+
   return createPortal(
     <>
       <div
         className={clsx(
           'fixed inset-0 flex w-full h-full transition-opacity duration-500 bg-black',
-          visible ? 'bg-opacity-50' : 'bg-opacity-0',
+          visible
+            ? 'opacity-50 pointer-events-auto'
+            : 'opacity-0 pointer-events-none',
         )}
+        data-testid="drawer-overlay"
       />
       <CSSTransition
         in={visible}
         timeout={500}
         classNames={`drawer-${placement}`}
         unmountOnExit
-        onEnter={() => {
-          if (!portalParent.contains(portalContainer)) {
-            portalParent.appendChild(portalContainer)
-          }
-        }}
-        onExited={() => {
-          if (portalParent.contains(portalContainer)) {
-            portalParent.removeChild(portalContainer)
-          }
-        }}
       >
         <div
           className={clsx(
             'bg-white shadow-2xl fixed flex flex-col justify-between',
-            placement === 'right'
-              ? 'top-0 right-0 w-64 h-full'
-              : placement === 'left'
-              ? 'top-0 left-0 w-64 h-full'
-              : placement === 'top'
-              ? 'top-0 left-0 w-full h-64'
-              : 'bottom-0 left-0 w-full h-64',
+            placementClasses,
             className,
           )}
           style={style}
@@ -107,6 +111,7 @@ export function Drawer({
               <XOutline className="w-4 h-4" />
             </button>
           ) : null}
+
           <div>
             {title ? (
               <div className="px-6 py-3 font-medium text-gray-900 border-b">
@@ -117,6 +122,7 @@ export function Drawer({
               {children}
             </div>
           </div>
+
           {footer ? <div className="px-4 py-3 border-t">{footer}</div> : null}
         </div>
       </CSSTransition>
