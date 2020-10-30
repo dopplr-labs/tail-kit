@@ -6,11 +6,15 @@ import clsx from 'clsx'
 import useOutsideClick from 'hooks/use-outside-click'
 import { XOutline } from 'components/icons'
 
+/**
+ * Drawer component properties
+ */
 export type DrawerProps = {
   /** content rendered inside the modal */
   children: React.ReactNode
   /** Whether a close (x) button is visible on top right of the Drawer dialog or not */
   closable?: boolean
+  /** The footer for Drawer */
   footer?: React.ReactNode
   /** function called when the user is closing the drawer, either by clicking on cancel button or overlay */
   onRequestClose?: () => void
@@ -22,7 +26,9 @@ export type DrawerProps = {
   portalParent?: HTMLElement
   /** whether drawer is visible or not */
   visible: boolean
+  /** Additional classes applied to the Drawer component */
   className?: string
+  /** Additional styles applied to the Drawer component */
   style?: React.CSSProperties
 }
 
@@ -64,7 +70,7 @@ export function Drawer({
       />
       <CSSTransition
         in={visible}
-        timeout={300}
+        timeout={500}
         classNames={`drawer-${placement}`}
         unmountOnExit
         onEnter={() => {

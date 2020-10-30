@@ -13,9 +13,7 @@ export type OnChangeType = (page: number, pageSize: number) => void
  * Pagination component properties
  */
 export type PaginationProps = {
-  /** Use current prop along with onChange
-   * to create controlled Pagination component
-   */
+  /** Use current prop along with onChange to create controlled Pagination component */
   current?: number
   /** Default initial page number */
   defaultCurrent?: number
