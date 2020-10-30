@@ -6,6 +6,13 @@ import clsx from 'clsx'
 import useOutsideClick from 'hooks/use-outside-click'
 import { XOutline } from 'components/icons'
 
+export enum DrawerPlacement {
+  left = 'left',
+  right = 'right',
+  top = 'top',
+  bottom = 'bottom',
+}
+
 /**
  * Drawer component properties
  */
@@ -21,7 +28,7 @@ export type DrawerProps = {
   /** title of the drawer */
   title?: string
   /** The placement of the Drawer */
-  placement?: 'left' | 'right' | 'top' | 'bottom'
+  placement?: DrawerPlacement
   /** parent of the portal container */
   portalParent?: HTMLElement
   /** whether drawer is visible or not */
@@ -37,7 +44,7 @@ export function Drawer({
   closable = false,
   footer,
   onRequestClose,
-  placement = 'right',
+  placement = DrawerPlacement.right,
   portalParent = document.body,
   title = '',
   visible,
@@ -68,20 +75,22 @@ export function Drawer({
     }
   }, [portalContainer, portalParent])
 
-  const placementClasses =
-    placement === 'right'
-      ? 'top-0 right-0 w-64 h-full'
-      : placement === 'left'
-      ? 'top-0 left-0 w-64 h-full'
-      : placement === 'top'
-      ? 'top-0 left-0 w-full h-64'
-      : 'bottom-0 left-0 w-full h-64'
+  let placementClasses
+  if (placement === DrawerPlacement.right) {
+    placementClasses = 'top-0 right-0 w-64 h-full'
+  } else if (placement === DrawerPlacement.left) {
+    placementClasses = 'top-0 left-0 w-64 h-full'
+  } else if (placement === DrawerPlacement.top) {
+    placementClasses = 'top-0 left-0 w-full h-64'
+  } else if (placement === DrawerPlacement.bottom) {
+    placementClasses = 'bottom-0 left-0 w-full h-64'
+  }
 
   return createPortal(
     <>
       <div
         className={clsx(
-          'fixed inset-0 flex w-full h-full transition-opacity duration-500 bg-black',
+          'fixed inset-0 flex w-full h-full transition-opacity duration-200 bg-black',
           visible
             ? 'opacity-50 pointer-events-auto'
             : 'opacity-0 pointer-events-none',
@@ -90,13 +99,13 @@ export function Drawer({
       />
       <CSSTransition
         in={visible}
-        timeout={500}
+        timeout={200}
         classNames={`drawer-${placement}`}
         unmountOnExit
       >
         <div
           className={clsx(
-            'bg-white shadow-2xl fixed flex flex-col justify-between',
+            'bg-white shadow-2xl fixed flex flex-col justify-between drawer',
             placementClasses,
             className,
           )}
@@ -130,3 +139,5 @@ export function Drawer({
     portalContainer,
   )
 }
+
+Drawer.DrawerPlacement = DrawerPlacement

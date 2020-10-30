@@ -144,6 +144,7 @@ export function SubmitFormInDrawer() {
             <Select
               options={['Male', 'Female', 'Other']}
               placeholder="Select your gender"
+              className="w-full"
             />
           </div>
           <div className="w-1/2 space-y-2">

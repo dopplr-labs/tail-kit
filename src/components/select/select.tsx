@@ -245,7 +245,7 @@ export function Select({
             </span>
           </>
         ) : (
-          <span>{placeholder}</span>
+          <span className="text-gray-400">{placeholder}</span>
         )}
 
         <span className="flex-1" />
