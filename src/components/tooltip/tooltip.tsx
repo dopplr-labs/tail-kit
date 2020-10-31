@@ -40,6 +40,7 @@ export function Tooltip({ title, icon, children }: TooltipProps) {
       <Portal
         triggerRef={trigger}
         visible={tooltipVisible}
+        // visible
         allowedPlacements={[
           [VerticalPlacement.top, HorizontalPlacement.leftAlign],
           [VerticalPlacement.top, HorizontalPlacement.center],
@@ -52,10 +53,15 @@ export function Tooltip({ title, icon, children }: TooltipProps) {
         ]}
         defaultPlacement={[VerticalPlacement.center, HorizontalPlacement.right]}
       >
-        <div className="inline-flex px-4 py-2 space-x-3 text-sm text-gray-800 bg-white rounded-md shadow">
-          {icon}
-          <span>{title}</span>
-        </div>
+        {() => (
+          <div className="relative rounded-md shadow">
+            <div className="absolute left-0 w-2.5 h-2.5 transform rotate-45 -translate-x-1/2 -translate-y-1/2 bg-white shadow top-1/2" />
+            <div className="relative z-10 inline-flex px-4 py-2 space-x-3 text-sm text-gray-800 bg-white rounded-md">
+              {icon}
+              <span>{title}</span>
+            </div>
+          </div>
+        )}
       </Portal>
     </>
   )

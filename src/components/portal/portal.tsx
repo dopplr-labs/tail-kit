@@ -21,7 +21,13 @@ type PortalProps = {
   /** Whether portal is visible or not */
   visible: boolean
   /** Content to be rendered inside the portal */
-  children: React.ReactElement
+  children:
+    | React.ReactElement
+    | ((_: {
+        contentVisibility: ContentVisibility
+        containerPlacement: Placement
+        contentStyle?: React.CSSProperties
+      }) => React.ReactElement)
   defaultPlacement: Placement
   allowedPlacements: Placement[]
   offsetHorizontal?: number
@@ -79,7 +85,13 @@ export function Portal({
 
   const content = (
     <div className="inline-block" ref={contentContainer}>
-      {children}
+      {typeof children === 'function'
+        ? children({
+            contentVisibility,
+            containerPlacement: containerPlacement ?? defaultPlacement,
+            contentStyle,
+          })
+        : children}
     </div>
   )
 
