@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 import { createPortal } from 'react-dom'
+import { isNumber } from 'lodash-es'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import useOutsideClick from 'hooks/use-outside-click'
@@ -31,6 +32,8 @@ export type DrawerProps = {
   placement?: DrawerPlacement
   /** parent of the portal container */
   portalParent?: HTMLElement
+  /** Define the size of drawer (width in case of left or right placement and height in case of top or bottom placement) */
+  size?: number
   /** whether drawer is visible or not */
   visible: boolean
   /** Additional classes applied to the Drawer component */
@@ -46,6 +49,7 @@ export function Drawer({
   onRequestClose,
   placement = DrawerPlacement.right,
   portalParent = document.body,
+  size = 250,
   title = '',
   visible,
   className,
@@ -77,13 +81,28 @@ export function Drawer({
 
   let placementClasses
   if (placement === DrawerPlacement.right) {
-    placementClasses = 'top-0 right-0 w-64 h-full'
+    placementClasses = 'top-0 right-0'
   } else if (placement === DrawerPlacement.left) {
-    placementClasses = 'top-0 left-0 w-64 h-full'
+    placementClasses = 'top-0 left-0'
   } else if (placement === DrawerPlacement.top) {
-    placementClasses = 'top-0 left-0 w-full h-64'
+    placementClasses = 'top-0 left-0'
   } else if (placement === DrawerPlacement.bottom) {
-    placementClasses = 'bottom-0 left-0 w-full h-64'
+    placementClasses = 'bottom-0 left-0'
+  }
+
+  let height: string, width: string
+  if (
+    placement === DrawerPlacement.right ||
+    placement === DrawerPlacement.left
+  ) {
+    height = '100%'
+    width = isNumber(size) ? `${size}px` : '250px'
+  } else if (
+    placement === DrawerPlacement.top ||
+    placement === DrawerPlacement.bottom
+  ) {
+    height = isNumber(size) ? `${size}px` : '250px'
+    width = '100%'
   }
 
   return createPortal(
@@ -109,7 +128,7 @@ export function Drawer({
             placementClasses,
             className,
           )}
-          style={style}
+          style={{ width, height, ...style }}
           ref={contentContainer}
         >
           {closable ? (

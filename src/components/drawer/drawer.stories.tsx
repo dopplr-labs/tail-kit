@@ -114,7 +114,7 @@ export function SubmitFormInDrawer() {
         title="Create a new employee account"
         onRequestClose={onClose}
         closable
-        style={{ width: '550px' }}
+        size={550}
         footer={
           <div className="flex items-center justify-end gap-x-3">
             <Button label="Cancel" onClick={onClose} />
