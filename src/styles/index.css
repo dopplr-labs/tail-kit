@@ -64,6 +64,58 @@ input[type='number']::-webkit-outer-spin-button {
   @apply transition-all duration-200 ease-in transform scale-95 opacity-0;
 }
 
+.drawer {
+  @apply transition-transform duration-200 ease-linear transform;
+}
+
+.drawer-right-enter {
+  @apply translate-x-full;
+}
+
+.drawer-right-enter-active {
+  @apply translate-x-0;
+}
+
+.drawer-right-exit-active {
+  @apply translate-x-full;
+}
+
+.drawer-left-enter {
+  @apply -translate-x-full;
+}
+
+.drawer-left-enter-active {
+  @apply translate-x-0;
+}
+
+.drawer-left-exit-active {
+  @apply -translate-x-full;
+}
+
+.drawer-top-enter {
+  @apply -translate-y-full;
+}
+
+.drawer-top-enter-active {
+  @apply translate-y-0;
+}
+
+.drawer-top-exit-active {
+  @apply -translate-y-full;
+}
+
+.drawer-bottom-enter {
+  @apply translate-y-full;
+}
+
+.drawer-bottom-enter-active {
+  @apply translate-y-0;
+}
+
+.drawer-bottom-exit-active {
+  @apply translate-y-full;
+}
+
 .portal-container {
   @apply absolute top-0 left-0 right-0 h-0;
   z-index: 10001;
@@ -142,6 +194,11 @@ input[type='number']::-webkit-outer-spin-button {
 
 .page-button {
   @apply transition-none !important;
+}
+
+.drawer-portal-container {
+  @apply relative;
+  z-index: 100;
 }
 
 @tailwind utilities;

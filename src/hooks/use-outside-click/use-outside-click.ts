@@ -8,7 +8,7 @@ type ContainerRef = React.RefObject<HTMLElement | null>
 type HookProps = {
   /**
    * Array of containers to be whitelisted. If any click event is triggered outside these containers,
-   * then the handler owuld be called
+   * then the handler would be called
    *
    * Make sure that this doesn't change during the runtime
    * use useMemoOne hook to set the containers
@@ -33,7 +33,7 @@ type HookProps = {
  * and the outside click handler should only call the handler for it.
  *
  * To do it
- * 1. we generate a containerId for each of the outside click handler hoook
+ * 1. we generate a containerId for each of the outside click handler hook
  * 2. if the hook is active we push the containerId to the list of container ids, and remove on deactive
  * 3. when a click is triggered, we check if the containerId for a hook correspond to the top containerId
  * 4. if step 3 is correct, then check if the element is triggered out the list of containers passed
