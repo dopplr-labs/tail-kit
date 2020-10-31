@@ -72,9 +72,7 @@ test('left placement drawer renders correctly', () => {
       <p>Some Contents...</p>
     </Drawer>,
   )
-  expect(screen.getByRole('button').parentElement).toHaveClass(
-    'top-0 left-0 h-full',
-  )
+  expect(screen.getByRole('button').parentElement).toHaveClass('top-0 left-0')
 })
 
 test('top placement drawer renders correctly', () => {
@@ -83,9 +81,7 @@ test('top placement drawer renders correctly', () => {
       <p>Some Contents...</p>
     </Drawer>,
   )
-  expect(screen.getByRole('button').parentElement).toHaveClass(
-    'top-0 left-0 w-full',
-  )
+  expect(screen.getByRole('button').parentElement).toHaveClass('top-0 left-0')
 })
 
 test('bottom placement drawer renders correctly', () => {
@@ -95,7 +91,7 @@ test('bottom placement drawer renders correctly', () => {
     </Drawer>,
   )
   expect(screen.getByRole('button').parentElement).toHaveClass(
-    'bottom-0 left-0 w-full',
+    'bottom-0 left-0',
   )
 })
 
