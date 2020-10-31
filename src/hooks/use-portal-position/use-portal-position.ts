@@ -1,10 +1,11 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import {
-  getContentHorizontalPlacement,
-  getContentPosition,
-  getContentVerticalPlacement,
+  getPlacement,
+  getTopPosition,
+  getLeftPosition,
   HorizontalPlacement,
   VerticalPlacement,
+  Placement,
 } from 'utils/portal'
 
 export enum ContentVisibility {
@@ -32,10 +33,10 @@ type UsePortalProps = {
    * according to the position of the trigger.
    */
   contentContainer: React.RefObject<HTMLElement | null>
-  /** Default vertical placement. If provided, the portal won't calculate the vertical position */
-  verticalPlacement?: VerticalPlacement
-  /** parent of the portal container rendering the menu */
-  horizontalPlacement?: HorizontalPlacement
+  defaultPlacement: Placement
+  allowedPlacements: Placement[]
+  offsetHorizontal?: number
+  offsetVertical?: number
 }
 
 /**
@@ -49,8 +50,10 @@ export function usePortalPosition({
   visible,
   trigger,
   contentContainer,
-  verticalPlacement,
-  horizontalPlacement,
+  defaultPlacement,
+  allowedPlacements,
+  offsetHorizontal = 12,
+  offsetVertical = 12,
 }: UsePortalProps): {
   contentVisibility: ContentVisibility
   contentStyle: React.CSSProperties
@@ -100,17 +103,27 @@ export function usePortalPosition({
       const contentContainerBCR = contentContainer.current?.getBoundingClientRect()
       const triggerBCR = trigger.current?.getBoundingClientRect()
       if (contentContainerBCR && triggerBCR) {
-        const placement = [
-          verticalPlacement ??
-            getContentVerticalPlacement(triggerBCR, contentContainerBCR),
-          horizontalPlacement ??
-            getContentHorizontalPlacement(triggerBCR, contentContainerBCR),
-        ] as [VerticalPlacement, HorizontalPlacement]
-        const { top, left } = getContentPosition(
+        const placement = getPlacement({
           triggerBCR,
           contentContainerBCR,
-          placement,
-        )
+          allowedPlacements,
+          defaultPlacement,
+          offsetHorizontal,
+          offsetVertical,
+        })
+        const [verticalPlacement, horizontalPlacement] = placement
+        const top = getTopPosition({
+          triggerBCR,
+          contentContainerBCR,
+          verticalPlacement,
+          offsetVertical,
+        })
+        const left = getLeftPosition({
+          triggerBCR,
+          contentContainerBCR,
+          horizontalPlacement,
+          offsetHorizontal,
+        })
         setContentVisibility(ContentVisibility.SHOWN)
         setContentContainerPosition({
           top:
@@ -139,10 +152,12 @@ export function usePortalPosition({
     }
   }, [
     contentVisibility,
-    verticalPlacement,
-    horizontalPlacement,
     contentContainer,
     trigger,
+    offsetHorizontal,
+    offsetVertical,
+    allowedPlacements,
+    defaultPlacement,
   ])
 
   return {

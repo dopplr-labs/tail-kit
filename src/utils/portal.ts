@@ -1,138 +1,259 @@
 export enum VerticalPlacement {
   top = 'top',
+  center = 'center',
   bottom = 'bottom',
 }
 
 export enum HorizontalPlacement {
   left = 'left',
+  leftAlign = 'leftAlign',
+  center = 'center',
   right = 'right',
+  rightAlign = 'rightAlign',
 }
 
-/**
- * Computes the vertical placement of the content depending on the
- * content size and trigger position in the screen
- *
- * @param triggerBCR DOMRect bounding client rect of the dropdown trigger
- * @param contentContainerBCR DOMRect bounding client rect of the content
- * @param offsetVertical number vertial gap between the content and trigger
- * @returns VerticalPlacement vertical placement of the either top or bottom
- */
-export function getContentVerticalPlacement(
-  triggerBCR: DOMRect,
-  contentContainerBCR: DOMRect,
-  offsetVertical: number = 12,
-): VerticalPlacement {
-  const isClient =
-    typeof window !== 'undefined' && typeof navigator !== 'undefined'
+export type Placement = [VerticalPlacement, HorizontalPlacement]
 
-  // on node simply return the content position to be bottom (for SSR)
-  if (!isClient) {
-    return VerticalPlacement.bottom
+type getPlacementProps = {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  defaultPlacement: Placement
+  allowedPlacements: Placement[]
+  offsetVertical: number
+  offsetHorizontal: number
+}
+
+export function getPlacement({
+  triggerBCR,
+  contentContainerBCR,
+  defaultPlacement,
+  allowedPlacements,
+  offsetHorizontal,
+  offsetVertical,
+}: getPlacementProps) {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return defaultPlacement
   }
 
-  let verticalPlacement
-  /**
-   * If the content height + bottom position of the trigger is greater than the window height
-   * then there is no space at the bottom to render the content, it should be *rendered at the top*
-   */
+  const validPlacements = allowedPlacements.filter((placement) =>
+    isValidPlacement({
+      triggerBCR,
+      contentContainerBCR,
+      placement,
+      offsetHorizontal,
+      offsetVertical,
+    }),
+  )
+
+  if (validPlacements.length === 0) {
+    return defaultPlacement
+  }
+
   if (
-    triggerBCR.bottom + contentContainerBCR.height + offsetVertical >
-    window.innerHeight
+    validPlacements.find(
+      (placement) =>
+        JSON.stringify(placement) === JSON.stringify(defaultPlacement),
+    )
   ) {
-    verticalPlacement = VerticalPlacement.top
-  }
-  /**
-   * If the space between the top position of the content and the start of window is less than height of
-   * content, then there is no space to render that top, the content should be *rendered at bottom*
-   */
-  if (contentContainerBCR.height + offsetVertical > triggerBCR.top) {
-    verticalPlacement = VerticalPlacement.bottom
+    return defaultPlacement
   }
 
-  return verticalPlacement ?? VerticalPlacement.bottom
+  return validPlacements[0]
 }
 
-/**
- * Computes the horizontal placement of the content depending on the content size and trigger
- * position in the screen
- *
- * @param triggerBCR DOMRect bounding client rect of the dropdown trigger
- * @param contentContainerBCR DOMRect bounding client rect of the content
- * @returns HorizontalPlacement horizontal placement of the content either left or right
- */
-export function getContentHorizontalPlacement(
-  triggerBCR: DOMRect,
-  contentContainerBCR: DOMRect,
-): HorizontalPlacement {
-  const isClient =
-    typeof window !== 'undefined' && typeof navigator !== 'undefined'
-
-  // on node simply return the content position to be left (for SSR)
-  if (!isClient) {
-    return HorizontalPlacement.left
-  }
-
-  let horizontalPlacement
-  /**
-   * If the left position of the trigger + width of the content is greater than window width, then there
-   * is no space to render the content on the left side, the content should be *rendered at the right*
-   * (right position of content and trigger co-incide)
-   */
-  if (triggerBCR.left + contentContainerBCR.width > window.innerWidth) {
-    horizontalPlacement = HorizontalPlacement.right
-  }
-  /**
-   * If the right position of the trigger is less than the width of the container, then there is no space to render the
-   * content on the right side, it should be *rendered at the left* (left position of content and trigger co-incide)
-   */
-  if (contentContainerBCR.width > triggerBCR.right) {
-    horizontalPlacement = HorizontalPlacement.left
-  }
-
-  return horizontalPlacement ?? HorizontalPlacement.left
+type isValidPlacementProps = {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  placement: Placement
+  offsetVertical: number
+  offsetHorizontal: number
 }
 
-/**
- * Computes content top and left position on the basis of trigger position, content position
- * and placement
- *
- * @param triggerBCR DOMRect bounding client rect of trigger
- * @param contentContainerBCR DOMRect bounding client rect of content
- * @param placement [VerticalPlacement, HorizontalPlacement] placement of content
- * @param offsetVertical number vertial gap between the content and trigger
- * @returns {top: number, left: number} top and left position of content container
- */
-export function getContentPosition(
-  triggerBCR: DOMRect,
-  contentContainerBCR: DOMRect,
-  placement: [VerticalPlacement, HorizontalPlacement],
-  offsetVertical: number = 12,
-): { top: number; left: number } {
-  const isClient =
-    typeof window !== 'undefined' && typeof navigator !== 'undefined'
-
-  // on node simply return the content position to be bottom left (for SSR)
-  if (!isClient) {
-    return { top: 0, left: 0 }
-  }
-
+export function isValidPlacement({
+  triggerBCR,
+  contentContainerBCR,
+  placement,
+  offsetHorizontal,
+  offsetVertical,
+}: isValidPlacementProps): Boolean {
   const [verticalPlacement, horizontalPlacement] = placement
+  return (
+    isVerticalPlacementValid({
+      triggerBCR,
+      contentContainerBCR,
+      verticalPlacement,
+      offsetVertical,
+    }) &&
+    isHorizontalPlacementValid({
+      triggerBCR,
+      contentContainerBCR,
+      horizontalPlacement,
+      offsetHorizontal,
+    })
+  )
+}
 
-  let top
-  if (verticalPlacement === VerticalPlacement.top) {
-    top = triggerBCR.top - (contentContainerBCR.height + offsetVertical)
-  } else if (verticalPlacement === VerticalPlacement.bottom) {
-    top = triggerBCR.bottom + offsetVertical
+type isVerticalPlacementValidProps = {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  verticalPlacement: VerticalPlacement
+  offsetVertical: number
+}
+
+export function isVerticalPlacementValid({
+  triggerBCR,
+  contentContainerBCR,
+  verticalPlacement,
+  offsetVertical,
+}: isVerticalPlacementValidProps): boolean {
+  switch (verticalPlacement) {
+    case VerticalPlacement.top: {
+      return triggerBCR.top - contentContainerBCR.height - offsetVertical >= 0
+    }
+
+    case VerticalPlacement.center: {
+      const maxHeight = Math.max(triggerBCR.height, contentContainerBCR.height)
+      return (
+        triggerBCR.top + triggerBCR.height / 2 + maxHeight / 2 <=
+        window.innerHeight
+      )
+    }
+
+    case VerticalPlacement.bottom: {
+      return (
+        triggerBCR.bottom + contentContainerBCR.height + offsetVertical <=
+        window.innerHeight
+      )
+    }
+
+    default: {
+      return false
+    }
   }
+}
 
-  let left
-  if (horizontalPlacement === HorizontalPlacement.left) {
-    left = triggerBCR.left
-  } else if (horizontalPlacement === HorizontalPlacement.right) {
-    left = triggerBCR.right - contentContainerBCR.width
+type isHorizontalPlacementValidProps = {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  horizontalPlacement: HorizontalPlacement
+  offsetHorizontal: number
+}
+
+export function isHorizontalPlacementValid({
+  triggerBCR,
+  contentContainerBCR,
+  horizontalPlacement,
+  offsetHorizontal,
+}: isHorizontalPlacementValidProps): boolean {
+  const maxWidth = Math.max(triggerBCR.width, contentContainerBCR.width)
+
+  switch (horizontalPlacement) {
+    case HorizontalPlacement.left: {
+      return triggerBCR.left - contentContainerBCR.width - offsetHorizontal >= 0
+    }
+
+    case HorizontalPlacement.leftAlign: {
+      return triggerBCR.left + maxWidth <= window.innerWidth
+    }
+
+    case HorizontalPlacement.center: {
+      return (
+        triggerBCR.left + triggerBCR.width / 2 + maxWidth / 2 <=
+        window.innerWidth
+      )
+    }
+
+    case HorizontalPlacement.right: {
+      return (
+        triggerBCR.right + contentContainerBCR.width + offsetHorizontal <=
+        window.innerWidth
+      )
+    }
+
+    case HorizontalPlacement.rightAlign: {
+      return triggerBCR.right <= window.innerWidth
+    }
+
+    default: {
+      return false
+    }
   }
+}
 
-  return { top: top ?? 0, left: left ?? 0 }
+type getTopPositionProps = {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  verticalPlacement: VerticalPlacement
+  offsetVertical: number
+}
+
+export function getTopPosition({
+  triggerBCR,
+  contentContainerBCR,
+  verticalPlacement,
+  offsetVertical,
+}: getTopPositionProps): number {
+  switch (verticalPlacement) {
+    case VerticalPlacement.top: {
+      return triggerBCR.top - contentContainerBCR.height - offsetVertical
+    }
+
+    case VerticalPlacement.center: {
+      return (
+        triggerBCR.top + triggerBCR.height / 2 - contentContainerBCR.height / 2
+      )
+    }
+
+    case VerticalPlacement.bottom: {
+      return triggerBCR.bottom + offsetVertical
+    }
+
+    default: {
+      throw new Error('Invalid vertical placement')
+    }
+  }
+}
+
+type getLeftPositionProps = {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  horizontalPlacement: HorizontalPlacement
+  offsetHorizontal: number
+}
+
+export function getLeftPosition({
+  triggerBCR,
+  contentContainerBCR,
+  horizontalPlacement,
+  offsetHorizontal,
+}: getLeftPositionProps): number {
+  switch (horizontalPlacement) {
+    case HorizontalPlacement.left: {
+      return triggerBCR.left - contentContainerBCR.width - offsetHorizontal
+    }
+
+    case HorizontalPlacement.leftAlign: {
+      return triggerBCR.left
+    }
+
+    case HorizontalPlacement.center: {
+      return (
+        triggerBCR.left + triggerBCR.width / 2 - contentContainerBCR.width / 2
+      )
+    }
+
+    case HorizontalPlacement.right: {
+      return triggerBCR.right + offsetHorizontal
+    }
+
+    case HorizontalPlacement.rightAlign: {
+      return triggerBCR.right - contentContainerBCR.width
+    }
+
+    default: {
+      throw new Error('Invalid horizontal placement')
+    }
+  }
 }
 
 /**
@@ -145,42 +266,41 @@ export function getTransformOriginClassName(
   placement?: [VerticalPlacement, HorizontalPlacement],
 ): string {
   if (!placement) {
-    return 'origin-top-left'
+    return ''
   }
 
   const [verticalPlacement, horizontalPlacement] = placement
 
-  /**
-   * If the vertical placement is top, it means that the content is atop of the trigger
-   * which means that the it should open from bottom to top and vice-versa
-   */
-  if (
-    verticalPlacement === VerticalPlacement.top &&
-    horizontalPlacement === HorizontalPlacement.left
-  ) {
-    return 'origin-bottom-left'
+  if (verticalPlacement === VerticalPlacement.top) {
+    if (horizontalPlacement === HorizontalPlacement.leftAlign) {
+      return 'origin-bottom-left'
+    }
+    if (horizontalPlacement === HorizontalPlacement.rightAlign) {
+      return 'origin-bottom-right'
+    }
+
+    return 'origin-bottom'
   }
 
-  if (
-    verticalPlacement === VerticalPlacement.bottom &&
-    horizontalPlacement === HorizontalPlacement.left
-  ) {
-    return 'origin-top-left'
+  if (verticalPlacement === VerticalPlacement.center) {
+    if (horizontalPlacement === HorizontalPlacement.left) {
+      return 'origin-right'
+    }
+    if (horizontalPlacement === HorizontalPlacement.right) {
+      return 'origin-left'
+    }
   }
 
-  if (
-    verticalPlacement === VerticalPlacement.top &&
-    horizontalPlacement === HorizontalPlacement.right
-  ) {
-    return 'origin-bottom-right'
+  if (verticalPlacement === VerticalPlacement.bottom) {
+    if (horizontalPlacement === HorizontalPlacement.leftAlign) {
+      return 'origin-top-left'
+    }
+    if (horizontalPlacement === HorizontalPlacement.rightAlign) {
+      return 'origin-top-right'
+    }
+
+    return 'origin-top'
   }
 
-  if (
-    verticalPlacement === VerticalPlacement.bottom &&
-    horizontalPlacement === HorizontalPlacement.right
-  ) {
-    return 'origin-top-right'
-  }
-
-  return 'origin-top-left'
+  return ''
 }

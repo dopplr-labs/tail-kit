@@ -13,6 +13,7 @@ import Portal from 'components/portal'
 import useOutsideClick from 'hooks/use-outside-click'
 import { Keys } from 'utils/keyboard'
 import usePrevious from 'hooks/use-previous'
+import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 import { Week } from './components/week'
 import { ActionType, reducer } from './reducer'
 import { getWeeksForMonth, isDateDisabled, isDateEqual } from './utils'
@@ -165,6 +166,16 @@ export function DatePicker({
       <Portal
         visible={open}
         triggerRef={trigger}
+        allowedPlacements={[
+          [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
+          [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
+          [VerticalPlacement.top, HorizontalPlacement.leftAlign],
+          [VerticalPlacement.top, HorizontalPlacement.rightAlign],
+        ]}
+        defaultPlacement={[
+          VerticalPlacement.bottom,
+          HorizontalPlacement.leftAlign,
+        ]}
         onContentMount={() => {
           if (dateSelected) {
             ;(datesContainer.current?.querySelector(

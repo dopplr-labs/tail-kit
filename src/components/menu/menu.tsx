@@ -9,16 +9,7 @@ import clsx from 'clsx'
 import Portal from 'components/portal'
 import { useMemoOne } from 'use-memo-one'
 import useOutsideClick from 'hooks/use-outside-click'
-
-export enum VerticalPlacement {
-  top = 'top',
-  bottom = 'bottom',
-}
-
-export enum HorizontalPlacement {
-  left = 'left',
-  right = 'right',
-}
+import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 
 const MenuContext = createContext<{
   menuVisible: boolean
@@ -100,8 +91,16 @@ export function Menu({
         triggerRef={triggerContainer}
         visible={menuVisible}
         portalParent={portalParent}
-        verticalPlacement={verticalPlacement}
-        horizontalPlacement={horizontalPlacement}
+        defaultPlacement={[
+          verticalPlacement ?? VerticalPlacement.bottom,
+          horizontalPlacement ?? HorizontalPlacement.left,
+        ]}
+        allowedPlacements={[
+          [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
+          [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
+          [VerticalPlacement.top, HorizontalPlacement.leftAlign],
+          [VerticalPlacement.top, HorizontalPlacement.rightAlign],
+        ]}
       >
         {menuContent}
       </Portal>
@@ -109,9 +108,20 @@ export function Menu({
   )
 }
 
-Menu.VerticalPlacement = VerticalPlacement
-Menu.HorizontalPlacement = HorizontalPlacement
+enum MenuVerticalPlacement {
+  top = VerticalPlacement.top,
+  bottom = VerticalPlacement.bottom,
+}
+Menu.VerticalPlacement = MenuVerticalPlacement
+
+enum MenuHorizontalPlacement {
+  left = HorizontalPlacement.leftAlign,
+  right = HorizontalPlacement.rightAlign,
+}
+Menu.HorizontalPlacement = MenuHorizontalPlacement
+
 Menu.MenuItem = MenuItem
+
 Menu.MenuDivider = MenuDivider
 
 /** Menu item properties */
