@@ -49,7 +49,7 @@ export function Drawer({
   onRequestClose,
   placement = DrawerPlacement.right,
   portalParent = document.body,
-  size = 250,
+  size = 256,
   title = '',
   visible,
   className,
@@ -90,18 +90,19 @@ export function Drawer({
     placementClasses = 'bottom-0 left-0'
   }
 
-  let height: string, width: string
+  let height: string | undefined
+  let width: string | undefined
   if (
     placement === DrawerPlacement.right ||
     placement === DrawerPlacement.left
   ) {
     height = '100%'
-    width = isNumber(size) ? `${size}px` : '250px'
+    width = isNumber(size) ? `${size}px` : '256px'
   } else if (
     placement === DrawerPlacement.top ||
     placement === DrawerPlacement.bottom
   ) {
-    height = isNumber(size) ? `${size}px` : '250px'
+    height = isNumber(size) ? `${size}px` : '256px'
     width = '100%'
   }
 
@@ -128,7 +129,7 @@ export function Drawer({
             placementClasses,
             className,
           )}
-          style={{ width, height, ...style }}
+          style={{ ...style, width, height }}
           ref={contentContainer}
         >
           {closable ? (
