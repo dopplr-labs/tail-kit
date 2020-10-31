@@ -84,7 +84,8 @@ export function Select({
   })
 
   const triggerContainer = useRef<HTMLButtonElement | null>(null)
-  const triggerRect = useRect(triggerContainer)
+  // compute the triggerRect only when the select is visible
+  const triggerRect = useRect(triggerContainer, open)
 
   const listContainer = useRef<HTMLUListElement | null>(null)
 
