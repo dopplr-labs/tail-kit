@@ -5,7 +5,7 @@ import Radio from 'components/radio'
 import { PlusOutline } from 'components/icons'
 import Input from 'components/input'
 import Select from 'components/select'
-import { Drawer } from './drawer'
+import { Drawer, DrawerPlacement } from './drawer'
 
 export default {
   title: 'Feedback/Drawer',
@@ -40,9 +40,7 @@ export function BasicDrawer() {
 
 export function CustomPlacement() {
   const [visible, setVisible] = useState(false)
-  const [placement, setPlacement] = useState<
-    'top' | 'right' | 'bottom' | 'left'
-  >('right')
+  const [placement, setPlacement] = useState(DrawerPlacement.right)
   const options = ['top', 'right', 'bottom', 'left']
 
   function showDrawer() {
@@ -54,13 +52,14 @@ export function CustomPlacement() {
   }
 
   function handlePlacement(checkedValue: string) {
-    if (
-      checkedValue === 'top' ||
-      checkedValue === 'right' ||
-      checkedValue === 'bottom' ||
-      checkedValue === 'left'
-    ) {
-      setPlacement(checkedValue)
+    if (checkedValue === 'right') {
+      setPlacement(DrawerPlacement.right)
+    } else if (checkedValue === 'left') {
+      setPlacement(DrawerPlacement.left)
+    } else if (checkedValue === 'top') {
+      setPlacement(DrawerPlacement.top)
+    } else if (checkedValue === 'bottom') {
+      setPlacement(DrawerPlacement.bottom)
     }
   }
 
