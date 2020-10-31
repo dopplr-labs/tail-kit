@@ -37,9 +37,17 @@ export function WithCustomMessage() {
   }
 
   function message(score: number) {
-    return score > 8
-      ? 'Thank you for your feedback!'
-      : 'Uh-oh! We will try to improve in future'
+    return score > 8 ? (
+      <div className="flex items-center space-x-3">
+        <span className="text-3xl">🎉</span>
+        <span>Thank you for your feedback!</span>
+      </div>
+    ) : (
+      <div className="flex items-center space-x-3">
+        <span className="text-3xl">😞</span>
+        <span>Uh-oh! We will try to improve in future</span>
+      </div>
+    )
   }
   function handleClick() {
     setReset((prevState) => (prevState === 0 ? 1 : 0))
