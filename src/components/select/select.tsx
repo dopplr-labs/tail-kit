@@ -8,6 +8,7 @@ import useOutsideClick from 'hooks/use-outside-click'
 import useSyncedState from 'hooks/use-synced-states'
 import { Keys } from 'utils/keyboard'
 import clsx from 'clsx'
+import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 import { ActionType, reducer } from './reducer'
 import { OptionType } from './types'
 import { SelectOption } from './components/select-option'
@@ -84,7 +85,8 @@ export function Select({
   })
 
   const triggerContainer = useRef<HTMLButtonElement | null>(null)
-  const triggerRect = useRect(triggerContainer)
+  // compute the triggerRect only when the select is visible
+  const triggerRect = useRect(triggerContainer, open)
 
   const listContainer = useRef<HTMLUListElement | null>(null)
 
@@ -268,6 +270,16 @@ export function Select({
       <Portal
         triggerRef={triggerContainer}
         visible={open}
+        allowedPlacements={[
+          [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
+          [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
+          [VerticalPlacement.top, HorizontalPlacement.leftAlign],
+          [VerticalPlacement.top, HorizontalPlacement.rightAlign],
+        ]}
+        defaultPlacement={[
+          VerticalPlacement.bottom,
+          HorizontalPlacement.leftAlign,
+        ]}
         onContentMount={onOptionsMount}
         onContentUnmount={onOptionsUnmount}
         portalParent={portalParent}

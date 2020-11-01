@@ -4,11 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useMemoOne } from 'use-memo-one'
-import {
-  getTransformOriginClassName,
-  HorizontalPlacement,
-  VerticalPlacement,
-} from 'utils/portal'
+import { getTransformOriginClassName, Placement } from 'utils/portal'
 
 enum ContentVisibility {
   HIDDEN = 'HIDDEN',
@@ -25,11 +21,17 @@ type PortalProps = {
   /** Whether portal is visible or not */
   visible: boolean
   /** Content to be rendered inside the portal */
-  children: React.ReactElement
-  /** Default vertical placement. If provided, the portal won't calculate the vertical position */
-  verticalPlacement?: VerticalPlacement
-  /** Default horizontal placement. If provided, the portal won't calculate the horizontal position */
-  horizontalPlacement?: HorizontalPlacement
+  children:
+    | React.ReactElement
+    | ((_: {
+        contentVisibility: ContentVisibility
+        containerPlacement: Placement
+        contentStyle?: React.CSSProperties
+      }) => React.ReactElement)
+  defaultPlacement: Placement
+  allowedPlacements: Placement[]
+  offsetHorizontal?: number
+  offsetVertical?: number
   /** Handler function called when the portal children is rendered in the correct position */
   onContentMount?: () => void
   /** Handler function called when the portal children is unmounted */
@@ -42,8 +44,10 @@ export function Portal({
   triggerRef,
   visible,
   children,
-  verticalPlacement,
-  horizontalPlacement,
+  allowedPlacements,
+  defaultPlacement,
+  offsetHorizontal = 12,
+  offsetVertical = 12,
   onContentMount,
   onContentUnmount,
   portalParent = document.body,
@@ -73,13 +77,21 @@ export function Portal({
     visible,
     trigger: triggerRef,
     contentContainer,
-    verticalPlacement,
-    horizontalPlacement,
+    allowedPlacements,
+    defaultPlacement,
+    offsetHorizontal,
+    offsetVertical,
   })
 
   const content = (
     <div className="inline-block" ref={contentContainer}>
-      {children}
+      {typeof children === 'function'
+        ? children({
+            contentVisibility,
+            containerPlacement: containerPlacement ?? defaultPlacement,
+            contentStyle,
+          })
+        : children}
     </div>
   )
 

@@ -114,7 +114,7 @@ export function SubmitFormInDrawer() {
         title="Create a new employee account"
         onRequestClose={onClose}
         closable
-        size={550}
+        size={560}
         footer={
           <div className="flex items-center justify-end gap-x-3">
             <Button label="Cancel" onClick={onClose} />
@@ -151,6 +151,7 @@ export function SubmitFormInDrawer() {
             <Select
               options={['Single', 'Married']}
               placeholder="Select your marital status"
+              className="w-full"
             />
           </div>
         </div>
