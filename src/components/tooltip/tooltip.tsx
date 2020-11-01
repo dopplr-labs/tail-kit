@@ -140,10 +140,10 @@ export function Tooltip({
               ) : null}
               <div
                 className={clsx(
-                  'relative z-10 inline-flex items-center px-4 py-2 space-x-3 text-sm rounded-md',
+                  'relative z-10 inline-flex items-center p-2 space-x-2 text-xs rounded-md font-medium',
                   inverted
                     ? 'text-white bg-gray-700 '
-                    : 'bg-white text-gray-800',
+                    : 'bg-white text-gray-700',
                 )}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave(0)}

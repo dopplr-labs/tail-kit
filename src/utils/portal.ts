@@ -1,28 +1,40 @@
 export enum VerticalPlacement {
+  /** The content container is placed at top of the trigger */
   top = 'top',
+  /** The content container is placed along with mid position of the trigger */
   center = 'center',
+  /** The content container is placed at bottom of the trigger */
   bottom = 'bottom',
 }
 
 export enum HorizontalPlacement {
+  /** The content container is placed at left side of the trigger */
   left = 'left',
+  /** The left position of the content container and trigger co-incide */
   leftAlign = 'leftAlign',
+  /** The content container is placed along with mid position of the trigger */
   center = 'center',
+  /** The content container is placed at right side of the trigger */
   right = 'right',
+  /** The right position of the content container and trigger co-incide */
   rightAlign = 'rightAlign',
 }
 
 export type Placement = [VerticalPlacement, HorizontalPlacement]
 
-type getPlacementProps = {
-  triggerBCR: DOMRect
-  contentContainerBCR: DOMRect
-  defaultPlacement: Placement
-  allowedPlacements: Placement[]
-  offsetVertical: number
-  offsetHorizontal: number
-}
-
+/**
+ * Computes the placement of the content container with respect to
+ * the trigger, based on the heuristics.
+ *
+ * This method finds out all the validate placements out of the allowed
+ * placements and
+ * * if there are no valid placements it returns the default placement
+ * * if the default placement is a valid one the it returns the default placement
+ * * else it returns the first valid placement
+ *
+ * TODO: Update the getPlacement method to compute the placement based on
+ * constraint optimisation (Food for thought for someone working on it in future)
+ */
 export function getPlacement({
   triggerBCR,
   contentContainerBCR,
@@ -30,20 +42,45 @@ export function getPlacement({
   allowedPlacements,
   offsetHorizontal,
   offsetVertical,
-}: getPlacementProps) {
+}: {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  /**
+   * The default placement of the content container.
+   *
+   * Generally all the portal components have some kind of default placement.
+   * Select as bottom and left-align, so is date picker
+   * whereas tooltip might have center and right
+   */
+  defaultPlacement: Placement
+  /** List of all the placements allowed */
+  allowedPlacements: Placement[]
+  /** Vertical offset, the vertical gap between the trigger container and content container */
+  offsetVertical: number
+  /** Horizontal offset, the horizontal gap between the trigger container and content container */
+  offsetHorizontal: number
+}) {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') {
     return defaultPlacement
   }
 
-  const validPlacements = allowedPlacements.filter((placement) =>
-    isValidPlacement({
-      triggerBCR,
-      contentContainerBCR,
-      placement,
-      offsetHorizontal,
-      offsetVertical,
-    }),
-  )
+  const validPlacements = allowedPlacements.filter((placement) => {
+    const [verticalPlacement, horizontalPlacement] = placement
+    return (
+      isVerticalPlacementValid({
+        triggerBCR,
+        contentContainerBCR,
+        verticalPlacement,
+        offsetVertical,
+      }) &&
+      isHorizontalPlacementValid({
+        triggerBCR,
+        contentContainerBCR,
+        horizontalPlacement,
+        offsetHorizontal,
+      })
+    )
+  })
 
   if (validPlacements.length === 0) {
     return defaultPlacement
@@ -61,61 +98,27 @@ export function getPlacement({
   return validPlacements[0]
 }
 
-type isValidPlacementProps = {
-  triggerBCR: DOMRect
-  contentContainerBCR: DOMRect
-  placement: Placement
-  offsetVertical: number
-  offsetHorizontal: number
-}
-
-export function isValidPlacement({
-  triggerBCR,
-  contentContainerBCR,
-  placement,
-  offsetHorizontal,
-  offsetVertical,
-}: isValidPlacementProps): Boolean {
-  const [verticalPlacement, horizontalPlacement] = placement
-  return (
-    isVerticalPlacementValid({
-      triggerBCR,
-      contentContainerBCR,
-      verticalPlacement,
-      offsetVertical,
-    }) &&
-    isHorizontalPlacementValid({
-      triggerBCR,
-      contentContainerBCR,
-      horizontalPlacement,
-      offsetHorizontal,
-    })
-  )
-}
-
-type isVerticalPlacementValidProps = {
-  triggerBCR: DOMRect
-  contentContainerBCR: DOMRect
-  verticalPlacement: VerticalPlacement
-  offsetVertical: number
-}
-
 export function isVerticalPlacementValid({
   triggerBCR,
   contentContainerBCR,
   verticalPlacement,
   offsetVertical,
-}: isVerticalPlacementValidProps): boolean {
+}: {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  verticalPlacement: VerticalPlacement
+  offsetVertical: number
+}): boolean {
   switch (verticalPlacement) {
     case VerticalPlacement.top: {
       return triggerBCR.top - contentContainerBCR.height - offsetVertical >= 0
     }
 
     case VerticalPlacement.center: {
-      const maxHeight = Math.max(triggerBCR.height, contentContainerBCR.height)
+      const triggerMidPos = triggerBCR.top + triggerBCR.height / 2
       return (
-        triggerBCR.top + triggerBCR.height / 2 + maxHeight / 2 <=
-        window.innerHeight
+        triggerMidPos + contentContainerBCR.height / 2 <= window.innerHeight &&
+        triggerMidPos - contentContainerBCR.height / 2 >= 0
       )
     }
 
@@ -125,18 +128,7 @@ export function isVerticalPlacementValid({
         window.innerHeight
       )
     }
-
-    default: {
-      return false
-    }
   }
-}
-
-type isHorizontalPlacementValidProps = {
-  triggerBCR: DOMRect
-  contentContainerBCR: DOMRect
-  horizontalPlacement: HorizontalPlacement
-  offsetHorizontal: number
 }
 
 export function isHorizontalPlacementValid({
@@ -144,22 +136,26 @@ export function isHorizontalPlacementValid({
   contentContainerBCR,
   horizontalPlacement,
   offsetHorizontal,
-}: isHorizontalPlacementValidProps): boolean {
-  const maxWidth = Math.max(triggerBCR.width, contentContainerBCR.width)
-
+}: {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  horizontalPlacement: HorizontalPlacement
+  offsetHorizontal: number
+}): boolean {
   switch (horizontalPlacement) {
     case HorizontalPlacement.left: {
       return triggerBCR.left - contentContainerBCR.width - offsetHorizontal >= 0
     }
 
     case HorizontalPlacement.leftAlign: {
-      return triggerBCR.left + maxWidth <= window.innerWidth
+      return triggerBCR.left + contentContainerBCR.width <= window.innerWidth
     }
 
     case HorizontalPlacement.center: {
+      const triggerMidPos = triggerBCR.left + triggerBCR.width / 2
       return (
-        triggerBCR.left + triggerBCR.width / 2 + maxWidth / 2 <=
-        window.innerWidth
+        triggerMidPos + contentContainerBCR.width / 2 <= window.innerWidth &&
+        triggerMidPos - contentContainerBCR.width / 2 >= 0
       )
     }
 
@@ -171,20 +167,9 @@ export function isHorizontalPlacementValid({
     }
 
     case HorizontalPlacement.rightAlign: {
-      return triggerBCR.right <= window.innerWidth
-    }
-
-    default: {
-      return false
+      return triggerBCR.right - contentContainerBCR.width >= 0
     }
   }
-}
-
-type getTopPositionProps = {
-  triggerBCR: DOMRect
-  contentContainerBCR: DOMRect
-  verticalPlacement: VerticalPlacement
-  offsetVertical: number
 }
 
 export function getTopPosition({
@@ -192,7 +177,12 @@ export function getTopPosition({
   contentContainerBCR,
   verticalPlacement,
   offsetVertical,
-}: getTopPositionProps): number {
+}: {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  verticalPlacement: VerticalPlacement
+  offsetVertical: number
+}): number {
   switch (verticalPlacement) {
     case VerticalPlacement.top: {
       return triggerBCR.top - contentContainerBCR.height - offsetVertical
@@ -207,18 +197,7 @@ export function getTopPosition({
     case VerticalPlacement.bottom: {
       return triggerBCR.bottom + offsetVertical
     }
-
-    default: {
-      throw new Error('Invalid vertical placement')
-    }
   }
-}
-
-type getLeftPositionProps = {
-  triggerBCR: DOMRect
-  contentContainerBCR: DOMRect
-  horizontalPlacement: HorizontalPlacement
-  offsetHorizontal: number
 }
 
 export function getLeftPosition({
@@ -226,7 +205,12 @@ export function getLeftPosition({
   contentContainerBCR,
   horizontalPlacement,
   offsetHorizontal,
-}: getLeftPositionProps): number {
+}: {
+  triggerBCR: DOMRect
+  contentContainerBCR: DOMRect
+  horizontalPlacement: HorizontalPlacement
+  offsetHorizontal: number
+}): number {
   switch (horizontalPlacement) {
     case HorizontalPlacement.left: {
       return triggerBCR.left - contentContainerBCR.width - offsetHorizontal
@@ -249,10 +233,6 @@ export function getLeftPosition({
     case HorizontalPlacement.rightAlign: {
       return triggerBCR.right - contentContainerBCR.width
     }
-
-    default: {
-      throw new Error('Invalid horizontal placement')
-    }
   }
 }
 
@@ -272,10 +252,17 @@ export function getTransformOriginClassName(
   const [verticalPlacement, horizontalPlacement] = placement
 
   if (verticalPlacement === VerticalPlacement.top) {
-    if (horizontalPlacement === HorizontalPlacement.leftAlign) {
+    if (
+      horizontalPlacement === HorizontalPlacement.leftAlign ||
+      horizontalPlacement === HorizontalPlacement.right
+    ) {
       return 'origin-bottom-left'
     }
-    if (horizontalPlacement === HorizontalPlacement.rightAlign) {
+
+    if (
+      horizontalPlacement === HorizontalPlacement.rightAlign ||
+      horizontalPlacement === HorizontalPlacement.left
+    ) {
       return 'origin-bottom-right'
     }
 
@@ -286,16 +273,24 @@ export function getTransformOriginClassName(
     if (horizontalPlacement === HorizontalPlacement.left) {
       return 'origin-right'
     }
+
     if (horizontalPlacement === HorizontalPlacement.right) {
       return 'origin-left'
     }
   }
 
   if (verticalPlacement === VerticalPlacement.bottom) {
-    if (horizontalPlacement === HorizontalPlacement.leftAlign) {
+    if (
+      horizontalPlacement === HorizontalPlacement.leftAlign ||
+      horizontalPlacement === HorizontalPlacement.right
+    ) {
       return 'origin-top-left'
     }
-    if (horizontalPlacement === HorizontalPlacement.rightAlign) {
+
+    if (
+      horizontalPlacement === HorizontalPlacement.rightAlign ||
+      horizontalPlacement === HorizontalPlacement.left
+    ) {
       return 'origin-top-right'
     }
 

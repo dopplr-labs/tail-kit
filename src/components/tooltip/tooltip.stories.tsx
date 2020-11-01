@@ -28,7 +28,7 @@ export function TooltipWithIcon() {
   return (
     <Tooltip
       title="User once deleted cannot be restored"
-      icon={<ExclamationCircleSolid className="w-6 h-6 text-red-500" />}
+      icon={<ExclamationCircleSolid className="w-5 h-5 text-red-500" />}
     >
       <Button
         buttonType={Button.ButtonType.danger}
@@ -79,9 +79,10 @@ export function TooltipWithExplicitPlacement() {
 export function TooltipWithLightBackground() {
   return (
     <Tooltip
-      title="Continue with the items placed"
+      title="Place order for items present in cart"
       inverted={false}
-      icon={<CheckCircleSolid className="w-6 h-6 text-green-500" />}
+      icon={<CheckCircleSolid className="w-5 h-5 text-green-500" />}
+      placement="top"
     >
       <Button
         icon={<ShoppingCartSolid />}
