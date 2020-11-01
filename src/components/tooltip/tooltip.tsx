@@ -21,31 +21,65 @@ export type TooltipProps = {
   title: React.ReactNode
   /** Title shown in the tooltip  */
   icon?: JSX.Element
+  /**
+   * The default placement of the tooltip. If the default placement cannot be
+   * used because of constraints, the tooltip placement would be computed automatically.
+   */
+  placement?: keyof typeof TooltipPlacements
+  /** Tooltip theme. When inverted, the tooltip contnt would be shown in dark background */
+  inverted?: boolean
+  /**
+   * The delay in closing the tooltip on mouse leave.
+   * A delay is added so that the user can move over the tooltip content before being closed.
+   * If the delay is set to 0, it would close as soon as the mouse leaves, but the user
+   * cannot select the content present inside tooltip.
+   */
+  tooltipCloseDelay?: number
+  /** Whether a arrow pointing towards the trigger would be shown or not  */
+  pointingArrow?: boolean
   /** Content for which the tooltip is to be shown */
   children: React.ReactElement
-  defaultPlacement?: keyof typeof TooltipPlacements
 }
 
 /**
- * Component to show **tooltip**
+ * Component to show **tooltip**.
+ *
+ * ### When To Use
+ *
+ * * The tip is shown on mouse enter, and is hidden on mouse leave. The Tooltip doesn't support complex text or operations.
+ * * To provide an explanation of a button/text/operation. It's often used instead of the html title attribute.
  */
 export function Tooltip({
   title,
   icon,
+  placement = 'right',
+  inverted = true,
+  tooltipCloseDelay = 100,
+  pointingArrow = true,
   children,
-  defaultPlacement = 'right',
 }: TooltipProps) {
-  const trigger = useRef<HTMLDivElement | null>(null)
-
   const [tooltipVisible, setTooltipVisible] = useState(false)
 
+  const timeout = useRef<number | undefined>()
+
   function handleMouseEnter() {
+    if (timeout.current) {
+      clearTimeout(timeout.current)
+      timeout.current = undefined
+    }
     setTooltipVisible(true)
   }
 
-  function handleMouseLeave() {
-    setTooltipVisible(false)
+  function handleMouseLeave(delay = tooltipCloseDelay) {
+    return function () {
+      // @ts-ignore
+      timeout.current = setTimeout(() => {
+        setTooltipVisible(false)
+      }, delay)
+    }
   }
+
+  const trigger = useRef<HTMLDivElement | null>(null)
 
   return (
     <>
@@ -53,7 +87,7 @@ export function Tooltip({
         ref={trigger}
         className="inline-block"
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={handleMouseLeave()}
       >
         {children}
       </div>
@@ -64,42 +98,56 @@ export function Tooltip({
           [VerticalPlacement.top, HorizontalPlacement.leftAlign],
           [VerticalPlacement.top, HorizontalPlacement.center],
           [VerticalPlacement.top, HorizontalPlacement.rightAlign],
+
           [VerticalPlacement.center, HorizontalPlacement.left],
           [VerticalPlacement.center, HorizontalPlacement.right],
+
           [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
           [VerticalPlacement.bottom, HorizontalPlacement.center],
           [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
         ]}
-        defaultPlacement={TooltipPlacements[defaultPlacement]}
+        defaultPlacement={TooltipPlacements[placement]}
       >
         {({ containerPlacement }) => {
           const [verticalPlacement, horizontalPlacement] = containerPlacement
           return (
             <div className="relative rounded-md shadow">
+              {pointingArrow ? (
+                <div
+                  className={clsx(
+                    'absolute w-2 h-2 transform rotate-45 shadow rounded-sm',
+                    inverted ? 'bg-gray-700' : 'bg-white',
+                    verticalPlacement === VerticalPlacement.center
+                      ? 'top-1/2 -translate-y-1/2'
+                      : verticalPlacement === VerticalPlacement.top
+                      ? 'bottom-0 translate-y-1/2 mb-px'
+                      : verticalPlacement === VerticalPlacement.bottom
+                      ? 'top-0 -translate-y-1/2 mt-px'
+                      : undefined,
+                    horizontalPlacement === HorizontalPlacement.left
+                      ? 'right-0 translate-x-1/2 mr-px'
+                      : horizontalPlacement === HorizontalPlacement.right
+                      ? 'left-0 -translate-x-1/2 ml-px'
+                      : horizontalPlacement === HorizontalPlacement.leftAlign
+                      ? 'left-0 ml-4'
+                      : horizontalPlacement === HorizontalPlacement.rightAlign
+                      ? 'right-0 mr-4'
+                      : horizontalPlacement === HorizontalPlacement.center
+                      ? 'left-1/2 -translate-x-1/2'
+                      : undefined,
+                  )}
+                />
+              ) : null}
               <div
                 className={clsx(
-                  'absolute w-2 h-2 transform rotate-45 bg-gray-700 shadow rounded-sm',
-                  verticalPlacement === VerticalPlacement.center
-                    ? 'top-1/2 -translate-y-1/2'
-                    : verticalPlacement === VerticalPlacement.top
-                    ? 'bottom-0 translate-y-1/2 mb-px'
-                    : verticalPlacement === VerticalPlacement.bottom
-                    ? 'top-0 -translate-y-1/2 mt-px'
-                    : undefined,
-                  horizontalPlacement === HorizontalPlacement.left
-                    ? 'right-0 translate-x-1/2 mr-px'
-                    : horizontalPlacement === HorizontalPlacement.right
-                    ? 'left-0 -translate-x-1/2 ml-px'
-                    : horizontalPlacement === HorizontalPlacement.leftAlign
-                    ? 'left-0 ml-4'
-                    : horizontalPlacement === HorizontalPlacement.rightAlign
-                    ? 'right-0 mr-4'
-                    : horizontalPlacement === HorizontalPlacement.center
-                    ? 'left-1/2 -translate-x-1/2'
-                    : undefined,
+                  'relative z-10 inline-flex items-center px-4 py-2 space-x-3 text-sm rounded-md',
+                  inverted
+                    ? 'text-white bg-gray-700 '
+                    : 'bg-white text-gray-800',
                 )}
-              />
-              <div className="relative z-10 inline-flex items-center px-4 py-2 space-x-3 text-sm text-white bg-gray-700 rounded-md">
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave(0)}
+              >
                 {icon}
                 <span>{title}</span>
               </div>
