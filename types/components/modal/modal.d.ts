@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonProps } from 'components/button'
+import { ButtonProps } from 'components/button/button'
 declare type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
   ref: React.Ref<HTMLButtonElement>
 }

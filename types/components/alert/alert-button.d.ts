@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonProps } from 'components/button'
+import { ButtonProps } from 'components/button/button'
 export declare enum ButtonType {
   primary = 'primary',
   default = 'default',

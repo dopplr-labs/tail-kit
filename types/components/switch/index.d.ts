@@ -1,3 +1,2 @@
-import { Switch, SwitchProps } from './switch'
+import { Switch } from './switch'
 export default Switch
-export { SwitchProps }

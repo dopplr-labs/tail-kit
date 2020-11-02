@@ -1,3 +1,2 @@
-import { Tabs, TabsProps } from './tabs'
+import { Tabs } from './tabs'
 export default Tabs
-export { TabsProps }

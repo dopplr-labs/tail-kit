@@ -1,5 +1,5 @@
 import React from 'react'
-import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
+import { HorizontalPlacement, VerticalPlacement, Placement } from 'utils/portal'
 export declare enum ContentVisibility {
   HIDDEN = 'HIDDEN',
   INVISIBLE = 'INVISIBLE',
@@ -23,10 +23,10 @@ declare type UsePortalProps = {
    * according to the position of the trigger.
    */
   contentContainer: React.RefObject<HTMLElement | null>
-  /** Default vertical placement. If provided, the portal won't calculate the vertical position */
-  verticalPlacement?: VerticalPlacement
-  /** parent of the portal container rendering the menu */
-  horizontalPlacement?: HorizontalPlacement
+  defaultPlacement: Placement
+  allowedPlacements: Placement[]
+  offsetHorizontal?: number
+  offsetVertical?: number
 }
 /**
  * Hook for computing the portal position.
@@ -39,8 +39,10 @@ export declare function usePortalPosition({
   visible,
   trigger,
   contentContainer,
-  verticalPlacement,
-  horizontalPlacement,
+  defaultPlacement,
+  allowedPlacements,
+  offsetHorizontal,
+  offsetVertical,
 }: UsePortalProps): {
   contentVisibility: ContentVisibility
   contentStyle: React.CSSProperties

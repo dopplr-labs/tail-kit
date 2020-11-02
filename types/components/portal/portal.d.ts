@@ -1,5 +1,10 @@
 import React from 'react'
-import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
+import { Placement } from 'utils/portal'
+declare enum ContentVisibility {
+  HIDDEN = 'HIDDEN',
+  INVISIBLE = 'INVISIBLE',
+  SHOWN = 'SHOWN',
+}
 declare type PortalProps = {
   /**
    * Ref of the trigger element. The content container would render
@@ -9,11 +14,17 @@ declare type PortalProps = {
   /** Whether portal is visible or not */
   visible: boolean
   /** Content to be rendered inside the portal */
-  children: React.ReactElement
-  /** Default vertical placement. If provided, the portal won't calculate the vertical position */
-  verticalPlacement?: VerticalPlacement
-  /** Default horizontal placement. If provided, the portal won't calculate the horizontal position */
-  horizontalPlacement?: HorizontalPlacement
+  children:
+    | React.ReactElement
+    | ((_: {
+        contentVisibility: ContentVisibility
+        containerPlacement: Placement
+        contentStyle?: React.CSSProperties
+      }) => React.ReactElement)
+  defaultPlacement: Placement
+  allowedPlacements: Placement[]
+  offsetHorizontal?: number
+  offsetVertical?: number
   /** Handler function called when the portal children is rendered in the correct position */
   onContentMount?: () => void
   /** Handler function called when the portal children is unmounted */
@@ -25,8 +36,10 @@ export declare function Portal({
   triggerRef,
   visible,
   children,
-  verticalPlacement,
-  horizontalPlacement,
+  allowedPlacements,
+  defaultPlacement,
+  offsetHorizontal,
+  offsetVertical,
   onContentMount,
   onContentUnmount,
   portalParent,

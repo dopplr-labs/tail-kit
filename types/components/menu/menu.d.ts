@@ -1,12 +1,5 @@
 import React from 'react'
-export declare enum VerticalPlacement {
-  top = 'top',
-  bottom = 'bottom',
-}
-export declare enum HorizontalPlacement {
-  left = 'left',
-  right = 'right',
-}
+import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 /**
  * Menu properties
  */
@@ -42,10 +35,18 @@ export declare function Menu({
   horizontalPlacement,
 }: MenuProps): JSX.Element
 export declare namespace Menu {
-  var VerticalPlacement: typeof import('./menu').VerticalPlacement
-  var HorizontalPlacement: typeof import('./menu').HorizontalPlacement
+  var VerticalPlacement: typeof MenuVerticalPlacement
+  var HorizontalPlacement: typeof MenuHorizontalPlacement
   var MenuItem: typeof import('./menu').MenuItem
   var MenuDivider: typeof import('./menu').MenuDivider
+}
+declare enum MenuVerticalPlacement {
+  top = 'top',
+  bottom = 'bottom',
+}
+declare enum MenuHorizontalPlacement {
+  left = 'leftAlign',
+  right = 'rightAlign',
 }
 /** Menu item properties */
 export declare type MenuItemProps = {
@@ -78,3 +79,4 @@ export declare function MenuDivider({
   className,
   style,
 }: MenuDividerProps): JSX.Element
+export {}

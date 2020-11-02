@@ -46,7 +46,7 @@ export declare function Alert({
 export declare namespace Alert {
   var AlertButton: React.ForwardRefExoticComponent<
     Pick<
-      import('../button').ButtonProps,
+      import('../button/button').ButtonProps,
       | 'disabled'
       | 'loading'
       | 'hidden'

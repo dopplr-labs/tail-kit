@@ -1,3 +1,2 @@
-import { Menu, MenuProps, MenuItem } from './menu'
+import { Menu } from './menu'
 export default Menu
-export { MenuProps, MenuItem }
