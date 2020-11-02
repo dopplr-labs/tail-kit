@@ -1,9 +1,9 @@
+import React, { useRef, useState } from 'react'
 import clsx from 'clsx'
 import Portal from 'components/portal'
-import React, { useRef, useState } from 'react'
 import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 
-const TooltipPlacements: {
+const PopoverPlacements: {
   [key: string]: [VerticalPlacement, HorizontalPlacement]
 } = {
   topLeft: [VerticalPlacement.top, HorizontalPlacement.leftAlign],
@@ -16,19 +16,17 @@ const TooltipPlacements: {
   bottomRight: [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
 }
 
-export type TooltipProps = {
-  /** Title shown in the tooltip */
-  title: React.ReactNode
-  /** Title shown in the tooltip  */
-  icon?: JSX.Element
+export type PopoverProps = {
+  /** Title shown in the popover */
+  title?: React.ReactNode
+  /** Content of the popover */
+  content: React.ReactNode
   /**
    * The default placement of the tooltip. If the default placement cannot be
    * used because of constraints, the tooltip placement would be computed automatically.
    * It can be one of `topLeft`, `top`, `topRight`, `left`, `right`, `bottomLeft`, `bottom` and `bottomRight`
    */
   placement?: string
-  /** Tooltip theme. When inverted, the tooltip contnt would be shown in dark background */
-  inverted?: boolean
   /**
    * The delay in closing the tooltip on mouse leave.
    * A delay is added so that the user can move over the tooltip content before being closed.
@@ -36,33 +34,28 @@ export type TooltipProps = {
    * cannot select the content present inside tooltip.
    */
   tooltipCloseDelay?: number
-  /** Whether a arrow pointing towards the trigger would be shown or not  */
-  pointingArrow?: boolean
-  /** Content for which the tooltip is to be shown */
-  children: React.ReactElement
   /** parent of the portal container */
   portalParent?: HTMLElement
+  /** Content for which the tooltip is to be shown */
+  children: React.ReactElement
 }
 
 /**
- * Component to show **tooltip**.
+ * Component for rendering *floating card* popped by hovering.
  *
  * ### When To Use
- *
- * * The tip is shown on mouse enter, and is hidden on mouse leave. The Tooltip doesn't support complex text or operations.
- * * To provide an explanation of a button/text/operation. It's often used instead of the html title attribute.
+ * * A simple popup menu to provide extra information or operations.
+ * * Comparing with Tooltip, besides information Popover card can also provide action elements like links and buttons.
  */
-export function Tooltip({
+export function Popover({
   title,
-  icon,
-  placement = 'right',
-  inverted = true,
+  content,
+  placement = 'top',
   tooltipCloseDelay = 100,
-  pointingArrow = true,
   children,
-  portalParent = document.body,
-}: TooltipProps) {
-  const [tooltipVisible, setTooltipVisible] = useState(false)
+  portalParent,
+}: PopoverProps) {
+  const [popoverVisible, setPopoverVisible] = useState(false)
 
   const timeout = useRef<number | undefined>()
 
@@ -71,13 +64,13 @@ export function Tooltip({
       clearTimeout(timeout.current)
       timeout.current = undefined
     }
-    setTooltipVisible(true)
+    setPopoverVisible(true)
   }
 
   function handleMouseLeave() {
     // @ts-ignore
     timeout.current = setTimeout(() => {
-      setTooltipVisible(false)
+      setPopoverVisible(false)
     }, tooltipCloseDelay)
   }
 
@@ -95,64 +88,60 @@ export function Tooltip({
       </div>
       <Portal
         triggerRef={trigger}
-        visible={tooltipVisible}
+        visible={popoverVisible}
         allowedPlacements={[
           [VerticalPlacement.top, HorizontalPlacement.leftAlign],
           [VerticalPlacement.top, HorizontalPlacement.center],
           [VerticalPlacement.top, HorizontalPlacement.rightAlign],
 
-          [VerticalPlacement.center, HorizontalPlacement.left],
           [VerticalPlacement.center, HorizontalPlacement.right],
+          [VerticalPlacement.center, HorizontalPlacement.left],
 
           [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
           [VerticalPlacement.bottom, HorizontalPlacement.center],
           [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
         ]}
-        defaultPlacement={TooltipPlacements[placement]}
+        defaultPlacement={PopoverPlacements[placement]}
         portalParent={portalParent}
       >
         {({ containerPlacement }) => {
           const [verticalPlacement, horizontalPlacement] = containerPlacement
           return (
             <div className="relative rounded-md shadow">
-              {pointingArrow ? (
-                <div
-                  className={clsx(
-                    'absolute w-2 h-2 transform rotate-45 shadow rounded-sm',
-                    inverted ? 'bg-gray-700' : 'bg-white',
-                    verticalPlacement === VerticalPlacement.center
-                      ? 'top-1/2 -translate-y-1/2'
-                      : verticalPlacement === VerticalPlacement.top
-                      ? 'bottom-0 translate-y-1/2 mb-px'
-                      : verticalPlacement === VerticalPlacement.bottom
-                      ? 'top-0 -translate-y-1/2 mt-px'
-                      : undefined,
-                    horizontalPlacement === HorizontalPlacement.left
-                      ? 'right-0 translate-x-1/2 mr-px'
-                      : horizontalPlacement === HorizontalPlacement.right
-                      ? 'left-0 -translate-x-1/2 ml-px'
-                      : horizontalPlacement === HorizontalPlacement.leftAlign
-                      ? 'left-0 ml-4'
-                      : horizontalPlacement === HorizontalPlacement.rightAlign
-                      ? 'right-0 mr-4'
-                      : horizontalPlacement === HorizontalPlacement.center
-                      ? 'left-1/2 -translate-x-1/2'
-                      : undefined,
-                  )}
-                />
-              ) : null}
               <div
                 className={clsx(
-                  'relative z-10 inline-flex items-center p-2 space-x-2 text-xs rounded-md font-medium',
-                  inverted
-                    ? 'text-white bg-gray-700 '
-                    : 'bg-white text-gray-700',
+                  'absolute w-3 h-3 transform rotate-45 shadow rounded-sm bg-white',
+                  verticalPlacement === VerticalPlacement.center
+                    ? 'top-1/2 -translate-y-1/2'
+                    : verticalPlacement === VerticalPlacement.top
+                    ? 'bottom-0 translate-y-1/2 mb-px'
+                    : verticalPlacement === VerticalPlacement.bottom
+                    ? 'top-0 -translate-y-1/2 mt-px'
+                    : undefined,
+                  horizontalPlacement === HorizontalPlacement.left
+                    ? 'right-0 translate-x-1/2 mr-px'
+                    : horizontalPlacement === HorizontalPlacement.right
+                    ? 'left-0 -translate-x-1/2 ml-px'
+                    : horizontalPlacement === HorizontalPlacement.leftAlign
+                    ? 'left-0 ml-4'
+                    : horizontalPlacement === HorizontalPlacement.rightAlign
+                    ? 'right-0 mr-4'
+                    : horizontalPlacement === HorizontalPlacement.center
+                    ? 'left-1/2 -translate-x-1/2'
+                    : undefined,
+                )}
+              />
+              <div
+                className={clsx(
+                  'relative z-10 inline-flex items-center rounded-md font-medium bg-white text-gray-800',
                 )}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                {icon}
-                <span>{title}</span>
+                {title ? (
+                  <div className="px-4 py-3 border-b">{title}</div>
+                ) : null}
+                <div className="px-4 py-3">{content}</div>
               </div>
             </div>
           )
@@ -161,5 +150,3 @@ export function Tooltip({
     </>
   )
 }
-
-Tooltip.Placements = TooltipPlacements

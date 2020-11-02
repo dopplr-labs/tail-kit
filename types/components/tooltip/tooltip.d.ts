@@ -1,8 +1,5 @@
 import React from 'react'
 import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
-declare const TooltipPlacements: {
-  [key: string]: [VerticalPlacement, HorizontalPlacement]
-}
 export declare type TooltipProps = {
   /** Title shown in the tooltip */
   title: React.ReactNode
@@ -11,8 +8,9 @@ export declare type TooltipProps = {
   /**
    * The default placement of the tooltip. If the default placement cannot be
    * used because of constraints, the tooltip placement would be computed automatically.
+   * It can be one of `topLeft`, `top`, `topRight`, `left`, `right`, `bottomLeft`, `bottom` and `bottomRight`
    */
-  placement?: keyof typeof TooltipPlacements
+  placement?: string
   /** Tooltip theme. When inverted, the tooltip contnt would be shown in dark background */
   inverted?: boolean
   /**
@@ -26,6 +24,8 @@ export declare type TooltipProps = {
   pointingArrow?: boolean
   /** Content for which the tooltip is to be shown */
   children: React.ReactElement
+  /** parent of the portal container */
+  portalParent?: HTMLElement
 }
 /**
  * Component to show **tooltip**.
@@ -43,10 +43,10 @@ export declare function Tooltip({
   tooltipCloseDelay,
   pointingArrow,
   children,
+  portalParent,
 }: TooltipProps): JSX.Element
 export declare namespace Tooltip {
   var Placements: {
     [key: string]: [VerticalPlacement, HorizontalPlacement]
   }
 }
-export {}
