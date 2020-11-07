@@ -1,7 +1,7 @@
 {
   "name": "@tail-kit/tail-kit",
   "description": "UI-Kit made with tailwindcss",
-  "version": "0.1.10",
+  "version": "0.0.0-development",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -22,7 +22,8 @@
     "storybook": "start-storybook -p 6006 -s ./.storybook",
     "build-storybook": "build-storybook -s ./.storybook",
     "prepare": "yarn build",
-    "commit": "cz"
+    "commit": "cz",
+    "semantic-release": "semantic-release"
   },
   "husky": {
     "hooks": {
@@ -96,6 +97,11 @@
     "rollup-plugin-postcss": "^3.1.6",
     "rollup-plugin-uglify": "^6.0.4",
     "tailwindcss": "^1.7.3",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "semantic-release": "^17.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dopplr-labs/tail-kit.git"
   }
 }
