@@ -28,7 +28,7 @@ export function SelectOption({
         option.disabled
           ? 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-75'
           : undefined,
-        !highlighted && !option.disabled ? 'text-gray-800' : undefined,
+        !highlighted && !option.disabled ? 'text-gray-700' : undefined,
         className,
       )}
       style={style}

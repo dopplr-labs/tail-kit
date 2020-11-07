@@ -230,7 +230,7 @@ export function Select({
           'flex items-center px-3 py-2 space-x-3 text-sm border rounded-md focus:outline-none focus:shadow-outline',
           disabled
             ? 'bg-gray-100 cursor-not-allowed text-gray-400'
-            : 'text-gray-800 ',
+            : 'text-gray-700 ',
           className,
         )}
         style={style}

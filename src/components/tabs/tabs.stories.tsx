@@ -62,7 +62,7 @@ const tabs = tabsList.map((tab) => ({
   icon: tab.icon,
   content: (
     <>
-      <h1 className="text-base font-semibold text-gray-800">{tab.title}</h1>
+      <h1 className="text-base font-semibold text-gray-700">{tab.title}</h1>
       <div className="text-sm text-gray-700">{tab.content}</div>
     </>
   ),

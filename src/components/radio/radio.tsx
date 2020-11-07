@@ -51,7 +51,7 @@ export const RadioComponent = forwardRef(
           'flex items-center space-x-2',
           disabled
             ? 'cursor-not-allowed text-gray-400'
-            : 'cursor-pointer text-gray-800',
+            : 'cursor-pointer text-gray-700',
           className,
         )}
         style={style}

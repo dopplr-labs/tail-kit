@@ -27,7 +27,7 @@ export function DisabledRadio() {
             setDisable((prevState) => !prevState)
           }}
         />
-        <span className="text-sm text-gray-800">Toggle Disabled Radio</span>
+        <span className="text-sm text-gray-700">Toggle Disabled Radio</span>
       </div>
     </div>
   )

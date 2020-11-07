@@ -26,7 +26,7 @@ export function DisabledNumberInput() {
           setDisable((prevState) => !prevState)
         }}
       />
-      <div className="text-sm text-gray-800">Toggle Disabled Input</div>
+      <div className="text-sm text-gray-700">Toggle Disabled Input</div>
     </div>
   )
 }

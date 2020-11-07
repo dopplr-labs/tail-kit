@@ -143,7 +143,7 @@ export function DatePicker({
           }
         }}
       >
-        <span className="text-gray-800">
+        <span className="text-gray-700">
           {dateSelected
             ? dayjs(dateSelected).format('DD MMM YYYY')
             : placeholder}

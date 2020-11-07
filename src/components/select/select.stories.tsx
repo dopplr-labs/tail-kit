@@ -187,7 +187,7 @@ export function ControlledSelectComponent() {
           <div className="text-xs font-semibold text-blue-500">
             Selected User
           </div>
-          <div className="text-sm text-gray-800">
+          <div className="text-sm text-gray-700">
             {users.find((user) => user.id === valueSelected)?.name}
           </div>
         </div>

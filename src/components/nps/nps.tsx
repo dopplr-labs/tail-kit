@@ -55,7 +55,7 @@ export function NPSInput({
       style={style}
     >
       {score ? (
-        <div className="text-sm text-gray-800">{message?.(score)}</div>
+        <div className="text-sm text-gray-700">{message?.(score)}</div>
       ) : (
         <>
           <div className="font-medium text-gray-700">{title}</div>

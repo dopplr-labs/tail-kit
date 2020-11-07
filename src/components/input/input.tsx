@@ -41,7 +41,7 @@ export const Input = forwardRef(
         {icon ? cloneElement(icon, { className: 'w-5 h-5' }) : null}
         <input
           className={clsx(
-            'text-sm font-sans text-gray-800 placeholder-gray-400 flex-1 focus:outline-none',
+            'text-sm font-sans text-gray-700 placeholder-gray-400 flex-1 focus:outline-none',
             inputClassName,
           )}
           style={inputStyle}

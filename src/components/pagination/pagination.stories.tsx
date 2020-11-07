@@ -24,7 +24,7 @@ export function ControlledPagination() {
   const [current, setCurrent] = useState(3)
   return (
     <div className="flex flex-col items-start gap-y-4">
-      <span className="ml-4 text-sm text-gray-800">
+      <span className="ml-4 text-sm text-gray-700">
         Selected Page: <b>{current}</b>
       </span>
       <Pagination

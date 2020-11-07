@@ -124,7 +124,7 @@ export const InputNumber = forwardRef(
           type="number"
           className={clsx(
             'w-full px-3 py-2 text-sm focus:outline-none',
-            disabled ? 'cursor-not-allowed text-gray-600' : 'text-gray-800',
+            disabled ? 'cursor-not-allowed text-gray-600' : 'text-gray-700',
           )}
           value={!isNaN(inputValue) ? inputValue : ''}
           step={step}
