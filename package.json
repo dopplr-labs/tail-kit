@@ -21,7 +21,8 @@
     "test:ci": "jest --ci --coverage",
     "storybook": "start-storybook -p 6006 -s ./.storybook",
     "build-storybook": "build-storybook -s ./.storybook",
-    "prepare": "yarn build"
+    "prepare": "yarn build",
+    "commit": "cz"
   },
   "husky": {
     "hooks": {
@@ -70,6 +71,7 @@
     "babel-loader": "^8.1.0",
     "chalk": "^4.1.0",
     "codecov": "^3.7.2",
+    "commitizen": "^4.2.2",
     "concurrently": "^5.3.0",
     "cssnano": "^4.1.10",
     "eslint": "^7.7.0",
