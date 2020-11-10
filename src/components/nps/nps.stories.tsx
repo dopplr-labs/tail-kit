@@ -3,6 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { action } from '@storybook/addon-actions'
 import Button from 'components/button'
 import { NPSInput } from './nps'
+import { NPSDrawer } from './nps-drawer'
 
 export default {
   title: 'Survey/NPS',
@@ -58,5 +59,24 @@ export function WithCustomMessage() {
       <NPSInput onSubmit={handleSubmit} message={message} key={reset} />
       <Button label="Reset" onClick={handleClick} />
     </div>
+  )
+}
+
+export function NPSInDrawer() {
+  const [show, setShow] = useState(false)
+
+  function showDrawer() {
+    setShow(true)
+  }
+
+  function onClose() {
+    setShow(false)
+  }
+
+  return (
+    <>
+      <Button label="Open NPS Drawer" onClick={showDrawer} />
+      <NPSDrawer visible={show} onDismiss={onClose} />
+    </>
   )
 }
