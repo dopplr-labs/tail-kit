@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { useOutsideClick } from './use-outside-click'
 
 let containerIds: string[] = []
@@ -21,7 +21,10 @@ function Tester({
   active?: boolean
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null)
-  useOutsideClick({ containers: [containerRef], active, onClick }, containerIds)
+  useOutsideClick(
+    { containers: useMemo(() => [containerRef], []), active, onClick },
+    containerIds,
+  )
 
   return (
     <div ref={containerRef} data-testid={testId}>
