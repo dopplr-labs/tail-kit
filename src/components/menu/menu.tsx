@@ -15,7 +15,6 @@ enum MenuVerticalPlacement {
   top = VerticalPlacement.top,
   bottom = VerticalPlacement.bottom,
 }
-Menu.VerticalPlacement = MenuVerticalPlacement
 
 enum MenuHorizontalPlacement {
   left = HorizontalPlacement.leftAlign,
@@ -119,9 +118,8 @@ export function Menu({
 }
 
 Menu.HorizontalPlacement = MenuHorizontalPlacement
-
+Menu.VerticalPlacement = MenuVerticalPlacement
 Menu.MenuItem = MenuItem
-
 Menu.MenuDivider = MenuDivider
 
 /** Menu item properties */

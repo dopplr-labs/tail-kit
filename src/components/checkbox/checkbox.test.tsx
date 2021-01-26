@@ -4,14 +4,7 @@ import { Checkbox } from './checkbox'
 import { CheckboxGroup } from './checkbox-group'
 
 test('renders checkbox label correctly', () => {
-  render(
-    <Checkbox
-      label="Checkbox label"
-      onChange={(event) => {
-        event?.target.checked
-      }}
-    />,
-  )
+  render(<Checkbox label="Checkbox label" />)
   expect(screen.getByText('Checkbox label')).toBeInTheDocument()
 })
 

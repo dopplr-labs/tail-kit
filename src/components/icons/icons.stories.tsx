@@ -70,9 +70,9 @@ function IconsList({ type, iconNames }: { type: string; iconNames: string[] }) {
       <div className="grid grid-cols-10 gap-4">
         {iconNames.map((iconName) => {
           // @ts-ignore
-          const IconComponent = icons[iconName] as React.ComponentType<
-            IconProps
-          >
+          const IconComponent = icons[
+            iconName
+          ] as React.ComponentType<IconProps>
           return (
             <button
               key={iconName}
