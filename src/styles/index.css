@@ -65,19 +65,19 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .toast {
-  @apply transition-transform duration-200 ease-linear transform;
+  @apply transition-all duration-200 ease-linear transform;
 }
 
 .toast-right-enter {
-  @apply translate-x-full;
+  @apply -translate-y-full opacity-0;
 }
 
 .toast-right-enter-active {
-  @apply translate-x-0;
+  @apply translate-y-0 opacity-100;
 }
 
 .toast-right-exit-active {
-  @apply translate-x-full;
+  @apply -translate-y-full opacity-0;
 }
 
 .drawer {
