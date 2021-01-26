@@ -1,97 +1,69 @@
-import React, { useState } from 'react'
-import Radio from 'components/radio'
+import React from 'react'
 import Button from 'components/button'
 import { Meta } from '@storybook/react/types-6-0'
-import { Toast, ToastListType, ToastTypes } from './toast'
+import { ToastProvider, useToasts } from './toast'
 
-export default { title: 'Feedback/Toast', component: Toast } as Meta
+export default {
+  title: 'Feedback/Message',
+  component: ToastProvider,
+  decorators: [
+    (Story) => (
+      <ToastProvider>
+        <Story />
+      </ToastProvider>
+    ),
+  ],
+} as Meta
 
-export function SimpleToast() {
-  const [list, setList] = useState<ToastListType[] | []>([])
+export function NormalMessage() {
+  const { toast } = useToasts()
 
   function showToast() {
-    const toastProperties = {
-      id: (Math.random().toString(36) + Date.now().toString(36)).substr(2, 10),
-      title: 'Successfully saved!',
-    }
-    setList((prevState) => [...prevState, toastProperties])
+    toast.info('This is a normal message')
   }
 
   return (
-    <>
-      <div className="flex items-center justify-center">
-        <Button
-          label="Show Toast"
-          buttonType={Button.ButtonType.primary}
-          onClick={showToast}
-        />
-      </div>
-      <Toast toastList={list} />
-    </>
+    <Button
+      label="Display Simple Message"
+      buttonType={Button.ButtonType.primary}
+      onClick={showToast}
+    />
   )
 }
 
-export function DifferentTypesOfToasts() {
-  const [list, setList] = useState<ToastListType[] | []>([])
-  const [type, setType] = useState(ToastTypes.INFO)
+export function DifferentTypesOfMessages() {
+  const { toast } = useToasts()
 
-  const options = [
-    { label: 'Info', value: ToastTypes.INFO },
-    { label: 'Success', value: ToastTypes.SUCCESS },
-    { label: 'Warning', value: ToastTypes.WARNING },
-    { label: 'Error', value: ToastTypes.ERROR },
-  ]
-  function showToast() {
-    const toastProperties = {
-      id: (Math.random().toString(36) + Date.now().toString(36)).substr(2, 10),
-      title: 'Successfully saved!',
-      type,
-    }
-    setList((prevState) => [...prevState, toastProperties])
+  function success() {
+    toast.success('This is a success message')
   }
+
+  function warning() {
+    toast.warning('This is a warning message')
+  }
+
+  function error() {
+    toast.error('This is an error message')
+  }
+
   return (
-    <>
-      <div className="space-y-4">
-        <Radio.RadioGroup
-          options={options}
-          defaultValue={ToastTypes.INFO}
-          onChange={(value) => {
-            setType(value as ToastTypes)
-          }}
-        />
-        <Button
-          label="Show Toast"
-          buttonType={Button.ButtonType.primary}
-          onClick={showToast}
-        />
-      </div>
-      <Toast toastList={list} />
-    </>
+    <div className="flex items-center space-x-4">
+      <Button label="Success" onClick={success} />
+      <Button label="Warning" onClick={warning} />
+      <Button label="Error" onClick={error} />
+    </div>
   )
 }
 
-export function ToastWithDescription() {
-  const [list, setList] = useState<ToastListType[] | []>([])
+export function CustomDismissTime() {
+  const { toast } = useToasts()
 
-  function showToast() {
-    const toastProperties = {
-      id: (Math.random().toString(36) + Date.now().toString(36)).substr(2, 10),
-      title: 'Successfully saved!',
-      description: 'Anyone with the link can now view this file.',
-      type: ToastTypes.SUCCESS,
-    }
-    setList((prevState) => [...prevState, toastProperties])
+  const success = () => {
+    toast.success(
+      'This is a prompt message for success, and it will disappear in 10 seconds',
+      10000,
+    )
   }
-  return (
-    <>
-      <div className="flex items-center justify-center">
-        <Button
-          label="Show Toast"
-          buttonType={Button.ButtonType.primary}
-          onClick={showToast}
-        />
-        <Toast toastList={list} closeIcon />
-      </div>
-    </>
-  )
+
+  return <Button label="Custom Dismmis Time" onClick={success} />
 }
