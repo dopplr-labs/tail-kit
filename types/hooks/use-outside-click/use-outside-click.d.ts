@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react'
 declare type ContainerRef = React.RefObject<HTMLElement | null>
 declare type HookProps = {
   /**

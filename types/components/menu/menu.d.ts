@@ -42,8 +42,8 @@ export declare function Menu({
   horizontalPlacement,
 }: MenuProps): JSX.Element
 export declare namespace Menu {
-  var VerticalPlacement: typeof MenuVerticalPlacement
   var HorizontalPlacement: typeof MenuHorizontalPlacement
+  var VerticalPlacement: typeof MenuVerticalPlacement
   var MenuItem: typeof import('./menu').MenuItem
   var MenuDivider: typeof import('./menu').MenuDivider
 }

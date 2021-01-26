@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isEqual } from 'lodash-es'
 import usePrevious from 'hooks/use-previous'
 
