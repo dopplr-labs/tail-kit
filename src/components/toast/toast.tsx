@@ -1,19 +1,22 @@
-import React, { useCallback, useEffect } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
+import { createPortal } from 'react-dom'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import {
   CheckCircleOutline,
   ExclamationCircleOutline,
   InformationCircleOutline,
   XCircleOutline,
-  XOutline,
 } from 'components/icons'
-import useSyncedState from 'hooks/use-synced-states'
+import { ToastsContext } from './toast-context'
 
-export type ToastListType = {
-  id: string
-  title: string
-  description?: string
-  type?: ToastTypes
+type ToastProviderProps = {
+  children: React.ReactElement
 }
 
 export enum ToastTypes {
@@ -23,53 +26,94 @@ export enum ToastTypes {
   ERROR = 'error',
 }
 
-/**
- * Toast properties
- */
-export type ToastProps = {
-  toastList: ToastListType[]
-  /** Whether automatically dismiss toast or not */
-  autoDelete?: boolean
-  /** Time after which toast will dismiss */
-  dismissTime?: number
-  /** Whether to show close icon in toast or not */
+export type ToastListType = {
+  id: string
+  title: string
+  description?: string
+  type?: ToastTypes
+}
+
+export function ToastProvider({ children }: ToastProviderProps) {
+  const toastContainer = useRef<HTMLDivElement>(document.createElement('div'))
+
+  useLayoutEffect(() => {
+    const container = toastContainer.current
+    document.body.appendChild(container)
+    return () => {
+      document.body.removeChild(container)
+    }
+  }, [])
+
+  const [toasts, setToasts] = useState<ToastListType[]>([])
+
+  const removeToast = (id: string) => {
+    setToasts((prevState) => {
+      if (prevState.find((toast) => toast.id === id)) {
+        return prevState.filter((toast) => toast.id !== id)
+      }
+      return prevState
+    })
+  }
+
+  const dispatchToast = (type: ToastTypes) => (
+    title: string,
+    dismissTime?: number,
+  ) => {
+    const toastId = (
+      Math.random().toString(36) + Date.now().toString(36)
+    ).substr(2, 10)
+
+    setToasts((prevState) => [...prevState, { id: toastId, title, type }])
+
+    setTimeout(() => {
+      removeToast(toastId)
+    }, dismissTime ?? 3000)
+
+    return toastId
+  }
+
+  const info = dispatchToast(ToastTypes.INFO)
+  const success = dispatchToast(ToastTypes.SUCCESS)
+  const warning = dispatchToast(ToastTypes.WARNING)
+  const error = dispatchToast(ToastTypes.ERROR)
+
+  return (
+    <>
+      <ToastsContext.Provider
+        value={{ toast: { info, success, warning, error }, removeToast }}
+      >
+        {children}
+      </ToastsContext.Provider>
+      {createPortal(
+        <TransitionGroup className="fixed inset-0 z-10 flex flex-col items-center justify-start px-4 py-6 space-y-4 pointer-events-none">
+          {toasts.map((toast) => (
+            <CSSTransition
+              timeout={200}
+              classNames="toast-right"
+              key={toast.id}
+              unmountOnExit
+            >
+              <Toast toast={toast} />
+            </CSSTransition>
+          ))}
+        </TransitionGroup>,
+        toastContainer.current,
+      )}
+    </>
+  )
+}
+
+type ToastProps = {
+  toast: ToastListType
   closeIcon?: boolean
 }
 
-export function Toast({
-  toastList,
-  autoDelete = true,
-  dismissTime = 1500,
-  closeIcon = false,
-}: ToastProps) {
-  const [list, setList] = useSyncedState(toastList)
-
-  const deleteToast = useCallback(
-    (id: string) => {
-      const toastListItem = toastList.findIndex((toast) => toast.id === id)
-      toastList.splice(toastListItem, 1)
-      setList((prevState) => prevState.filter((toast) => toast.id !== id))
-    },
-    [setList, toastList],
-  )
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (autoDelete && list.length) {
-        deleteToast(list[0].id)
-      }
-    }, dismissTime)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [deleteToast, list, autoDelete, dismissTime])
-
+function Toast({ toast }: ToastProps) {
   const toastIcon = useCallback((type) => {
     switch (type) {
       case ToastTypes.INFO:
         return (
-          <div className="flex-shrink-0 text-blue-500">
+          <div className="text-blue-500 ">
             <InformationCircleOutline />
           </div>
         )
@@ -101,50 +145,15 @@ export function Toast({
   }, [])
 
   return (
-    <TransitionGroup className="fixed inset-0 z-10 flex flex-col items-end justify-start px-4 py-6 space-y-4 pointer-events-none">
-      {list.map((toast) => (
-        <CSSTransition
-          in={list.indexOf(toast) !== -1}
-          timeout={200}
-          classNames="toast-right"
-          key={toast.id}
-          unmountOnExit
-        >
-          <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto toast ring-1 ring-black ring-opacity-5">
-            <div className="p-4">
-              <div className="flex items-start">
-                {toastIcon(toast.type)}
-
-                <div className="ml-3 w-0 flex-1 pt-0.5">
-                  <p className="text-sm font-medium text-gray-900">
-                    {toast.title}
-                  </p>
-
-                  {toast.description ? (
-                    <p className="mt-1 text-sm text-gray-500">
-                      {toast.description}
-                    </p>
-                  ) : null}
-                </div>
-
-                {closeIcon ? (
-                  <div className="flex flex-shrink-0 ml-4">
-                    <button
-                      className="inline-flex text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      onClick={() => {
-                        deleteToast(toast.id)
-                      }}
-                    >
-                      <span className="sr-only">Close</span>
-                      <XOutline />
-                    </button>
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </div>
-        </CSSTransition>
-      ))}
-    </TransitionGroup>
+    <div className="flex items-start p-4 overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto toast ring-1 ring-black ring-opacity-5">
+      {toastIcon(toast.type)}
+      <div className="ml-3 flex-1 pt-0.5 text-sm font-medium text-gray-900">
+        {toast.title}
+      </div>
+    </div>
   )
+}
+
+export function useToasts() {
+  return useContext(ToastsContext)
 }
