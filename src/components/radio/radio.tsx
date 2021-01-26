@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { hideVisually } from 'polished'
 import useSyncedState from 'hooks/use-synced-states'
-import { RadioGroup } from 'components/radio/radio-group'
 
 /**
  * Radio properties
@@ -27,7 +26,7 @@ export type RadioProps = {
   style?: React.CSSProperties
 }
 
-export const RadioComponent = forwardRef(
+export const Radio = forwardRef(
   (
     {
       checked = false,
@@ -105,6 +104,4 @@ export const RadioComponent = forwardRef(
   },
 )
 
-RadioComponent.displayName = 'Radio'
-
-export const Radio = Object.assign(RadioComponent, { RadioGroup })
+Radio.displayName = 'Radio'

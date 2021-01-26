@@ -1,4 +1,4 @@
-import React, { useMemo, cloneElement, createContext } from 'react'
+import React, { useMemo, cloneElement } from 'react'
 import clsx from 'clsx'
 import {
   InformationCircleSolid,
@@ -8,6 +8,7 @@ import {
   XSolid,
 } from 'components/icons'
 import { AlertButton } from './alert-button'
+import { AlertContext } from './alert-context'
 
 export enum AlertType {
   info = 'info',
@@ -15,10 +16,6 @@ export enum AlertType {
   warning = 'warning',
   error = 'error',
 }
-
-export const AlertContext = createContext<{ baseColor: string }>({
-  baseColor: 'string',
-})
 
 /**
  * Alert properties

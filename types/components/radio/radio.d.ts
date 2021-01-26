@@ -1,5 +1,4 @@
 import React from 'react'
-import { RadioGroup } from 'components/radio/radio-group'
 /**
  * Radio properties
  */
@@ -22,11 +21,6 @@ export declare type RadioProps = {
   /** Styles property to apply on the entire Radio component */
   style?: React.CSSProperties
 }
-export declare const RadioComponent: React.ForwardRefExoticComponent<
-  RadioProps & React.RefAttributes<HTMLInputElement>
->
 export declare const Radio: React.ForwardRefExoticComponent<
   RadioProps & React.RefAttributes<HTMLInputElement>
-> & {
-  RadioGroup: typeof RadioGroup
-}
+>

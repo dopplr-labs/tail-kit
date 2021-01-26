@@ -5,9 +5,6 @@ export declare enum AlertType {
   warning = 'warning',
   error = 'error',
 }
-export declare const AlertContext: React.Context<{
-  baseColor: string
-}>
 /**
  * Alert properties
  */

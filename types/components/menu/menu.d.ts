@@ -1,5 +1,12 @@
 import React from 'react'
-import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
+declare enum MenuVerticalPlacement {
+  top = 'top',
+  bottom = 'bottom',
+}
+declare enum MenuHorizontalPlacement {
+  left = 'leftAlign',
+  right = 'rightAlign',
+}
 /**
  * Menu properties
  */
@@ -13,11 +20,11 @@ export declare type MenuProps = {
   /** vertical placement of the menu item, it could be either
    * `VerticalPlacement.TOP` (render the menu at top of the trigger)
    * or `VerticalPlacement.BOTTOM` (render menu at bottom) */
-  verticalPlacement?: VerticalPlacement
+  verticalPlacement?: MenuVerticalPlacement
   /** horizontal placement of the menu item, it could be either
    * `HorizontalPlacement.LEFT` (the left position of menu and trigger co-incide)
    * or `HorizontalPlacement.RIGHT` (the right position of the menu and trigger co-incide) */
-  horizontalPlacement?: HorizontalPlacement
+  horizontalPlacement?: MenuHorizontalPlacement
 }
 /**
  * Component to render **dropdown menu**.
@@ -35,18 +42,10 @@ export declare function Menu({
   horizontalPlacement,
 }: MenuProps): JSX.Element
 export declare namespace Menu {
-  var VerticalPlacement: typeof MenuVerticalPlacement
   var HorizontalPlacement: typeof MenuHorizontalPlacement
+  var VerticalPlacement: typeof MenuVerticalPlacement
   var MenuItem: typeof import('./menu').MenuItem
   var MenuDivider: typeof import('./menu').MenuDivider
-}
-declare enum MenuVerticalPlacement {
-  top = 'top',
-  bottom = 'bottom',
-}
-declare enum MenuHorizontalPlacement {
-  left = 'leftAlign',
-  right = 'rightAlign',
 }
 /** Menu item properties */
 export declare type MenuItemProps = {

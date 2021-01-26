@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 
 const containerIds: string[] = []

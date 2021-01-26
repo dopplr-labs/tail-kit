@@ -1,16 +1,10 @@
 import React, { createRef } from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Checkbox } from './checkbox'
+import { CheckboxGroup } from './checkbox-group'
 
 test('renders checkbox label correctly', () => {
-  render(
-    <Checkbox
-      label="Checkbox label"
-      onChange={(event) => {
-        event?.target.checked
-      }}
-    />,
-  )
+  render(<Checkbox label="Checkbox label" />)
   expect(screen.getByText('Checkbox label')).toBeInTheDocument()
 })
 
@@ -82,13 +76,13 @@ test('forward ref to the checkbox', () => {
 })
 
 test('renders checkbox-group correctly with options as string[]', () => {
-  render(<Checkbox.CheckboxGroup options={['Apple']} />)
+  render(<CheckboxGroup options={['Apple']} />)
   expect(screen.getByText('Apple')).toBeInTheDocument()
 })
 
 test('renders checkbox-group correctly with options as OptionType[]', () => {
   const options = [{ label: 'Apple', value: 'Apple' }]
-  render(<Checkbox.CheckboxGroup options={options} />)
+  render(<CheckboxGroup options={options} />)
   expect(screen.getByText('Apple')).toBeInTheDocument()
 })
 
@@ -103,11 +97,7 @@ test('onChange event of checkbox-group working correctly when checked is set to 
     return checkedValues
   })
   render(
-    <Checkbox.CheckboxGroup
-      options={options}
-      value={checkedList}
-      onChange={onChange}
-    />,
+    <CheckboxGroup options={options} value={checkedList} onChange={onChange} />,
   )
   fireEvent.click(screen.getByText('Apple'))
   expect(onChange).toBeCalled()
@@ -125,11 +115,7 @@ test('onChange event of checkbox-group working correctly when checked is set to 
     return checkedValues
   })
   render(
-    <Checkbox.CheckboxGroup
-      options={options}
-      value={checkedList}
-      onChange={onChange}
-    />,
+    <CheckboxGroup options={options} value={checkedList} onChange={onChange} />,
   )
   fireEvent.click(screen.getByText('Apple'))
   expect(onChange).toBeCalled()

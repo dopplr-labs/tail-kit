@@ -24,8 +24,9 @@ export type TooltipProps = {
   /**
    * The default placement of the tooltip. If the default placement cannot be
    * used because of constraints, the tooltip placement would be computed automatically.
+   * It can be one of `topLeft`, `top`, `topRight`, `left`, `right`, `bottomLeft`, `bottom` and `bottomRight`
    */
-  placement?: keyof typeof TooltipPlacements
+  placement?: string
   /** Tooltip theme. When inverted, the tooltip contnt would be shown in dark background */
   inverted?: boolean
   /**
@@ -39,6 +40,8 @@ export type TooltipProps = {
   pointingArrow?: boolean
   /** Content for which the tooltip is to be shown */
   children: React.ReactElement
+  /** parent of the portal container */
+  portalParent?: HTMLElement
 }
 
 /**
@@ -57,6 +60,7 @@ export function Tooltip({
   tooltipCloseDelay = 100,
   pointingArrow = true,
   children,
+  portalParent = document.body,
 }: TooltipProps) {
   const [tooltipVisible, setTooltipVisible] = useState(false)
 
@@ -70,13 +74,11 @@ export function Tooltip({
     setTooltipVisible(true)
   }
 
-  function handleMouseLeave(delay = tooltipCloseDelay) {
-    return function () {
-      // @ts-ignore
-      timeout.current = setTimeout(() => {
-        setTooltipVisible(false)
-      }, delay)
-    }
+  function handleMouseLeave() {
+    // @ts-ignore
+    timeout.current = setTimeout(() => {
+      setTooltipVisible(false)
+    }, tooltipCloseDelay)
   }
 
   const trigger = useRef<HTMLDivElement | null>(null)
@@ -87,7 +89,7 @@ export function Tooltip({
         ref={trigger}
         className="inline-block"
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave()}
+        onMouseLeave={handleMouseLeave}
       >
         {children}
       </div>
@@ -107,6 +109,7 @@ export function Tooltip({
           [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
         ]}
         defaultPlacement={TooltipPlacements[placement]}
+        portalParent={portalParent}
       >
         {({ containerPlacement }) => {
           const [verticalPlacement, horizontalPlacement] = containerPlacement
@@ -146,7 +149,7 @@ export function Tooltip({
                     : 'bg-white text-gray-700',
                 )}
                 onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave(0)}
+                onMouseLeave={handleMouseLeave}
               >
                 {icon}
                 <span>{title}</span>

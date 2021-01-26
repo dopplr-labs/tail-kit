@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import includePaths from 'rollup-plugin-includepaths'
 import ignoreImport from 'rollup-plugin-ignore-import'
 import { uglify } from 'rollup-plugin-uglify'
+import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 
 export default {
   input: './src/index.ts',
@@ -14,9 +15,9 @@ export default {
     compact: true,
   },
 
-  external: ['react', 'react-dom'],
-
   plugins: [
+    peerDepsExternal(),
+
     uglify(),
 
     commonjs(),

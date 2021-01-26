@@ -293,6 +293,7 @@ export declare const Input: React.ForwardRefExoticComponent<
     | 'autoComplete'
     | 'capture'
     | 'crossOrigin'
+    | 'enterKeyHint'
     | 'maxLength'
     | 'min'
     | 'minLength'

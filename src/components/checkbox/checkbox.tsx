@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import { hideVisually } from 'polished'
 import { CheckOutline } from 'components/icons'
 import useSyncedState from 'hooks/use-synced-states'
-import { CheckboxGroup } from './checkbox-group'
 
 /**
  * Checkbox properties
@@ -34,7 +33,7 @@ export type CheckboxProps = Omit<
 }
 
 /** Checkbox component to render input type checkbox along with some other properties */
-export const CheckboxComponent = forwardRef(
+export const Checkbox = forwardRef(
   (
     {
       checked,
@@ -108,6 +107,4 @@ export const CheckboxComponent = forwardRef(
   },
 )
 
-CheckboxComponent.displayName = 'Checkbox'
-
-export const Checkbox = Object.assign(CheckboxComponent, { CheckboxGroup })
+Checkbox.displayName = 'Checkbox'

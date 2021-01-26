@@ -316,6 +316,7 @@ export declare const InputNumber: React.ForwardRefExoticComponent<
     | 'autoComplete'
     | 'capture'
     | 'crossOrigin'
+    | 'enterKeyHint'
     | 'maxLength'
     | 'min'
     | 'minLength'
