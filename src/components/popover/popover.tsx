@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import Portal from 'components/portal'
 import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 import useOutsideClick from 'hooks/use-outside-click'
+import { useMemoOne } from 'use-memo-one'
 
 const PopoverPlacements: {
   [key: string]: [VerticalPlacement, HorizontalPlacement]
@@ -41,7 +42,7 @@ export type PopoverProps = {
    * If the delay is set to 0, it would close as soon as the mouse leaves, but the user
    * cannot select the content present inside tooltip.
    */
-  tooltipCloseDelay?: number
+  closeDelay?: number
   /**
    * Whether the popover is visible or not. If visible, it set the Popover component
    * would be a controlled component, and the visibility state can be updated using
@@ -71,7 +72,7 @@ export function Popover({
   title,
   content,
   placement = 'top',
-  tooltipCloseDelay = 100,
+  closeDelay = 100,
   visible,
   onVisibilityChange,
   triggerEvent = PopoverTriggerEvent.hover,
@@ -104,7 +105,7 @@ export function Popover({
     // @ts-ignore
     timeout.current = setTimeout(() => {
       onVisibilityChangeFn.current?.(false)
-    }, tooltipCloseDelay)
+    }, closeDelay)
   }
 
   function handleTriggerClick() {
@@ -122,7 +123,7 @@ export function Popover({
   useOutsideClick({
     active: isVisible && triggerEvent === PopoverTriggerEvent.click,
     onClick: handleOutsideClick,
-    containers: [trigger, contentContainer],
+    containers: useMemoOne(() => [trigger, contentContainer], []),
   })
 
   return (
