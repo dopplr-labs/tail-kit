@@ -16,6 +16,8 @@ const PopoverPlacements: {
   bottomRight: [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
 }
 
+type OnVisibilityChange = (visible: boolean) => void
+
 export type PopoverProps = {
   /** Title shown in the popover */
   title?: React.ReactNode
@@ -34,6 +36,14 @@ export type PopoverProps = {
    * cannot select the content present inside tooltip.
    */
   tooltipCloseDelay?: number
+  /**
+   * Whether the popover is visible or not. If visible, it set the Popover component
+   * would be a controlled component, and the visibility state can be updated using
+   * `onVisiblityChange` prop.
+   */
+  visible?: boolean
+  /** Handler function called when the visibility state is updated */
+  onVisibilityChange?: OnVisibilityChange
   /** parent of the portal container */
   portalParent?: HTMLElement
   /** Content for which the tooltip is to be shown */
@@ -52,10 +62,24 @@ export function Popover({
   content,
   placement = 'top',
   tooltipCloseDelay = 100,
+  visible,
+  onVisibilityChange,
   children,
   portalParent,
 }: PopoverProps) {
+  const isControlledComponent = typeof visible !== 'undefined'
+
   const [popoverVisible, setPopoverVisible] = useState(false)
+  const onVisibilityChangeRef = useRef<OnVisibilityChange | undefined>(
+    undefined,
+  )
+  onVisibilityChangeRef.current = isControlledComponent
+    ? onVisibilityChange
+    : setPopoverVisible
+
+  const isVisible = (isControlledComponent
+    ? visible
+    : popoverVisible) as boolean
 
   const timeout = useRef<number | undefined>()
 
@@ -64,13 +88,13 @@ export function Popover({
       clearTimeout(timeout.current)
       timeout.current = undefined
     }
-    setPopoverVisible(true)
+    onVisibilityChangeRef.current?.(true)
   }
 
   function handleMouseLeave() {
     // @ts-ignore
     timeout.current = setTimeout(() => {
-      setPopoverVisible(false)
+      onVisibilityChangeRef.current?.(false)
     }, tooltipCloseDelay)
   }
 
@@ -88,7 +112,7 @@ export function Popover({
       </div>
       <Portal
         triggerRef={trigger}
-        visible={popoverVisible}
+        visible={isVisible}
         allowedPlacements={[
           [VerticalPlacement.top, HorizontalPlacement.leftAlign],
           [VerticalPlacement.top, HorizontalPlacement.center],

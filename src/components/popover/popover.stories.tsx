@@ -82,3 +82,33 @@ export function DefaultPopover() {
     </Popover>
   )
 }
+
+export function ControlledPopover() {
+  const [popoverVisible, setPopoverVisible] = useState<boolean>(false)
+
+  return (
+    <Popover
+      visible={popoverVisible}
+      onVisibilityChange={setPopoverVisible}
+      content={
+        <div className="w-64">
+          <div className="mb-1 font-medium text-gray-800">
+            Controlled Popover
+          </div>
+          <div className="mb-4 text-sm text-gray-600">
+            To close the Popover, click on the close button
+          </div>
+          <Button
+            label="Close Popover"
+            buttonType={Button.ButtonType.danger}
+            onClick={() => {
+              setPopoverVisible(false)
+            }}
+          />
+        </div>
+      }
+    >
+      <Button label="Hover Over Me" />
+    </Popover>
+  )
+}
