@@ -1,20 +1,22 @@
 import { createContext } from 'react'
 
-export const ToastsContext = createContext<{
-  toast: {
+export const MessageContext = createContext<{
+  message: {
     // eslint-disable-next-line func-call-spacing
     info: (title: string, dismissTime?: number) => string
     success: (title: string, dismissTime?: number) => string
     warning: (title: string, dismissTime?: number) => string
     error: (title: string, dismissTime?: number) => string
+    loading: (title: string, dismissTime?: number) => string
   }
-  removeToast: (id: string) => void
+  removeMessage: (id: string) => void
 }>({
-  toast: {
+  message: {
     info: () => '',
     success: () => '',
     warning: () => '',
     error: () => '',
+    loading: () => '',
   },
-  removeToast: () => {},
+  removeMessage: () => {},
 })

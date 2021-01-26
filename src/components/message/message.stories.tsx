@@ -1,25 +1,25 @@
 import React from 'react'
 import Button from 'components/button'
 import { Meta } from '@storybook/react/types-6-0'
-import { ToastProvider, useToasts } from './toast'
+import { MessageProvider, useMessage } from './message'
 
 export default {
   title: 'Feedback/Message',
-  component: ToastProvider,
+  component: MessageProvider,
   decorators: [
     (Story) => (
-      <ToastProvider>
+      <MessageProvider>
         <Story />
-      </ToastProvider>
+      </MessageProvider>
     ),
   ],
 } as Meta
 
 export function NormalMessage() {
-  const { toast } = useToasts()
+  const { message } = useMessage()
 
   function showToast() {
-    toast.info('This is a normal message')
+    message.info('This is a normal message')
   }
 
   return (
@@ -32,18 +32,18 @@ export function NormalMessage() {
 }
 
 export function DifferentTypesOfMessages() {
-  const { toast } = useToasts()
+  const { message } = useMessage()
 
   function success() {
-    toast.success('This is a success message')
+    message.success('This is a success message')
   }
 
   function warning() {
-    toast.warning('This is a warning message')
+    message.warning('This is a warning message')
   }
 
   function error() {
-    toast.error('This is an error message')
+    message.error('This is an error message')
   }
 
   return (
@@ -56,14 +56,24 @@ export function DifferentTypesOfMessages() {
 }
 
 export function CustomDismissTime() {
-  const { toast } = useToasts()
+  const { message } = useMessage()
 
   const success = () => {
-    toast.success(
+    message.success(
       'This is a prompt message for success, and it will disappear in 10 seconds',
       10000,
     )
   }
 
-  return <Button label="Custom Dismmis Time" onClick={success} />
+  return <Button label="Custom Dismiss Time" onClick={success} />
+}
+
+export function DispalyLoadingIndicator() {
+  const { message } = useMessage()
+
+  const loading = () => {
+    message.loading('Saving changes. Please wait!!')
+  }
+
+  return <Button label="Display Loading Indicator" onClick={loading} />
 }
