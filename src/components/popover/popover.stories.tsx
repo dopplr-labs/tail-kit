@@ -183,7 +183,7 @@ export function ControlledPopover() {
         </div>
       }
     >
-      <Button label="Hover Over Me" />
+      <Button label="Click to open Popover" />
     </Popover>
   )
 }
