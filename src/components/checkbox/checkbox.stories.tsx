@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { action } from '@storybook/addon-actions'
 import { Meta } from '@storybook/react/types-6-0'
 import { Checkbox } from './checkbox'
+import { CheckboxGroup } from './checkbox-group'
 
 export default {
   title: 'Data Entry/Checkbox',
@@ -67,7 +68,7 @@ export function IndeterminateCheckbox() {
         }}
       />
       <div className="border border-gray-200" />
-      <Checkbox.CheckboxGroup
+      <CheckboxGroup
         options={options}
         value={checkedValues}
         onChange={onChange}
@@ -96,17 +97,17 @@ export function WithCheckboxGroup() {
 
   return (
     <div className="space-y-6">
-      <Checkbox.CheckboxGroup
+      <CheckboxGroup
         options={plainOptions}
         value={['Apple', 'Orange']}
         onChange={onChange('firstGroup')}
       />
-      <Checkbox.CheckboxGroup
+      <CheckboxGroup
         options={options}
         value={['Pear']}
         onChange={onChange('secondGroup')}
       />
-      <Checkbox.CheckboxGroup
+      <CheckboxGroup
         options={optionsWithDisabled}
         value={['Apple']}
         disabled

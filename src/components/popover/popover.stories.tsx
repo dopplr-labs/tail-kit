@@ -167,6 +167,7 @@ export function ControlledPopover() {
       visible={popoverVisible}
       onVisibilityChange={setPopoverVisible}
       title="Controlled Popopver"
+      triggerEvent={Popover.PopoverTriggerEvent.click}
       content={
         <div className="w-64">
           <div className="mb-4 text-sm text-gray-600">

@@ -20,7 +20,7 @@ const PopoverPlacements: {
 
 type OnVisibilityChange = (visible: boolean) => void
 
-enum PopoverTriggerEvent {
+export enum PopoverTriggerEvent {
   click = 'CLICK',
   hover = 'HOVER',
 }
@@ -196,7 +196,7 @@ export function Popover({
               />
               <div
                 className={clsx(
-                  'relative z-10 inline-flex items-center rounded-md font-medium bg-white text-gray-800',
+                  'relative z-10 rounded-md font-medium bg-white text-gray-800',
                 )}
                 onMouseEnter={
                   triggerEvent === PopoverTriggerEvent.hover
@@ -210,7 +210,7 @@ export function Popover({
                 }
               >
                 {title ? (
-                  <div className="px-4 py-3 border-b">{title}</div>
+                  <div className="px-4 py-2 border-b">{title}</div>
                 ) : null}
                 <div className="px-4 py-3">{content}</div>
               </div>

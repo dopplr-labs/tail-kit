@@ -11,6 +11,17 @@ import { useMemoOne } from 'use-memo-one'
 import useOutsideClick from 'hooks/use-outside-click'
 import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 
+enum MenuVerticalPlacement {
+  top = VerticalPlacement.top,
+  bottom = VerticalPlacement.bottom,
+}
+Menu.VerticalPlacement = MenuVerticalPlacement
+
+enum MenuHorizontalPlacement {
+  left = HorizontalPlacement.leftAlign,
+  right = HorizontalPlacement.rightAlign,
+}
+
 const MenuContext = createContext<{
   menuVisible: boolean
   setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -32,11 +43,11 @@ export type MenuProps = {
   /** vertical placement of the menu item, it could be either
    * `VerticalPlacement.TOP` (render the menu at top of the trigger)
    * or `VerticalPlacement.BOTTOM` (render menu at bottom) */
-  verticalPlacement?: VerticalPlacement
+  verticalPlacement?: MenuVerticalPlacement
   /** horizontal placement of the menu item, it could be either
    * `HorizontalPlacement.LEFT` (the left position of menu and trigger co-incide)
    * or `HorizontalPlacement.RIGHT` (the right position of the menu and trigger co-incide) */
-  horizontalPlacement?: HorizontalPlacement
+  horizontalPlacement?: MenuHorizontalPlacement
 }
 
 /**
@@ -51,8 +62,8 @@ export function Menu({
   trigger,
   children,
   portalParent = document.body,
-  verticalPlacement,
-  horizontalPlacement,
+  verticalPlacement = MenuVerticalPlacement.bottom,
+  horizontalPlacement = MenuHorizontalPlacement.left,
 }: MenuProps) {
   const [menuVisible, setMenuVisible] = useState(false)
 
@@ -91,10 +102,9 @@ export function Menu({
         triggerRef={triggerContainer}
         visible={menuVisible}
         portalParent={portalParent}
-        defaultPlacement={[
-          verticalPlacement ?? VerticalPlacement.bottom,
-          horizontalPlacement ?? HorizontalPlacement.left,
-        ]}
+        // TODO figure out proper type definitions or convert the enums to strings
+        // @ts-ignore
+        defaultPlacement={[verticalPlacement, horizontalPlacement]}
         allowedPlacements={[
           [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
           [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
@@ -108,16 +118,6 @@ export function Menu({
   )
 }
 
-enum MenuVerticalPlacement {
-  top = VerticalPlacement.top,
-  bottom = VerticalPlacement.bottom,
-}
-Menu.VerticalPlacement = MenuVerticalPlacement
-
-enum MenuHorizontalPlacement {
-  left = HorizontalPlacement.leftAlign,
-  right = HorizontalPlacement.rightAlign,
-}
 Menu.HorizontalPlacement = MenuHorizontalPlacement
 
 Menu.MenuItem = MenuItem

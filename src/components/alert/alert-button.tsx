@@ -2,7 +2,7 @@ import React, { useContext, forwardRef } from 'react'
 import clsx from 'clsx'
 import Button from 'components/button'
 import { ButtonProps } from 'components/button/button'
-import { AlertContext } from './alert'
+import { AlertContext } from './alert-context'
 
 export enum ButtonType {
   primary = 'primary',
