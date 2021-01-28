@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Button from 'components/button'
 import { MessageProvider, MessageTypes, useMessage } from './message'
@@ -7,6 +12,7 @@ import { MessageProvider, MessageTypes, useMessage } from './message'
 type RenderButtonProps = {
   type?: MessageTypes
   messageContent?: string
+  dismissTime?: number
 }
 
 function renderInMessageProvider(children: React.ReactElement) {
@@ -16,12 +22,13 @@ function renderInMessageProvider(children: React.ReactElement) {
 function RenderButton({
   type = MessageTypes.INFO,
   messageContent = 'Hello World',
+  dismissTime = 10000,
 }: RenderButtonProps) {
   const { message, removeMessage } = useMessage()
   const [messageId, setMessageId] = useState('')
 
   const renderMessage = () => {
-    const id = message[type](messageContent, 10000)
+    const id = message[type](messageContent, dismissTime)
     setMessageId(id)
   }
 
@@ -91,8 +98,12 @@ test('removeMessage function working correctly', async () => {
   userEvent.click(screen.getByText('Click Me'))
   expect(screen.getByText('Hello World')).toBeInTheDocument()
   userEvent.click(screen.getByText('Delete Message'))
+  await waitForElementToBeRemoved(() => screen.queryByText('Hello World'))
+})
 
-  await waitFor(() => {
-    expect(screen.queryByText('Hello World')).not.toBeInTheDocument()
-  })
+test('message is being removed automatically', async () => {
+  renderInMessageProvider(<RenderButton dismissTime={500} />)
+  userEvent.click(screen.getByText('Click Me'))
+  expect(screen.getByText('Hello World')).toBeInTheDocument()
+  await waitForElementToBeRemoved(() => screen.queryByText('Hello World'))
 })
