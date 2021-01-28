@@ -51,8 +51,8 @@ type MessageProviderProps = {
  * ### How to use
  *
  * * Wrap your `<App />` within `<MessageProvider />` component
- * * Import useMessage hook wherever you want to render `Message` component
- * * useMessage provides you 2 methods which you can access using `const { message, removeMessage } = useMessage()`
+ * * Import `useMessage` hook wherever you want to render `Message` component
+ * * `useMessage` provides you 2 methods which you can access using `const { message, removeMessage } = useMessage()`
  *
  * There are 5 different types of messages available to user. You can pass the string which you want to render in `Message` component as argument.
  *
@@ -181,17 +181,11 @@ function Message({ message }: MessageProps) {
             <ButtonSpinner />
           </div>
         )
-      default:
-        return (
-          <div className="flex-shrink-0 text-blue-500">
-            <InformationCircleOutline />
-          </div>
-        )
     }
   }, [])
 
   return (
-    <div className="flex items-start p-4 overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto toast ring-1 ring-black ring-opacity-5">
+    <div className="flex items-start px-4 py-2 overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto toast ring-1 ring-black ring-opacity-5">
       {toastIcon(message.type)}
       <div className="flex-1 ml-3 text-sm font-medium text-gray-900">
         {message.title}
