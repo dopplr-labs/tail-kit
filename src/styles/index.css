@@ -64,6 +64,22 @@ input[type='number']::-webkit-outer-spin-button {
   @apply transition-all duration-200 ease-in transform scale-95 opacity-0;
 }
 
+.toast {
+  @apply transition-all duration-200 ease-linear transform;
+}
+
+.toast-right-enter {
+  @apply -translate-y-full opacity-0;
+}
+
+.toast-right-enter-active {
+  @apply translate-y-0 opacity-100;
+}
+
+.toast-right-exit-active {
+  @apply -translate-y-full opacity-0;
+}
+
 .drawer {
   @apply transition-transform duration-200 ease-linear transform;
 }
