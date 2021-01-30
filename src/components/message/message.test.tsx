@@ -2,17 +2,18 @@ import React, { useState } from 'react'
 import {
   render,
   screen,
-  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Button from 'components/button'
+import { CurrencyRupeeOutline } from 'components/icons'
 import { MessageProvider, MessageTypes, useMessage } from './message'
 
 type RenderButtonProps = {
   type?: MessageTypes
   messageContent?: string
   dismissTime?: number
+  icon?: React.ReactElement
 }
 
 function renderInMessageProvider(children: React.ReactElement) {
@@ -23,12 +24,13 @@ function RenderButton({
   type = MessageTypes.INFO,
   messageContent = 'Hello World',
   dismissTime = 10000,
+  icon,
 }: RenderButtonProps) {
   const { message, removeMessage } = useMessage()
   const [messageId, setMessageId] = useState('')
 
   const renderMessage = () => {
-    const id = message[type](messageContent, dismissTime)
+    const id = message[type](messageContent, { dismissTime, icon })
     setMessageId(id)
   }
 
@@ -106,4 +108,19 @@ test('message is being removed automatically', async () => {
   userEvent.click(screen.getByText('Click Me'))
   expect(screen.getByText('Hello World')).toBeInTheDocument()
   await waitForElementToBeRemoved(() => screen.queryByText('Hello World'))
+})
+
+test('custom icon renders correctly', () => {
+  const icon = (
+    <div className="text-green-500">
+      <CurrencyRupeeOutline />
+    </div>
+  )
+
+  renderInMessageProvider(<RenderButton icon={icon} />)
+  userEvent.click(screen.getByText('Click Me'))
+  expect(screen.getByText('Hello World')).toBeInTheDocument()
+  expect(screen.getByText('Hello World').parentElement?.firstChild).toHaveClass(
+    'text-green-500',
+  )
 })
