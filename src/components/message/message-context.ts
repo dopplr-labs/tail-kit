@@ -1,14 +1,15 @@
 /* istanbul ignore file */
 import { createContext } from 'react'
+import { MessageOptions } from './message'
 
 export const MessageContext = createContext<{
   message: {
     // eslint-disable-next-line func-call-spacing
-    info: (title: string, dismissTime?: number) => string
-    success: (title: string, dismissTime?: number) => string
-    warning: (title: string, dismissTime?: number) => string
-    error: (title: string, dismissTime?: number) => string
-    loading: (title: string, dismissTime?: number) => string
+    info: (title: string, options?: MessageOptions) => string
+    success: (title: string, options?: MessageOptions) => string
+    warning: (title: string, options?: MessageOptions) => string
+    error: (title: string, options?: MessageOptions) => string
+    loading: (title: string, options?: MessageOptions) => string
   }
   removeMessage: (id: string) => void
 }>({
