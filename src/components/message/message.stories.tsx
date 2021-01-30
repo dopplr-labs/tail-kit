@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Button from 'components/button'
 import { Meta } from '@storybook/react/types-6-0'
+import { CurrencyRupeeOutline } from 'components/icons'
 import { MessageProvider, useMessage } from './message'
 
 export default {
@@ -61,7 +62,7 @@ export function CustomDismissTime() {
   const success = () => {
     message.success(
       'This is a prompt message for success, and it will disappear in 10 seconds',
-      10000,
+      { dismissTime: 10000 },
     )
   }
 
@@ -76,4 +77,24 @@ export function DispalyLoadingIndicator() {
   }
 
   return <Button label="Display Loading Indicator" onClick={loading} />
+}
+
+export function MessageWithCustomIcon() {
+  const { message } = useMessage()
+
+  const icon = useMemo(
+    () => (
+      <div className="text-green-500">
+        <CurrencyRupeeOutline />
+      </div>
+    ),
+    [],
+  )
+
+  const renderMessage = () => {
+    message.info('You will recieve refund in 5-7 days!!!', {
+      icon,
+    })
+  }
+  return <Button label="Message with custom icon" onClick={renderMessage} />
 }
