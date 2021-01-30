@@ -2,6 +2,7 @@ import React, {
   useCallback,
   useContext,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -28,6 +29,12 @@ export type MessageListType = {
   id: string
   title: string
   type?: MessageTypes
+  icon?: React.ReactElement
+}
+
+export type MessageOptions = {
+  dismissTime?: number
+  icon?: React.ReactElement
 }
 
 /**
@@ -82,31 +89,34 @@ export function MessageProvider({
 
   const [messages, setMessages] = useState<MessageListType[]>([])
 
-  const removeMessage = (id: string) => {
+  const removeMessage = useCallback((id: string) => {
     setMessages((prevState) => {
       if (prevState.find((message) => message.id === id)) {
         return prevState.filter((message) => message.id !== id)
       }
       return prevState
     })
-  }
+  }, [])
 
-  const dispatchMessage = (type: MessageTypes) => (
-    title: string,
-    dismissTime?: number,
-  ) => {
-    const messageId = (
-      Math.random().toString(36) + Date.now().toString(36)
-    ).substr(2, 10)
+  const dispatchMessage = useCallback(
+    (type: MessageTypes) => (title: string, options?: MessageOptions) => {
+      const messageId = (
+        Math.random().toString(36) + Date.now().toString(36)
+      ).substr(2, 10)
 
-    setMessages((prevState) => [...prevState, { id: messageId, title, type }])
+      setMessages((prevState) => [
+        ...prevState,
+        { id: messageId, title, type, icon: options?.icon },
+      ])
 
-    setTimeout(() => {
-      removeMessage(messageId)
-    }, dismissTime ?? defaultDismissTime)
+      setTimeout(() => {
+        removeMessage(messageId)
+      }, options?.dismissTime ?? defaultDismissTime)
 
-    return messageId
-  }
+      return messageId
+    },
+    [defaultDismissTime, removeMessage],
+  )
 
   const info = dispatchMessage(MessageTypes.INFO)
   const success = dispatchMessage(MessageTypes.SUCCESS)
@@ -145,12 +155,11 @@ export function MessageProvider({
 
 type MessageProps = {
   message: MessageListType
-  closeIcon?: boolean
 }
 
 function Message({ message }: MessageProps) {
-  const toastIcon = useCallback((type) => {
-    switch (type) {
+  const toastIcon = useMemo(() => {
+    switch (message.type) {
       case MessageTypes.INFO:
         return (
           <div className="text-blue-500 ">
@@ -181,12 +190,14 @@ function Message({ message }: MessageProps) {
             <ButtonSpinner />
           </div>
         )
+      default:
+        return null
     }
-  }, [])
+  }, [message.type])
 
   return (
     <div className="flex items-start px-4 py-2 overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto toast ring-1 ring-black ring-opacity-5">
-      {toastIcon(message.type)}
+      {message.icon ?? toastIcon}
       <div className="flex-1 ml-3 text-sm font-medium text-gray-900">
         {message.title}
       </div>
