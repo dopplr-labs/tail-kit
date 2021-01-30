@@ -48,14 +48,12 @@ function RenderButton({
 
 test('render content inside message correctly', () => {
   renderInMessageProvider(<RenderButton />)
-  expect(screen.getByText('Click Me')).toBeInTheDocument()
   userEvent.click(screen.getByText('Click Me'))
   expect(screen.getByText('Hello World')).toBeInTheDocument()
 })
 
 test('render success variant of message correctly', () => {
   renderInMessageProvider(<RenderButton type={MessageTypes.SUCCESS} />)
-  expect(screen.getByText('Click Me')).toBeInTheDocument()
   userEvent.click(screen.getByText('Click Me'))
   expect(screen.getByText('Hello World')).toBeInTheDocument()
   expect(screen.getByText('Hello World').parentElement?.firstChild).toHaveClass(
@@ -65,7 +63,6 @@ test('render success variant of message correctly', () => {
 
 test('render warning variant of message correctly', () => {
   renderInMessageProvider(<RenderButton type={MessageTypes.WARNING} />)
-  expect(screen.getByText('Click Me')).toBeInTheDocument()
   userEvent.click(screen.getByText('Click Me'))
   expect(screen.getByText('Hello World')).toBeInTheDocument()
   expect(screen.getByText('Hello World').parentElement?.firstChild).toHaveClass(
@@ -75,7 +72,6 @@ test('render warning variant of message correctly', () => {
 
 test('render error variant of message correctly', () => {
   renderInMessageProvider(<RenderButton type={MessageTypes.ERROR} />)
-  expect(screen.getByText('Click Me')).toBeInTheDocument()
   userEvent.click(screen.getByText('Click Me'))
   expect(screen.getByText('Hello World')).toBeInTheDocument()
   expect(screen.getByText('Hello World').parentElement?.firstChild).toHaveClass(
@@ -85,7 +81,6 @@ test('render error variant of message correctly', () => {
 
 test('render loading variant of message correctly', () => {
   renderInMessageProvider(<RenderButton type={MessageTypes.LOADING} />)
-  expect(screen.getByText('Click Me')).toBeInTheDocument()
   userEvent.click(screen.getByText('Click Me'))
   expect(screen.getByText('Hello World')).toBeInTheDocument()
   expect(screen.getByText('Hello World').parentElement?.firstChild).toHaveClass(
@@ -95,8 +90,6 @@ test('render loading variant of message correctly', () => {
 
 test('removeMessage function working correctly', async () => {
   renderInMessageProvider(<RenderButton />)
-  expect(screen.getByText('Click Me')).toBeInTheDocument()
-  expect(screen.getByText('Delete Message')).toBeInTheDocument()
   userEvent.click(screen.getByText('Click Me'))
   expect(screen.getByText('Hello World')).toBeInTheDocument()
   userEvent.click(screen.getByText('Delete Message'))
