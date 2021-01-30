@@ -1,3 +1,3 @@
-import { MessageProvider } from './message'
+import { MessageProvider, useMessage } from './message'
 
-export default MessageProvider
+export { MessageProvider, useMessage }
