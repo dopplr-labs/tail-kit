@@ -44,6 +44,7 @@
     "lodash-es": "^4.17.15",
     "polished": "^3.6.6",
     "postcss-cli": "^8.1.0",
+    "react-hook-form": "^6.15.4",
     "react-transition-group": "^4.4.1",
     "use-memo-one": "^1.1.1"
   },
