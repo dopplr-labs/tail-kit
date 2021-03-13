@@ -11,13 +11,13 @@ export type FormProps = {
 }
 
 export function Form({ children, className, onSubmit }: FormProps) {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, errors } = useForm()
   return (
     <form
       className={clsx('p-8 border space-y-4', className)}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <FormContext.Provider value={{ register }}>
+      <FormContext.Provider value={{ register, errors }}>
         {children}
       </FormContext.Provider>
     </form>
