@@ -36,7 +36,7 @@ export function Basic() {
       >
         <Input placeholder="Password" icon={<KeyOutline />} type="password" />
       </Form.Item>
-      <Form.Item name="remember-me">
+      <Form.Item name="rememberMe">
         <Checkbox label="Remember Me" />
       </Form.Item>
       <Button

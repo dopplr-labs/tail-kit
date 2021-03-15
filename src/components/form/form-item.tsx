@@ -1,4 +1,4 @@
-import React, { cloneElement, useContext } from 'react'
+import React, { cloneElement, useContext, useMemo } from 'react'
 import { RegisterOptions } from 'react-hook-form'
 import FormContext from './form-context'
 
@@ -18,10 +18,14 @@ export default function FormItem({
   rules = [],
 }: FormItemProps) {
   const { register, errors } = useContext(FormContext)
-  const schema: any = {}
-  rules.forEach((element) => {
-    schema[Object.keys(element)[0]] = Object.values(element)[0]
-  })
+
+  const validationScehma = useMemo(() => {
+    const schema: any = {}
+    rules.forEach((element) => {
+      schema[Object.keys(element)[0]] = Object.values(element)[0]
+    })
+    return schema
+  }, [rules])
 
   return (
     <div className="flex flex-col space-y-2">
@@ -30,7 +34,7 @@ export default function FormItem({
           {label}
         </label>
       ) : null}
-      {cloneElement(children, { id: name, name, ref: register(schema) })}
+      {cloneElement(children, { name, ref: register(validationScehma) })}
       {rules
         ?.filter((rule) => {
           return errors[name]?.type === Object.keys(rule)[0]
