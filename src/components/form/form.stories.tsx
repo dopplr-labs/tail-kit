@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import { action } from '@storybook/addon-actions'
 import Button from 'components/button'
 import Input from 'components/input'
 import Checkbox from 'components/checkbox'
 import { AtSymbolOutline, KeyOutline } from 'components/icons'
-import { Form } from './form'
+import { RadioGroup } from 'components/radio/radio-group'
+import { Form, LayoutOptions } from './form'
 
 export default {
   title: 'Data Entry/Form',
@@ -13,9 +14,14 @@ export default {
 } as Meta
 
 export function Basic() {
-  const onSubmit = (data: any) => action('form-data')(data)
+  const tailLayout = { wrapperCol: { span: 2, offset: 2 } }
+  const formLayout = { wrapperCol: { span: 2 } }
+
+  function onSubmit(data: any) {
+    action('form-data')(data)
+  }
   return (
-    <Form className="max-w-md mx-auto" onSubmit={onSubmit}>
+    <Form {...formLayout} onSubmit={onSubmit}>
       <Form.Item
         label="Email"
         name="email"
@@ -36,15 +42,61 @@ export function Basic() {
       >
         <Input placeholder="Password" icon={<KeyOutline />} type="password" />
       </Form.Item>
-      <Form.Item name="rememberMe">
+      <Form.Item name="rememberMe" {...tailLayout}>
         <Checkbox label="Remember Me" />
       </Form.Item>
-      <Button
-        label="Submit"
-        className="w-full"
-        type="submit"
-        buttonType={Button.ButtonType.primary}
-      />
+      <Form.Item {...tailLayout}>
+        <Button
+          label="Submit"
+          className="w-full"
+          type="submit"
+          buttonType={Button.ButtonType.primary}
+        />
+      </Form.Item>
+    </Form>
+  )
+}
+
+export function FormLayout() {
+  const [formLayout, setFormLayout] = useState<LayoutOptions>(
+    LayoutOptions.HORIZONTAL,
+  )
+  const formItemLayout = { wrapperCol: { span: 2 } }
+  const buttonLayout = { wrapperCol: { span: 1, offset: 2 } }
+
+  function onFormLayoutChange(checkedValue: string) {
+    setFormLayout(checkedValue as LayoutOptions)
+  }
+  const radioOptions = [
+    { label: 'Horizontal', value: 'horizontal' },
+    { label: 'Vertical', value: 'vertical' },
+    { label: 'Inline', value: 'inline' },
+  ]
+  function onSubmit(data: any) {
+    action('form-data')(data)
+  }
+  return (
+    <Form {...formItemLayout} layout={formLayout} onSubmit={onSubmit}>
+      <Form.Item label="Form Layout" name="layout">
+        <RadioGroup
+          options={radioOptions}
+          defaultValue={LayoutOptions.HORIZONTAL}
+          onChange={onFormLayoutChange}
+        />
+      </Form.Item>
+      <Form.Item name="fieldA" label="Field A">
+        <Input placeholder="input placeholder" />
+      </Form.Item>
+      <Form.Item name="fieldB" label="Field B">
+        <Input placeholder="input placeholder" />
+      </Form.Item>
+      <Form.Item {...buttonLayout}>
+        <Button
+          type="submit"
+          buttonType={Button.ButtonType.primary}
+          label="Submit"
+        />
+      </Form.Item>
     </Form>
   )
 }

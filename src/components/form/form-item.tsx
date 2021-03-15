@@ -1,23 +1,75 @@
 import React, { cloneElement, useContext, useMemo } from 'react'
+import clsx from 'clsx'
 import { RegisterOptions } from 'react-hook-form'
 import FormContext from './form-context'
+import { LayoutOptions } from './form'
 
 type FormItemRules = RegisterOptions & { message: string }
+export type FormItemLayout = {
+  span?: number
+  offset?: number
+}
 
 export type FormItemProps = {
-  name: string
-  label?: string
   children: React.ReactElement
+  name?: string
+  label?: string
+  labelCol?: FormItemLayout
   rules?: FormItemRules[]
+  wrapperCol?: FormItemLayout
 }
 
 export default function FormItem({
+  children,
   name,
   label,
-  children,
+  labelCol,
   rules = [],
+  wrapperCol,
 }: FormItemProps) {
-  const { register, errors } = useContext(FormContext)
+  const { register, errors, layout, formLabelCol, formWrapperCol } = useContext(
+    FormContext,
+  )
+
+  const labelColWidth = useMemo(() => {
+    const DEFAULT_LABEL_WIDTH = 1
+    if (labelCol?.span) {
+      return labelCol.span
+    } else if (formLabelCol?.span) {
+      return formLabelCol.span
+    }
+    return DEFAULT_LABEL_WIDTH
+  }, [labelCol, formLabelCol])
+
+  const labelColOffset = useMemo(() => {
+    const DEFAULT_LABEL_OFFSET = 0
+    if (labelCol?.offset) {
+      return labelCol.offset
+    } else if (formLabelCol?.offset) {
+      return formLabelCol.offset
+    }
+    return DEFAULT_LABEL_OFFSET
+  }, [labelCol, formLabelCol])
+
+  const wrapperColWidth = useMemo(() => {
+    const DEFAULT_WRAPPER_WIDTH = 5
+    if (wrapperCol?.span) {
+      return wrapperCol.span
+    } else if (formWrapperCol?.span) {
+      return formWrapperCol.span
+    }
+    return DEFAULT_WRAPPER_WIDTH
+  }, [formWrapperCol, wrapperCol])
+
+  const wrapperColOffset = useMemo(() => {
+    const DEFAULT_WRAPPER_OFFSET = 0
+    if (wrapperCol?.offset) {
+      return wrapperCol.offset
+    } else if (formWrapperCol?.offset) {
+      return formWrapperCol.offset
+    }
+    return DEFAULT_WRAPPER_OFFSET
+  }, [formWrapperCol, wrapperCol])
 
   const validationScehma = useMemo(() => {
     const schema: any = {}
@@ -28,22 +80,55 @@ export default function FormItem({
   }, [rules])
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div
+      className={clsx(
+        layout === LayoutOptions.VERTICAL
+          ? 'flex flex-col space-y-2'
+          : layout === LayoutOptions.HORIZONTAL
+          ? 'grid grid-cols-6 items-center'
+          : layout === LayoutOptions.INLINE
+          ? 'flex items-center space-x-4'
+          : undefined,
+      )}
+    >
       {label ? (
-        <label htmlFor={name} className="text-gray-700">
-          {label}
+        <label
+          htmlFor={name}
+          className={clsx(
+            'text-sm text-gray-700',
+            layout === LayoutOptions.HORIZONTAL
+              ? `col-span-${labelColWidth} col-start-${labelColOffset} text-right px-2`
+              : undefined,
+          )}
+        >
+          {label}{' '}
+          {layout === LayoutOptions.HORIZONTAL ||
+          layout === LayoutOptions.INLINE
+            ? ':'
+            : null}
         </label>
       ) : null}
-      {cloneElement(children, { name, ref: register(validationScehma) })}
-      {rules
-        ?.filter((rule) => {
-          return errors[name]?.type === Object.keys(rule)[0]
-        })
-        .map((rule) => (
-          <span className="text-xs text-red-500" key={rule.message}>
-            {rule.message}
-          </span>
-        ))}
+
+      {cloneElement(children, {
+        name,
+        className: clsx(
+          layout === LayoutOptions.HORIZONTAL
+            ? `col-span-${wrapperColWidth} col-start-${wrapperColOffset}`
+            : undefined,
+        ),
+        ref: name ? register(validationScehma) : undefined,
+      })}
+
+      {name &&
+        rules
+          ?.filter((rule) => {
+            return errors[name]?.type === Object.keys(rule)[0]
+          })
+          .map((rule) => (
+            <span className="text-xs text-red-500" key={rule.message}>
+              {rule.message}
+            </span>
+          ))}
     </div>
   )
 }
