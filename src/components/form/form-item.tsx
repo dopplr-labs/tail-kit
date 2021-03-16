@@ -85,7 +85,7 @@ export default function FormItem({
         layout === LayoutOptions.VERTICAL
           ? 'flex flex-col space-y-2'
           : layout === LayoutOptions.HORIZONTAL
-          ? 'grid grid-cols-6 items-center'
+          ? 'grid grid-cols-1 space-y-2 lg:space-y-0 lg:grid-cols-6 items-center'
           : layout === LayoutOptions.INLINE
           ? 'flex items-center space-x-4'
           : undefined,
@@ -97,7 +97,7 @@ export default function FormItem({
           className={clsx(
             'text-sm text-gray-700',
             layout === LayoutOptions.HORIZONTAL
-              ? `col-span-${labelColWidth} col-start-${labelColOffset} text-right px-2`
+              ? `lg:col-span-${labelColWidth} lg:col-start-${labelColOffset} lg:text-right lg:px-2`
               : undefined,
           )}
         >
@@ -111,7 +111,7 @@ export default function FormItem({
       <div
         className={clsx(
           layout === LayoutOptions.HORIZONTAL
-            ? `col-span-${wrapperColWidth} col-start-${wrapperColOffset}`
+            ? `lg:col-span-${wrapperColWidth} lg:col-start-${wrapperColOffset}`
             : undefined,
         )}
       >
