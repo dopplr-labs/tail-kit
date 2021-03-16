@@ -36,7 +36,7 @@ export function Form({
         'p-8',
         layout === LayoutOptions.INLINE
           ? 'flex flex-wrap space-x-4'
-          : 'space-y-4',
+          : 'space-y-6',
         className,
       )}
       onSubmit={handleSubmit(onSubmit)}

@@ -84,7 +84,11 @@ export function FormLayout() {
           onChange={onFormLayoutChange}
         />
       </Form.Item>
-      <Form.Item name="fieldA" label="Field A">
+      <Form.Item
+        name="fieldA"
+        label="Field A"
+        rules={[{ required: true, message: 'This field is required' }]}
+      >
         <Input placeholder="input placeholder" />
       </Form.Item>
       <Form.Item name="fieldB" label="Field B">

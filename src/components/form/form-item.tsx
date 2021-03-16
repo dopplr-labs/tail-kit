@@ -108,27 +108,29 @@ export default function FormItem({
             : null}
         </label>
       ) : null}
-
-      {cloneElement(children, {
-        name,
-        className: clsx(
+      <div
+        className={clsx(
           layout === LayoutOptions.HORIZONTAL
             ? `col-span-${wrapperColWidth} col-start-${wrapperColOffset}`
             : undefined,
-        ),
-        ref: name ? register(validationScehma) : undefined,
-      })}
+        )}
+      >
+        {cloneElement(children, {
+          name,
+          ref: name ? register(validationScehma) : undefined,
+        })}
 
-      {name &&
-        rules
-          ?.filter((rule) => {
-            return errors[name]?.type === Object.keys(rule)[0]
-          })
-          .map((rule) => (
-            <span className="text-xs text-red-500" key={rule.message}>
-              {rule.message}
-            </span>
-          ))}
+        {name &&
+          rules
+            ?.filter((rule) => {
+              return errors[name]?.type === Object.keys(rule)[0]
+            })
+            .map((rule) => (
+              <div className="absolute text-xs text-red-500" key={rule.message}>
+                {rule.message}
+              </div>
+            ))}
+      </div>
     </div>
   )
 }
