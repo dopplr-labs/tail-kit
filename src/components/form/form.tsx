@@ -27,7 +27,7 @@ export type FormProps = {
   /** The layout for Input controls, same as `labelCol` */
   wrapperCol?: FormItemLayout
   /** Trigger after submitting the form and verifying data successfully */
-  onSubmit: (data: any) => void
+  onSubmit?: (data: any) => void
 }
 
 export function Form({
@@ -37,13 +37,12 @@ export function Form({
   layout = LayoutOptions.HORIZONTAL,
   labelCol,
   wrapperCol,
-  onSubmit,
+  onSubmit = () => {},
 }: FormProps) {
   const { register, handleSubmit, errors } = useForm({ defaultValues })
   return (
     <form
       className={clsx(
-        'p-8',
         layout === LayoutOptions.INLINE
           ? 'flex flex-wrap space-x-4'
           : 'space-y-6',
@@ -67,3 +66,4 @@ export function Form({
 }
 
 Form.Item = FormItem
+Form.Layout = LayoutOptions

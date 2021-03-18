@@ -3,6 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { action } from '@storybook/addon-actions'
 import Button from 'components/button'
 import Input from 'components/input'
+import Select from 'components/select'
 import Checkbox from 'components/checkbox'
 import { AtSymbolOutline, KeyOutline } from 'components/icons'
 import { RadioGroup } from 'components/radio/radio-group'
@@ -60,9 +61,7 @@ export function Basic() {
 }
 
 export function FormLayout() {
-  const [formLayout, setFormLayout] = useState<LayoutOptions>(
-    LayoutOptions.HORIZONTAL,
-  )
+  const [formLayout, setFormLayout] = useState(Form.Layout.HORIZONTAL)
   const formItemLayout = { wrapperCol: { span: 2 } }
   const buttonLayout = { wrapperCol: { span: 1, offset: 2 } }
 
@@ -104,5 +103,70 @@ export function FormLayout() {
         />
       </Form.Item>
     </Form>
+  )
+}
+
+export function TwoColumnForm() {
+  function onSubmit(data: any) {
+    action('form-data')(data)
+  }
+  return (
+    <>
+      <div className="px-8 font-semibold text-gray-700">
+        Create a new employee account
+      </div>
+      <Form
+        onSubmit={onSubmit}
+        layout={Form.Layout.VERTICAL}
+        className="px-8 py-4"
+      >
+        <div className="flex w-full space-x-4">
+          <Form.Item name="firstName" label="First Name">
+            <Input placeholder="Enter first name" />
+          </Form.Item>
+          <Form.Item name="lastName" label="Last Name">
+            <Input placeholder="Enter last name" />
+          </Form.Item>
+        </div>
+        <div className="flex w-full space-x-4">
+          <Form.Item name="gender" label="Gender">
+            <Select
+              options={['Male', 'Female', 'Other']}
+              placeholder="Select your gender"
+              className="w-full"
+            />
+          </Form.Item>
+          <Form.Item name="maritalStatus" label="Marital Status">
+            <Select
+              options={['Single', 'Married']}
+              placeholder="Select your marital status"
+              className="w-full"
+            />
+          </Form.Item>
+        </div>
+        <div className="flex w-full space-x-4">
+          <Form.Item name="phoneNumber" label="Phone Number">
+            <Input placeholder="Enter phone number" />
+          </Form.Item>
+          <Form.Item name="email" label="Email Address">
+            <Input placeholder="Enter email address" />
+          </Form.Item>
+        </div>
+        <Form.Item name="pastExperience" label="Past Experience">
+          <textarea
+            className="w-full h-24 px-3 py-2 text-sm border rounded-md focus:outline-none focus:shadow-outline"
+            placeholder="Please write employee's previous experience description"
+          />
+        </Form.Item>
+        <div className="flex justify-end space-x-4">
+          <Button label="Cancel" />
+          <Button
+            type="submit"
+            buttonType={Button.ButtonType.primary}
+            label="Submit"
+          />
+        </div>
+      </Form>
+    </>
   )
 }

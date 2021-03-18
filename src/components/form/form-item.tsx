@@ -16,6 +16,8 @@ export type FormItemLayout = {
 export type FormItemProps = {
   /** Form Field to render within FormItem component */
   children: React.ReactElement
+  /** Customize FormItem styles using className */
+  className?: string
   /** Field name */
   name?: string
   /** Label Text for Form Field */
@@ -34,6 +36,7 @@ export type FormItemProps = {
 
 export function FormItem({
   children,
+  className,
   name,
   label,
   labelCol,
@@ -96,19 +99,20 @@ export function FormItem({
     <div
       className={clsx(
         layout === LayoutOptions.VERTICAL
-          ? 'flex flex-col space-y-2'
+          ? 'flex flex-col space-y-2 w-full'
           : layout === LayoutOptions.HORIZONTAL
           ? 'grid grid-cols-1 space-y-2 lg:space-y-0 lg:grid-cols-6 items-center'
           : layout === LayoutOptions.INLINE
           ? 'flex items-center space-x-4'
           : undefined,
+        className,
       )}
     >
       {label ? (
         <label
           htmlFor={name}
           className={clsx(
-            'text-sm text-gray-700',
+            'text-sm font-semibold text-gray-600',
             layout === LayoutOptions.HORIZONTAL
               ? `lg:col-span-${labelColWidth} lg:col-start-${labelColOffset} lg:text-right lg:px-2`
               : undefined,
