@@ -10,16 +10,29 @@ export type FormItemLayout = {
   offset?: number
 }
 
+/**
+ * FormItem Properties
+ */
 export type FormItemProps = {
+  /** Form Field to render within FormItem component */
   children: React.ReactElement
+  /** Field name */
   name?: string
+  /** Label Text for Form Field */
   label?: string
+  /** The layout for label. You can set `span` `offset` to something like `{span: 1, offset: 1}`.
+   *  You can set labelCol on Form which will not affect nest Item. If both exists, use Item first.
+   */
   labelCol?: FormItemLayout
+  /** Rules for field validation */
   rules?: FormItemRules[]
+  /** The layout for input controls, same as `labelCol`.
+   * You can set wrapperCol on Form which will not affect nest Item. If both exists, use Item first
+   */
   wrapperCol?: FormItemLayout
 }
 
-export default function FormItem({
+export function FormItem({
   children,
   name,
   label,

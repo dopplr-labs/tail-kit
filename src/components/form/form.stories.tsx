@@ -7,10 +7,12 @@ import Checkbox from 'components/checkbox'
 import { AtSymbolOutline, KeyOutline } from 'components/icons'
 import { RadioGroup } from 'components/radio/radio-group'
 import { Form, LayoutOptions } from './form'
+import { FormItem } from './form-item'
 
 export default {
   title: 'Data Entry/Form',
   component: Form,
+  subcomponents: { FormItem },
 } as Meta
 
 export function Basic() {

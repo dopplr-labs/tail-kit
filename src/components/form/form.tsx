@@ -2,7 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import { useForm } from 'react-hook-form'
 import FormContext from './form-context'
-import FormItem, { FormItemLayout } from './form-item'
+import { FormItem, FormItemLayout } from './form-item'
 
 export enum LayoutOptions {
   HORIZONTAL = 'horizontal',
@@ -10,13 +10,23 @@ export enum LayoutOptions {
   INLINE = 'inline',
 }
 
+/**
+ * Form properties
+ */
 export type FormProps = {
+  /** Form Items to render within Form component */
   children: React.ReactNode
+  /** Customize Form styles using className */
   className?: string
+  /** Initialize Form component with default values */
   defaultValues?: any
+  /** Select your preferred Form layout from `Horizontal`, `Vertical` and `Inline` */
   layout?: LayoutOptions
+  /** Label Layout, works when form layout is `Horizontal`. Set `span` `offset` values like `{span: 2, offset: 1}`  */
   labelCol?: FormItemLayout
+  /** The layout for Input controls, same as `labelCol` */
   wrapperCol?: FormItemLayout
+  /** Trigger after submitting the form and verifying data successfully */
   onSubmit: (data: any) => void
 }
 
