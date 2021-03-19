@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { useForm } from 'react-hook-form'
 import FormContext from './form-context'
@@ -30,41 +30,48 @@ export type FormProps = {
   onSubmit?: (data: any) => void
 }
 
-export function Form({
-  children,
-  className,
-  defaultValues,
-  layout = LayoutOptions.HORIZONTAL,
-  labelCol,
-  wrapperCol,
-  onSubmit = () => {},
-}: FormProps) {
-  const { register, handleSubmit, errors, control } = useForm({ defaultValues })
-  return (
-    <form
-      className={clsx(
-        layout === LayoutOptions.INLINE
-          ? 'flex flex-wrap space-x-4'
-          : 'space-y-6',
-        className,
-      )}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <FormContext.Provider
-        value={{
-          register,
-          errors,
-          layout,
-          control,
-          formLabelCol: labelCol,
-          formWrapperCol: wrapperCol,
-        }}
+export const FormComponent = forwardRef(
+  (
+    {
+      children,
+      className,
+      defaultValues,
+      layout = LayoutOptions.HORIZONTAL,
+      labelCol,
+      wrapperCol,
+      onSubmit = () => {},
+    }: FormProps,
+    ref: React.Ref<HTMLFormElement>,
+  ) => {
+    const { handleSubmit, errors, control } = useForm({ defaultValues })
+    return (
+      <form
+        className={clsx(
+          layout === LayoutOptions.INLINE
+            ? 'flex flex-wrap space-x-4'
+            : 'space-y-6',
+          className,
+        )}
+        onSubmit={handleSubmit(onSubmit)}
+        ref={ref}
       >
-        {children}
-      </FormContext.Provider>
-    </form>
-  )
-}
+        <FormContext.Provider
+          value={{
+            errors,
+            layout,
+            control,
+            formLabelCol: labelCol,
+            formWrapperCol: wrapperCol,
+          }}
+        >
+          {children}
+        </FormContext.Provider>
+      </form>
+    )
+  },
+)
 
-Form.Item = FormItem
-Form.Layout = LayoutOptions
+export const Form = Object.assign(FormComponent, {
+  Item: FormItem,
+  Layout: LayoutOptions,
+})
