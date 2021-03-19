@@ -1,6 +1,6 @@
 import React, { cloneElement, useContext, useMemo } from 'react'
 import clsx from 'clsx'
-import { RegisterOptions } from 'react-hook-form'
+import { Controller, RegisterOptions } from 'react-hook-form'
 import FormContext from './form-context'
 import { LayoutOptions } from './form'
 
@@ -28,6 +28,8 @@ export type FormItemProps = {
   labelCol?: FormItemLayout
   /** Rules for field validation */
   rules?: FormItemRules[]
+  /** The name of the prop used to as value */
+  valuePropName?: string
   /** The layout for input controls, same as `labelCol`.
    * You can set wrapperCol on Form which will not affect nest Item. If both exists, use Item first
    */
@@ -41,11 +43,16 @@ export function FormItem({
   label,
   labelCol,
   rules = [],
+  valuePropName = 'value',
   wrapperCol,
 }: FormItemProps) {
-  const { register, errors, layout, formLabelCol, formWrapperCol } = useContext(
+  const { errors, layout, formLabelCol, formWrapperCol, control } = useContext(
     FormContext,
   )
+
+  if (!control) {
+    throw new Error('Form.Item component should be used within Form component')
+  }
 
   const labelColWidth = useMemo(() => {
     const DEFAULT_LABEL_WIDTH = 1
@@ -132,11 +139,24 @@ export function FormItem({
             : undefined,
         )}
       >
-        {cloneElement(children, {
-          name,
-          ref: name ? register(validationScehma) : undefined,
-        })}
-
+        <Controller
+          control={control}
+          name={name ?? ''}
+          render={({ onChange, value, ref }) =>
+            cloneElement(children, {
+              [valuePropName]: value,
+              onChange: (...args: any[]) => {
+                const childrenOnChange = children?.props?.onChange
+                if (childrenOnChange) {
+                  childrenOnChange(...args)
+                }
+                onChange(...args)
+              },
+              ref,
+            })
+          }
+          rules={validationScehma}
+        />
         {name &&
           rules
             ?.filter((rule) => {

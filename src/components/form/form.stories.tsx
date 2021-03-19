@@ -24,7 +24,11 @@ export function Basic() {
     action('form-data')(data)
   }
   return (
-    <Form {...formLayout} onSubmit={onSubmit}>
+    <Form
+      {...formLayout}
+      onSubmit={onSubmit}
+      defaultValues={{ rememberMe: true }}
+    >
       <Form.Item
         label="Email"
         name="email"
@@ -45,7 +49,7 @@ export function Basic() {
       >
         <Input placeholder="Password" icon={<KeyOutline />} type="password" />
       </Form.Item>
-      <Form.Item name="rememberMe" {...tailLayout}>
+      <Form.Item name="rememberMe" {...tailLayout} valuePropName="checked">
         <Checkbox label="Remember Me" />
       </Form.Item>
       <Form.Item {...tailLayout}>

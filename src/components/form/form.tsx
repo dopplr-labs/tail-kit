@@ -39,7 +39,7 @@ export function Form({
   wrapperCol,
   onSubmit = () => {},
 }: FormProps) {
-  const { register, handleSubmit, errors } = useForm({ defaultValues })
+  const { register, handleSubmit, errors, control } = useForm({ defaultValues })
   return (
     <form
       className={clsx(
@@ -55,6 +55,7 @@ export function Form({
           register,
           errors,
           layout,
+          control,
           formLabelCol: labelCol,
           formWrapperCol: wrapperCol,
         }}

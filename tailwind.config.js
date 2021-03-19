@@ -1,6 +1,7 @@
 const defaultConfig = require('tailwindcss/defaultConfig')
 const defaultTheme = require('tailwindcss/defaultTheme')
 const tailwindUI = require('@tailwindcss/ui')
+const { range } = require('lodash')
 
 module.exports = {
   purge: {
@@ -22,6 +23,8 @@ module.exports = {
         'bg-green-50',
         'bg-yellow-50',
         'bg-blue-50',
+        ...range(6).map((val) => `lg:col-span-${val + 1}`),
+        ...range(6).map((val) => `lg:col-start-${val + 1}`),
       ],
     },
   },

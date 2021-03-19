@@ -47,3 +47,4 @@ rules:
   '@typescript-eslint/no-unused-vars': 1
   indent: 0
   no-console: warn
+  func-call-spacing: 0

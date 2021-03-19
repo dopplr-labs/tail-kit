@@ -238,6 +238,7 @@ export function Select({
         onKeyDown={handleButtonKeyDown}
         ref={triggerContainer}
         disabled={disabled}
+        type="button"
       >
         {selectedValue ? (
           <>

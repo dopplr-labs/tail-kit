@@ -14,6 +14,8 @@ export type RadioOptions = {
 export type RadioGroupProps = {
   /** Specifies options of radio to render */
   options: (RadioOptions | string)[]
+  /** Radio value */
+  value?: string
   /** Default selected radio value */
   defaultValue?: string
   /** To disable all radio components */
@@ -28,6 +30,7 @@ export type RadioGroupProps = {
 
 export function RadioGroup({
   options,
+  value,
   defaultValue,
   disabled = false,
   onChange,
@@ -44,7 +47,9 @@ export function RadioGroup({
     })
   }, [options])
 
-  const [checkedValue, setCheckedValue] = useSyncedState(defaultValue ?? '')
+  const [checkedValue, setCheckedValue] = useSyncedState(
+    (value || defaultValue) ?? '',
+  )
 
   return (
     <div className="flex items-center space-x-8">

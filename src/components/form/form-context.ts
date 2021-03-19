@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { FieldErrors, RegisterOptions } from 'react-hook-form'
+import { Control, FieldErrors, RegisterOptions } from 'react-hook-form'
 import { FormItemLayout } from './form-item'
 
 enum LayoutOptions {
@@ -14,6 +14,7 @@ const FormContext = createContext<{
   layout: LayoutOptions
   formLabelCol?: FormItemLayout
   formWrapperCol?: FormItemLayout
+  control?: Control
 }>({
   register: () => {},
   errors: () => {},
