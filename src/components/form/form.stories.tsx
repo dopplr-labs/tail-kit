@@ -174,3 +174,78 @@ export function TwoColumnForm() {
     </>
   )
 }
+
+export function Notifications() {
+  function onSubmit(data: any) {
+    action('form-data')(data)
+  }
+
+  const radioOptions = [
+    { label: 'Everything', value: 'everything' },
+    { label: 'Same as email', value: 'sameAsEmail' },
+    { label: 'No push notifications', value: 'none' },
+  ]
+  return (
+    <Form
+      layout={Form.Layout.VERTICAL}
+      onSubmit={onSubmit}
+      className="max-w-xl pt-8 mx-auto rounded-md shadow-lg"
+    >
+      <div className="px-8 space-y-4">
+        <div className="text-sm font-semibold text-gray-600">By Email</div>
+        <Form.Item
+          name="comments"
+          valuePropName="checked"
+          extra={
+            <div className="ml-6 text-sm text-gray-500">
+              Get notified when someones posts a comment on a posting.
+            </div>
+          }
+        >
+          <Checkbox label="Comments" />
+        </Form.Item>
+        <Form.Item
+          name="candidates"
+          valuePropName="checked"
+          extra={
+            <div className="ml-6 text-sm text-gray-500">
+              Get notified when a candidate applies for a job.
+            </div>
+          }
+        >
+          <Checkbox label="Candidates" />
+        </Form.Item>
+        <Form.Item
+          name="offers"
+          valuePropName="checked"
+          extra={
+            <div className="ml-6 text-sm text-gray-500">
+              Get notified when a candidate accepts or rejects an offer.
+            </div>
+          }
+        >
+          <Checkbox label="Offers" />
+        </Form.Item>
+      </div>
+
+      <div className="px-8">
+        <div className="text-sm font-semibold text-gray-600">
+          Push Notifications
+        </div>
+        <div className="mb-2 text-sm text-gray-400">
+          These are delivered via SMS to your mobile phone.
+        </div>
+        <Form.Item name="bySMS">
+          <RadioGroup options={radioOptions} />
+        </Form.Item>
+      </div>
+      <div className="flex justify-end px-4 py-2 bg-gray-50">
+        <Button
+          label="Save"
+          type="submit"
+          buttonType={Button.ButtonType.primary}
+        />
+      </div>
+    </Form>
+  )
+}
