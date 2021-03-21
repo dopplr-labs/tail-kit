@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
+import { action } from '@storybook/addon-actions'
 import Button from 'components/button'
 import Radio from 'components/radio'
 import Form from 'components/form'
@@ -95,6 +96,7 @@ export function CustomPlacement() {
 
 export function SubmitFormInDrawer() {
   const [visible, setVisible] = useState(false)
+  const formRef = useRef<HTMLFormElement | null>(null)
 
   function showDrawer() {
     setVisible(true)
@@ -102,6 +104,15 @@ export function SubmitFormInDrawer() {
 
   function onClose() {
     setVisible(false)
+  }
+  function onFormSubmit(data: any) {
+    action('form-data')(data)
+  }
+  function onDrawerSubmit() {
+    formRef.current?.dispatchEvent(
+      new Event('submit', { cancelable: true, bubbles: true }),
+    )
+    onClose()
   }
   return (
     <>
@@ -122,12 +133,17 @@ export function SubmitFormInDrawer() {
             <Button
               label="Submit"
               buttonType={Button.ButtonType.primary}
-              onClick={onClose}
+              onClick={onDrawerSubmit}
             />
           </div>
         }
       >
-        <Form layout={Form.Layout.VERTICAL} className="p-0">
+        <Form
+          layout={Form.Layout.VERTICAL}
+          className="p-0"
+          ref={formRef}
+          onSubmit={onFormSubmit}
+        >
           <div className="flex w-full space-x-4">
             <Form.Item name="firstName" label="First Name">
               <Input placeholder="Enter first name" />

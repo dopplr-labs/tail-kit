@@ -172,7 +172,10 @@ export function FormItem({
               return errors[name]?.type === Object.keys(rule)[0]
             })
             .map((rule) => (
-              <div className="absolute text-xs text-red-500" key={rule.message}>
+              <div
+                className="absolute mt-1 text-xs text-red-500"
+                key={rule.message}
+              >
                 {rule.message}
               </div>
             ))}

@@ -5,7 +5,12 @@ import Button from 'components/button'
 import Input from 'components/input'
 import Select from 'components/select'
 import Checkbox from 'components/checkbox'
-import { AtSymbolOutline, KeyOutline } from 'components/icons'
+import {
+  AtSymbolOutline,
+  FingerPrintOutline,
+  KeyOutline,
+  UserOutline,
+} from 'components/icons'
 import { RadioGroup } from 'components/radio/radio-group'
 import { Form, LayoutOptions } from './form'
 import { FormItem } from './form-item'
@@ -32,7 +37,7 @@ export function Basic() {
       <Form.Item
         label="Email"
         name="email"
-        rules={[{ required: true, message: 'Please enter you email address' }]}
+        rules={[{ required: true, message: 'Please enter your email address' }]}
       >
         <Input placeholder="Enter your email" icon={<AtSymbolOutline />} />
       </Form.Item>
@@ -40,7 +45,7 @@ export function Basic() {
         label="Password"
         name="password"
         rules={[
-          { required: true, message: 'Please enter you password' },
+          { required: true, message: 'Please enter your password' },
           {
             minLength: 8,
             message: 'Password should be of atleast 8 characters',
@@ -246,6 +251,26 @@ export function Notifications() {
           buttonType={Button.ButtonType.primary}
         />
       </div>
+    </Form>
+  )
+}
+
+export function InlineLoginForm() {
+  return (
+    <Form layout={Form.Layout.INLINE}>
+      <Form.Item
+        name="username"
+        rules={[{ required: true, message: 'Please enter your username' }]}
+      >
+        <Input placeholder="Username" icon={<UserOutline />} />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        rules={[{ required: true, message: 'Please enter your password' }]}
+      >
+        <Input placeholder="Password" icon={<FingerPrintOutline />} />
+      </Form.Item>
+      <Button label="Login" buttonType={Button.ButtonType.primary} />
     </Form>
   )
 }

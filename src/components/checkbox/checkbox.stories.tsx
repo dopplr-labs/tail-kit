@@ -7,6 +7,7 @@ import { CheckboxGroup } from './checkbox-group'
 export default {
   title: 'Data Entry/Checkbox',
   component: Checkbox,
+  subcomponents: { CheckboxGroup },
 } as Meta
 
 export function DefaultCheckbox() {
