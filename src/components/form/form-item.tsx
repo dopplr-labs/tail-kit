@@ -18,14 +18,16 @@ export type FormItemProps = {
   children: React.ReactElement
   /** Customize FormItem styles using className */
   className?: string
-  /** Field name */
-  name?: string
+  /** extra prop can be used to render prompt message or field description below the Field Input */
+  extra?: React.ReactElement
   /** Label Text for Form Field */
   label?: string
   /** The layout for label. You can set `span` `offset` to something like `{span: 1, offset: 1}`.
    *  You can set labelCol on Form which will not affect nest Item. If both exists, use Item first.
    */
   labelCol?: FormItemLayout
+  /** Field name */
+  name?: string
   /** Rules for field validation */
   rules?: FormItemRules[]
   /** The name of the prop used to as value */
@@ -39,9 +41,10 @@ export type FormItemProps = {
 export function FormItem({
   children,
   className,
-  name,
+  extra,
   label,
   labelCol,
+  name,
   rules = [],
   valuePropName = 'value',
   wrapperCol,
@@ -145,18 +148,24 @@ export function FormItem({
           render={({ onChange, value, ref }) =>
             cloneElement(children, {
               [valuePropName]: value,
-              onChange: (...args: any[]) => {
+              onChange: (event: any[]) => {
                 const childrenOnChange = children?.props?.onChange
                 if (childrenOnChange) {
-                  childrenOnChange(...args)
+                  childrenOnChange(event)
                 }
-                onChange(...args)
+                if (valuePropName === 'checked') {
+                  // @ts-ignore
+                  onChange(event.target.checked)
+                } else {
+                  onChange(event)
+                }
               },
               ref,
             })
           }
           rules={validationScehma}
         />
+        {extra ? <>{extra}</> : null}
         {name &&
           rules
             ?.filter((rule) => {
