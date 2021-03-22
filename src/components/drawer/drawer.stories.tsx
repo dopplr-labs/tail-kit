@@ -105,9 +105,11 @@ export function SubmitFormInDrawer() {
   function onClose() {
     setVisible(false)
   }
+
   function onFormSubmit(data: any) {
     action('form-data')(data)
   }
+
   function onDrawerSubmit() {
     formRef.current?.dispatchEvent(
       new Event('submit', { cancelable: true, bubbles: true }),

@@ -109,7 +109,7 @@ export function FormItem({
     <div
       className={clsx(
         layout === LayoutOptions.VERTICAL
-          ? 'flex flex-col space-y-2 w-full'
+          ? 'flex flex-col space-y-2'
           : layout === LayoutOptions.HORIZONTAL
           ? 'grid grid-cols-1 space-y-2 lg:space-y-0 lg:grid-cols-6 items-center'
           : layout === LayoutOptions.INLINE

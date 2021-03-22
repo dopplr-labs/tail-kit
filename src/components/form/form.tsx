@@ -43,7 +43,12 @@ export const FormComponent = forwardRef(
     }: FormProps,
     ref: React.Ref<HTMLFormElement>,
   ) => {
-    const { handleSubmit, errors, control } = useForm({ defaultValues })
+    const { handleSubmit, errors, control, formState } = useForm({
+      defaultValues,
+      mode: 'onChange', // isValid works only with onChange mode. But this causes multiple re-renders
+    })
+    const { isSubmitting, isDirty, isValid } = formState
+
     return (
       <form
         className={clsx(
@@ -64,7 +69,9 @@ export const FormComponent = forwardRef(
             formWrapperCol: wrapperCol,
           }}
         >
-          {children}
+          {typeof children === 'function'
+            ? children({ isSubmitting, isValid, isDirty })
+            : children}
         </FormContext.Provider>
       </form>
     )

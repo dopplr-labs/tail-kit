@@ -5,6 +5,7 @@ import Button from 'components/button'
 import Input from 'components/input'
 import Select from 'components/select'
 import Checkbox from 'components/checkbox'
+import Switch from 'components/switch'
 import {
   AtSymbolOutline,
   FingerPrintOutline,
@@ -130,22 +131,26 @@ export function TwoColumnForm() {
         className="px-8 py-4"
       >
         <div className="flex w-full space-x-4">
-          <Form.Item name="firstName" label="First Name">
+          <Form.Item name="firstName" label="First Name" className="w-full">
             <Input placeholder="Enter first name" />
           </Form.Item>
-          <Form.Item name="lastName" label="Last Name">
+          <Form.Item name="lastName" label="Last Name" className="w-full">
             <Input placeholder="Enter last name" />
           </Form.Item>
         </div>
         <div className="flex w-full space-x-4">
-          <Form.Item name="gender" label="Gender">
+          <Form.Item name="gender" label="Gender" className="w-full">
             <Select
               options={['Male', 'Female', 'Other']}
               placeholder="Select your gender"
               className="w-full"
             />
           </Form.Item>
-          <Form.Item name="maritalStatus" label="Marital Status">
+          <Form.Item
+            name="maritalStatus"
+            label="Marital Status"
+            className="w-full"
+          >
             <Select
               options={['Single', 'Married']}
               placeholder="Select your marital status"
@@ -154,10 +159,10 @@ export function TwoColumnForm() {
           </Form.Item>
         </div>
         <div className="flex w-full space-x-4">
-          <Form.Item name="phoneNumber" label="Phone Number">
+          <Form.Item name="phoneNumber" label="Phone Number" className="w-full">
             <Input placeholder="Enter phone number" />
           </Form.Item>
-          <Form.Item name="email" label="Email Address">
+          <Form.Item name="email" label="Email Address" className="w-full">
             <Input placeholder="Enter email address" />
           </Form.Item>
         </div>
@@ -256,21 +261,101 @@ export function Notifications() {
 }
 
 export function InlineLoginForm() {
+  function onSubmit(data: any) {
+    action('form-data')(data)
+  }
   return (
-    <Form layout={Form.Layout.INLINE}>
-      <Form.Item
-        name="username"
-        rules={[{ required: true, message: 'Please enter your username' }]}
-      >
-        <Input placeholder="Username" icon={<UserOutline />} />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: 'Please enter your password' }]}
-      >
-        <Input placeholder="Password" icon={<FingerPrintOutline />} />
-      </Form.Item>
-      <Button label="Login" buttonType={Button.ButtonType.primary} />
+    <Form layout={Form.Layout.INLINE} onSubmit={onSubmit}>
+      {({ isDirty, isValid }: { isDirty: boolean; isValid: boolean }) => (
+        <>
+          <Form.Item
+            name="username"
+            rules={[{ required: true, message: 'Please enter your username' }]}
+          >
+            <Input placeholder="Username" icon={<UserOutline />} />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: 'Please enter your password' }]}
+          >
+            <Input
+              placeholder="Password"
+              type="password"
+              icon={<FingerPrintOutline />}
+            />
+          </Form.Item>
+          <Button
+            label="Login"
+            buttonType={Button.ButtonType.primary}
+            disabled={!isDirty || !isValid}
+          />
+        </>
+      )}
+    </Form>
+  )
+}
+
+export function AsyncForm() {
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms))
+  async function onSubmit(data: any) {
+    await sleep(3000)
+    action('form-data')(data)
+  }
+  return (
+    <Form
+      layout={Form.Layout.VERTICAL}
+      className="max-w-xl mx-auto"
+      onSubmit={onSubmit}
+    >
+      {({ isSubmitting }: { isSubmitting: boolean }) => (
+        <>
+          <div className="flex w-full space-x-4">
+            <Form.Item name="firstName" label="First Name" className="w-full">
+              <Input placeholder="Enter your first name" />
+            </Form.Item>
+            <Form.Item name="lastName" label="Last Name" className="w-full">
+              <Input placeholder="Enter your last name" />
+            </Form.Item>
+          </div>
+          <Form.Item name="company" label="Company">
+            <Input placeholder="Enter your company name" />
+          </Form.Item>
+          <Form.Item name="email" label="Email">
+            <Input placeholder="Enter your email address" />
+          </Form.Item>
+          <Form.Item name="phoneNumber" label="Phone Number">
+            <Input placeholder="+91-9148739422" />
+          </Form.Item>
+          <Form.Item name="message" label="Message">
+            <textarea
+              className="w-full h-24 px-3 py-2 text-sm border rounded-md focus:outline-none focus:shadow-outline"
+              placeholder="Please write employee's previous experience description"
+            />
+          </Form.Item>
+          <div className="flex items-center space-x-4">
+            <Form.Item name="privacyPolicy" valuePropName="checked">
+              <Switch />
+            </Form.Item>
+            <div className="w-full text-sm text-gray-500">
+              By Selecting this, you agree to the{' '}
+              <b>
+                <u>Privacy Policy</u>
+              </b>{' '}
+              and{' '}
+              <b>
+                <u>Cookie Policy</u>
+              </b>
+            </div>
+          </div>
+          <Button
+            label="Let' s Talk"
+            className="w-full"
+            buttonType={Button.ButtonType.primary}
+            loading={isSubmitting}
+          />
+        </>
+      )}
     </Form>
   )
 }
