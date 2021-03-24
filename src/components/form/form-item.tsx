@@ -129,6 +129,9 @@ export function FormItem({
               : undefined,
           )}
         >
+          {validationScehma.required ? (
+            <span className="text-red-600">*</span>
+          ) : null}
           {label}{' '}
           {layout === LayoutOptions.HORIZONTAL ||
           layout === LayoutOptions.INLINE
