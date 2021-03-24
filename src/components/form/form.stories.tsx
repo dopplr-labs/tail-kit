@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import { action } from '@storybook/addon-actions'
 import Button from 'components/button'
@@ -13,6 +13,7 @@ import {
   UserOutline,
 } from 'components/icons'
 import { RadioGroup } from 'components/radio/radio-group'
+import Modal from 'components/modal'
 import { Form, LayoutOptions } from './form'
 import { FormItem } from './form-item'
 
@@ -357,5 +358,65 @@ export function AsyncForm() {
         </>
       )}
     </Form>
+  )
+}
+
+export function FormInModal() {
+  const [show, setShow] = useState(false)
+  const formRef = useRef<HTMLFormElement | null>(null)
+
+  function openModal() {
+    setShow(true)
+  }
+  function closeModal() {
+    setShow(false)
+  }
+  function onOk() {
+    formRef.current?.dispatchEvent(
+      new Event('submit', { cancelable: true, bubbles: true }),
+    )
+    closeModal()
+  }
+  function onSubmit(data: any) {
+    action('form-data')(data)
+  }
+  return (
+    <>
+      <Button
+        label="Create Project"
+        buttonType={Button.ButtonType.primary}
+        onClick={openModal}
+      />
+      <Modal
+        title="Create a new project"
+        visible={show}
+        onRequestClose={closeModal}
+        onOK={onOk}
+      >
+        <Form
+          layout={Form.Layout.VERTICAL}
+          className="p-4"
+          onSubmit={onSubmit}
+          ref={formRef}
+          defaultValues={{ type: 'Public' }}
+        >
+          <Form.Item
+            label="Title"
+            name="title"
+            rules={[
+              { required: true, message: 'Please add title for your project!' },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item label="Description" name="description">
+            <Input />
+          </Form.Item>
+          <Form.Item name="type">
+            <RadioGroup options={['Public', 'Private']} />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   )
 }
