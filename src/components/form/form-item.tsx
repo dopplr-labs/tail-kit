@@ -4,7 +4,7 @@ import { Controller, RegisterOptions } from 'react-hook-form'
 import FormContext from './form-context'
 import { LayoutOptions } from './form'
 
-type FormItemRules = RegisterOptions & { message: string }
+type FormItemRule = RegisterOptions & { message: string }
 export type FormItemLayout = {
   span?: number
   offset?: number
@@ -29,7 +29,7 @@ export type FormItemProps = {
   /** Field name */
   name?: string
   /** Rules for field validation */
-  rules?: FormItemRules[]
+  rules?: FormItemRule[]
   /** The name of the prop used to as value */
   valuePropName?: string
   /** The layout for input controls, same as `labelCol`.
@@ -37,6 +37,11 @@ export type FormItemProps = {
    */
   wrapperCol?: FormItemLayout
 }
+
+const DEFAULT_LABEL_WIDTH = 1
+const DEFAULT_LABEL_OFFSET = 0
+const DEFAULT_WRAPPER_WIDTH = 5
+const DEFAULT_WRAPPER_OFFSET = 0
 
 export function FormItem({
   children,
@@ -58,7 +63,6 @@ export function FormItem({
   }
 
   const labelColWidth = useMemo(() => {
-    const DEFAULT_LABEL_WIDTH = 1
     if (labelCol?.span) {
       return labelCol.span
     } else if (formLabelCol?.span) {
@@ -68,7 +72,6 @@ export function FormItem({
   }, [labelCol, formLabelCol])
 
   const labelColOffset = useMemo(() => {
-    const DEFAULT_LABEL_OFFSET = 0
     if (labelCol?.offset) {
       return labelCol.offset
     } else if (formLabelCol?.offset) {
@@ -78,7 +81,6 @@ export function FormItem({
   }, [labelCol, formLabelCol])
 
   const wrapperColWidth = useMemo(() => {
-    const DEFAULT_WRAPPER_WIDTH = 5
     if (wrapperCol?.span) {
       return wrapperCol.span
     } else if (formWrapperCol?.span) {
@@ -88,7 +90,6 @@ export function FormItem({
   }, [formWrapperCol, wrapperCol])
 
   const wrapperColOffset = useMemo(() => {
-    const DEFAULT_WRAPPER_OFFSET = 0
     if (wrapperCol?.offset) {
       return wrapperCol.offset
     } else if (formWrapperCol?.offset) {
@@ -153,6 +154,7 @@ export function FormItem({
                 if (childrenOnChange) {
                   childrenOnChange(event)
                 }
+                // @TODO: Remove the hard coded value once the controller is removed
                 if (valuePropName === 'checked') {
                   // @ts-ignore
                   onChange(event.target.checked)
