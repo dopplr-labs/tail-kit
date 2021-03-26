@@ -151,7 +151,7 @@ export function FormItem({
           name={name ?? ''}
           render={({ onChange, value, ref }) =>
             cloneElement(children, {
-              [valuePropName]: value,
+              [valuePropName]: children.props.value ?? value,
               onChange: (event: any[]) => {
                 const childrenOnChange = children?.props?.onChange
                 if (childrenOnChange) {

@@ -1,7 +1,10 @@
 import React from 'react'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Input from 'components/input'
 import Button from 'components/button'
+import { CheckboxGroup } from 'components/checkbox/checkbox-group'
+import { Checkbox } from 'components/checkbox/checkbox'
 import { Form } from './form'
 
 test('render form correctly', () => {
@@ -57,5 +60,72 @@ test('error message renders correctly', async () => {
     expect(
       screen.getByText('Please enter your email address'),
     ).toBeInTheDocument()
+  })
+})
+
+test('onChange of input elements works correctly with form', () => {
+  let value = ['hello']
+  const onChange = jest.fn((checkedValues) => {
+    value = checkedValues
+    return checkedValues
+  })
+  render(
+    <Form>
+      <Form.Item name="checkbox">
+        <CheckboxGroup
+          options={['hello', 'world']}
+          value={value}
+          onChange={onChange}
+        />
+      </Form.Item>
+    </Form>,
+  )
+  fireEvent.click(screen.getByText('world'))
+  expect(onChange).toBeCalled()
+  expect(onChange.mock.results[0].value).toStrictEqual(['hello', 'world'])
+})
+
+test('checkbox works correctly in form', async () => {
+  const onSubmit = jest.fn((data) => data)
+  render(
+    <Form onSubmit={onSubmit}>
+      <Form.Item name="checkbox" valuePropName="checked">
+        <Checkbox label="Remember me" />
+      </Form.Item>
+      <Button label="Submit" />
+    </Form>,
+  )
+  fireEvent.click(screen.getByText('Remember me'))
+  fireEvent.click(screen.getByText('Submit'))
+  await waitFor(() => {
+    expect(onSubmit).toBeCalled()
+  })
+  expect(onSubmit.mock.results[0].value).toStrictEqual({ checkbox: true })
+})
+
+test('children as function works correctly with form', async () => {
+  render(
+    <Form>
+      {({ isDirty, isValid }: { isDirty: boolean; isValid: boolean }) => (
+        <>
+          <Form.Item
+            name="email"
+            rules={[{ required: true, message: 'Please enter your email' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Button
+            label="Submit"
+            buttonType={Button.ButtonType.primary}
+            disabled={!isDirty || !isValid}
+          />
+        </>
+      )}
+    </Form>,
+  )
+  expect(screen.getByText('Submit').parentElement).toHaveClass('bg-gray-400')
+  userEvent.type(screen.getByRole('textbox'), 'test@example.com')
+  await waitFor(() => {
+    expect(screen.getByText('Submit').parentElement).toHaveClass('bg-blue-600')
   })
 })
