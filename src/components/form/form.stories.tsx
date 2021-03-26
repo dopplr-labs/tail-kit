@@ -390,6 +390,7 @@ export function FormInModal() {
       <Modal
         title="Create a new project"
         visible={show}
+        okButtonProps={{ label: 'Create' }}
         onRequestClose={closeModal}
         onOK={onOk}
       >
