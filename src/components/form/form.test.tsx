@@ -129,3 +129,78 @@ test('children as function works correctly with form', async () => {
     expect(screen.getByText('Submit').parentElement).toHaveClass('bg-blue-600')
   })
 })
+
+test('Layouting works correctly for form', () => {
+  const tailLayout = {
+    wrapperCol: { span: 2, offset: 2 },
+    labelCol: { span: 2, offset: 1 },
+  }
+  const formLayout = {
+    wrapperCol: { span: 2, offset: 2 },
+    labelCol: { span: 1, offset: 1 },
+  }
+  render(
+    <Form {...formLayout} defaultValues={{ rememberMe: true }}>
+      <Form.Item name="email" label="Email">
+        <Input />
+      </Form.Item>
+      <Form.Item name="password" label="Password">
+        <Input />
+      </Form.Item>
+      <Form.Item name="rememberMe" {...tailLayout} valuePropName="checked">
+        <Checkbox label="Remember Me" />
+      </Form.Item>
+      <Form.Item {...tailLayout}>
+        <Button label="Submit" type="submit" />
+      </Form.Item>
+    </Form>,
+  )
+  expect(screen.getByText('Submit').parentElement?.parentElement).toHaveClass(
+    'lg:col-start-2',
+  )
+})
+
+test('using form-item without parent component should throw error', () => {
+  const renderItem = () => {
+    render(
+      <Form.Item>
+        <Input />
+      </Form.Item>,
+    )
+  }
+  expect(renderItem).toThrow(
+    'Form.Item component should be used within Form component',
+  )
+})
+
+test('extra content renders correctly in form item', () => {
+  render(
+    <Form>
+      <Form.Item
+        name="email"
+        label="Email"
+        extra={<span>Enter your business email address</span>}
+      >
+        <Input />
+      </Form.Item>
+    </Form>,
+  )
+  expect(
+    screen.getByText('Enter your business email address'),
+  ).toBeInTheDocument()
+})
+
+test('required mark renders correctly for required fields', () => {
+  render(
+    <Form>
+      <Form.Item
+        name="email"
+        label="Email"
+        rules={[{ required: true, message: 'Please enter your email address' }]}
+      >
+        <Input />
+      </Form.Item>
+    </Form>,
+  )
+  expect(screen.getByText('*')).toBeInTheDocument()
+})
