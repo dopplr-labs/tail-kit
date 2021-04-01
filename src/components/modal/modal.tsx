@@ -7,7 +7,7 @@ import { CSSTransition } from 'react-transition-group'
 import useOutsideClick from 'hooks/use-outside-click'
 
 type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
-  ref: React.Ref<HTMLButtonElement>
+  ref?: React.Ref<HTMLButtonElement>
 }
 
 /**

@@ -8,6 +8,7 @@ import { RadioGroup } from './radio-group'
 export default {
   title: 'Data Entry/Radio',
   component: Radio,
+  subcomponents: { RadioGroup },
 } as Meta
 
 export function DefaultRadio() {

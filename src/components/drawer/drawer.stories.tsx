@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
+import { action } from '@storybook/addon-actions'
 import Button from 'components/button'
 import Radio from 'components/radio'
+import Form from 'components/form'
 import { PlusOutline } from 'components/icons'
 import Input from 'components/input'
 import Select from 'components/select'
@@ -94,6 +96,7 @@ export function CustomPlacement() {
 
 export function SubmitFormInDrawer() {
   const [visible, setVisible] = useState(false)
+  const formRef = useRef<HTMLFormElement | null>(null)
 
   function showDrawer() {
     setVisible(true)
@@ -101,6 +104,17 @@ export function SubmitFormInDrawer() {
 
   function onClose() {
     setVisible(false)
+  }
+
+  function onFormSubmit(data: any) {
+    action('form-data')(data)
+  }
+
+  function onDrawerSubmit() {
+    formRef.current?.dispatchEvent(
+      new Event('submit', { cancelable: true, bubbles: true }),
+    )
+    onClose()
   }
   return (
     <>
@@ -121,59 +135,56 @@ export function SubmitFormInDrawer() {
             <Button
               label="Submit"
               buttonType={Button.ButtonType.primary}
-              onClick={onClose}
+              onClick={onDrawerSubmit}
             />
           </div>
         }
       >
-        <div className="flex items-center justify-center mb-8 gap-x-3">
-          <div className="w-1/2 space-y-2">
-            <label>First Name</label>
-            <Input placeholder="Enter first name" />
+        <Form
+          layout={Form.Layout.VERTICAL}
+          className="p-0"
+          ref={formRef}
+          onSubmit={onFormSubmit}
+        >
+          <div className="flex w-full space-x-4">
+            <Form.Item name="firstName" label="First Name">
+              <Input placeholder="Enter first name" />
+            </Form.Item>
+            <Form.Item name="lastName" label="Last Name">
+              <Input placeholder="Enter last name" />
+            </Form.Item>
           </div>
-          <div className="w-1/2 space-y-2">
-            <label>Last Name</label>
-            <Input placeholder="Enter last name" />
+          <div className="flex w-full space-x-4">
+            <Form.Item name="gender" label="Gender">
+              <Select
+                options={['Male', 'Female', 'Other']}
+                placeholder="Select your gender"
+                className="w-full"
+              />
+            </Form.Item>
+            <Form.Item name="maritalStatus" label="Marital Status">
+              <Select
+                options={['Single', 'Married']}
+                placeholder="Select your marital status"
+                className="w-full"
+              />
+            </Form.Item>
           </div>
-        </div>
-
-        <div className="flex items-center justify-center mb-8 gap-x-3">
-          <div className="w-1/2 space-y-2">
-            <label>Gender</label>
-            <Select
-              options={['Male', 'Female', 'Other']}
-              placeholder="Select your gender"
-              className="w-full"
+          <div className="flex w-full space-x-4">
+            <Form.Item name="phoneNumber" label="Phone Number">
+              <Input placeholder="Enter phone number" />
+            </Form.Item>
+            <Form.Item name="email" label="Email Address">
+              <Input placeholder="Enter email address" />
+            </Form.Item>
+          </div>
+          <Form.Item name="pastExperience" label="Past Experience">
+            <textarea
+              className="w-full h-24 px-3 py-2 text-sm border rounded-md focus:outline-none focus:shadow-outline"
+              placeholder="Please write employee's previous experience description"
             />
-          </div>
-          <div className="w-1/2 space-y-2">
-            <label>Marital Status</label>
-            <Select
-              options={['Single', 'Married']}
-              placeholder="Select your marital status"
-              className="w-full"
-            />
-          </div>
-        </div>
-
-        <div className="flex items-center justify-center mb-8 gap-x-3">
-          <div className="w-1/2 space-y-2">
-            <label>Phone Number</label>
-            <Input placeholder="Enter phone number" />
-          </div>
-          <div className="w-1/2 space-y-2">
-            <label>Email Address</label>
-            <Input placeholder="Enter email address" />
-          </div>
-        </div>
-
-        <div className="flex flex-col space-y-2">
-          <label>Past Experience</label>
-          <textarea
-            className="h-24 px-3 py-2 border rounded-md focus:outline-none focus:shadow-outline"
-            placeholder="Please write employee's previous experience description"
-          />
-        </div>
+          </Form.Item>
+        </Form>
       </Drawer>
     </>
   )
