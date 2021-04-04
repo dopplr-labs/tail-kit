@@ -146,7 +146,7 @@ export function Drawer({
         >
           {closable ? (
             <button
-              className="absolute top-0 right-0 p-1 mt-3 mr-3 rounded-md focus:outline-none focus:shadow-outline"
+              className="absolute top-0 right-0 p-1 mt-3 mr-3 rounded-md focus:outline-none focus:ring"
               onClick={onRequestClose}
             >
               <XOutline className="w-4 h-4" />

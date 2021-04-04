@@ -1,6 +1,8 @@
 const defaultConfig = require('tailwindcss/defaultConfig')
 const defaultTheme = require('tailwindcss/defaultTheme')
-const tailwindUI = require('@tailwindcss/ui')
+const tailwindForm = require('@tailwindcss/forms')
+const tailwindTypography = require('@tailwindcss/typography')
+const tailwindAspectRatio = require('@tailwindcss/aspect-ratio')
 const { range } = require('lodash')
 
 module.exports = {
@@ -46,9 +48,5 @@ module.exports = {
     boxShadow: [...defaultConfig.variants.boxShadow, 'focus-within'],
   },
 
-  plugins: [tailwindUI],
-
-  future: {
-    removeDeprecatedGapUtilities: true,
-  },
+  plugins: [tailwindForm, tailwindTypography, tailwindAspectRatio],
 }

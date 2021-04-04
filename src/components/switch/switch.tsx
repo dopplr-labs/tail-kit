@@ -33,7 +33,7 @@ export const Switch = forwardRef(
     return (
       <label
         className={clsx(
-          'w-10 rounded-full h-5 transition-all duration-300 focus-within:shadow-outline relative inline-block',
+          'w-10 rounded-full h-5 transition-all duration-300 focus-within:ring relative inline-block',
           checkedState ? 'bg-green-500' : 'bg-gray-300',
           className,
         )}

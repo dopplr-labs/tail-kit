@@ -98,7 +98,7 @@ export function Week({
             key={day.valueOf()}
             data-date={day.format('DD-MM-YYYY')}
             className={clsx(
-              'py-1 text-sm rounded focus:outline-none focus:shadow-outline font-medium transition-colors duration-100 w-7',
+              'py-1 text-sm rounded focus:outline-none focus:ring font-medium transition-colors duration-100 w-7',
               buttonClassName,
             )}
             onClick={(event) => {

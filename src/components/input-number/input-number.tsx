@@ -114,7 +114,7 @@ export const InputNumber = forwardRef(
     return (
       <div
         className={clsx(
-          'flex group items-center justify-between border rounded-md focus-within:shadow-outline overflow-hidden',
+          'flex group items-center justify-between border rounded-md focus-within:ring overflow-hidden',
           disabled ? 'cursor-not-allowed' : undefined,
           className,
         )}

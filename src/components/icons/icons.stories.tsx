@@ -31,7 +31,7 @@ export function Icons() {
   return (
     <>
       <input
-        className="block w-full px-3 py-2 mb-2 text-sm border rounded-md focus:outline-none focus:shadow-outline"
+        className="block w-full px-3 py-2 mb-2 text-sm border rounded-md focus:outline-none focus:ring"
         placeholder="Search for your icon..."
         value={searchText}
         onChange={(event) => {
@@ -76,7 +76,7 @@ function IconsList({ type, iconNames }: { type: string; iconNames: string[] }) {
           return (
             <button
               key={iconName}
-              className="flex items-center justify-center p-4 text-gray-700 transition-shadow duration-300 bg-white rounded-md shadow hover:shadow-xl focus:outline-none focus:shadow-outline"
+              className="flex items-center justify-center p-4 text-gray-700 transition-shadow duration-300 bg-white rounded-md shadow hover:shadow-xl focus:outline-none focus:ring"
               onClick={() => {
                 if (timeout) {
                   window.clearTimeout(timeout)
