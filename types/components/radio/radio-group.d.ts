@@ -10,6 +10,8 @@ export declare type RadioOptions = {
 export declare type RadioGroupProps = {
   /** Specifies options of radio to render */
   options: (RadioOptions | string)[]
+  /** Radio value */
+  value?: string
   /** Default selected radio value */
   defaultValue?: string
   /** To disable all radio components */
@@ -23,6 +25,7 @@ export declare type RadioGroupProps = {
 }
 export declare function RadioGroup({
   options,
+  value,
   defaultValue,
   disabled,
   onChange,
