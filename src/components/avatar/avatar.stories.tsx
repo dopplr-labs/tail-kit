@@ -1,11 +1,13 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import { UserOutline } from 'components/icons'
+import { AnnotationSolid, UserOutline } from 'components/icons'
 import { Avatar } from './avatar'
+import { AvatarGroup } from './avatar-group'
 
 export default {
   title: 'Data Display / Avatar',
   component: Avatar,
+  subcomponents: { AvatarGroup },
 } as Meta
 
 export function Basic() {
@@ -30,9 +32,26 @@ export function AvatarTypes() {
     <div className="flex items-center space-x-4">
       <Avatar icon={<UserOutline />} />
       <Avatar>U</Avatar>
-      <Avatar size="large">USER</Avatar>
+      <Avatar size="large" className="text-sm">
+        USER
+      </Avatar>
+      <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
       <Avatar className="font-semibold text-red-400 bg-red-100">U</Avatar>
       <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
     </div>
+  )
+}
+
+export function AvatarGroupDemo() {
+  return (
+    <Avatar.Group>
+      <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+      <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+      <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
+      <Avatar
+        style={{ backgroundColor: '#1890ff' }}
+        icon={<AnnotationSolid />}
+      />
+    </Avatar.Group>
   )
 }
