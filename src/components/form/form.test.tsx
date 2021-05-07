@@ -5,7 +5,7 @@ import Input from 'components/input'
 import Button from 'components/button'
 import { CheckboxGroup } from 'components/checkbox/checkbox-group'
 import { Checkbox } from 'components/checkbox/checkbox'
-import { Form } from './form'
+import Form from './index'
 
 test('render form correctly', () => {
   render(

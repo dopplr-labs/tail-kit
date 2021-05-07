@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { useForm } from 'react-hook-form'
 import FormContext from './form-context'
-import { FormItem, FormItemLayout } from './form-item'
+import { FormItemLayout } from './form-item'
 
 export enum LayoutOptions {
   HORIZONTAL = 'horizontal',
@@ -30,7 +30,7 @@ export type FormProps = {
   onSubmit?: (data: any) => void
 }
 
-export const FormComponent = forwardRef(
+export const Form = forwardRef(
   (
     {
       children,
@@ -77,8 +77,3 @@ export const FormComponent = forwardRef(
     )
   },
 )
-
-export const Form = Object.assign(FormComponent, {
-  Item: FormItem,
-  Layout: LayoutOptions,
-})

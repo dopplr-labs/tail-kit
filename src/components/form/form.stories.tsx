@@ -14,7 +14,8 @@ import {
 } from 'components/icons'
 import { RadioGroup } from 'components/radio/radio-group'
 import Modal from 'components/modal'
-import { Form, LayoutOptions } from './form'
+import Form from './index'
+import { LayoutOptions } from './form'
 import { FormItem } from './form-item'
 
 export default {
