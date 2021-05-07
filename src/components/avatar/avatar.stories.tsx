@@ -44,14 +44,29 @@ export function AvatarTypes() {
 
 export function AvatarGroupDemo() {
   return (
-    <Avatar.Group>
-      <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
-      <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-      <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
-      <Avatar
-        style={{ backgroundColor: '#1890ff' }}
-        icon={<AnnotationSolid />}
-      />
-    </Avatar.Group>
+    <>
+      <Avatar.Group>
+        <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+        <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+        <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
+        <Avatar
+          style={{ backgroundColor: '#1890ff' }}
+          icon={<AnnotationSolid />}
+        />
+      </Avatar.Group>
+      <div className="my-4 border-t" />
+      <Avatar.Group
+        maxCount={2}
+        maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+      >
+        <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+        <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+        <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
+        <Avatar
+          style={{ backgroundColor: '#1890ff' }}
+          icon={<AnnotationSolid />}
+        />
+      </Avatar.Group>
+    </>
   )
 }
