@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react'
+import React from 'react'
 import Popover from 'components/popover'
 import Avatar from '.'
 import AvatarContext from './avatar-context'
@@ -29,11 +29,11 @@ export function AvatarGroup({
     return (
       <AvatarContext.Provider value={{ size }}>
         <div className="flex items-center">
-          {React.Children.map(childrenShow, (child) =>
-            cloneElement(child as React.ReactElement, {
-              className: '-ml-2 border border-white',
-            }),
-          )}
+          {React.Children.map(childrenShow, (child) => (
+            <div className="-ml-2 border border-white rounded-full">
+              {child}
+            </div>
+          ))}
           <Popover
             content={
               <div className="flex items-center space-x-1">{childrenHide}</div>
@@ -55,11 +55,11 @@ export function AvatarGroup({
   return (
     <AvatarContext.Provider value={{ size }}>
       <div className="flex items-center">
-        {React.Children.map(children, (child) =>
-          cloneElement(child as React.ReactElement, {
-            className: '-ml-2 border border-white',
-          }),
-        )}
+        {React.Children.map(children, (child) => (
+          <div className="inline-block -ml-2 border border-white rounded-full">
+            {child}
+          </div>
+        ))}
       </div>
     </AvatarContext.Provider>
   )
