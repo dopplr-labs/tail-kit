@@ -6,6 +6,7 @@ import { IoMdHand } from 'react-icons/io'
 import { Meta } from '@storybook/react/types-6-0'
 import { AnnotationSolid, UserOutline } from 'components/icons'
 import Button from 'components/button'
+import Tooltip from 'components/tooltip'
 import Avatar from '.'
 import { AvatarGroup } from './avatar-group'
 
@@ -51,9 +52,16 @@ export function AvatarGroupDemo() {
   return (
     <>
       <Avatar.Group>
-        <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+        <Tooltip title="Brad Gibson" placement="bottom">
+          <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+        </Tooltip>
         <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-        <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
+        <Tooltip title="Unknown User" placement="bottom">
+          <Avatar
+            style={{ backgroundColor: '#87d068' }}
+            icon={<UserOutline />}
+          />
+        </Tooltip>
         <Avatar
           style={{ backgroundColor: '#1890ff' }}
           icon={<AnnotationSolid />}
@@ -81,7 +89,12 @@ export function AvatarGroupDemo() {
       >
         <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
         <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-        <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
+        <Tooltip title="Brad Gibson" placement="bottom">
+          <Avatar
+            style={{ backgroundColor: '#87d068' }}
+            icon={<UserOutline />}
+          />
+        </Tooltip>
         <Avatar
           style={{ backgroundColor: '#1890ff' }}
           icon={<AnnotationSolid />}
@@ -92,6 +105,23 @@ export function AvatarGroupDemo() {
 }
 
 export function AvatarsInNavbar() {
+  const userList = [
+    {
+      name: 'Brad Gibson',
+      src: 'https://randomuser.me/api/portraits/thumb/men/75.jpg',
+    },
+    { name: 'Kumar Sanu', style: { backgroundColor: '#87d068' } },
+    {
+      name: 'Marcus Brownlee',
+      style: { backgroundColor: '#87d068' },
+      icon: <UserOutline />,
+    },
+    {
+      name: 'Johnny Harris',
+      style: { backgroundColor: '#1890ff' },
+      icon: <AnnotationSolid />,
+    },
+  ]
   return (
     <div className="flex items-center justify-between w-full px-3 py-2 bg-gray-800 rounded">
       <div className="flex items-center space-x-4">
@@ -108,16 +138,16 @@ export function AvatarsInNavbar() {
           maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
           maxPopoverPlacement="bottom"
         >
-          <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
-          <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-          <Avatar
-            style={{ backgroundColor: '#87d068' }}
-            icon={<UserOutline />}
-          />
-          <Avatar
-            style={{ backgroundColor: '#1890ff' }}
-            icon={<AnnotationSolid />}
-          />
+          {userList.map((user, index) => (
+            <Tooltip title={user.name} placement="bottom" key={index}>
+              <Avatar src={user.src} style={user.style}>
+                {user.name
+                  .split(' ')
+                  .map((name) => name[0])
+                  .join('')}
+              </Avatar>
+            </Tooltip>
+          ))}
         </Avatar.Group>
         <Button label="Share" buttonType={Button.ButtonType.primary} />
       </div>
