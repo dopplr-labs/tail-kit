@@ -1,6 +1,6 @@
-import React, { useMemo, cloneElement } from 'react'
+import React, { useMemo, cloneElement, useContext } from 'react'
 import clsx from 'clsx'
-import { AvatarGroup } from './avatar-group'
+import AvatarContext from './avatar-context'
 
 /**
  * Avatar Properties
@@ -30,33 +30,38 @@ export function Avatar({
   className,
   icon,
   shape = 'circle',
-  size = 'default',
+  size,
   src,
   style,
 }: AvatarProps) {
+  const { size: groupSize } = useContext(AvatarContext)
+  const preferredSize = size ?? groupSize
+
   const avatarSize = useMemo(() => {
-    if (size === 'default') {
-      return 'w-8 h-8'
+    switch (preferredSize) {
+      case 'default':
+        return 'w-8 h-8'
+      case 'large':
+        return 'w-12 h-12'
+      case 'small':
+        return 'w-6 h-6'
+      default:
+        return 'w-8 h-8'
     }
-    if (size === 'large') {
-      return 'w-12 h-12'
-    }
-    if (size === 'small') {
-      return 'w-6 h-6'
-    }
-  }, [size])
+  }, [preferredSize])
 
   const iconSize = useMemo(() => {
-    if (size === 'default') {
-      return 'w-5 h-5'
+    switch (preferredSize) {
+      case 'default':
+        return 'w-5 h-5'
+      case 'large':
+        return 'w-8 h-8'
+      case 'small':
+        return 'w-4 h-4'
+      default:
+        return 'w-5 h-5'
     }
-    if (size === 'large') {
-      return 'w-8 h-8'
-    }
-    if (size === 'small') {
-      return 'w-4 h-4'
-    }
-  }, [size])
+  }, [preferredSize])
 
   const avatarContent = useMemo(() => {
     if (src) {
@@ -97,5 +102,3 @@ export function Avatar({
     </div>
   )
 }
-
-Avatar.Group = AvatarGroup
