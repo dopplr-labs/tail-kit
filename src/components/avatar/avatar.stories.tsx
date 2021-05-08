@@ -1,7 +1,12 @@
 import React from 'react'
+import { FiFigma } from 'react-icons/fi'
+import { FaRegComment } from 'react-icons/fa'
+import { AiOutlineEdit, AiOutlineFontSize } from 'react-icons/ai'
+import { IoMdHand } from 'react-icons/io'
 import { Meta } from '@storybook/react/types-6-0'
 import { AnnotationSolid, UserOutline } from 'components/icons'
-import { Avatar } from './avatar'
+import Button from 'components/button'
+import Avatar from '.'
 import { AvatarGroup } from './avatar-group'
 
 export default {
@@ -67,6 +72,55 @@ export function AvatarGroupDemo() {
           icon={<AnnotationSolid />}
         />
       </Avatar.Group>
+      <div className="my-4 border-t" />
+      <Avatar.Group
+        maxCount={2}
+        maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+        size="large"
+        maxPopoverPlacement="bottom"
+      >
+        <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+        <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+        <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
+        <Avatar
+          style={{ backgroundColor: '#1890ff' }}
+          icon={<AnnotationSolid />}
+        />
+      </Avatar.Group>
     </>
+  )
+}
+
+export function AvatarsInNavbar() {
+  return (
+    <div className="flex items-center justify-between w-full px-3 py-2 bg-gray-800 rounded">
+      <div className="flex items-center space-x-4">
+        <FiFigma className="w-6 h-6 text-white" />
+        <div className="h-6 border-r border-white" />
+        <AiOutlineEdit className="w-4 h-4 text-white" />
+        <AiOutlineFontSize className="w-4 h-4 text-white" />
+        <IoMdHand className="w-4 h-4 text-white" />
+        <FaRegComment className="w-4 h-4 text-white" />
+      </div>
+      <div className="flex items-center space-x-4">
+        <Avatar.Group
+          maxCount={2}
+          maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+          maxPopoverPlacement="bottom"
+        >
+          <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+          <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+          <Avatar
+            style={{ backgroundColor: '#87d068' }}
+            icon={<UserOutline />}
+          />
+          <Avatar
+            style={{ backgroundColor: '#1890ff' }}
+            icon={<AnnotationSolid />}
+          />
+        </Avatar.Group>
+        <Button label="Share" buttonType={Button.ButtonType.primary} />
+      </div>
+    </div>
   )
 }
