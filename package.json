@@ -1,7 +1,7 @@
 {
   "name": "@tail-kit/tail-kit",
   "description": "UI-Kit made with tailwindcss",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
