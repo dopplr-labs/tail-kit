@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 import { createPortal } from 'react-dom'
-import { isNumber } from 'lodash-es'
+import isNumber from 'lodash/isNumber'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import useOutsideClick from 'hooks/use-outside-click'

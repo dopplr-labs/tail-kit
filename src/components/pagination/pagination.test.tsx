@@ -1,5 +1,5 @@
 import React from 'react'
-import { range } from 'lodash-es'
+import range from 'lodash/range'
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Pagination from '.'

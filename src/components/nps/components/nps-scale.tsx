@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { range } from 'lodash-es'
+import range from 'lodash/range'
 import clsx from 'clsx'
 
 const MIN = 0
