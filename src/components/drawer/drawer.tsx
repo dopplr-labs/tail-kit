@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 import { createPortal } from 'react-dom'
-import { isNumber } from 'lodash-es'
+import isNumber from 'lodash/isNumber'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import useOutsideClick from 'hooks/use-outside-click'
-import { XOutline } from 'components/icons'
+import { HiOutlineX } from 'react-icons/hi'
 
 export enum DrawerPlacement {
   left = 'left',
@@ -149,7 +149,7 @@ export function Drawer({
               className="absolute top-0 right-0 p-1 mt-3 mr-3 rounded-md focus:outline-none focus:shadow-outline"
               onClick={onRequestClose}
             >
-              <XOutline className="w-4 h-4" />
+              <HiOutlineX className="w-4 h-4" />
             </button>
           ) : null}
 

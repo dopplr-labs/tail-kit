@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Button from 'components/button'
-import { CurrencyRupeeOutline } from 'components/icons'
+import { HiOutlineCurrencyRupee } from 'react-icons/hi'
 import { MessageProvider, MessageTypes, useMessage } from './message'
 
 type RenderButtonProps = {
@@ -106,7 +106,7 @@ test('message is being removed automatically', async () => {
 test('custom icon renders correctly', () => {
   const icon = (
     <div className="text-green-500">
-      <CurrencyRupeeOutline />
+      <HiOutlineCurrencyRupee />
     </div>
   )
 

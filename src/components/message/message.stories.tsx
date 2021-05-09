@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import Button from 'components/button'
 import { Meta } from '@storybook/react/types-6-0'
-import { CurrencyRupeeOutline } from 'components/icons'
+import { HiOutlineCurrencyRupee } from 'react-icons/hi'
 import { MessageProvider, useMessage } from './message'
 
 export default {
@@ -85,7 +85,7 @@ export function MessageWithCustomIcon() {
   const icon = useMemo(
     () => (
       <div className="text-green-500">
-        <CurrencyRupeeOutline />
+        <HiOutlineCurrencyRupee />
       </div>
     ),
     [],

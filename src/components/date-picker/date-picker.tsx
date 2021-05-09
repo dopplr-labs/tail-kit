@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useReducer, useRef } from 'react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import {
-  CalendarOutline,
-  ChevronDoubleLeftOutline,
-  ChevronDoubleRightOutline,
-  ChevronLeftOutline,
-  ChevronRightOutline,
-  XCircleSolid,
-} from 'components/icons'
+  HiOutlineCalendar,
+  HiOutlineChevronDoubleLeft,
+  HiOutlineChevronDoubleRight,
+  HiOutlineChevronLeft,
+  HiOutlineChevronRight,
+  HiXCircle,
+} from 'react-icons/hi'
 import Portal from 'components/portal'
 import useOutsideClick from 'hooks/use-outside-click'
 import { Keys } from 'utils/keyboard'
@@ -157,10 +157,10 @@ export function DatePicker({
               dispatch({ type: ActionType.CLEAR_DATE })
             }}
           >
-            <XCircleSolid className="w-5 h-5" />
+            <HiXCircle className="w-5 h-5" />
           </div>
         ) : (
-          <CalendarOutline className="w-5 h-5" />
+          <HiOutlineCalendar className="w-5 h-5" />
         )}
       </button>
       <Portal
@@ -203,7 +203,7 @@ export function DatePicker({
                 dispatch({ type: ActionType.MOVE_TO_PREV_YEAR })
               }}
             >
-              <ChevronDoubleLeftOutline className="w-5 h-5" />
+              <HiOutlineChevronDoubleLeft className="w-5 h-5" />
             </button>
             <button
               aria-label="move to previous month"
@@ -212,7 +212,7 @@ export function DatePicker({
                 dispatch({ type: ActionType.MOVE_TO_PREV_MONTH })
               }}
             >
-              <ChevronLeftOutline className="w-5 h-5" />
+              <HiOutlineChevronLeft className="w-5 h-5" />
             </button>
             <div className="flex-1" />
             <div className="text-sm font-medium text-gray-700">
@@ -226,7 +226,7 @@ export function DatePicker({
                 dispatch({ type: ActionType.MOVE_TO_NEXT_MONTH })
               }}
             >
-              <ChevronRightOutline className="w-5 h-5" />
+              <HiOutlineChevronRight className="w-5 h-5" />
             </button>
             <button
               aria-label="move to next year"
@@ -235,7 +235,7 @@ export function DatePicker({
                 dispatch({ type: ActionType.MOVE_TO_NEXT_YEAR })
               }}
             >
-              <ChevronDoubleRightOutline className="w-5 h-5" />
+              <HiOutlineChevronDoubleRight className="w-5 h-5" />
             </button>
           </div>
           <div className="px-4 py-2 space-y-2 border-b">

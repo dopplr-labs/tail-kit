@@ -1,13 +1,13 @@
 import { Meta } from '@storybook/react/types-6-0'
 import Button from 'components/button'
 import {
-  CheckCircleSolid,
-  ExclamationCircleSolid,
-  PlusOutline,
-  ShoppingCartSolid,
-  TrashOutline,
-  DownloadOutline,
-} from 'components/icons'
+  HiCheckCircle,
+  HiExclamationCircle,
+  HiOutlinePlus,
+  HiShoppingCart,
+  HiOutlineTrash,
+  HiOutlineDownload,
+} from 'react-icons/hi'
 import React from 'react'
 import { Tooltip } from './tooltip'
 
@@ -19,7 +19,7 @@ export default {
 export function DefaultTooltip() {
   return (
     <Tooltip title="Create a new blog">
-      <Button icon={<PlusOutline />} />
+      <Button icon={<HiOutlinePlus />} />
     </Tooltip>
   )
 }
@@ -28,11 +28,11 @@ export function TooltipWithIcon() {
   return (
     <Tooltip
       title="User once deleted cannot be restored"
-      icon={<ExclamationCircleSolid className="w-5 h-5 text-red-500" />}
+      icon={<HiExclamationCircle className="w-5 h-5 text-red-500" />}
     >
       <Button
         buttonType={Button.ButtonType.danger}
-        icon={<TrashOutline />}
+        icon={<HiOutlineTrash />}
         label="Delete User"
       />
     </Tooltip>
@@ -81,11 +81,11 @@ export function TooltipWithLightBackground() {
     <Tooltip
       title="Place order for items present in cart"
       inverted={false}
-      icon={<CheckCircleSolid className="w-5 h-5 text-green-500" />}
+      icon={<HiCheckCircle className="w-5 h-5 text-green-500" />}
       placement="top"
     >
       <Button
-        icon={<ShoppingCartSolid />}
+        icon={<HiShoppingCart />}
         label="Place Order"
         buttonType={Button.ButtonType.primary}
       />
@@ -99,7 +99,7 @@ export function TooltipWithoutPointingArrow() {
       title="Download the file in your Google Drive"
       pointingArrow={false}
     >
-      <Button icon={<DownloadOutline />} label="Download" />
+      <Button icon={<HiOutlineDownload />} label="Download" />
     </Tooltip>
   )
 }

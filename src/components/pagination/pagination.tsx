@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import clsx from 'clsx'
 import Button from 'components/button'
 import Select from 'components/select'
-import { ChevronLeftOutline, ChevronRightOutline } from 'components/icons'
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 import useSyncedState from 'hooks/use-synced-states'
 import { Keys } from 'utils/keyboard'
 import PageButton from './components/page-button'
@@ -228,7 +228,7 @@ export function Pagination({
       <Button
         label="Previous"
         buttonType={Button.ButtonType.link}
-        icon={<ChevronLeftOutline />}
+        icon={<HiOutlineChevronLeft />}
         disabled={selected === 1}
         onClick={handleDecrement}
       />
@@ -236,7 +236,7 @@ export function Pagination({
       <Button
         label="Next"
         buttonType={Button.ButtonType.link}
-        icon={<ChevronRightOutline />}
+        icon={<HiOutlineChevronRight />}
         iconPlacement={Button.IconPlacement.afterLabel}
         disabled={selected === totalPages}
         onClick={handleIncrement}

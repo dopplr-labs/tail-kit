@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { hideVisually } from 'polished'
-import { CheckOutline } from 'components/icons'
+import { HiOutlineCheck } from 'react-icons/hi'
 import useSyncedState from 'hooks/use-synced-states'
 
 /**
@@ -75,7 +75,7 @@ export const Checkbox = forwardRef(
           )}
         >
           {checkedState === true ? (
-            <CheckOutline className="w-4 h-4" />
+            <HiOutlineCheck className="w-4 h-4" />
           ) : checkedState === 'indeterminate' ? (
             <div className="w-2 h-2 bg-blue-500" />
           ) : null}

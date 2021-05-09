@@ -9,11 +9,11 @@ import React, {
 import { createPortal } from 'react-dom'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import {
-  CheckCircleOutline,
-  ExclamationCircleOutline,
-  InformationCircleOutline,
-  XCircleOutline,
-} from 'components/icons'
+  HiOutlineInformationCircle,
+  HiOutlineCheckCircle,
+  HiOutlineExclamationCircle,
+  HiOutlineXCircle,
+} from 'react-icons/hi'
 import { ButtonSpinner } from 'components/button/button-spinner'
 import { MessageContext } from './message-context'
 
@@ -163,31 +163,31 @@ function Message({ message }: MessageProps) {
       case MessageTypes.INFO:
         return (
           <div className="text-blue-500 ">
-            <InformationCircleOutline />
+            <HiOutlineInformationCircle className="w-6 h-6" />
           </div>
         )
       case MessageTypes.SUCCESS:
         return (
           <div className="flex-shrink-0 text-green-500">
-            <CheckCircleOutline />
+            <HiOutlineCheckCircle className="w-6 h-6" />
           </div>
         )
       case MessageTypes.WARNING:
         return (
           <div className="flex-shrink-0 text-yellow-300">
-            <ExclamationCircleOutline />
+            <HiOutlineExclamationCircle className="w-6 h-6" />
           </div>
         )
       case MessageTypes.ERROR:
         return (
           <div className="flex-shrink-0 text-red-500">
-            <XCircleOutline />
+            <HiOutlineXCircle className="w-6 h-6" />
           </div>
         )
       case MessageTypes.LOADING:
         return (
           <div className="flex-shrink-0 text-gray-500">
-            <ButtonSpinner />
+            <ButtonSpinner className="w-6 h-6" />
           </div>
         )
       default:

@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useReducer, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 import { useRect } from '@reach/rect'
-import { SelectorOutline, XCircleSolid } from 'components/icons'
+import { HiOutlineSelector, HiXCircle } from 'react-icons/hi'
 import Portal from 'components/portal'
 import { scrollIntoView } from 'utils/dom'
 import useOutsideClick from 'hooks/use-outside-click'
@@ -260,11 +260,11 @@ export function Select({
             onClick={reset}
             data-testid="clear-all"
           >
-            <XCircleSolid className="w-5 h-5 text-gray-400" />
+            <HiXCircle className="w-5 h-5 text-gray-400" />
           </div>
         ) : (
           <span className="py-0.5">
-            <SelectorOutline className="w-5 h-5 text-gray-400" />
+            <HiOutlineSelector className="w-5 h-5 text-gray-400" />
           </span>
         )}
       </button>

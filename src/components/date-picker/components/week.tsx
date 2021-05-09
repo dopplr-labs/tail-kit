@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 import dayjs from 'dayjs'
-import { range } from 'lodash-es'
+import range from 'lodash/range'
 import { isDateDisabled } from '../utils'
 
 export type WeekProps = {

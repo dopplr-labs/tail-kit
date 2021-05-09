@@ -1,10 +1,6 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import {
-  BookmarkSolid,
-  BellSolid,
-  ExclamationCircleSolid,
-} from 'components/icons'
+import { HiBookmark, HiBell, HiExclamationCircle } from 'react-icons/hi'
 import { Alert, AlertType } from './alert'
 import { AlertButton } from './alert-button'
 
@@ -60,7 +56,7 @@ export function AlertWithCustomIcon() {
   return (
     <Alert
       type={AlertType.success}
-      icon={<BookmarkSolid />}
+      icon={<HiBookmark />}
       title="This webpage is now bookmarked"
     />
   )
@@ -80,7 +76,7 @@ export function AlertWithAction() {
     <Alert
       title="You can change the title by changing the Title knob"
       content={content}
-      icon={<BellSolid />}
+      icon={<HiBell />}
       closable
       actions={
         <>
@@ -110,7 +106,7 @@ export function ErrorAlertWithAction() {
       title="There were 2 errors with your submission"
       content={content}
       closable
-      icon={<ExclamationCircleSolid />}
+      icon={<HiExclamationCircle />}
       actions={
         <>
           <Alert.AlertButton

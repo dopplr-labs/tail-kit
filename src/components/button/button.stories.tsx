@@ -1,13 +1,13 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import {
-  ShieldCheckSolid,
-  PlusOutline,
-  CheckCircleSolid,
-  TrashOutline,
-  PencilAltOutline,
-  ChevronRightOutline,
-} from 'components/icons'
+  HiShieldCheck,
+  HiOutlinePlus,
+  HiCheckCircle,
+  HiOutlineTrash,
+  HiOutlinePencilAlt,
+  HiOutlineChevronRight,
+} from 'react-icons/hi'
 import { Button } from './button'
 
 export default {
@@ -20,15 +20,15 @@ export function DefaultButton() {
 }
 
 export function DefaultButtonWithIcon() {
-  return <Button label="Update Password" icon={<ShieldCheckSolid />} />
+  return <Button label="Update Password" icon={<HiShieldCheck />} />
 }
 
 export function DefaultIconButton() {
-  return <Button icon={<PlusOutline />} />
+  return <Button icon={<HiOutlinePlus />} />
 }
 
 export function DefaultIconLoadingButton() {
-  return <Button icon={<PlusOutline />} loading />
+  return <Button icon={<HiOutlinePlus />} loading />
 }
 
 export function DefaultLoadingButton() {
@@ -39,7 +39,7 @@ export function DefaultButtonWithIconAfterLabel() {
   return (
     <Button
       label="Next Step"
-      icon={<ChevronRightOutline />}
+      icon={<HiOutlineChevronRight />}
       iconPlacement={Button.IconPlacement.afterLabel}
     />
   )
@@ -56,7 +56,7 @@ export function PrimaryButtonWithIcon() {
     <Button
       buttonType={Button.ButtonType.primary}
       label="Create Account"
-      icon={<CheckCircleSolid />}
+      icon={<HiCheckCircle />}
     />
   )
 }
@@ -82,7 +82,7 @@ export function DangerButtonWithIcon() {
     <Button
       buttonType={Button.ButtonType.danger}
       label="Delete User"
-      icon={<TrashOutline />}
+      icon={<HiOutlineTrash />}
     />
   )
 }
@@ -102,7 +102,7 @@ export function LinkButtonWithIcon() {
     <Button
       buttonType={Button.ButtonType.link}
       label="Edit Post"
-      icon={<PencilAltOutline />}
+      icon={<HiOutlinePencilAlt />}
     />
   )
 }
