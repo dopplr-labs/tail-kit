@@ -3,7 +3,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import includePaths from 'rollup-plugin-includepaths'
 import ignoreImport from 'rollup-plugin-ignore-import'
-import { uglify } from 'rollup-plugin-uglify'
+import { terser } from 'rollup-plugin-terser'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 
 export default {
@@ -18,7 +18,7 @@ export default {
   plugins: [
     peerDepsExternal(),
 
-    uglify(),
+    terser(),
 
     commonjs(),
 
