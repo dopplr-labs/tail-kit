@@ -252,7 +252,7 @@ export function Pagination({
         <div className="flex items-center text-sm gap-x-2">
           <span>Go to</span>
           <input
-            className="w-16 px-3 py-2 border rounded-md focus:outline-none focus:shadow-outline"
+            className="w-16 px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
             value={inputValue}
             onChange={handleChange}
             onBlur={handlePageJump}

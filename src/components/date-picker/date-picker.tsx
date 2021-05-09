@@ -131,7 +131,7 @@ export function DatePicker({
   return (
     <div className={clsx(className)} style={style}>
       <button
-        className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-300 bg-white border rounded-md focus:outline-none focus:shadow-outline"
+        className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-300 bg-white border rounded-md focus:outline-none focus:ring-2"
         ref={trigger}
         onClick={() => {
           dispatch({ type: ActionType.TOGGLE_OPEN })
@@ -198,7 +198,7 @@ export function DatePicker({
           <div className="flex items-center px-4 py-2 border-b border-gray-100">
             <button
               aria-label="move to previous year"
-              className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
+              className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:ring-2 hover:bg-gray-50"
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_PREV_YEAR })
               }}
@@ -207,7 +207,7 @@ export function DatePicker({
             </button>
             <button
               aria-label="move to previous month"
-              className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
+              className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:ring-2 hover:bg-gray-50"
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_PREV_MONTH })
               }}
@@ -221,7 +221,7 @@ export function DatePicker({
             <div className="flex-1" />
             <button
               aria-label="move to next month"
-              className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
+              className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:ring-2 hover:bg-gray-50"
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_NEXT_MONTH })
               }}
@@ -230,7 +230,7 @@ export function DatePicker({
             </button>
             <button
               aria-label="move to next year"
-              className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-50"
+              className="p-1 mr-1 text-gray-400 transition-colors duration-100 rounded-md focus:outline-none focus:ring-2 hover:bg-gray-50"
               onClick={() => {
                 dispatch({ type: ActionType.MOVE_TO_NEXT_YEAR })
               }}
@@ -266,7 +266,7 @@ export function DatePicker({
           </div>
           <button
             className={clsx(
-              'w-full px-4 py-2 text-sm font-medium focus:shadow-outline rounded-b-md focus:outline-none',
+              'w-full px-4 py-2 text-sm font-medium focus:ring-2 rounded-b-md focus:outline-none',
               isTodayDisabled
                 ? 'text-gray-400 cursor-not-allowed'
                 : 'text-blue-500',
