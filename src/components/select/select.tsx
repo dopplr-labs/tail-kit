@@ -227,7 +227,7 @@ export function Select({
     <>
       <button
         className={clsx(
-          'flex items-center px-3 py-2 space-x-3 text-sm border rounded-md focus:outline-none focus:shadow-outline',
+          'flex items-center px-3 py-2 space-x-3 text-sm border rounded-md focus:outline-none focus:ring-2',
           disabled
             ? 'bg-gray-100 cursor-not-allowed text-gray-400'
             : 'text-gray-800 ',

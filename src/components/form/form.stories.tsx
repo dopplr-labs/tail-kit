@@ -170,7 +170,7 @@ export function TwoColumnForm() {
         </div>
         <Form.Item name="pastExperience" label="Past Experience">
           <textarea
-            className="w-full h-24 px-3 py-2 text-sm border rounded-md focus:outline-none focus:shadow-outline"
+            className="w-full h-24 px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2"
             placeholder="Please write employee's previous experience description"
           />
         </Form.Item>
@@ -331,7 +331,7 @@ export function AsyncForm() {
           </Form.Item>
           <Form.Item name="message" label="Message">
             <textarea
-              className="w-full h-24 px-3 py-2 text-sm border rounded-md focus:outline-none focus:shadow-outline"
+              className="w-full h-24 px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2"
               placeholder="Please write employee's previous experience description"
             />
           </Form.Item>

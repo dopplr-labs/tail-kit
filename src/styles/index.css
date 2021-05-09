@@ -9,11 +9,11 @@ body {
 }
 
 .checkbox:focus-within > .checkbox-icon-container {
-  @apply shadow-outline;
+  @apply ring-2 ring-blue-50;
 }
 
 .checkbox:focus-within > .checkbox-icon-container.error {
-  @apply shadow-outline-red;
+  @apply ring-2 ring-red-50;
 }
 
 input[type='number']::-webkit-inner-spin-button,
