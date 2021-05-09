@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import Button from 'components/button'
 import Radio from 'components/radio'
 import Form from 'components/form'
-import { PlusOutline } from 'components/icons'
+import { HiOutlinePlus } from 'react-icons/hi'
 import Input from 'components/input'
 import Select from 'components/select'
 import { Drawer, DrawerPlacement } from './drawer'
@@ -120,7 +120,7 @@ export function SubmitFormInDrawer() {
     <>
       <Button
         label="New Employee"
-        icon={<PlusOutline />}
+        icon={<HiOutlinePlus />}
         onClick={showDrawer}
       />
       <Drawer

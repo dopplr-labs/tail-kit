@@ -1,12 +1,12 @@
 import React, { useMemo, cloneElement } from 'react'
 import clsx from 'clsx'
 import {
-  InformationCircleSolid,
-  CheckCircleSolid,
-  XCircleSolid,
-  ExclamationSolid,
-  XSolid,
-} from 'components/icons'
+  HiInformationCircle,
+  HiCheckCircle,
+  HiXCircle,
+  HiExclamation,
+  HiX,
+} from 'react-icons/hi'
 import { AlertButton } from './alert-button'
 import { AlertContext } from './alert-context'
 
@@ -79,28 +79,28 @@ export function Alert({
 
     if (type === AlertType.info) {
       return (
-        <InformationCircleSolid
+        <HiInformationCircle
           className={`w-5 h-5 text-${baseColor}-400`}
           data-testid="info-icon"
         />
       )
     } else if (type === AlertType.success) {
       return (
-        <CheckCircleSolid
+        <HiCheckCircle
           className={`w-5 h-5 text-${baseColor}-400`}
           data-testid="success-icon"
         />
       )
     } else if (type === AlertType.warning) {
       return (
-        <ExclamationSolid
+        <HiExclamation
           className={`w-5 h-5 text-${baseColor}-400`}
           data-testid="warning-icon"
         />
       )
     } else if (type === AlertType.error) {
       return (
-        <XCircleSolid
+        <HiXCircle
           className={`w-5 h-5 text-${baseColor}-400`}
           data-testid="error-icon"
         />
@@ -134,7 +134,7 @@ export function Alert({
           onClick={onClose}
           data-testid="close-button"
         >
-          <XSolid className={clsx(`w-4 h-4 text-${baseColor}-700`)} />
+          <HiX className={clsx(`w-4 h-4 text-${baseColor}-700`)} />
         </button>
       ) : null}
     </div>

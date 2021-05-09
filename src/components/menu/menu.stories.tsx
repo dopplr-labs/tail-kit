@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import Button from 'components/button'
 import {
-  ShareOutline,
-  PencilAltOutline,
-  TrashOutline,
-  ChevronDownOutline,
-  ChevronUpOutline,
-  DotsVerticalOutline,
-  LogoutOutline,
-  UserCircleOutline,
-  CogOutline,
-} from 'components/icons'
+  HiOutlineShare,
+  HiOutlinePencilAlt,
+  HiOutlineTrash,
+  HiOutlineChevronDown,
+  HiOutlineChevronUp,
+  HiOutlineDotsVertical,
+  HiOutlineLogout,
+  HiOutlineUserCircle,
+  HiOutlineCog,
+} from 'react-icons/hi'
 import Modal from 'components/modal'
 import { Menu } from './menu'
 import './menu.stories.css'
@@ -24,32 +24,32 @@ export default {
 export function DropdownMenu() {
   const menuContent = (
     <>
-      <Menu.MenuItem label="Share Blog" icon={<ShareOutline />} />
-      <Menu.MenuItem label="Edit Blog" icon={<PencilAltOutline />} />
+      <Menu.MenuItem label="Share Blog" icon={<HiOutlineShare />} />
+      <Menu.MenuItem label="Edit Blog" icon={<HiOutlinePencilAlt />} />
       <Menu.MenuDivider />
-      <Menu.MenuItem label="Delete Blog" icon={<TrashOutline />} />
+      <Menu.MenuItem label="Delete Blog" icon={<HiOutlineTrash />} />
     </>
   )
 
   return (
     <div className="relative w-full h-80 all-menus-container">
       <div className="absolute top-0 left-0">
-        <Menu trigger={<Button icon={<ChevronDownOutline />} />}>
+        <Menu trigger={<Button icon={<HiOutlineChevronDown />} />}>
           {menuContent}
         </Menu>
       </div>
       <div className="absolute bottom-0 left-0">
-        <Menu trigger={<Button icon={<ChevronUpOutline />} />}>
+        <Menu trigger={<Button icon={<HiOutlineChevronUp />} />}>
           {menuContent}
         </Menu>
       </div>
       <div className="absolute top-0 right-0">
-        <Menu trigger={<Button icon={<ChevronDownOutline />} />}>
+        <Menu trigger={<Button icon={<HiOutlineChevronDown />} />}>
           {menuContent}
         </Menu>
       </div>
       <div className="absolute bottom-0 right-0">
-        <Menu trigger={<Button icon={<ChevronUpOutline />} />}>
+        <Menu trigger={<Button icon={<HiOutlineChevronUp />} />}>
           {menuContent}
         </Menu>
       </div>
@@ -83,12 +83,12 @@ export function MenuWithinAModal() {
           nisi.
         </div>
         <Menu
-          trigger={<Button icon={<ChevronDownOutline />} label="Show Menu" />}
+          trigger={<Button icon={<HiOutlineChevronDown />} label="Show Menu" />}
         >
-          <Menu.MenuItem label="Share Blog" icon={<ShareOutline />} />
-          <Menu.MenuItem label="Edit Blog" icon={<PencilAltOutline />} />
+          <Menu.MenuItem label="Share Blog" icon={<HiOutlineShare />} />
+          <Menu.MenuItem label="Edit Blog" icon={<HiOutlinePencilAlt />} />
           <Menu.MenuDivider />
-          <Menu.MenuItem label="Delete Blog" icon={<TrashOutline />} />
+          <Menu.MenuItem label="Delete Blog" icon={<HiOutlineTrash />} />
         </Menu>
       </Modal>
     </>
@@ -101,17 +101,17 @@ export function MenuWithExplicitPlacement() {
       <Menu
         trigger={
           <Button
-            icon={<DotsVerticalOutline />}
+            icon={<HiOutlineDotsVertical />}
             buttonType={Button.ButtonType.link}
           />
         }
         horizontalPlacement={Menu.HorizontalPlacement.right}
         verticalPlacement={Menu.VerticalPlacement.top}
       >
-        <Menu.MenuItem label="Profile" icon={<UserCircleOutline />} />
-        <Menu.MenuItem label="Settings" icon={<CogOutline />} />
+        <Menu.MenuItem label="Profile" icon={<HiOutlineUserCircle />} />
+        <Menu.MenuItem label="Settings" icon={<HiOutlineCog />} />
         <Menu.MenuDivider />
-        <Menu.MenuItem label="Logout" icon={<LogoutOutline />} />
+        <Menu.MenuItem label="Logout" icon={<HiOutlineLogout />} />
       </Menu>
     </div>
   )

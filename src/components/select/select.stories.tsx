@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import {
-  BeakerOutline,
-  BookOpenOutline,
-  CalculatorOutline,
-  CalendarOutline,
-  ClipboardOutline,
-  DatabaseOutline,
-} from 'components/icons'
+  HiOutlineBeaker,
+  HiOutlineBookOpen,
+  HiOutlineCalculator,
+  HiOutlineCalendar,
+  HiOutlineClipboard,
+  HiOutlineDatabase,
+} from 'react-icons/hi'
 import { Select } from './select'
 
 export default {
@@ -103,18 +103,30 @@ export function SelectWithIcon() {
         placeholder="Select Icon"
         className="w-64"
         options={[
-          { value: 'beaker', label: 'Beaker', icon: <BeakerOutline /> },
+          {
+            value: 'beaker',
+            label: 'Beaker',
+            icon: <HiOutlineBeaker className="w-6 h-6" />,
+          },
           {
             value: 'calculator',
             label: 'Calculator',
-            icon: <CalculatorOutline />,
+            icon: <HiOutlineCalculator className="w-6 h-6" />,
           },
-          { value: 'book-open', label: 'Book Open', icon: <BookOpenOutline /> },
-          { value: 'calendar', label: 'Calendar', icon: <CalendarOutline /> },
+          {
+            value: 'book-open',
+            label: 'Book Open',
+            icon: <HiOutlineBookOpen className="w-6 h-6" />,
+          },
+          {
+            value: 'calendar',
+            label: 'Calendar',
+            icon: <HiOutlineCalendar className="w-6 h-6" />,
+          },
           {
             value: 'clipboard',
             label: 'Clipboard',
-            icon: <ClipboardOutline />,
+            icon: <HiOutlineClipboard className="w-6 h-6" />,
           },
         ]}
       />
@@ -206,26 +218,34 @@ export function SelectWithDisabledOptions() {
         {
           value: 'beaker',
           label: 'Beaker',
-          icon: <BeakerOutline />,
+          icon: <HiOutlineBeaker className="w-6 h-6" />,
           disabled: true,
         },
         {
           value: 'calculator',
           label: 'Calculator',
-          icon: <CalculatorOutline />,
+          icon: <HiOutlineCalculator className="w-6 h-6" />,
         },
         {
           value: 'book-open',
           label: 'Book Open',
-          icon: <BookOpenOutline />,
+          icon: <HiOutlineBookOpen className="w-6 h-6" />,
           disabled: true,
         },
-        { value: 'calendar', label: 'Calendar', icon: <CalendarOutline /> },
-        { value: 'database', label: 'Database', icon: <DatabaseOutline /> },
+        {
+          value: 'calendar',
+          label: 'Calendar',
+          icon: <HiOutlineCalendar className="w-6 h-6" />,
+        },
+        {
+          value: 'database',
+          label: 'Database',
+          icon: <HiOutlineDatabase className="w-6 h-6" />,
+        },
         {
           value: 'clipboard',
           label: 'Clipboard',
-          icon: <ClipboardOutline />,
+          icon: <HiOutlineClipboard className="w-6 h-6" />,
           disabled: true,
         },
       ]}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import { AtSymbolOutline, KeyOutline } from 'components/icons'
+import { HiOutlineAtSymbol, HiOutlineKey } from 'react-icons/hi'
 import Button from 'components/button'
 import { Input } from './input'
 
@@ -16,8 +16,8 @@ export function DefaultInput() {
 export function InputWithIcon() {
   return (
     <div className="space-y-4 w-80">
-      <Input placeholder="Email" icon={<AtSymbolOutline />} />
-      <Input placeholder="Password" icon={<KeyOutline />} type="password" />
+      <Input placeholder="Email" icon={<HiOutlineAtSymbol />} />
+      <Input placeholder="Password" icon={<HiOutlineKey />} type="password" />
       <Button
         label="Login"
         className="w-full"

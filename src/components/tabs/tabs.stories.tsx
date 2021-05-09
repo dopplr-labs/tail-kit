@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import {
-  CreditCardSolid,
-  OfficeBuildingSolid,
-  UserCircleSolid,
-  UsersSolid,
-} from 'components/icons'
+  HiCreditCard,
+  HiOfficeBuilding,
+  HiUserCircle,
+  HiUsers,
+} from 'react-icons/hi'
 import Select from 'components/select'
 import { range } from 'lodash-es'
 import { Tabs } from './tabs'
@@ -33,26 +33,26 @@ const tabsList = [
   {
     title: 'My Account',
     content: 'Account Details',
-    icon: <UserCircleSolid />,
+    icon: <HiUserCircle className="w-6 h-6" />,
     key: 'my-account',
   },
   {
     title: 'Company',
     content: 'Company Details',
     key: 'company',
-    icon: <OfficeBuildingSolid />,
+    icon: <HiOfficeBuilding className="w-6 h-6" />,
   },
   {
     title: 'Team Members',
     content: 'Team Members Details',
     key: 'team-members',
-    icon: <UsersSolid />,
+    icon: <HiUsers className="w-6 h-6" />,
   },
   {
     title: 'Billing',
     content: 'Billing Details',
     key: 'billing',
-    icon: <CreditCardSolid />,
+    icon: <HiCreditCard className="w-6 h-6" />,
   },
 ]
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import { CheckOutline } from 'components/icons'
+import { HiOutlineCheck } from 'react-icons/hi'
 import { OptionType } from '../types'
 
 type SelectOptionProps = Omit<
@@ -40,7 +40,7 @@ export function SelectOption({
       {option.icon}
       <span className="truncate whitespace-no-wrap">{option.label}</span>
       <span className="flex-1" />
-      {selected ? <CheckOutline className="w-4 h-4" /> : null}
+      {selected ? <HiOutlineCheck className="w-4 h-4" /> : null}
     </li>
   )
 }

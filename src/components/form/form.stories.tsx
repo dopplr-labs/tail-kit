@@ -7,11 +7,11 @@ import Select from 'components/select'
 import Checkbox from 'components/checkbox'
 import Switch from 'components/switch'
 import {
-  AtSymbolOutline,
-  FingerPrintOutline,
-  KeyOutline,
-  UserOutline,
-} from 'components/icons'
+  HiOutlineAtSymbol,
+  HiOutlineFingerPrint,
+  HiOutlineKey,
+  HiOutlineUser,
+} from 'react-icons/hi'
 import { RadioGroup } from 'components/radio/radio-group'
 import Modal from 'components/modal'
 import Form from './index'
@@ -42,7 +42,7 @@ export function Basic() {
         name="email"
         rules={[{ required: true, message: 'Please enter your email address' }]}
       >
-        <Input placeholder="Enter your email" icon={<AtSymbolOutline />} />
+        <Input placeholder="Enter your email" icon={<HiOutlineAtSymbol />} />
       </Form.Item>
       <Form.Item
         label="Password"
@@ -55,7 +55,7 @@ export function Basic() {
           },
         ]}
       >
-        <Input placeholder="Password" icon={<KeyOutline />} type="password" />
+        <Input placeholder="Password" icon={<HiOutlineKey />} type="password" />
       </Form.Item>
       <Form.Item name="rememberMe" {...tailLayout} valuePropName="checked">
         <Checkbox label="Remember Me" />
@@ -274,7 +274,7 @@ export function InlineLoginForm() {
             name="username"
             rules={[{ required: true, message: 'Please enter your username' }]}
           >
-            <Input placeholder="Username" icon={<UserOutline />} />
+            <Input placeholder="Username" icon={<HiOutlineUser />} />
           </Form.Item>
           <Form.Item
             name="password"
@@ -283,7 +283,7 @@ export function InlineLoginForm() {
             <Input
               placeholder="Password"
               type="password"
-              icon={<FingerPrintOutline />}
+              icon={<HiOutlineFingerPrint />}
             />
           </Form.Item>
           <Button

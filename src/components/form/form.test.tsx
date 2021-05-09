@@ -9,7 +9,7 @@ import Form from './index'
 
 test('render form correctly', () => {
   render(
-    <Form>
+    <Form defaultValues={{ email: '' }}>
       <Form.Item name="email" label="Email">
         <Input />
       </Form.Item>
@@ -20,7 +20,7 @@ test('render form correctly', () => {
 
 test('inline layout form renders correctly', () => {
   render(
-    <Form layout={Form.Layout.INLINE}>
+    <Form layout={Form.Layout.INLINE} defaultValues={{ email: '' }}>
       <Form.Item name="email" label="Email">
         <Input />
       </Form.Item>
@@ -33,7 +33,7 @@ test('inline layout form renders correctly', () => {
 
 test('vertical layout form renders correctly', () => {
   render(
-    <Form layout={Form.Layout.VERTICAL}>
+    <Form layout={Form.Layout.VERTICAL} defaultValues={{ email: '' }}>
       <Form.Item name="email" label="Email">
         <Input />
       </Form.Item>
@@ -45,7 +45,7 @@ test('vertical layout form renders correctly', () => {
 test('error message renders correctly', async () => {
   const onSubmit = jest.fn((data) => data)
   render(
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} defaultValues={{ email: '' }}>
       <Form.Item
         name="email"
         rules={[{ required: true, message: 'Please enter your email address' }]}
@@ -70,7 +70,7 @@ test('onChange of input elements works correctly with form', () => {
     return checkedValues
   })
   render(
-    <Form>
+    <Form defaultValues={{ checkbox: ['hello'] }}>
       <Form.Item name="checkbox">
         <CheckboxGroup
           options={['hello', 'world']}
@@ -88,7 +88,7 @@ test('onChange of input elements works correctly with form', () => {
 test('checkbox works correctly in form', async () => {
   const onSubmit = jest.fn((data) => data)
   render(
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} defaultValues={{ checkbox: false }}>
       <Form.Item name="checkbox" valuePropName="checked">
         <Checkbox label="Remember me" />
       </Form.Item>
@@ -105,7 +105,7 @@ test('checkbox works correctly in form', async () => {
 
 test('children as function works correctly with form', async () => {
   render(
-    <Form>
+    <Form defaultValues={{ email: '' }}>
       {({ isDirty, isValid }: { isDirty: boolean; isValid: boolean }) => (
         <>
           <Form.Item
@@ -140,7 +140,10 @@ test('Layouting works correctly for form', () => {
     labelCol: { span: 1, offset: 1 },
   }
   render(
-    <Form {...formLayout} defaultValues={{ rememberMe: true }}>
+    <Form
+      {...formLayout}
+      defaultValues={{ rememberMe: true, email: '', password: '' }}
+    >
       <Form.Item name="email" label="Email">
         <Input />
       </Form.Item>
@@ -163,7 +166,7 @@ test('Layouting works correctly for form', () => {
 test('using form-item without parent component should throw error', () => {
   const renderItem = () => {
     render(
-      <Form.Item>
+      <Form.Item name="email">
         <Input />
       </Form.Item>,
     )
@@ -175,7 +178,7 @@ test('using form-item without parent component should throw error', () => {
 
 test('extra content renders correctly in form item', () => {
   render(
-    <Form>
+    <Form defaultValues={{ email: '' }}>
       <Form.Item
         name="email"
         label="Email"
@@ -192,7 +195,7 @@ test('extra content renders correctly in form item', () => {
 
 test('required mark renders correctly for required fields', () => {
   render(
-    <Form>
+    <Form defaultValues={{ email: '' }}>
       <Form.Item
         name="email"
         label="Email"

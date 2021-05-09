@@ -1,6 +1,6 @@
 import React, { forwardRef, useMemo } from 'react'
 import clsx from 'clsx'
-import { ChevronDownOutline, ChevronUpOutline } from 'components/icons'
+import { HiOutlineChevronDown, HiOutlineChevronUp } from 'react-icons/hi'
 import useSyncedState from 'hooks/use-synced-states'
 import useLongPress from 'hooks/use-long-press'
 
@@ -154,7 +154,7 @@ export const InputNumber = forwardRef(
             ref={incrementRef}
             onClick={increment}
           >
-            <ChevronUpOutline className="w-4 h-4" />
+            <HiOutlineChevronUp className="w-4 h-4" />
           </button>
           <button
             className={clsx(
@@ -164,7 +164,7 @@ export const InputNumber = forwardRef(
             ref={decrementRef}
             onClick={decrement}
           >
-            <ChevronDownOutline className="w-4 h-4" />
+            <HiOutlineChevronDown className="w-4 h-4" />
           </button>
         </div>
       </div>
