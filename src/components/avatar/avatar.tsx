@@ -39,8 +39,6 @@ export function Avatar({
 
   const avatarSize = useMemo(() => {
     switch (preferredSize) {
-      case 'default':
-        return 'w-8 h-8'
       case 'large':
         return 'w-12 h-12'
       case 'small':
@@ -52,8 +50,6 @@ export function Avatar({
 
   const iconSize = useMemo(() => {
     switch (preferredSize) {
-      case 'default':
-        return 'w-5 h-5'
       case 'large':
         return 'w-8 h-8'
       case 'small':
