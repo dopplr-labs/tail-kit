@@ -24,6 +24,10 @@ export type AvatarProps = {
   style?: React.CSSProperties
 }
 
+/**
+ * Avatar can be used to represent users, collaborators or objects.
+ * You can render `image`, `icon` or `text` inside Avatars.
+ */
 export function Avatar({
   alt,
   children,
