@@ -3,8 +3,8 @@ import { FiFigma } from 'react-icons/fi'
 import { FaRegComment } from 'react-icons/fa'
 import { AiOutlineEdit, AiOutlineFontSize } from 'react-icons/ai'
 import { IoMdHand } from 'react-icons/io'
+import { HiAnnotation, HiOutlineUser } from 'react-icons/hi'
 import { Meta } from '@storybook/react/types-6-0'
-import { AnnotationSolid, UserOutline } from 'components/icons'
 import Button from 'components/button'
 import Tooltip from 'components/tooltip'
 import Avatar from '.'
@@ -20,14 +20,14 @@ export function Basic() {
   return (
     <div className="space-y-4">
       <div className="flex items-center space-x-4">
-        <Avatar size="large" icon={<UserOutline />} />
-        <Avatar icon={<UserOutline />} />
-        <Avatar size="small" icon={<UserOutline />} />
+        <Avatar size="large" icon={<HiOutlineUser />} />
+        <Avatar icon={<HiOutlineUser />} />
+        <Avatar size="small" icon={<HiOutlineUser />} />
       </div>
       <div className="flex items-center space-x-4">
-        <Avatar shape="square" size="large" icon={<UserOutline />} />
-        <Avatar shape="square" icon={<UserOutline />} />
-        <Avatar shape="square" size="small" icon={<UserOutline />} />
+        <Avatar shape="square" size="large" icon={<HiOutlineUser />} />
+        <Avatar shape="square" icon={<HiOutlineUser />} />
+        <Avatar shape="square" size="small" icon={<HiOutlineUser />} />
       </div>
     </div>
   )
@@ -36,14 +36,14 @@ export function Basic() {
 export function AvatarTypes() {
   return (
     <div className="flex items-center space-x-4">
-      <Avatar icon={<UserOutline />} />
+      <Avatar icon={<HiOutlineUser />} />
       <Avatar>U</Avatar>
       <Avatar size="large" className="text-sm">
         USER
       </Avatar>
       <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
       <Avatar className="font-semibold text-red-400 bg-red-100">U</Avatar>
-      <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
+      <Avatar style={{ backgroundColor: '#87d068' }} icon={<HiOutlineUser />} />
     </div>
   )
 }
@@ -59,12 +59,12 @@ export function AvatarGroupDemo() {
         <Tooltip title="Unknown User" placement="bottom">
           <Avatar
             style={{ backgroundColor: '#87d068' }}
-            icon={<UserOutline />}
+            icon={<HiOutlineUser />}
           />
         </Tooltip>
         <Avatar
           style={{ backgroundColor: '#1890ff' }}
-          icon={<AnnotationSolid />}
+          icon={<HiAnnotation />}
         />
       </Avatar.Group>
       <div className="my-4 border-t" />
@@ -74,10 +74,13 @@ export function AvatarGroupDemo() {
       >
         <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
         <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-        <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
+        <Avatar
+          style={{ backgroundColor: '#87d068' }}
+          icon={<HiOutlineUser />}
+        />
         <Avatar
           style={{ backgroundColor: '#1890ff' }}
-          icon={<AnnotationSolid />}
+          icon={<HiAnnotation />}
         />
       </Avatar.Group>
       <div className="my-4 border-t" />
@@ -92,12 +95,12 @@ export function AvatarGroupDemo() {
         <Tooltip title="Brad Gibson" placement="bottom">
           <Avatar
             style={{ backgroundColor: '#87d068' }}
-            icon={<UserOutline />}
+            icon={<HiOutlineUser />}
           />
         </Tooltip>
         <Avatar
           style={{ backgroundColor: '#1890ff' }}
-          icon={<AnnotationSolid />}
+          icon={<HiAnnotation />}
         />
       </Avatar.Group>
     </>
@@ -114,12 +117,12 @@ export function AvatarsInNavbar() {
     {
       name: 'Marcus Brownlee',
       style: { backgroundColor: '#87d068' },
-      icon: <UserOutline />,
+      icon: <HiOutlineUser />,
     },
     {
       name: 'Johnny Harris',
       style: { backgroundColor: '#1890ff' },
-      icon: <AnnotationSolid />,
+      icon: <HiAnnotation />,
     },
   ]
   return (

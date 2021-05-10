@@ -1,8 +1,8 @@
 import React from 'react'
 import { AiOutlineDown } from 'react-icons/ai'
+import { HiAnnotation, HiOutlineUser } from 'react-icons/hi'
 import { render, screen } from '@testing-library/react'
 import Tooltip from 'components/tooltip'
-import { AnnotationSolid, UserOutline } from 'components/icons'
 import Avatar from '.'
 
 test('render avatar with children correctly', () => {
@@ -62,12 +62,12 @@ test('render avatar-group with few hidden avatars correctly', () => {
       <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
       <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
       <Tooltip title="Brad Gibson" placement="bottom">
-        <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
+        <Avatar
+          style={{ backgroundColor: '#87d068' }}
+          icon={<HiOutlineUser />}
+        />
       </Tooltip>
-      <Avatar
-        style={{ backgroundColor: '#1890ff' }}
-        icon={<AnnotationSolid />}
-      />
+      <Avatar style={{ backgroundColor: '#1890ff' }} icon={<HiAnnotation />} />
     </Avatar.Group>,
   )
   expect(screen.getByText('+2')).toBeInTheDocument()
@@ -83,11 +83,8 @@ test('render avatar-group correctly', () => {
     <Avatar.Group>
       <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
       <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-      <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutline />} />
-      <Avatar
-        style={{ backgroundColor: '#1890ff' }}
-        icon={<AnnotationSolid />}
-      />
+      <Avatar style={{ backgroundColor: '#87d068' }} icon={<HiOutlineUser />} />
+      <Avatar style={{ backgroundColor: '#1890ff' }} icon={<HiAnnotation />} />
     </Avatar.Group>,
   )
 })
