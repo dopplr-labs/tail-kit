@@ -1,6 +1,7 @@
 import './styles/index.css'
 export * from './components/icons'
 export { default as Alert } from './components/alert'
+export { default as Avatar } from './components/avatar'
 export { default as Button } from './components/button'
 export { default as Checkbox } from './components/checkbox'
 export { default as DatePicker } from './components/date-picker'
