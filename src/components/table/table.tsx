@@ -6,11 +6,11 @@ export type TableProps = {
     title: string
     dataIndex: string
     key: string
+    render?: (cellData: any) => React.ReactElement
   }>
 }
 
 export function Table({ dataSource, columns }: TableProps) {
-  const dataIndex = columns.map((val) => val.dataIndex)
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -30,16 +30,26 @@ export function Table({ dataSource, columns }: TableProps) {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {dataSource.map((val: any) => (
-                  <tr key={val.key}>
-                    {dataIndex.map((title) => (
+                {dataSource.map((row: any) => (
+                  <tr key={row.key}>
+                    {columns.map((column) => (
+                      <td
+                        key={column.key}
+                        className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap"
+                      >
+                        {column.render
+                          ? column.render(row[column.dataIndex])
+                          : row[column.dataIndex]}
+                      </td>
+                    ))}
+                    {/* {dataIndex.map((title) => (
                       <td
                         key={title}
                         className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap"
                       >
                         {val[title]}
                       </td>
-                    ))}
+                    ))} */}
                   </tr>
                 ))}
               </tbody>
