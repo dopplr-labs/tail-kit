@@ -1,0 +1,102 @@
+{
+  "name": "@tail-kit/tail-kit",
+  "description": "UI-Kit made with tailwindcss",
+  "version": "0.1.13",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "ui-kit",
+    "tailwindcss"
+  ],
+  "scripts": {
+    "lint": "eslint src/**/*.ts src/**/*.tsx --fix",
+    "prebuild": "rimraf dist types",
+    "build-lib": "rollup --config --environment NODE_ENV:production",
+    "build-visualize": "rollup --config --environment NODE_ENV:production --visualize",
+    "build-types": "tsc --jsx react --declaration --emitDeclarationOnly --esModuleInterop --allowSyntheticDefaultImports --moduleResolution node --baseUrl src --outDir types src/index.ts",
+    "build-css": "postcss src/styles/index.css -o dist/tail-kit.css",
+    "build": "concurrently yarn:build-lib yarn:build-types yarn:build-css",
+    "postbuild": "prettier --write types/",
+    "test": "jest --watch",
+    "test:ci": "jest --ci --coverage",
+    "storybook": "start-storybook -p 6006 -s ./.storybook",
+    "build-storybook": "build-storybook -s ./.storybook",
+    "prepare": "yarn build",
+    "commit": "cz",
+    "semantic-release": "semantic-release"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn test:ci"
+    }
+  },
+  "dependencies": {
+    "@reach/rect": "^0.11.2",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@testing-library/user-event": "^12.1.3",
+    "@types/lodash-es": "^4.17.3",
+    "@types/react-transition-group": "^4.4.0",
+    "compute-scroll-into-view": "^1.0.16",
+    "polished": "^3.6.6",
+    "postcss-cli": "^8.1.0",
+    "react-transition-group": "^4.4.1",
+    "use-memo-one": "^1.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-typescript": "^6.0.0",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
+    "@tailwindcss/ui": "^0.5.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^10.4.9",
+    "@types/jest": "^26.0.10",
+    "babel-jest": "^26.3.0",
+    "babel-loader": "^8.1.0",
+    "chalk": "^4.1.0",
+    "codecov": "^3.7.2",
+    "concurrently": "^5.3.0",
+    "cssnano": "^4.1.10",
+    "jest": "^26.4.2",
+    "mz": "^2.7.0",
+    "postcss-loader": "^3.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^6.15.4",
+    "react-icons": "^4.2.0",
+    "react-is": "^16.13.1",
+    "react-test-renderer": "^16.13.1",
+    "rollup": "^2.26.5",
+    "rollup-plugin-ignore-import": "^1.3.2",
+    "rollup-plugin-includepaths": "^0.2.4",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^3.1.6",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-visualizer": "^5.5.0"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^6.15.4",
+    "react-icons": "^4.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dopplr-labs/tail-kit.git"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

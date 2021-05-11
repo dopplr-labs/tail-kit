@@ -1,6 +1,6 @@
 import { create } from '@storybook/theming/create'
 import colors from '@tailwindcss/ui/colors'
-import logo from '../assets/brand-image.png'
+import logo from '../../../assets/brand-image.png'
 
 export default create({
   base: 'light',
