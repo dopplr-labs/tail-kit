@@ -5,9 +5,9 @@ import { Table } from './table'
 export default { title: 'Data Display/Table', component: Table } as Meta
 
 export function BasicTable() {
-  const dataSource = Array.from({ length: 7 }).map((_, i) => ({
+  const dataSource = Array.from({ length: 45 }).map((_, i) => ({
     key: i.toString(),
-    name: 'Bernard Lane',
+    name: `Bernard Lane ${i}`,
     title: 'Director, Human Resources',
     email: 'bernardlane@example.com',
     role: 'Owner',

@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Pagination from 'components/pagination'
 
+/** Table Properties */
 export type TableProps = {
   dataSource: any
   columns: Array<{
@@ -8,13 +10,24 @@ export type TableProps = {
     key: string
     render?: (cellData: any) => React.ReactElement
   }>
+  showPagination?: boolean
 }
 
-export function Table({ dataSource, columns }: TableProps) {
+export function Table({
+  dataSource,
+  columns,
+  showPagination = true,
+}: TableProps) {
+  const [tableData, setTableData] = useState(dataSource.slice(0, 10))
+
+  function handleTableData(page: number, pageSize: number) {
+    setTableData(dataSource.slice(pageSize * (page - 1), pageSize * page))
+  }
+
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <div className="inline-block min-w-full py-2 space-y-4 align-middle sm:px-6 lg:px-8">
           <div className="overflow-hidden border border-gray-200 rounded-lg shadow">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -30,7 +43,7 @@ export function Table({ dataSource, columns }: TableProps) {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {dataSource.map((row: any) => (
+                {tableData.map((row: any) => (
                   <tr key={row.key}>
                     {columns.map((column) => (
                       <td
@@ -42,18 +55,18 @@ export function Table({ dataSource, columns }: TableProps) {
                           : row[column.dataIndex]}
                       </td>
                     ))}
-                    {/* {dataIndex.map((title) => (
-                      <td
-                        key={title}
-                        className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap"
-                      >
-                        {val[title]}
-                      </td>
-                    ))} */}
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="flex justify-end">
+            {showPagination ? (
+              <Pagination
+                total={dataSource.length}
+                onChange={handleTableData}
+              />
+            ) : null}
           </div>
         </div>
       </div>
