@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
-import range from 'lodash/range'
+import range from 'utils/range'
 import { Tabs } from './tabs'
 
 test('renders tab titles correctly', () => {

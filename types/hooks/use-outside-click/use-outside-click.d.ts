@@ -1,19 +1,19 @@
-import React from 'react'
-declare type ContainerRef = React.RefObject<HTMLElement | null>
+import React from 'react';
+declare type ContainerRef = React.RefObject<HTMLElement | null>;
 declare type HookProps = {
-  /**
-   * Array of containers to be whitelisted. If any click event is triggered outside these containers,
-   * then the handler would be called
-   *
-   * Make sure that this doesn't change during the runtime
-   * use useMemoOne hook to set the containers
-   */
-  containers: ContainerRef[]
-  /** Whether to listen for outside click or not */
-  active: boolean
-  /** Handler function called on outside click */
-  onClick: (event: MouseEvent) => void
-}
+    /**
+     * Array of containers to be whitelisted. If any click event is triggered outside these containers,
+     * then the handler would be called
+     *
+     * Make sure that this doesn't change during the runtime
+     * use useMemoOne hook to set the containers
+     */
+    containers: ContainerRef[];
+    /** Whether to listen for outside click or not */
+    active: boolean;
+    /** Handler function called on outside click */
+    onClick: (event: MouseEvent) => void;
+};
 /**
  * Hook for handling click outside a parent container.
  * This hooks is useful while building elements like select and modal
@@ -61,13 +61,11 @@ declare type HookProps = {
  * Best of Luck to the future maintainer. May you find an elegant implementation than this.
  *
  */
-export declare function useOutsideClick(
-  { containers, active, onClick }: HookProps,
-  /**
-   * array of container ids
-   * by default it points to a global array, which need to be passed everytime,
-   * this explict passing is done to make the hook testable
-   */
-  elements?: string[],
-): void
-export {}
+export declare function useOutsideClick({ containers, active, onClick }: HookProps, 
+/**
+ * array of container ids
+ * by default it points to a global array, which need to be passed everytime,
+ * this explict passing is done to make the hook testable
+ */
+elements?: string[]): void;
+export {};
