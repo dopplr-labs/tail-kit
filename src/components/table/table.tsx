@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Pagination from 'components/pagination'
 import { Checkbox } from 'components/checkbox/checkbox'
 
@@ -60,11 +60,38 @@ export function Table({
   /** onChange callback for header checkbox */
   function handleHeaderCheckbox(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.checked) {
-      setSelectionData(tableData)
+      setSelectionData((prevState) =>
+        prevState ? [...prevState, ...tableData] : [...tableData],
+      )
     } else {
-      setSelectionData([])
+      const tableDataKeys = tableData.map((row) => row.key)
+      setSelectionData((prevState) =>
+        prevState?.filter((row) => !tableDataKeys.includes(row.key)),
+      )
     }
   }
+
+  /**
+   * Checked state for header checkbox should work in sync
+   * with the pagination component.
+   * Header Checkbox will have independent true, false or indeterminate state
+   * for each page of Pagination component
+   */
+  const checkedState = useMemo(() => {
+    const tableDataKeys = tableData.map((row) => row.key)
+    const selectedRowKeys = selectionData?.map((val) => val.key)
+    let count = 0
+    for (const key of tableDataKeys) {
+      if (selectedRowKeys?.includes(key)) {
+        count++
+      }
+    }
+    return count === 0
+      ? false
+      : count === tableDataKeys.length
+      ? true
+      : 'indeterminate'
+  }, [tableData, selectionData])
 
   return (
     <div className="flex flex-col">
@@ -77,14 +104,7 @@ export function Table({
                   {rowSelection ? (
                     <th className="py-3 pl-6 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                       <Checkbox
-                        checked={
-                          selectionData?.length === tableData.length
-                            ? true
-                            : selectionData === undefined ||
-                              selectionData?.length === 0
-                            ? false
-                            : 'indeterminate'
-                        }
+                        checked={checkedState}
                         onChange={handleHeaderCheckbox}
                       />
                     </th>

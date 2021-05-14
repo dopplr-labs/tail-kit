@@ -180,7 +180,7 @@ export function CustomCells() {
 }
 
 export function RowSelection() {
-  const dataSource = Array.from({ length: 5 }).map((_, i) => ({
+  const dataSource = Array.from({ length: 25 }).map((_, i) => ({
     key: i.toString(),
     name: `Bernard Lane ${i}`,
     title: 'Director, Human Resources',
