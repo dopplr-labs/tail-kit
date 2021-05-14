@@ -4,4 +4,4 @@
  * @param value - the value to be checked
  * @returns whether the value is number or not
  */
-export default function isNumber(value: any): boolean;
+export default function isNumber(value: any): boolean

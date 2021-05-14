@@ -18,7 +18,7 @@
     "build-types": "tsc --jsx react --declaration --emitDeclarationOnly --esModuleInterop --allowSyntheticDefaultImports --moduleResolution node --baseUrl src --outDir types src/index.ts",
     "build-css": "postcss src/styles/index.css -o dist/tail-kit.css",
     "build": "concurrently yarn:build-lib yarn:build-types yarn:build-css",
-    "postbuild": "prettier --write types/",
+    "postbuild": "prettier --write --no-error-on-unmatched-pattern types/**/*.{js,ts,tsx,json} types/components/**/*.d.ts",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
     "storybook": "start-storybook -p 6006 -s ./.storybook",
