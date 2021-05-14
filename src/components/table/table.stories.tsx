@@ -1,5 +1,6 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
+import { action } from '@storybook/addon-actions'
 import { Table } from './table'
 
 export default { title: 'Data Display/Table', component: Table } as Meta
@@ -176,4 +177,51 @@ export function CustomCells() {
   ]
 
   return <Table columns={columns} dataSource={dataSource} />
+}
+
+export function RowSelection() {
+  const dataSource = Array.from({ length: 5 }).map((_, i) => ({
+    key: i.toString(),
+    name: `Bernard Lane ${i}`,
+    title: 'Director, Human Resources',
+    email: 'bernardlane@example.com',
+    role: 'Owner',
+  }))
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
+    },
+  ]
+
+  const rowSelection = {
+    onChange: (selectedRowKeys: string[], selectedRows: typeof dataSource) => {
+      action('Selected Row Data')(selectedRowKeys, selectedRows)
+    },
+  }
+
+  return (
+    <Table
+      rowSelection={rowSelection}
+      dataSource={dataSource}
+      columns={columns}
+    />
+  )
 }
