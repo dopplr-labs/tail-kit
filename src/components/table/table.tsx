@@ -1,6 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Pagination from 'components/pagination'
 import { Checkbox } from 'components/checkbox/checkbox'
+import useSyncedState from 'hooks/use-synced-states'
+
+type OnChangeType = (selectedRowKeys: string[], selectedRows?: any) => void
 
 /** Table Properties */
 export type TableProps = {
@@ -12,7 +15,8 @@ export type TableProps = {
     render?: (cellData: any) => React.ReactElement
   }>
   rowSelection?: {
-    onChange: (selectedRowKeys: string[], selectedRows: any) => void
+    selectedRowKeys?: string[]
+    onChange: OnChangeType
   }
   showPagination?: boolean
 }
@@ -24,26 +28,28 @@ export function Table({
   showPagination = true,
 }: TableProps) {
   const [tableData, setTableData] = useState(dataSource.slice(0, 10))
-  const [selectionData, setSelectionData] = useState<
-    typeof dataSource | undefined
-  >()
-
-  useEffect(
-    function rowSelectionOnChange() {
-      if (rowSelection?.onChange !== undefined) {
-        const keys = selectionData?.map((val) => val.key)
-        rowSelection.onChange(keys as string[], selectionData)
-      }
-    },
-    [selectionData, rowSelection],
+  const [selectionData, setSelectionData] = useSyncedState(
+    dataSource.filter((row) =>
+      rowSelection?.selectedRowKeys?.includes(row.key),
+    ),
   )
+
+  const onChangeCb = useRef<OnChangeType | null>()
+  onChangeCb.current = rowSelection?.onChange
+
+  useEffect(() => {
+    onChangeCb.current?.(
+      selectionData.map((row) => row.key),
+      selectionData,
+    )
+  }, [selectionData])
 
   /** slice data for pagination */
   function handleTableData(page: number, pageSize: number) {
     setTableData(dataSource.slice(pageSize * (page - 1), pageSize * page))
   }
 
-  /** checkbox row selection */
+  // checkbox row selection
   function handleRowSelection(
     event: React.ChangeEvent<HTMLInputElement>,
     row: typeof dataSource[0],
@@ -57,7 +63,7 @@ export function Table({
     }
   }
 
-  /** onChange callback for header checkbox */
+  // onChange callback for header checkbox
   function handleHeaderCheckbox(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.checked) {
       setSelectionData((prevState) =>
@@ -71,12 +77,10 @@ export function Table({
     }
   }
 
-  /**
-   * Checked state for header checkbox should work in sync
-   * with the pagination component.
-   * Header Checkbox will have independent true, false or indeterminate state
-   * for each page of Pagination component
-   */
+  // Checked state for header checkbox should work in sync
+  // with the pagination component.
+  // Header Checkbox will have independent true, false or indeterminate state
+  // for each page of Pagination component
   const checkedState = useMemo(() => {
     const tableDataKeys = tableData.map((row) => row.key)
     const selectedRowKeys = selectionData?.map((val) => val.key)

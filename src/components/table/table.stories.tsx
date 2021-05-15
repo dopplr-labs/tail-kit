@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import { action } from '@storybook/addon-actions'
+import Button from 'components/button'
+import { MessageProvider, useMessage } from 'components/message'
 import { Table } from './table'
 
-export default { title: 'Data Display/Table', component: Table } as Meta
+export default {
+  title: 'Data Display/Table',
+  component: Table,
+  decorators: [
+    (Story) => (
+      <MessageProvider>
+        <Story />
+      </MessageProvider>
+    ),
+  ],
+} as Meta
 
 export function BasicTable() {
   const dataSource = Array.from({ length: 45 }).map((_, i) => ({
@@ -212,7 +224,7 @@ export function RowSelection() {
   ]
 
   const rowSelection = {
-    onChange: (selectedRowKeys: string[], selectedRows: typeof dataSource) => {
+    onChange: (selectedRowKeys: string[], selectedRows: any) => {
       action('Selected Row Data')(selectedRowKeys, selectedRows)
     },
   }
@@ -223,5 +235,77 @@ export function RowSelection() {
       dataSource={dataSource}
       columns={columns}
     />
+  )
+}
+
+export function ControlledRowSelection() {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([])
+  const [loading, setLoading] = useState(false)
+  const { message } = useMessage()
+
+  const dataSource = Array.from({ length: 45 }).map((_, i) => ({
+    key: `${i}`,
+    name: `Edward King ${i}`,
+    age: 32,
+    address: `London, Park Lane no. ${i}`,
+  }))
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+      key: 'age',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'address',
+    },
+  ]
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (keys: string[]) => {
+      setSelectedRowKeys(keys)
+      action('Selected Row Data')(selectedRowKeys)
+    },
+  }
+  function sleep() {
+    return new Promise((resolve) => setTimeout(resolve, 1000))
+  }
+  async function handleSubmit() {
+    setLoading(true)
+    await sleep()
+    setSelectedRowKeys([])
+    setLoading(false)
+    message.success('Selected rows submitted Successfully!!!')
+  }
+
+  const isItemsSelected = selectedRowKeys.length > 0
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center space-x-4">
+        <Button
+          loading={loading}
+          buttonType={Button.ButtonType.primary}
+          disabled={!isItemsSelected}
+          label="Submit"
+          onClick={handleSubmit}
+        />
+        <span className="text-sm text-gray-700">
+          {isItemsSelected ? `Selected ${selectedRowKeys?.length} items` : ''}
+        </span>
+      </div>
+      <Table
+        rowSelection={rowSelection}
+        dataSource={dataSource}
+        columns={columns}
+      />
+    </div>
   )
 }
