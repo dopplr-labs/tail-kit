@@ -2,6 +2,7 @@ const defaultConfig = require('tailwindcss/defaultConfig')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  mode: 'jit',
   purge: {
     content: ['./src/**/*.tsx', './src/**/*.ts'],
     // These options are passed through directly to PurgeCSS
