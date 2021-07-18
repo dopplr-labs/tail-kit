@@ -69,7 +69,6 @@ export declare const InputNumber: React.ForwardRefExoticComponent<
     },
     | 'max'
     | 'required'
-    | 'disabled'
     | 'hidden'
     | 'dir'
     | 'form'
@@ -77,6 +76,7 @@ export declare const InputNumber: React.ForwardRefExoticComponent<
     | 'style'
     | 'title'
     | 'pattern'
+    | 'disabled'
     | 'color'
     | 'size'
     | 'multiple'

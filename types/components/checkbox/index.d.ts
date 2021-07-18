@@ -7,7 +7,7 @@ declare const _default: import('react').ForwardRefExoticComponent<
         import('react').InputHTMLAttributes<HTMLInputElement>,
         HTMLInputElement
       >,
-      'disabled' | 'style' | 'className' | 'onChange' | 'checked'
+      'style' | 'disabled' | 'className' | 'onChange' | 'checked'
     > & {
       checked?: boolean | 'indeterminate'
       defaultChecked?: boolean | 'indeterminate'
@@ -20,7 +20,6 @@ declare const _default: import('react').ForwardRefExoticComponent<
     },
     | 'max'
     | 'required'
-    | 'disabled'
     | 'error'
     | 'hidden'
     | 'dir'
@@ -30,6 +29,7 @@ declare const _default: import('react').ForwardRefExoticComponent<
     | 'style'
     | 'title'
     | 'pattern'
+    | 'disabled'
     | 'color'
     | 'size'
     | 'multiple'

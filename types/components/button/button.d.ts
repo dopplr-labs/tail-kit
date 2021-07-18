@@ -79,7 +79,6 @@ export declare const Button: React.ForwardRefExoticComponent<
       /** button styles */
       style?: React.CSSProperties
     },
-    | 'disabled'
     | 'loading'
     | 'hidden'
     | 'dir'
@@ -88,6 +87,7 @@ export declare const Button: React.ForwardRefExoticComponent<
     | 'slot'
     | 'style'
     | 'title'
+    | 'disabled'
     | 'color'
     | 'icon'
     | 'translate'

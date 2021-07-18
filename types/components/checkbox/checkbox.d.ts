@@ -34,7 +34,7 @@ export declare const Checkbox: React.ForwardRefExoticComponent<
         React.InputHTMLAttributes<HTMLInputElement>,
         HTMLInputElement
       >,
-      'disabled' | 'style' | 'className' | 'onChange' | 'checked'
+      'style' | 'disabled' | 'className' | 'onChange' | 'checked'
     > & {
       /** HTML checked attribute for input element to set input status true or false */
       checked?: boolean | 'indeterminate'
@@ -55,7 +55,6 @@ export declare const Checkbox: React.ForwardRefExoticComponent<
     },
     | 'max'
     | 'required'
-    | 'disabled'
     | 'error'
     | 'hidden'
     | 'dir'
@@ -65,6 +64,7 @@ export declare const Checkbox: React.ForwardRefExoticComponent<
     | 'style'
     | 'title'
     | 'pattern'
+    | 'disabled'
     | 'color'
     | 'size'
     | 'multiple'
