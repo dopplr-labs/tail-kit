@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
 import Popover from 'components/popover'
-import Avatar from '.'
+import { Avatar } from './avatar'
 import AvatarContext from './avatar-context'
 
 /**

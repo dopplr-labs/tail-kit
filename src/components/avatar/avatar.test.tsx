@@ -55,7 +55,7 @@ test('render avatar-group with few hidden avatars correctly', () => {
   render(
     <Avatar.Group
       maxCount={2}
-      maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+      excessAvatarStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
       size="large"
       maxPopoverPlacement="bottom"
     >
