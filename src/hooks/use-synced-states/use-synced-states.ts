@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import isEqual from 'lodash/isEqual'
+import { dequal } from 'dequal'
 import usePrevious from 'hooks/use-previous'
 
 export function useSyncedState<T extends any>(
@@ -10,7 +10,7 @@ export function useSyncedState<T extends any>(
   const prevProp = usePrevious(prop)
 
   useEffect(() => {
-    if (!isEqual(prop, prevProp)) {
+    if (!dequal(prop, prevProp)) {
       setState(prop)
     }
   }, [prop, prevProp])

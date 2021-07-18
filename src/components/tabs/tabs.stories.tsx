@@ -7,7 +7,7 @@ import {
   HiUsers,
 } from 'react-icons/hi'
 import Select from 'components/select'
-import range from 'lodash/range'
+import range from 'utils/range'
 import { Tabs } from './tabs'
 
 export default {
