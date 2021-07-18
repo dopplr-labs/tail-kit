@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
+import Button from 'components/button'
 import { Switch } from './switch'
 
 export default {
@@ -20,5 +21,16 @@ export function ControlledSwitch() {
         setChecked(event.target.checked)
       }}
     />
+  )
+}
+
+export function DisbaledSwitch() {
+  const [disable, setDisable] = useState(true)
+
+  return (
+    <div className="flex items-center space-x-3">
+      <Switch disabled={disable} />
+      <Button label="Toggle Disabled" onClick={() => setDisable(!disable)} />
+    </div>
   )
 }
