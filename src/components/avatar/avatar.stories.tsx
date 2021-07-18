@@ -70,7 +70,7 @@ export function AvatarGroupDemo() {
       <div className="my-4 border-t" />
       <Avatar.Group
         maxCount={2}
-        maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+        excessAvatarStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
       >
         <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
         <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
@@ -86,7 +86,7 @@ export function AvatarGroupDemo() {
       <div className="my-4 border-t" />
       <Avatar.Group
         maxCount={2}
-        maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+        excessAvatarStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
         size="large"
         maxPopoverPlacement="bottom"
       >
@@ -138,7 +138,7 @@ export function AvatarsInNavbar() {
       <div className="flex items-center space-x-4">
         <Avatar.Group
           maxCount={2}
-          maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+          excessAvatarStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
           maxPopoverPlacement="bottom"
         >
           {userList.map((user, index) => (
