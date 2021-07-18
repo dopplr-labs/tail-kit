@@ -2,10 +2,11 @@ const defaultConfig = require('tailwindcss/defaultConfig')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  mode: 'jit',
   purge: {
-    content: ['./src/**/*.tsx', './src/**/*.ts'],
-    // These options are passed through directly to PurgeCSS
-    // so add all the classes that could be computed using the `baseColor`
+    content: ['./src/**/*.tsx', './src/**/*.ts', './src/styles/safelist.txt'],
+    // Safelist actually works from safelist.txt file
+    // The below section is just for referrance which classes are in safelist file
     options: {
       safelist: [
         /text-[red,green,yellow,blue]+-[400,700]+/,

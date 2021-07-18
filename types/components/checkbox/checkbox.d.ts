@@ -29,32 +29,10 @@ export declare type CheckboxProps = Omit<
 /** Checkbox component to render input type checkbox along with some other properties */
 export declare const Checkbox: React.ForwardRefExoticComponent<
   Pick<
-    Omit<
-      React.DetailedHTMLProps<
-        React.InputHTMLAttributes<HTMLInputElement>,
-        HTMLInputElement
-      >,
-      'style' | 'disabled' | 'className' | 'onChange' | 'checked'
-    > & {
-      /** HTML checked attribute for input element to set input status true or false */
-      checked?: boolean | 'indeterminate'
-      /** Default checked property to intialize component */
-      defaultChecked?: boolean | 'indeterminate'
-      /** To show label on the right side of checkbox */
-      label?: React.ReactNode
-      /** Error property to render checkbox border and label text in red whenever error occurs */
-      error?: boolean
-      /** Use disbaled property to disable user input in checkbox */
-      disabled?: boolean
-      /** The callback function that is triggered when the state changes */
-      onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-      /** Additional class applied to checkbox */
-      className?: string
-      /** Styles property to apply on the entire Checkbox component */
-      style?: React.CSSProperties
-    },
+    CheckboxProps,
     | 'max'
     | 'required'
+    | 'disabled'
     | 'error'
     | 'hidden'
     | 'dir'
@@ -64,7 +42,6 @@ export declare const Checkbox: React.ForwardRefExoticComponent<
     | 'style'
     | 'title'
     | 'pattern'
-    | 'disabled'
     | 'color'
     | 'size'
     | 'multiple'

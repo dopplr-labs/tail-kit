@@ -7,6 +7,8 @@ export declare type SwitchProps = {
   checked?: boolean
   /** Property to initialize switch with a particular value */
   defaultChecked?: boolean
+  /** Disable switch */
+  disabled?: boolean
   /** function called when the state of switch is changed */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   /** additional class names */

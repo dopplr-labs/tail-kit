@@ -33,42 +33,10 @@ export declare type InputNumberProps = Omit<
 /** Enter a number within certain range with the mouse or keyboard. */
 export declare const InputNumber: React.ForwardRefExoticComponent<
   Pick<
-    Omit<
-      React.DetailedHTMLProps<
-        React.InputHTMLAttributes<HTMLInputElement>,
-        HTMLInputElement
-      >,
-      | 'max'
-      | 'step'
-      | 'className'
-      | 'value'
-      | 'defaultValue'
-      | 'onChange'
-      | 'min'
-    > & {
-      /** The number to which the current value is increased or decreased. It can be an integer or decimal */
-      step?: number
-      /** The current value */
-      value?: number
-      /** The initial value */
-      defaultValue?: number
-      /** The min value */
-      min?: number
-      /** The max value */
-      max?: number
-      /** The precision of input value */
-      precision?: number
-      /** To disable input number component */
-      disabled?: boolean
-      /** The callback triggered when the value is changed */
-      onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-      /** Additional class applied to the input element */
-      className?: string
-      /** Additional styles to apply */
-      style?: React.CSSProperties
-    },
+    InputNumberProps,
     | 'max'
     | 'required'
+    | 'disabled'
     | 'hidden'
     | 'dir'
     | 'form'
@@ -76,7 +44,6 @@ export declare const InputNumber: React.ForwardRefExoticComponent<
     | 'style'
     | 'title'
     | 'pattern'
-    | 'disabled'
     | 'color'
     | 'size'
     | 'multiple'
