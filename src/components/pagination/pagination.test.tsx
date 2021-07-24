@@ -11,23 +11,23 @@ test('pagination component working correctly', () => {
 
 test('Next button of pagination component working correctly', () => {
   render(<Pagination total={50} />)
-  expect(screen.getByText('1').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('1').parentElement).toHaveClass('primary')
   fireEvent.click(screen.getByText('Next'))
-  expect(screen.getByText('2').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('2').parentElement).toHaveClass('primary')
 })
 
 test('Previous button of pagination component working correctly', () => {
   render(<Pagination total={50} defaultCurrent={3} />)
-  expect(screen.getByText('3').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('3').parentElement).toHaveClass('primary')
   fireEvent.click(screen.getByText('Previous'))
-  expect(screen.getByText('2').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('2').parentElement).toHaveClass('primary')
 })
 
 test('Page buttons of pagination component working correctly', () => {
   render(<Pagination total={50} />)
-  expect(screen.getByText('1').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('1').parentElement).toHaveClass('primary')
   fireEvent.click(screen.getByText('3'))
-  expect(screen.getByText('3').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('3').parentElement).toHaveClass('primary')
 })
 
 /** Tests for page size changer in pagination component */
@@ -43,7 +43,7 @@ test('Change selected page when value of total number of pages changes', () => {
   render(<Pagination total={100} showSizeChanger defaultCurrent={10} />)
   fireEvent.click(screen.getByText('10 / page'))
   fireEvent.click(screen.getByText('20 / page'))
-  expect(screen.getByText('5').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('5').parentElement).toHaveClass('primary')
 })
 
 /** Tests for page jumper */
@@ -51,18 +51,18 @@ test('Page jumper of pagination component working correctly', () => {
   render(<Pagination total={50} showQuickJumper />)
   userEvent.type(screen.getByRole('textbox'), '3')
   fireEvent.blur(screen.getByDisplayValue('3'))
-  expect(screen.getByText('3').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('3').parentElement).toHaveClass('primary')
 })
 
 test('Out of range value in page jumper working correctly', () => {
   render(<Pagination total={50} defaultCurrent={3} showQuickJumper />)
   userEvent.type(screen.getByRole('textbox'), '-1')
   fireEvent.blur(screen.getByDisplayValue('-1'))
-  expect(screen.getByText('1').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('1').parentElement).toHaveClass('primary')
 
   userEvent.type(screen.getByRole('textbox'), '10')
   fireEvent.blur(screen.getByDisplayValue('10'))
-  expect(screen.getByText('5').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('5').parentElement).toHaveClass('primary')
 })
 
 test('Enter key shortcut for page jumper working correctly', () => {
@@ -70,7 +70,7 @@ test('Enter key shortcut for page jumper working correctly', () => {
   const input = screen.getByRole('textbox')
   userEvent.type(input, '5')
   fireEvent.keyDown(input, { key: 'Enter', code: 13 })
-  expect(screen.getByText('5').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('5').parentElement).toHaveClass('primary')
 })
 
 test('invalid entries in page jumper working correctly', () => {
@@ -78,7 +78,7 @@ test('invalid entries in page jumper working correctly', () => {
   const input = screen.getByRole('textbox')
   userEvent.type(input, 'abc')
   fireEvent.keyDown(input, { key: 'Enter', code: 13 })
-  expect(screen.getByText('5').parentElement).toHaveClass('bg-blue-600')
+  expect(screen.getByText('5').parentElement).toHaveClass('primary')
 })
 
 /** Test cases for page wrap in pagination component */
