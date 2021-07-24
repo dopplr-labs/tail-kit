@@ -123,10 +123,12 @@ test('children as function works correctly with form', async () => {
       )}
     </Form>,
   )
-  expect(screen.getByText('Submit').parentElement).toHaveClass('bg-gray-400')
+  expect(screen.getByText('Submit').parentElement).toHaveAttribute('disabled')
   userEvent.type(screen.getByRole('textbox'), 'test@example.com')
   await waitFor(() => {
-    expect(screen.getByText('Submit').parentElement).toHaveClass('bg-blue-600')
+    expect(screen.getByText('Submit').parentElement).not.toHaveAttribute(
+      'disabled',
+    )
   })
 })
 

@@ -1,34 +1,32 @@
-const defaultConfig = require('tailwindcss/defaultConfig')
-const defaultTheme = require('tailwindcss/defaultTheme')
-
 module.exports = {
   mode: 'jit',
   purge: {
-    content: ['./src/**/*.tsx', './src/**/*.ts', './src/styles/safelist.txt'],
     // Safelist actually works from safelist.txt file
-    // The below section is just for referrance which classes are in safelist file
-    options: {
-      safelist: [
-        /text-[red,green,yellow,blue]+-[400,700]+/,
-        /bg-[red,green,yellow,blue]+-50/,
-        /lg:col-span-[0-9]+/,
-        /lg:col-start-[0-9]+/,
-      ],
-    },
+    content: ['./src/**/*.tsx', './src/**/*.ts', './src/styles/safelist.txt'],
   },
 
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        default: 'var(--font-family)',
+      },
+      colors: {
+        white: 'var(--white)',
+        black: 'var(--black)',
+        disabled: 'var(--disabled-color)',
+        primary: 'var(--primary-color)',
+        info: 'var(--info-color)',
+        success: 'var(--success-color)',
+        error: 'var(--error-color)',
+        'text-primary': 'var(--text-primary-color)',
+        'text-secondary': 'var(--text-secondary-color)',
+        'text-inverse': 'var(--text-color-inverse)',
+      },
+      borderRadius: {
+        default: 'var(--border-radius-default)',
+        small: 'var(--border-radius-small)',
       },
     },
-  },
-
-  variants: {
-    borderColor: [...defaultConfig.variants.borderColor, 'group-hover'],
-    opacity: [...defaultConfig.variants.opacity, 'group-hover'],
-    boxShadow: [...defaultConfig.variants.boxShadow, 'focus-within'],
   },
 
   plugins: [],

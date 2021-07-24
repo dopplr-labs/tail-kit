@@ -22,8 +22,14 @@ module.exports = {
       styles: path.resolve(__dirname, '../src/styles'),
       hooks: path.resolve(__dirname, '../src/hooks'),
       utils: path.resolve(__dirname, '../src/utils'),
+      helpers: path.resolve(__dirname, '../src/helpers'),
     }
 
     return config
   },
+
+  babel: async (options) => ({
+    ...options,
+    plugins: [['@babel/plugin-proposal-class-properties', { loose: true }]],
+  }),
 }

@@ -1,5 +1,7 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
+import colors from 'tailwindcss/colors'
+import defaultTheme from 'tailwindcss/defaultTheme'
 import {
   HiShieldCheck,
   HiOutlinePlus,
@@ -8,11 +10,47 @@ import {
   HiOutlinePencilAlt,
   HiOutlineChevronRight,
 } from 'react-icons/hi'
+import ThemeDecorator from 'helpers/theme-decorator'
 import { Button } from './button'
 
 export default {
   title: 'General/Button',
   component: Button,
+  decorators: [
+    (Story) => (
+      <ThemeDecorator
+        darkTheme={{
+          '--primary-color': colors.cyan['600'],
+          '--error-color': colors.red['500'],
+          '--disabled-color': colors.gray['600'],
+        }}
+        themeConfig={{
+          '--primary-color': {
+            type: 'color',
+            initialValue: colors.green['600'],
+          },
+          '--error-color': {
+            type: 'color',
+            initialValue: colors.rose['500'],
+          },
+          '--disabled-color': {
+            type: 'color',
+            initialValue: colors.blueGray['400'],
+          },
+          '--border-radius-default': {
+            type: 'number',
+            initialValue: 0.25,
+          },
+          '--font-family': {
+            type: 'string',
+            initialValue: defaultTheme.fontFamily?.sans.join(',') ?? '',
+          },
+        }}
+      >
+        <Story />
+      </ThemeDecorator>
+    ),
+  ],
 } as Meta
 
 export function DefaultButton() {
@@ -21,6 +59,10 @@ export function DefaultButton() {
 
 export function DefaultButtonWithIcon() {
   return <Button label="Update Password" icon={<HiShieldCheck />} />
+}
+
+export function DefaultDisabledButtonWithIcon() {
+  return <Button label="Update Password" icon={<HiShieldCheck />} disabled />
 }
 
 export function DefaultIconButton() {
@@ -57,6 +99,17 @@ export function PrimaryButtonWithIcon() {
       buttonType={Button.ButtonType.primary}
       label="Create Account"
       icon={<HiCheckCircle />}
+    />
+  )
+}
+
+export function PrimaryDisabledButtonWithIcon() {
+  return (
+    <Button
+      buttonType={Button.ButtonType.primary}
+      label="Create Account"
+      icon={<HiCheckCircle />}
+      disabled
     />
   )
 }
@@ -107,8 +160,30 @@ export function LinkButtonWithIcon() {
   )
 }
 
+export function LinkDisabledButtonWithIcon() {
+  return (
+    <Button
+      buttonType={Button.ButtonType.link}
+      label="Edit Post"
+      icon={<HiOutlinePencilAlt />}
+      disabled
+    />
+  )
+}
+
 export function LinkLoadingButton() {
   return (
     <Button buttonType={Button.ButtonType.link} label="Updating Post" loading />
+  )
+}
+
+export function LinkDisabledLoadingButton() {
+  return (
+    <Button
+      buttonType={Button.ButtonType.link}
+      label="Updating Post"
+      loading
+      disabled
+    />
   )
 }
