@@ -5,7 +5,7 @@
 @tailwind components;
 
 body {
-  @apply font-sans antialiased;
+  @apply antialiased font-default;
 }
 
 .checkbox:focus-within > .checkbox-icon-container {

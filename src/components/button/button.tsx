@@ -102,7 +102,7 @@ const ButtonComponent = forwardRef(
       <button
         aria-label={label || restProps['aria-label']}
         className={clsx(
-          'py-2 rounded-default focus:outline-none focus:ring-2 border text-sm font-medium flex items-center justify-center space-x-2 transition-colors duration-300',
+          'font-default py-2 rounded-default focus:outline-none focus:ring-2 border text-sm font-medium flex items-center justify-center space-x-2 transition-colors duration-300',
           iconOnlyButton ? 'px-2' : 'px-3',
           buttonClassNames,
           disabled || loading ? 'cursor-not-allowed' : 'cursor-pointer',
