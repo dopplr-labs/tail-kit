@@ -1,0 +1,192 @@
+---
+name: Drawer
+route: /drawer
+menu: 'Feedback'
+---
+
+import { useState, useRef } from 'react'
+import { HiOutlinePlus } from 'react-icons/hi'
+import { Playground } from 'docz'
+import { Button, Drawer, Radio, Form, Select, Input } from '@tail-kit/tail-kit'
+
+# Drawer
+
+A panel which slides in from the edge of the screen.
+
+## When To Use
+
+A Drawer is a panel that is typically overlaid on top of a page and slides in from the side. It contains a set of information or actions. Since the user can interact with the Drawer without leaving the current page, tasks can be achieved more efficiently within the same context.
+
+- Use a Form to create or edit a set of information.
+- Processing subtasks. When subtasks are too heavy for a Popover and we still want to keep the subtasks in the context of the main task, Drawer comes very handy.
+- When the same Form is needed in multiple places.
+
+## Basic Drawer
+
+<Playground>
+  {() => {
+    const [visible, setVisible] = useState(false)
+    function showDrawer() {
+      setVisible(true)
+    }
+    function hideDrawer() {
+      setVisible(false)
+    }
+    return (
+      <>
+        <Button buttonType="primary" label="Open" onClick={showDrawer} />
+        <Drawer
+          visible={visible}
+          title="Basic Drawer"
+          onRequestClose={hideDrawer}
+        >
+          <p>Some Contents...</p>
+          <p>Some Contents...</p>
+          <p>Some Contents...</p>
+        </Drawer>
+      </>
+    )
+  }}
+</Playground>
+
+<br />
+
+## Custom Placement
+
+<Playground>
+  {() => {
+    const [visible, setVisible] = useState(false)
+    const [placement, setPlacement] = useState('right')
+    const options = ['top', 'right', 'bottom', 'left']
+    function showDrawer() {
+      setVisible(true)
+    }
+    function hideDrawer() {
+      setVisible(false)
+    }
+    function handlePlacement(checkedValue) {
+      setPlacement(checkedValue)
+    }
+    return (
+      <>
+        <div className="flex items-center space-x-6">
+          <Radio.RadioGroup
+            options={options}
+            defaultValue="right"
+            onChange={handlePlacement}
+          />
+          <Button label="Open" buttonType="primary" onClick={showDrawer} />
+        </div>
+        <Drawer
+          visible={visible}
+          title="Basic Drawer"
+          onRequestClose={hideDrawer}
+          placement={placement}
+          closable
+        >
+          <p>Some Contents...</p>
+          <p>Some Contents...</p>
+          <p>Some Contents...</p>
+        </Drawer>
+      </>
+    )
+  }}
+</Playground>
+
+<br />
+
+## Submit Form in Drawer
+
+<Playground>
+  {() => {
+    const [visible, setVisible] = useState(false)
+    const formRef = useRef(null)
+    function showDrawer() {
+      setVisible(true)
+    }
+    function hideDrawer() {
+      setVisible(false)
+    }
+    function onFormSubmit(data) {
+      console.log(data)
+    }
+    function onDrawerSubmit() {
+      formRef.current.dispatchEvent(
+        new Event('submit', { cancelable: true, bubbles: true }),
+      )
+      hideDrawer()
+    }
+    return (
+      <>
+        <Button
+          label="New Employee"
+          icon={<HiOutlinePlus />}
+          onClick={showDrawer}
+        />
+        <Drawer
+          visible={visible}
+          title="Create a new employee account"
+          onRequestClose={hideDrawer}
+          closable
+          size={560}
+          footer={
+            <div className="flex items-center justify-end space-x-3">
+              <Button label="Cancel" onClick={hideDrawer} />
+              <Button
+                label="Submit"
+                buttonType="primary"
+                onClick={onDrawerSubmit}
+              />
+            </div>
+          }
+        >
+          <Form
+            layout={Form.Layout.VERTICAL}
+            className="p-0"
+            ref={formRef}
+            onSubmit={onFormSubmit}
+          >
+            <div className="flex w-full space-x-4">
+              <Form.Item name="firstName" label="First Name">
+                <Input placeholder="Enter first name" />
+              </Form.Item>
+              <Form.Item name="lastName" label="Last Name">
+                <Input placeholder="Enter last name" />
+              </Form.Item>
+            </div>
+            <div className="flex w-full space-x-4">
+              <Form.Item name="gender" label="Gender">
+                <Select
+                  options={['Male', 'Female', 'Other']}
+                  placeholder="Select your gender"
+                  className="w-full"
+                />
+              </Form.Item>
+              <Form.Item name="maritalStatus" label="Marital Status">
+                <Select
+                  options={['Single', 'Married']}
+                  placeholder="Select your marital status"
+                  className="w-full"
+                />
+              </Form.Item>
+            </div>
+            <div className="flex w-full space-x-4">
+              <Form.Item name="phoneNumber" label="Phone Number">
+                <Input placeholder="Enter phone number" />
+              </Form.Item>
+              <Form.Item name="email" label="Email Address">
+                <Input placeholder="Enter email address" />
+              </Form.Item>
+            </div>
+            <Form.Item name="pastExperience" label="Past Experience">
+              <textarea
+                className="w-full h-24 px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2"
+                placeholder="Please write employee's previous experience description"
+              />
+            </Form.Item>
+          </Form>
+        </Drawer>
+      </>
+    )
+  }}
+</Playground>
