@@ -27,13 +27,6 @@ type HightlightAction = {
   }
 }
 
-type SelectAction = {
-  type: ActionType.HIGHLIGHT
-  payload: {
-    index: number
-  }
-}
-
 export type Action = OpenAction | CloseAction | HightlightAction
 
 export function reducer(state: State, action: Action): State {
