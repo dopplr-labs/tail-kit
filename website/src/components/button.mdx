@@ -1,0 +1,138 @@
+---
+name: Button
+route: /button
+menu: 'General'
+---
+
+import { Playground, Props } from 'docz'
+import { Button } from '@tail-kit/tail-kit'
+import {
+  HiShieldCheck,
+  HiOutlinePlus,
+  HiOutlineChevronRight,
+  HiCheckCircle,
+  HiOutlineTrash,
+  HiOutlinePencilAlt,
+  HiOutlineUserCircle,
+} from 'react-icons/hi'
+
+# Button
+
+Base component to render **button**.
+
+Button can be of type
+
+- **primary** `Button.ButtonType.primary` solid filled button (with primary background color), to be used for primary actions
+- **default** `Button.ButtonType.default` bordered button (primary color) and text in primary color, to be used for secondary actions
+- **danger** `Button.ButtonType.danger` bordered button with error color, to be used in case of presenting any delete action to user
+- **link** `Button.ButtonType.link` button without any border, can be used to render menu icons where we don't want to show users any button border
+
+Generally the **icon** is placed before the button label. But that can also be changed, by configuring `iconPlacement` prop to be
+
+- `Button.IconPlacement.beforeLabel` rendering the button icon before the label
+- `Button.IconPlacement.afterLabel` rendering the button icon after the label
+
+## Button Types
+
+<Playground>
+  <div className="flex items-center justify-center space-x-4">
+    <Button buttonType="primary" label="Create Account" />
+    <Button label="Login" />
+    <Button buttonType="danger" label="Delete Repository" />
+    <Button buttonType="link" label="View More" />
+  </div>
+</Playground>
+
+<br />
+
+## Button With Icon
+
+<Playground>
+  <div className="flex items-center justify-center space-x-4">
+    <Button
+      buttonType="primary"
+      label="Create Account"
+      icon={<HiCheckCircle />}
+    />
+    <Button label="Update Password" icon={<HiShieldCheck />} />
+    <Button buttonType="danger" label="Delete User" icon={<HiOutlineTrash />} />
+    <Button buttonType="link" label="Edit Post" icon={<HiOutlinePencilAlt />} />
+  </div>
+</Playground>
+
+<br />
+
+## Icon Buttons
+
+<Playground>
+  <div className="flex items-center justify-center space-x-4">
+    <Button buttonType="primary" icon={<HiOutlinePlus />} />
+    <Button icon={<HiOutlinePlus />} />
+    <Button buttonType="danger" icon={<HiOutlineTrash />} />
+    <Button buttonType="link" icon={<HiOutlinePlus />} />
+  </div>
+</Playground>
+
+<br />
+
+## Icon Loading Buttons
+
+<Playground>
+  <div className="flex items-center justify-center space-x-4">
+    <Button buttonType="primary" icon={<HiOutlinePlus />} loading />
+    <Button icon={<HiOutlinePlus />} loading />
+    <Button buttonType="danger" icon={<HiOutlineTrash />} loading />
+    <Button buttonType="link" icon={<HiOutlinePlus />} loading />
+  </div>
+</Playground>
+
+<br />
+
+## Loading Buttons
+
+<Playground>
+  <div className="flex items-center justify-center space-x-4">
+    <Button buttonType="primary" label="Creating Blog" loading />
+    <Button label="Submitting" loading />
+    <Button buttonType="danger" label="Deleting Repository" loading />
+    <Button buttonType="link" label="Updating Post" loading />
+  </div>
+</Playground>
+
+<br />
+
+## Buttons With Icon After label
+
+<Playground>
+  <div className="flex items-center justify-center space-x-4">
+    <Button
+      label="Next Step"
+      icon={<HiOutlineChevronRight />}
+      iconPlacement={Button.IconPlacement.afterLabel}
+    />
+    <Button
+      label="View More"
+      buttonType="primary"
+      icon={<HiOutlineChevronRight />}
+      iconPlacement={Button.IconPlacement.afterLabel}
+    />
+    <Button
+      label="Delete User"
+      buttonType="danger"
+      icon={<HiOutlineUserCircle />}
+      iconPlacement={Button.IconPlacement.afterLabel}
+    />
+    <Button
+      label="View Docs"
+      buttonType="link"
+      icon={<HiOutlinePencilAlt />}
+      iconPlacement={Button.IconPlacement.afterLabel}
+    />
+  </div>
+</Playground>
+
+<br />
+
+## Button API
+
+<Props of={Button} />

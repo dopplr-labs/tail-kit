@@ -1,0 +1,151 @@
+---
+name: Alert
+route: /alert
+menu: 'Feedback'
+---
+
+import { Playground, Props } from 'docz'
+import { Alert } from '@tail-kit/tail-kit'
+import { HiBookmark, HiBell, HiExclamationCircle } from 'react-icons/hi'
+
+# Alert
+
+Alert component to render `info`, `warning`, `success` and `error` messages
+
+## Info Alert
+
+<Playground>
+  <Alert title="Some additional information" />
+</Playground>
+
+<br />
+
+## Success Alert
+
+<Playground>
+  {() => {
+    const title = 'Order placed'
+    const content =
+      'Lorem ipsum dolor sit amet consectetur adipsicing elit. Aliquid pariatur, ipsum similique veniam.'
+    return <Alert type="success" title={title} content={content} />
+  }}
+</Playground>
+
+<br />
+
+## Warning Alert
+
+<Playground>
+  {() => {
+    const content =
+      'Lorem ipsum dolor sit amet consectetur adipsicing elit. Aliquid pariatur, ipsum similique veniam.'
+    return <Alert type="warning" title="Attention needed" content={content} />
+  }}
+</Playground>
+
+<br />
+
+## Error Alert
+
+<Playground>
+  {() => {
+    const title = 'There were 2 errors with your submission'
+    const content = (
+      <ul className="ml-4 list-disc">
+        <li>Your password must be at least 8 characters</li>
+        <li>
+          Your password must included at least one pro wrestling finishing move
+        </li>
+      </ul>
+    )
+    return <Alert type="error" title={title} content={content} />
+  }}
+</Playground>
+
+<br />
+
+## Alert with only title
+
+<Playground>
+  <Alert
+    closable
+    icon={false}
+    title="The quick, brown fox jumps over a lazy dog."
+  />
+</Playground>
+
+<br />
+
+## Alert With Custom Icon
+
+<Playground>
+  <Alert
+    type="success"
+    icon={<HiBookmark />}
+    title="This webpage is now bookmarked"
+  />
+</Playground>
+
+<br />
+
+## Alert With Action
+
+<Playground>
+  {() => {
+    const content = (
+      <div className="space-y-2">
+        <p>Also you can change the message by changing the Message knob</p>
+        <ul className="ml-4 list-disc">
+          <li>623 KC will be refunded by your payment card</li>
+          <li>623 KC will be refunded by your payment card</li>
+        </ul>
+      </div>
+    )
+    return (
+      <Alert
+        title="You can change the title by changing the Title knob"
+        content={content}
+        icon={<HiBell />}
+        closable
+        actions={
+          <>
+            <Alert.AlertButton label="OK" buttonType="primary" />
+            <Alert.AlertButton label="Ignore" />
+          </>
+        }
+      />
+    )
+  }}
+</Playground>
+
+<br />
+
+## Error Alert With Action
+
+<Playground>
+  {() => {
+    const content = (
+      <ul className="ml-4 list-disc">
+        <li>Your password must be at least 8 characters</li>
+        <li>
+          Your password must included at least one pro wrestling finishing move
+        </li>
+      </ul>
+    )
+    return (
+      <Alert
+        type="error"
+        title="There were 2 errors with your submission"
+        content={content}
+        closable
+        icon={<HiExclamationCircle />}
+        actions={
+          <>
+            <Alert.AlertButton label="OK" buttonType="primary" />
+            <Alert.AlertButton label="Ignore" />
+          </>
+        }
+      />
+    )
+  }}
+</Playground>

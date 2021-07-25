@@ -1,0 +1,35 @@
+{
+  "name": "@tail-kit/docs",
+  "version": "0.0.1",
+  "description": "Documentation app for tail-kit using gatsby + docz",
+  "files": [
+    "src/",
+    "doczrc.js",
+    "package.json"
+  ],
+  "author": "Himanshu",
+  "license": "MIT",
+  "scripts": {
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
+    "docz:serve": "docz build && docz serve",
+    "format": "prettier --write src/gatsby-theme-docz/**/*.js"
+  },
+  "dependencies": {
+    "@tail-kit/tail-kit": "^0.1.14",
+    "clsx": "^1.1.1",
+    "docz": "^2.3.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-scrollspy": "^3.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.4.1",
+    "autoprefixer": "^10.3.1",
+    "gatsby-plugin-postcss": "^4.10.0",
+    "postcss": "^8.3.6",
+    "prettier": "^2.3.2",
+    "tailwindcss": "^2.2.6"
+  }
+}
