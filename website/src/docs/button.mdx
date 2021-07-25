@@ -1,0 +1,43 @@
+---
+title: 'General/Button'
+route: 'docs/button'
+component: 'Button'
+componentPath: 'src/components/button/button.tsx'
+---
+
+import { Button } from '@tail-kit/tail-kit'
+import PropsTable from 'props-table'
+import Playground from 'playground'
+
+# Button
+
+Base component to render **button**.
+
+Button can be of type
+
+- **primary** `Button.ButtonType.primary` solid filled button (with primary background color), to be used for primary actions
+- **default** `Button.ButtonType.default` bordered button (primary color) and text in primary color, to be used for secondary actions
+- **danger** `Button.ButtonType.danger` bordered button with error color, to be used in case of presenting any delete action to user
+- **link** `Button.ButtonType.link` button without any border, can be used to render menu icons where we don't want to show users any button border
+
+Generally the **icon** is placed before the button label. But that can also be changed, by configuring `iconPlacement` prop to be
+
+- `Button.IconPlacement.beforeLabel` rendering the button icon before the label
+- `Button.IconPlacement.afterLabel` rendering the button icon after the label
+
+### Button Types
+
+```jsx
+function renderButtons() {
+  return (
+    <div className="flex items-center space-x-4">
+      <Button label="Default Button" />
+      <Button buttonType={Button.ButtonType.primary} label="Primary Button" />
+    </div>
+  )
+}
+```
+
+## Component API
+
+<PropsTable />

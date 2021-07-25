@@ -87,9 +87,9 @@ export function Popover({
     ? onVisibilityChange
     : setPopoverVisible
 
-  const isVisible = (isControlledComponent
-    ? visible
-    : popoverVisible) as boolean
+  const isVisible = (
+    isControlledComponent ? visible : popoverVisible
+  ) as boolean
 
   const timeout = useRef<number | undefined>()
 

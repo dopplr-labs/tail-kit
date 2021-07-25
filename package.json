@@ -12,11 +12,12 @@
     "bootstrap": "lerna bootstrap --scope=\"@tail-kit/*\"",
     "test:ci": "lerna run test:ci",
     "lint": "eslint --no-error-on-unmatched-pattern --fix packages/**/*.{ts,tsx,js,jsx} website/**/*.{ts,tsx,js,jsx}",
-    "format": "eslint --no-error-on-unmatched-pattern --write packages/**/*.{ts,tsx,js,jsx,css,json} website/**/*.{ts,tsx,js,jsx,css,json} *.{ts,js,json}"
+    "format": "prettier --no-error-on-unmatched-pattern --write packages/**/*.{ts,tsx,js,jsx,css,json} website/**/*.{ts,tsx,js,jsx,css,json} *.{ts,js,json}"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
+    "autoprefixer": "^10.3.1",
     "eslint": "^7.7.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
@@ -25,7 +26,10 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "eslint-plugin-standard": "^4.0.1",
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "prettier": "^2.1.1",
+    "postcss": "^8.3.5",
+    "tailwindcss": "^2.2.4"
   },
   "husky": {
     "hooks": {

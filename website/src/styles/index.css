@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+code:not(pre code) {
+  @apply px-2 py-1 !text-xs bg-blue-50 rounded-md !font-normal !text-blue-800;
+}

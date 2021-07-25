@@ -20,8 +20,7 @@ export function DefaultPopover() {
       medium: 'https://randomuser.me/api/portraits/med/men/75.jpg',
       thumbnail: 'https://randomuser.me/api/portraits/thumb/men/75.jpg',
     },
-    bio:
-      'Developing UI-kit by day and using them in personal projects by night',
+    bio: 'Developing UI-kit by day and using them in personal projects by night',
     follower: 200,
     following: 100,
   }
@@ -95,8 +94,7 @@ export function PopoverTriggeredWithClickEvent() {
       medium: 'https://randomuser.me/api/portraits/med/men/75.jpg',
       thumbnail: 'https://randomuser.me/api/portraits/thumb/men/75.jpg',
     },
-    bio:
-      'Developing UI-kit by day and using them in personal projects by night',
+    bio: 'Developing UI-kit by day and using them in personal projects by night',
     follower: 200,
     following: 100,
   }

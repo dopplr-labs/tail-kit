@@ -54,9 +54,8 @@ export function FormItem({
   valuePropName = 'value',
   wrapperCol,
 }: FormItemProps) {
-  const { errors, layout, formLabelCol, formWrapperCol, control } = useContext(
-    FormContext,
-  )
+  const { errors, layout, formLabelCol, formWrapperCol, control } =
+    useContext(FormContext)
 
   if (!control) {
     throw new Error('Form.Item component should be used within Form component')

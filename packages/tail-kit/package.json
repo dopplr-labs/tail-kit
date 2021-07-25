@@ -64,7 +64,6 @@
     "@types/jest": "^26.0.10",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "autoprefixer": "^10.3.1",
     "babel-jest": "^26.3.0",
     "babel-loader": "^8.1.0",
     "chalk": "^4.1.0",
@@ -77,9 +76,7 @@
     "install-peers": "^1.0.3",
     "jest": "^26.4.2",
     "mz": "^2.7.0",
-    "postcss": "^8.3.5",
     "postcss-loader": "^3.0.0",
-    "prettier": "^2.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
@@ -94,7 +91,6 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-visualizer": "^5.5.0",
     "semantic-release": "^17.2.2",
-    "tailwindcss": "^2.2.4",
     "typescript": "^4.0.2"
   },
   "peerDependencies": {

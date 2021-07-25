@@ -178,9 +178,13 @@ export function DatePicker({
         ]}
         onContentMount={() => {
           if (dateSelected) {
-            ;(datesContainer.current?.querySelector(
-              `button[data-date="${dayjs(dateSelected).format('DD-MM-YYYY')}"]`,
-            ) as HTMLButtonElement | undefined)?.focus()
+            ;(
+              datesContainer.current?.querySelector(
+                `button[data-date="${dayjs(dateSelected).format(
+                  'DD-MM-YYYY',
+                )}"]`,
+              ) as HTMLButtonElement | undefined
+            )?.focus()
           } else {
             datesContainer.current?.focus()
           }

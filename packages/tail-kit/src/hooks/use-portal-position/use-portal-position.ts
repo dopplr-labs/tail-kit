@@ -100,7 +100,8 @@ export function usePortalPosition({
 
   useEffect(() => {
     function setPortalPosition() {
-      const contentContainerBCR = contentContainer.current?.getBoundingClientRect()
+      const contentContainerBCR =
+        contentContainer.current?.getBoundingClientRect()
       const triggerBCR = trigger.current?.getBoundingClientRect()
       if (contentContainerBCR && triggerBCR) {
         const placement = getPlacement({
