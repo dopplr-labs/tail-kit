@@ -1,21 +1,27 @@
 import React from 'react'
 import { LiveProvider, LivePreview, LiveEditor, LiveError } from 'react-live'
-import { Button } from '@tail-kit/tail-kit'
-import theme from 'prism-react-renderer/themes/nightOwl'
+import * as TailKit from '@tail-kit/tail-kit'
+import * as prettier from 'prettier'
+import theme from 'prism-react-renderer/themes/github'
 
 type PlaygroundProps = {
-  children: string
+  code: string
+  scope?: { [key: string]: any }
 }
 
-export function Playground({ children }: PlaygroundProps) {
+export function Playground({ code, scope = {} }: PlaygroundProps) {
   return (
-    <LiveProvider code={children} scope={{ Button }} theme={theme}>
+    <LiveProvider
+      code={code.trim()}
+      scope={{ ...TailKit, ...scope }}
+      theme={theme}
+    >
       <div>
-        <div className="p-4 border rounded-t-md">
-          <LivePreview />
+        <div className="overflow-hidden border rounded-md">
+          <LivePreview className="p-4 border-b" />
+          <LiveEditor className="font-mono text-sm rounded-b-md" />
         </div>
-        <LiveEditor className="font-mono text-sm rounded-b-md" />
-        <LiveError />
+        <LiveError className="px-4 py-2 mt-2 text-xs text-red-500 rounded-md bg-red-50" />
       </div>
     </LiveProvider>
   )

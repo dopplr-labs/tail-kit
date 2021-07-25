@@ -6,6 +6,7 @@ componentPath: 'src/components/button/button.tsx'
 ---
 
 import { Button } from '@tail-kit/tail-kit'
+import { HiShieldCheck } from 'react-icons/hi'
 import PropsTable from 'props-table'
 import Playground from 'playground'
 
@@ -27,16 +28,29 @@ Generally the **icon** is placed before the button label. But that can also be c
 
 ### Button Types
 
-```jsx
-function renderButtons() {
-  return (
-    <div className="flex items-center space-x-4">
-      <Button label="Default Button" />
-      <Button buttonType={Button.ButtonType.primary} label="Primary Button" />
-    </div>
-  )
-}
-```
+<Playground
+  code={`<div className="flex items-center space-x-4">
+  <Button label="Default Button" />
+  <Button buttonType={Button.ButtonType.primary} label="Primary Button" />
+  <Button buttonType={Button.ButtonType.danger} label="Danger Button" />
+  <Button buttonType={Button.ButtonType.link} label="Link Button" />
+</div>`}
+/>
+
+### Default Button With Icon
+
+<Playground
+  scope={{
+    HiShieldCheck,
+  }}
+  code={`<Button label="Update Password" icon={<HiShieldCheck />} />`}
+/>
+
+### Primary Loading Button
+
+<Playground
+  code={`<Button label="Creating Blog" loading buttonType={Button.ButtonType.primary} />`}
+/>
 
 ## Component API
 

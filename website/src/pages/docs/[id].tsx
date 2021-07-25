@@ -1,5 +1,4 @@
 import React, { Children, cloneElement, ReactElement, useMemo } from 'react'
-import clsx from 'clsx'
 import Head from 'next/head'
 import {
   GetStaticPathsResult,
@@ -47,28 +46,28 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   return <>{items.map((item, index) => cloneElement(item, { key: index }))}</>
 }
 
-type PreProps = {
-  children: React.ReactElement
-}
+// type PreProps = {
+//   children: React.ReactElement
+// }
 
-function Pre({ children }: PreProps) {
-  let languageType: string
+// function Pre({ children }: PreProps) {
+//   let languageType: string
 
-  if (typeof children !== 'string' && typeof children !== 'number') {
-    languageType =
-      children?.props?.className?.replace('language-', '') ?? undefined
-  }
+//   if (typeof children !== 'string' && typeof children !== 'number') {
+//     languageType =
+//       children?.props?.className?.replace('language-', '') ?? undefined
+//   }
 
-  if (languageType === 'jsx') {
-    return <Playground>{children.props.children.trim()}</Playground>
-  }
+//   if (languageType === 'jsx') {
+//     return <Playground>{children.props.children.trim()}</Playground>
+//   }
 
-  return (
-    <div className="prose">
-      <pre>{children}</pre>
-    </div>
-  )
-}
+//   return (
+//     <div className="prose">
+//       <pre>{children}</pre>
+//     </div>
+//   )
+// }
 
 type ComponentPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -91,7 +90,7 @@ export default function ComponentPage({
           <Component
             components={{
               wrapper: Wrapper,
-              pre: Pre,
+              // pre: Pre,
             }}
           />
         </PropsContext.Provider>
