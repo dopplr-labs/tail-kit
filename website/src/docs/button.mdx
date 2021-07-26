@@ -39,11 +39,7 @@ Generally the **icon** is placed before the button label. But that can also be c
 
 ### Default Button With Icon
 
-<Playground
-  scope={{
-    HiShieldCheck,
-  }}
->
+<Playground  scope={{ HiShieldCheck }}>
   <Button label="Update Password" icon={<HiShieldCheck />} />
 </Playground>
 
@@ -69,24 +65,29 @@ Generally the **icon** is placed before the button label. But that can also be c
 
 ### Building components
 
-<Playground scope={{HiPlus, HiMinus}}>
+<Playground scope={{ HiPlus, HiMinus }}>
   {function Counter() {
     const [count, setCount] = React.useState(0)
 
     return (
       <div className="flex items-center space-x-4">
-        <Button icon={<HiMinus />} onClick={() => {
-          setCount(prevCount => prevCount - 1)
-        }} buttonType={Button.ButtonType.danger} />
+        <Button
+          icon={<HiMinus />}
+          onClick={() => {
+            setCount(prevCount => prevCount - 1)
+          }}
+          buttonType={Button.ButtonType.danger}
+        />
         <span className="tabular-nums">{count}</span>
-        <Button icon={<HiPlus />} onClick={() => {
-          setCount(prevCount => prevCount + 1)
-        }} />
+        <Button
+          icon={<HiPlus />}
+          onClick={() => {
+            setCount(prevCount => prevCount + 1)
+          }}
+        />
       </div>
     )
-
-}}
-
+  }}
 </Playground>
 
 ## Component API
