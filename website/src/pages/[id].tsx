@@ -1,5 +1,4 @@
-import React, { Children, cloneElement, ReactElement, useMemo } from 'react'
-import clsx from 'clsx'
+import React, { useMemo, useRef } from 'react'
 import {
   GetStaticPathsResult,
   GetStaticPropsContext,
@@ -17,64 +16,9 @@ import Playground from 'components/playground'
 import rehypePlayground from 'plugins/rehype-playground'
 import rehypeHeading, { HeadingNode } from 'plugins/rehype-heading'
 import Head from 'next/head'
-
-function validate<T extends object>(input: T): T {
-  for (const key of Object.keys(input)) {
-    if (typeof input[key] === 'undefined') {
-      input[key] = null
-    } else if (typeof input[key] === 'object' && input[key] !== null) {
-      validate(input[key])
-    }
-  }
-  return input
-}
-
-function Wrapper({ children }: { children: React.ReactNode }) {
-  const allChildren = (Children.toArray(children)[0] as React.ReactElement)
-    .props.children as ReactElement[]
-  const items: React.ReactElement[] = []
-  let currentChild: React.ReactElement[] = []
-  for (let i = 0; i < allChildren.length; i++) {
-    const child = allChildren[i]
-    if (child.type && typeof child.type !== 'string') {
-      if (currentChild.length > 0) {
-        items.push(<div className="prose !max-w-full">{currentChild}</div>)
-        items.push(child)
-      }
-      currentChild = []
-    } else {
-      currentChild.push(child)
-    }
-  }
-  return <>{items.map((item, index) => cloneElement(item, { key: index }))}</>
-}
-
-type HeadingProps = {
-  heading: HeadingNode
-}
-
-function Heading({ heading }: HeadingProps) {
-  return (
-    <div className="space-y-2">
-      <a
-        href={`#${heading.slug}`}
-        className={clsx(
-          'block text-gray-400 hover:text-gray-800',
-          heading.type === 'h2' ? 'text-base' : 'text-sm',
-        )}
-      >
-        {heading.name}
-      </a>
-      {heading.children.length > 0 ? (
-        <div className="pl-4 space-y-2">
-          {heading.children.map((heading) => (
-            <Heading key={heading.slug} heading={heading} />
-          ))}
-        </div>
-      ) : null}
-    </div>
-  )
-}
+import Heading from 'components/heading'
+import Wrapper from 'components/wrapper'
+import { HeadingsProvider } from 'hooks/use-headings'
 
 type ComponentPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -84,29 +28,40 @@ export default function ComponentPage({
   componentProps,
   headings,
 }: ComponentPageProps) {
+  const container = useRef<HTMLDivElement | null>(null)
+
   const Component = useMemo(() => getMDXComponent(code), [code])
+
   return (
-    <div>
+    <>
       <Head>
         <title>{frontmatter.title} - Documentation</title>
       </Head>
-      <div className="max-w-screen-lg p-8 mx-auto space-y-6">
-        <PropsContext.Provider value={{ props: componentProps }}>
-          <Component
-            components={{
-              wrapper: Wrapper,
-              Playground: Playground as React.ComponentType,
-              PropsTable,
-            }}
-          />
-        </PropsContext.Provider>
-        <div className="fixed top-20 right-[120px] space-y-4">
-          {headings.map((heading) => (
-            <Heading heading={heading} key={heading.slug} />
-          ))}
-        </div>
+      <div className="max-w-screen-lg p-8 mx-auto space-y-6" ref={container}>
+        <HeadingsProvider
+          headings={[
+            ...headings,
+            ...headings.flatMap((heading) => heading.children),
+          ]}
+          container={container.current}
+        >
+          <PropsContext.Provider value={{ props: componentProps }}>
+            <Component
+              components={{
+                wrapper: Wrapper,
+                Playground: Playground as React.ComponentType,
+                PropsTable,
+              }}
+            />
+          </PropsContext.Provider>
+          <div className="fixed top-20 right-[120px] space-y-4">
+            {headings.map((heading) => (
+              <Heading heading={heading} key={heading.slug} />
+            ))}
+          </div>
+        </HeadingsProvider>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -145,6 +100,7 @@ export async function getStaticProps(
 
   const headings: HeadingNode[] = []
 
+  // compile mdx
   const { code, frontmatter } = await bundleMDX(content, {
     xdmOptions: (options) => {
       options.rehypePlugins = [
@@ -157,6 +113,7 @@ export async function getStaticProps(
     },
   })
 
+  // generate prop type definitions
   const { componentPath, component } = frontmatter
   const compiler = withCustomConfig(
     path.join(cwd, '../packages/tail-kit/tsconfig.json'),
@@ -170,6 +127,7 @@ export async function getStaticProps(
     Object.values(allProps).filter(({ declarations }) =>
       declarations?.find(({ fileName }) => fileName?.includes(componentPath)),
     ) ?? []
+
   return {
     props: {
       id: 'button',
@@ -179,4 +137,15 @@ export async function getStaticProps(
       headings,
     },
   }
+}
+
+function validate<T extends object>(input: T): T {
+  for (const key of Object.keys(input)) {
+    if (typeof input[key] === 'undefined') {
+      input[key] = null
+    } else if (typeof input[key] === 'object' && input[key] !== null) {
+      validate(input[key])
+    }
+  }
+  return input
 }
