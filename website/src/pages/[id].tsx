@@ -1,5 +1,5 @@
 import React, { Children, cloneElement, ReactElement, useMemo } from 'react'
-import Head from 'next/head'
+import clsx from 'clsx'
 import {
   GetStaticPathsResult,
   GetStaticPropsContext,
@@ -15,6 +15,8 @@ import PropsContext from 'contexts/props-context'
 import PropsTable from 'components/props-table'
 import Playground from 'components/playground'
 import rehypePlayground from 'plugins/rehype-playground'
+import rehypeHeading, { HeadingNode } from 'plugins/rehype-heading'
+import Head from 'next/head'
 
 function validate<T extends object>(input: T): T {
   for (const key of Object.keys(input)) {
@@ -47,16 +49,44 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   return <>{items.map((item, index) => cloneElement(item, { key: index }))}</>
 }
 
+type HeadingProps = {
+  heading: HeadingNode
+}
+
+function Heading({ heading }: HeadingProps) {
+  return (
+    <div className="space-y-2">
+      <a
+        href={`#${heading.slug}`}
+        className={clsx(
+          'block text-gray-400 hover:text-gray-800',
+          heading.type === 'h2' ? 'text-base' : 'text-sm',
+        )}
+      >
+        {heading.name}
+      </a>
+      {heading.children.length > 0 ? (
+        <div className="pl-4 space-y-2">
+          {heading.children.map((heading) => (
+            <Heading key={heading.slug} heading={heading} />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 type ComponentPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export default function ComponentPage({
   code,
   frontmatter,
   componentProps,
+  headings,
 }: ComponentPageProps) {
   const Component = useMemo(() => getMDXComponent(code), [code])
   return (
-    <>
+    <div>
       <Head>
         <title>{frontmatter.title} - Documentation</title>
       </Head>
@@ -70,8 +100,13 @@ export default function ComponentPage({
             }}
           />
         </PropsContext.Provider>
+        <div className="fixed top-20 right-[120px] space-y-4">
+          {headings.map((heading) => (
+            <Heading heading={heading} key={heading.slug} />
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
@@ -98,6 +133,7 @@ export async function getStaticProps(
     code: string
     frontmatter: { [key: string]: string }
     componentProps: PropItem[]
+    headings: HeadingNode[]
   }>
 > {
   const { id } = ctx.params
@@ -107,15 +143,20 @@ export async function getStaticProps(
   const docPath = path.join(docsDir, `${id}.mdx`)
   const content = fs.readFileSync(docPath, 'utf8')
 
+  const headings: HeadingNode[] = []
+
   const { code, frontmatter } = await bundleMDX(content, {
     xdmOptions: (options) => {
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
         rehypePlayground,
+        require('rehype-slug'),
+        rehypeHeading(headings),
       ]
       return options
     },
   })
+
   const { componentPath, component } = frontmatter
   const compiler = withCustomConfig(
     path.join(cwd, '../packages/tail-kit/tsconfig.json'),
@@ -135,6 +176,7 @@ export async function getStaticProps(
       code,
       frontmatter,
       componentProps: componentProps.map(validate),
+      headings,
     },
   }
 }

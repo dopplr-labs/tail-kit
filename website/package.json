@@ -19,6 +19,7 @@
     "react-dom": "17.0.2",
     "react-icons": "^4.2.0",
     "react-live": "^2.2.3",
+    "rehype-slug": "^4.0.1",
     "unist-util-visit": "2.0.3"
   },
   "devDependencies": {
@@ -31,5 +32,10 @@
     "postcss": "^8.3.6",
     "react-docgen-typescript": "^2.0.0",
     "tailwindcss": "^2.2.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
