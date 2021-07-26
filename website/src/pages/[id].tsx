@@ -20,14 +20,9 @@ import Heading from 'components/heading'
 import Wrapper from 'components/wrapper'
 import { HeadingsProvider } from 'hooks/use-headings'
 
-type ComponentPageProps = InferGetStaticPropsType<typeof getStaticProps>
+type DocPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export default function ComponentPage({
-  code,
-  frontmatter,
-  componentProps,
-  headings,
-}: ComponentPageProps) {
+function Doc({ code, frontmatter, componentProps, headings }: DocPageProps) {
   const container = useRef<HTMLDivElement | null>(null)
 
   const Component = useMemo(() => getMDXComponent(code), [code])
@@ -65,6 +60,13 @@ export default function ComponentPage({
   )
 }
 
+export default function DocPage({ id, ...restProps }: DocPageProps) {
+  if (!id) {
+    return null
+  }
+  return <Doc id={id} {...restProps} />
+}
+
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<{ id: string }>
 > {
@@ -76,7 +78,7 @@ export async function getStaticPaths(): Promise<
         id: doc.replace('.mdx', ''),
       },
     })),
-    fallback: true,
+    fallback: process.env.NODE_ENV === 'development',
   }
 }
 
@@ -132,7 +134,7 @@ export async function getStaticProps(
     props: {
       id: 'button',
       code,
-      frontmatter,
+      frontmatter: frontmatter ?? {},
       componentProps: componentProps.map(validate),
       headings,
     },
