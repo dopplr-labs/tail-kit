@@ -14,6 +14,7 @@ import { withCustomConfig, PropItem } from 'react-docgen-typescript'
 import PropsContext from 'contexts/props-context'
 import PropsTable from 'components/props-table'
 import Playground from 'components/playground'
+import rehypePlayground from 'plugins/rehype-playground'
 
 function validate<T extends object>(input: T): T {
   for (const key of Object.keys(input)) {
@@ -46,29 +47,6 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   return <>{items.map((item, index) => cloneElement(item, { key: index }))}</>
 }
 
-// type PreProps = {
-//   children: React.ReactElement
-// }
-
-// function Pre({ children }: PreProps) {
-//   let languageType: string
-
-//   if (typeof children !== 'string' && typeof children !== 'number') {
-//     languageType =
-//       children?.props?.className?.replace('language-', '') ?? undefined
-//   }
-
-//   if (languageType === 'jsx') {
-//     return <Playground>{children.props.children.trim()}</Playground>
-//   }
-
-//   return (
-//     <div className="prose">
-//       <pre>{children}</pre>
-//     </div>
-//   )
-// }
-
 type ComponentPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export default function ComponentPage({
@@ -76,10 +54,7 @@ export default function ComponentPage({
   frontmatter,
   componentProps,
 }: ComponentPageProps) {
-  const Component = useMemo(
-    () => getMDXComponent(code, { PropsTable, Playground }),
-    [code],
-  )
+  const Component = useMemo(() => getMDXComponent(code), [code])
   return (
     <>
       <Head>
@@ -90,7 +65,8 @@ export default function ComponentPage({
           <Component
             components={{
               wrapper: Wrapper,
-              // pre: Pre,
+              Playground: Playground as React.ComponentType,
+              PropsTable,
             }}
           />
         </PropsContext.Provider>
@@ -124,15 +100,20 @@ export async function getStaticProps(
     componentProps: PropItem[]
   }>
 > {
+  const { id } = ctx.params
+
   const cwd = process.cwd()
   const docsDir = path.resolve(cwd, 'src/docs')
-  const { id } = ctx.params
   const docPath = path.join(docsDir, `${id}.mdx`)
   const content = fs.readFileSync(docPath, 'utf8')
+
   const { code, frontmatter } = await bundleMDX(content, {
-    globals: {
-      'props-table': 'PropsTable',
-      playground: 'Playground',
+    xdmOptions: (options) => {
+      options.rehypePlugins = [
+        ...(options.rehypePlugins ?? []),
+        rehypePlayground,
+      ]
+      return options
     },
   })
   const { componentPath, component } = frontmatter

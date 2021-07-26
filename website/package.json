@@ -10,11 +10,15 @@
   },
   "dependencies": {
     "clsx": "^1.1.1",
+    "hast-util-to-string": "^1.0.4",
+    "mdast-util-mdx-jsx": "^0.1.4",
+    "mdast-util-to-markdown": "0.6.5",
     "next": "11.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.2.0",
-    "react-live": "^2.2.3"
+    "react-live": "^2.2.3",
+    "unist-util-visit": "2.0.3"
   },
   "devDependencies": {
     "@mdx-js/loader": "^1.6.22",

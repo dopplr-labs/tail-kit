@@ -9158,6 +9158,11 @@ hast-util-to-parse5@^6.0.0:
     xtend "^4.0.0"
     zwitch "^1.0.0"
 
+hast-util-to-string@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/hast-util-to-string/-/hast-util-to-string-1.0.4.tgz#9b24c114866bdb9478927d7e9c36a485ac728378"
+  integrity sha512-eK0MxRX47AV2eZ+Lyr18DCpQgodvaS3fAQO2+b9Two9F5HEoRPhiUMNzoXArMJfZi2yieFzUBMRl3HNJ3Jus3w==
+
 hast-util-whitespace@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/hast-util-whitespace/-/hast-util-whitespace-2.0.0.tgz#4fc1086467cc1ef5ba20673cb6b03cec3a970f1c"
@@ -11543,7 +11548,7 @@ mdast-util-mdx-expression@~0.1.0:
   dependencies:
     strip-indent "^3.0.0"
 
-mdast-util-mdx-jsx@~0.1.0:
+mdast-util-mdx-jsx@^0.1.4, mdast-util-mdx-jsx@~0.1.0:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/mdast-util-mdx-jsx/-/mdast-util-mdx-jsx-0.1.4.tgz#868371b90b17337b4f072a07021f7ce19612cf34"
   integrity sha512-67KOAvCmypBSpr+AJEAVQg1Obig5Wnguo4ETTxASe5WVP4TLt57bZjDX/9EW5sWYQsO4gPqLxkUOlypVn5rkhg==
@@ -11598,7 +11603,7 @@ mdast-util-to-hast@^10.2.0:
     unist-util-position "^3.0.0"
     unist-util-visit "^2.0.0"
 
-mdast-util-to-markdown@^0.6.0, mdast-util-to-markdown@^0.6.1:
+mdast-util-to-markdown@0.6.5, mdast-util-to-markdown@^0.6.0, mdast-util-to-markdown@^0.6.1:
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/mdast-util-to-markdown/-/mdast-util-to-markdown-0.6.5.tgz#b33f67ca820d69e6cc527a93d4039249b504bebe"
   integrity sha512-XeV9sDE7ZlOQvs45C9UKMtfTcctcaj/pGwH8YLbMHoMOXNNCn2LsqVQOqrF1+/NU8lKDAqozme9SCXWyo9oAcQ==

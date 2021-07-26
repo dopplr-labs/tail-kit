@@ -1,7 +1,14 @@
+@import url('https://rsms.me/inter/inter.css');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 code:not(pre code) {
-  @apply px-2 py-1 !text-xs bg-blue-50 rounded-md !font-normal !text-blue-800;
+  @apply px-2 py-1 !text-xs bg-gray-50 rounded-md !font-normal !text-gray-800;
+}
+
+.live-editor textarea {
+  @apply focus-visible:!outline-none;
 }

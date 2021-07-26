@@ -12,7 +12,7 @@ export function PropsTable() {
           <th className="px-4 py-2 text-left">Default Value</th>
         </tr>
       </thead>
-      <tbody className="border">
+      <tbody className="border rounded-md">
         {props.map((prop, index) => (
           <tr
             key={prop.name}
@@ -22,13 +22,17 @@ export function PropsTable() {
             <td className="p-4 font-medium text-left">
               <div>{prop.description}</div>
               {prop.type ? (
-                <div className="inline-block px-2 py-1 mt-2 text-xs bg-gray-100 rounded-md">
+                <code className="inline-block mt-2 border">
                   {prop.type.name}
-                </div>
+                </code>
               ) : null}
             </td>
             <td className="p-4 font-medium text-left">
-              {prop.defaultValue?.value ?? '--'}
+              {prop.defaultValue?.value ? (
+                <code className="border ">{prop.defaultValue?.value}</code>
+              ) : (
+                <span className="text-xs">--</span>
+              )}
             </td>
           </tr>
         ))}
