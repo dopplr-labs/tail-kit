@@ -1,6 +1,6 @@
 import React, { Children } from 'react'
 import Highlight, { defaultProps, Language } from 'prism-react-renderer'
-import theme from 'prism-react-renderer/themes/nightOwl'
+import theme from 'prism-react-renderer/themes/vsDark'
 import clsx from 'clsx'
 import { CopyButton } from 'components/copy-button/copy-button'
 import format from 'utils/format'
@@ -36,8 +36,8 @@ export function CodeBlock({ children }: CodeBlockProps) {
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre
-          className={clsx('text-sm leading-6 relative', className)}
-          style={{ ...style, padding: '20px' }}
+          className={clsx('text-sm relative p-4', className)}
+          style={{ ...style }}
         >
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line, key: i })}>

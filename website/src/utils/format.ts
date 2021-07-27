@@ -13,7 +13,7 @@ export default function format(inputCode: string): string {
     semi: false,
     trailingComma: 'all',
     singleQuote: true,
-    printWidth: 64,
+    printWidth: 80,
     parser: 'babel',
     plugins: [parserBabel],
   })

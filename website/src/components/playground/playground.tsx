@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { LiveProvider, LivePreview, LiveEditor, LiveError } from 'react-live'
 import { HiPencil } from 'react-icons/hi'
 import * as tailKit from '@tail-kit/tail-kit'
-import theme from 'prism-react-renderer/themes/nightOwl'
+import theme from 'prism-react-renderer/themes/vsDark'
 import { CopyButton } from 'components/copy-button/copy-button'
 
 type PlaygroundProps = {
@@ -40,7 +40,7 @@ export function Playground({
 
             <LiveEditor
               className={clsx(
-                '!font-mono text-sm leading-6 live-editor',
+                '!font-mono text-sm live-editor',
                 !editable ? 'rounded-b-md' : undefined,
               )}
               disabled={!editable}

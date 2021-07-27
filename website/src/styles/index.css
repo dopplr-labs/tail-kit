@@ -10,7 +10,11 @@ code:not(pre code) {
 }
 
 .live-editor textarea {
-  @apply focus-visible:!outline-none;
+  @apply focus-visible:!outline-none !p-4;
+}
+
+.live-editor pre {
+  @apply !p-4;
 }
 
 .props-table code:not(pre code) {

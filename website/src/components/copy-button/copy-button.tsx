@@ -28,7 +28,7 @@ export function CopyButton({ code, className, style }: CopyButtonProps) {
   return (
     <button
       className={clsx(
-        'px-2 py-1 font-medium text-xs rounded-b-md bg-blue-500 text-white font-sans opacity-50 hover:opacity-100 transition-opacity duration-100',
+        'px-2 py-1 font-medium text-xs rounded-b-md bg-blue-600 text-white font-sans opacity-60 hover:opacity-100 transition-opacity duration-100',
         className,
       )}
       style={style}
