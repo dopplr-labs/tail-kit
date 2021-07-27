@@ -10,7 +10,7 @@ type PlaygroundProps = {
 }
 
 export function Playground({ code, scope = {} }: PlaygroundProps) {
-  const [codeVisible, setCodeVisible] = useState(false)
+  const [codeVisible, setCodeVisible] = useState(true)
   const [codeCopied, setCodeCopied] = useState(false)
   const timeout = useRef(null)
 
@@ -58,7 +58,10 @@ export function Playground({ code, scope = {} }: PlaygroundProps) {
               </button>
             </div>
             {codeVisible ? (
-              <LiveEditor className="!font-mono text-sm leading-6 rounded-b-md live-editor" />
+              <LiveEditor
+                className="!font-mono text-sm leading-6 rounded-b-md live-editor"
+                disabled
+              />
             ) : null}
           </div>
         </div>
