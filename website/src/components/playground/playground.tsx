@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import clsx from 'clsx'
 import { LiveProvider, LivePreview, LiveEditor, LiveError } from 'react-live'
 import { HiPencil } from 'react-icons/hi'
@@ -17,8 +17,6 @@ export function Playground({
   scope = {},
   editable = false,
 }: PlaygroundProps) {
-  const [codeVisible, setCodeVisible] = useState(true)
-
   if (!code) {
     return null
   }
@@ -38,28 +36,15 @@ export function Playground({
           <LivePreview className="relative p-4" />
 
           <div className="relative">
-            {/* Toolbar */}
-            <div className="absolute top-0 z-20 flex items-center justify-end w-full px-4 space-x-4">
-              {codeVisible ? <CopyButton code={code} /> : null}
-              <button
-                className="px-2 py-1 text-xs border rounded-b-md bg-gray-50"
-                onClick={() => {
-                  setCodeVisible((prevState) => !prevState)
-                }}
-              >
-                {codeVisible ? 'Hide' : 'Show'} Code
-              </button>
-            </div>
+            <CopyButton code={code} className="absolute top-0 z-20 right-4" />
 
-            {codeVisible ? (
-              <LiveEditor
-                className={clsx(
-                  '!font-mono text-sm leading-6 live-editor',
-                  !editable ? 'rounded-b-md' : undefined,
-                )}
-                disabled={!editable}
-              />
-            ) : null}
+            <LiveEditor
+              className={clsx(
+                '!font-mono text-sm leading-6 live-editor',
+                !editable ? 'rounded-b-md' : undefined,
+              )}
+              disabled={!editable}
+            />
 
             {editable ? (
               <div className="flex items-center px-4 py-2 space-x-2 text-xs font-medium bg-gray-100">

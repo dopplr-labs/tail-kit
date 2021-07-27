@@ -19,11 +19,7 @@ import PropsTable from 'components/props-table'
 import Playground from 'components/playground'
 import PageNav from 'components/page-nav'
 import CodeBlock from 'components/code-block'
-import {
-  PageHeadingH1,
-  PageHeadingH2,
-  PageHeadingH3,
-} from 'components/page-heading'
+import { PageHeadingH2, PageHeadingH3 } from 'components/page-heading'
 
 type DocPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -51,7 +47,6 @@ export default function DocPage({
                 Playground: Playground as React.ComponentType,
                 PropsTable,
                 pre: CodeBlock,
-                h1: PageHeadingH1,
                 h2: PageHeadingH2,
                 h3: PageHeadingH3,
               }}
@@ -64,9 +59,7 @@ export default function DocPage({
   )
 }
 
-export async function getStaticProps(
-  ctx: GetStaticPropsContext,
-): Promise<
+export async function getStaticProps(ctx: GetStaticPropsContext): Promise<
   GetStaticPropsResult<{
     id: string
     code: string

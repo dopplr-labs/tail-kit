@@ -1,8 +1,8 @@
 import React from 'react'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
 import '@tail-kit/tail-kit/dist/tail-kit.css'
 import 'styles/index.css'
-import Head from 'next/head'
 
 export default function DocsApp({ Component, pageProps }: AppProps) {
   return (

@@ -1,6 +1,6 @@
 import toMarkdown from 'mdast-util-to-markdown'
-import mdxJsx from 'mdast-util-mdx-jsx'
-import prettier from 'prettier'
+import mdx from 'mdast-util-mdx'
+import format from 'utils/format'
 
 /**
  * Rehype plugin to inject code prop into the Playground component.
@@ -27,20 +27,36 @@ export default function rehypePlayground() {
 
       let code: string | undefined
 
-      // if child is another JSX element, we need to convert it to markdown string
-      if (children.type === 'mdxJsxFlowElement') {
+      try {
         code = toMarkdown(children, {
-          extensions: [mdxJsx.toMarkdown],
+          extensions: [
+            mdx.toMarkdown,
+            // add custom extension to conver 'element' to string
+            // keep on adding handlers for more types of elements
+            {
+              // handler tries to take a node and return a string
+              handlers: {
+                // for an expression just return it's value
+                mdxFlowExpression: (node: any) => node.value,
+
+                // for an element just return it's text content
+                element: (node: any) => {
+                  const text = node.children.find(
+                    (child) => child.type === 'text',
+                  )
+                  return text?.value ?? ''
+                },
+              },
+            },
+          ],
         })
-      } else if (children.type === 'mdxFlowExpression') {
-        // else if the child is a string, we just use the formatted string
-        code = prettier.format(children.value, {
-          semi: false,
-          trailingComma: 'all',
-          singleQuote: true,
-          printWidth: 120,
-          parser: 'babel',
-        })
+      } catch (error) {
+        // @TODO: Add proper error handling
+      }
+
+      if (code) {
+        // format code using prettier
+        code = format(code)
       }
 
       // inject the code into the Playground component's attributes

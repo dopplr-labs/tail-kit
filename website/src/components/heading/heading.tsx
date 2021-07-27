@@ -15,17 +15,16 @@ export function Heading({ heading }: HeadingProps) {
       <a
         href={`#${heading.slug}`}
         className={clsx(
-          'block ',
+          'block font-medium relative text-sm',
           heading.slug === activeHeading
-            ? 'text-gray-800'
+            ? 'text-gray-800 before:w-0.5 before:bg-gray-800 before:absolute before:transform before:-translate-x-2 before:top-0.5 before:bottom-0.5'
             : 'text-gray-400 hover:text-gray-800',
-          heading.type === 'h2' ? 'text-base' : 'text-sm',
         )}
       >
         {heading.name}
       </a>
       {heading.children.length > 0 ? (
-        <div className="pl-4 space-y-2">
+        <div className="pl-2 space-y-2">
           {heading.children.map((heading) => (
             <Heading key={heading.slug} heading={heading} />
           ))}

@@ -24,7 +24,7 @@ export function PageNav({ headings, className, style }: PageNavProps) {
   return (
     // offsetTop is used to offset the top of the container is having a padding of 32px
     <HeadingsProvider headings={allHeadings} offsetTop={-32}>
-      <div className={clsx('space-y-4', className)} style={style}>
+      <div className={clsx('space-y-2', className)} style={style}>
         {headings.map((heading) => (
           <Heading heading={heading} key={heading.slug} />
         ))}

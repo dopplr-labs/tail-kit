@@ -28,13 +28,13 @@ export function CopyButton({ code, className, style }: CopyButtonProps) {
   return (
     <button
       className={clsx(
-        'px-2 py-1 text-xs border rounded-b-md bg-gray-50 text-gray-800 font-sans',
+        'px-2 py-1 font-medium text-xs rounded-b-md bg-blue-500 text-white font-sans opacity-50 hover:opacity-100 transition-opacity duration-100',
         className,
       )}
       style={style}
       onClick={handleCopyCode}
     >
-      {codeCopied ? 'Copied' : 'Copy Code'}
+      {codeCopied ? 'Copied' : 'Copy'}
     </button>
   )
 }

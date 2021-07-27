@@ -46,22 +46,34 @@ import { Button } from '@tail-kit/tail-kit'
 ### Default Button With Icon
 
 <Playground  scope={{ HiShieldCheck }}>
-  <Button icon={<HiShieldCheck />}>Update Password</Button>
+  <Button icon={<HiShieldCheck />}>
+    Update Password
+  </Button>
 </Playground>
 
 ### Primary Loading Button
 
 <Playground>
-  <Button loading buttonType="primary">Creating Blog</Button>
+  <Button loading buttonType="primary">
+    Creating Blog
+  </Button>
+</Playground>
+
+### Simple loading button
+
+<Playground>
+  <Button loading />
 </Playground>
 
 ### Danger Button with Icon
 
 <Playground scope={{ HiOutlineTrash }}>
-  <Button buttonType="danger" icon={<HiOutlineTrash />}>Delete User</Button>
+  <Button buttonType="danger" icon={<HiOutlineTrash />}>
+    Delete User
+  </Button>
 </Playground>
 
-### Building components
+### Simple counter
 
 <Playground scope={{ HiPlus, HiMinus }} editable>
   {function Counter() {
@@ -74,7 +86,6 @@ import { Button } from '@tail-kit/tail-kit'
           onClick={() => {
             setCount(prevCount => prevCount - 1)
           }}
-          buttonType="danger"
         />
         <span className="tabular-nums">{count}</span>
         <Button
@@ -88,6 +99,6 @@ import { Button } from '@tail-kit/tail-kit'
   }}
 </Playground>
 
-## Component API
+## Button Props
 
 <PropsTable />

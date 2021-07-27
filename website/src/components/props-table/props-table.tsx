@@ -7,9 +7,11 @@ export function PropsTable() {
     <table className="w-full text-sm text-gray-800 props-table">
       <thead>
         <tr>
-          <th className="px-4 py-2 text-left">Name</th>
-          <th className="px-4 py-2 text-left">Description</th>
-          <th className="px-4 py-2 text-left">Default Value</th>
+          <th className="px-4 py-2 text-left whitespace-nowrap">Name</th>
+          <th className="px-4 py-2 text-left whitespace-nowrap">Description</th>
+          <th className="px-4 py-2 text-left whitespace-nowrap">
+            Default Value
+          </th>
         </tr>
       </thead>
       <tbody className="border rounded-md">

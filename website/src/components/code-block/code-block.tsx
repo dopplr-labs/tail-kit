@@ -3,6 +3,7 @@ import Highlight, { defaultProps, Language } from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/nightOwl'
 import clsx from 'clsx'
 import { CopyButton } from 'components/copy-button/copy-button'
+import format from 'utils/format'
 
 type CodeBlockProps = {
   children: React.ReactNode
@@ -23,8 +24,8 @@ export function CodeBlock({ children }: CodeBlockProps) {
 
   // the className would be something like language-jsx for a JSX block
   const language = codeChild.props.className.replace(/language-/, '')
-  // the code content would be the code children
-  const codeContent = codeChild.props.children.trim()
+  // format code using prettier
+  const codeContent = format(codeChild.props.children)
 
   return (
     <Highlight
