@@ -4,7 +4,7 @@ import PropsContext from 'contexts/props-context'
 export function PropsTable() {
   const { props } = useContext(PropsContext)
   return (
-    <table className="w-full text-sm text-gray-800 table-fixed">
+    <table className="w-full text-sm text-gray-800 props-table">
       <thead>
         <tr>
           <th className="px-4 py-2 text-left">Name</th>
@@ -18,7 +18,7 @@ export function PropsTable() {
             key={prop.name}
             className={index % 2 === 0 ? 'bg-gray-50' : undefined}
           >
-            <td className="p-4 font-medium text-left">{prop.name}</td>
+            <td className="p-4 font-mono font-bold text-left">{prop.name}</td>
             <td className="p-4 font-medium text-left">
               <div>{prop.description}</div>
               {prop.type ? (

@@ -1,4 +1,6 @@
 import React, { Children, cloneElement } from 'react'
+import Playground from 'components/playground'
+import PropsTable from 'components/props-table'
 
 export type WrapperProps = {
   children: React.ReactNode
@@ -11,7 +13,7 @@ export function Wrapper({ children }: WrapperProps) {
   let currentChild: React.ReactElement[] = []
   for (let i = 0; i < allChildren.length; i++) {
     const child = allChildren[i]
-    if (child.type && typeof child.type !== 'string') {
+    if (child.type === Playground || child.type === PropsTable) {
       if (currentChild.length > 0) {
         items.push(<div className="prose !max-w-full">{currentChild}</div>)
         items.push(child)
@@ -21,5 +23,10 @@ export function Wrapper({ children }: WrapperProps) {
       currentChild.push(child)
     }
   }
+
+  if (currentChild.length > 0) {
+    items.push(<div className="prose !max-w-full">{currentChild}</div>)
+  }
+
   return <>{items.map((item, index) => cloneElement(item, { key: index }))}</>
 }

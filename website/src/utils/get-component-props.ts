@@ -24,9 +24,7 @@ export default function getComponentProps(
   )
 
   // create a compiler instance to parse the component props
-  const compiler = withCustomConfig(tailKitTSConfigPath, {
-    componentNameResolver: () => componentName,
-  })
+  const compiler = withCustomConfig(tailKitTSConfigPath, {})
 
   const resolvedComponentPath = path.join(
     cwd,

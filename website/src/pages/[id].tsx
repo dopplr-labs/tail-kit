@@ -10,15 +10,14 @@ import * as path from 'path'
 import * as fs from 'fs'
 import { getMDXComponent } from 'mdx-bundler/client'
 import { PropItem } from 'react-docgen-typescript'
-import { HeadingsProvider } from 'hooks/use-headings'
 import compileMdx from 'utils/compile-mdx'
 import getComponentProps from 'utils/get-component-props'
 import { HeadingNode } from 'plugins/rehype-heading'
 import PropsContext from 'contexts/props-context'
-import Heading from 'components/heading'
 import Wrapper from 'components/wrapper'
 import PropsTable from 'components/props-table'
 import Playground from 'components/playground'
+import PageNav from 'components/page-nav'
 
 type DocPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -37,29 +36,19 @@ export default function DocPage({
         <title>{frontmatter.title} - Documentation</title>
       </Head>
 
-      <div className="max-w-screen-lg p-8 mx-auto space-y-6">
-        <PropsContext.Provider value={{ props: componentProps }}>
-          <Component
-            components={{
-              wrapper: Wrapper,
-              Playground: Playground as React.ComponentType,
-              PropsTable,
-            }}
-          />
-        </PropsContext.Provider>
-
-        <div className="fixed top-20 right-[120px] space-y-4">
-          <HeadingsProvider
-            headings={[
-              ...headings,
-              ...headings.flatMap((heading) => heading.children),
-            ]}
-          >
-            {headings.map((heading) => (
-              <Heading heading={heading} key={heading.slug} />
-            ))}
-          </HeadingsProvider>
+      <div className="flex items-start max-w-screen-lg p-8 mx-auto space-x-16">
+        <div className="space-y-6">
+          <PropsContext.Provider value={{ props: componentProps }}>
+            <Component
+              components={{
+                wrapper: Wrapper,
+                Playground: Playground as React.ComponentType,
+                PropsTable,
+              }}
+            />
+          </PropsContext.Provider>
         </div>
+        <PageNav headings={headings} className="sticky flex-shrink-0 top-8" />
       </div>
     </>
   )
@@ -100,11 +89,14 @@ export async function getStaticProps(
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<{ id: string }>
 > {
+  // cwd point to the root directory of website
   const docsDir = path.resolve(process.cwd(), 'src/docs')
-  const docs = fs.readdirSync(docsDir) as string[]
+  const allDocs = fs.readdirSync(docsDir) as string[]
+
   return {
-    paths: docs.map((doc) => ({
+    paths: allDocs.map((doc) => ({
       params: {
+        // the id of the doc is the name of the mdx file
         id: doc.replace('.mdx', ''),
       },
     })),

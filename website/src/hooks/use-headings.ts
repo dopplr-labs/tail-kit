@@ -1,38 +1,49 @@
 import constate from 'constate'
 import { HeadingNode } from 'plugins/rehype-heading'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 function useHeadings({ headings }: { headings: HeadingNode[] }) {
-  const [activeHeading, setActiveHeading] = useState<string | undefined>(
-    undefined,
+  const [positions, setPositions] = useState<{
+    [key: string]: number
+  }>({})
+  const slugs = headings.map((heading) => heading.slug)
+  const items = useMemo(
+    () =>
+      typeof window !== 'undefined'
+        ? slugs.map((slug) => document.getElementById(slug))
+        : [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [...slugs],
   )
-  const minPos = useRef(Number.POSITIVE_INFINITY)
-  const entryId = useRef<string | undefined>(undefined)
 
   useEffect(
-    function checkActiveHeading() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.boundingClientRect.top < minPos.current) {
-            minPos.current = entry.boundingClientRect.top
-            entryId.current = entry.target.id
-          }
+    function checkHeadingPositionsOnIntersetionChange() {
+      const observer = new IntersectionObserver(() => {
+        const updatedEntries = {}
+        items.forEach((item) => {
+          updatedEntries[item?.id] = item?.getBoundingClientRect()?.top ?? 0
         })
-
-        if (entryId) {
-          minPos.current = Number.POSITIVE_INFINITY
-          setActiveHeading(entryId.current)
-        }
+        setPositions(updatedEntries)
       })
 
-      headings.forEach((heading) => {
-        const item = document.getElementById(heading.slug)
+      items.forEach((item) => {
         observer.observe(item)
       })
+
+      return () => {
+        console.log('destruct')
+        items.forEach((item) => {
+          observer.unobserve(item)
+        })
+        observer.disconnect()
+      }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [items],
   )
+
+  const activeHeading = Object.entries(positions)
+    .filter(([, position]) => position > -32)
+    .sort(([, positionA], [, positionB]) => positionA - positionB)?.[0]?.[0]
 
   return {
     activeHeading,
