@@ -71,11 +71,12 @@ export function DatePickerWithModal() {
   return (
     <>
       <Button
-        label="Click To Open Modal"
         onClick={() => {
           setModalVisible(true)
         }}
-      />
+      >
+        Click To Open Modal
+      </Button>
       <Modal
         visible={modalVisible}
         onRequestClose={() => {

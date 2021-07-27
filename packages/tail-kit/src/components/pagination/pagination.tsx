@@ -226,21 +226,23 @@ export function Pagination({
   return (
     <div className={clsx('flex items-center gap-x-2', className)} style={style}>
       <Button
-        label="Previous"
-        buttonType={Button.ButtonType.link}
+        buttonType="link"
         icon={<HiOutlineChevronLeft />}
         disabled={selected === 1}
         onClick={handleDecrement}
-      />
+      >
+        Previous
+      </Button>
       {renderButtons}
       <Button
-        label="Next"
-        buttonType={Button.ButtonType.link}
+        buttonType="link"
         icon={<HiOutlineChevronRight />}
-        iconPlacement={Button.IconPlacement.afterLabel}
+        iconPlacement="afterText"
         disabled={selected === totalPages}
         onClick={handleIncrement}
-      />
+      >
+        Next
+      </Button>
 
       {/* Select component to change number of data to render in a page */}
       {showSizeChanger ? (

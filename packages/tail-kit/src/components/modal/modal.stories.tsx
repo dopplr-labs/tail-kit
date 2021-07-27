@@ -11,11 +11,12 @@ export function SimpleModal() {
   return (
     <>
       <Button
-        label="Click To Open Modal"
         onClick={() => {
           setVisible(true)
         }}
-      />
+      >
+        Click To Open Modal
+      </Button>
       <Modal
         visible={visible}
         onRequestClose={() => {
@@ -38,11 +39,12 @@ export function LargeContentModal() {
   return (
     <>
       <Button
-        label="Click To Open Modal"
         onClick={() => {
           setVisible(true)
         }}
-      />
+      >
+        Click To Open Modal
+      </Button>
       <Modal
         visible={visible}
         onRequestClose={() => {
@@ -123,11 +125,12 @@ export function NestedModal() {
   return (
     <>
       <Button
-        label="Click To Open Modal"
         onClick={() => {
           setVisible(true)
         }}
-      />
+      >
+        Click To Open Modal
+      </Button>
       <Modal
         visible={visible}
         onRequestClose={() => {
@@ -143,11 +146,12 @@ export function NestedModal() {
           nisi.
         </div>
         <Button
-          label="Click to open nested modal"
           onClick={() => {
             setNestedModalVisible(true)
           }}
-        />
+        >
+          Click to open nested modal
+        </Button>
         <Modal
           title="Nested Modal"
           visible={nestedModalVisible}

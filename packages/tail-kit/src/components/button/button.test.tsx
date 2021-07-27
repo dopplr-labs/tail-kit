@@ -4,12 +4,12 @@ import userEvent from '@testing-library/user-event'
 import { Button } from './button'
 
 test('render button label correctly', () => {
-  render(<Button label="Click Here" />)
+  render(<Button>Click Here</Button>)
   expect(screen.getByText('Click Here')).toBeInTheDocument()
 })
 
 test('render aria label correctly by default', () => {
-  render(<Button label="Click Here" />)
+  render(<Button>Click Here</Button>)
   expect(screen.getByLabelText('Click Here')).toBeInTheDocument()
 })
 
@@ -21,28 +21,28 @@ test('render aria label correctly by default', () => {
 })
 
 test('renders primary button correctly', () => {
-  render(<Button label="Click Here" buttonType={Button.ButtonType.primary} />)
+  render(<Button buttonType="primary">Click Here</Button>)
   expect(
     screen.getByLabelText('Click Here').classList.contains('primary'),
   ).toBe(true)
 })
 
 test('renders default button correctly', () => {
-  render(<Button label="Click Here" buttonType={Button.ButtonType.default} />)
+  render(<Button buttonType="default">Click Here</Button>)
   expect(
     screen.getByLabelText('Click Here').classList.contains('default'),
   ).toBe(true)
 })
 
 test('renders danger button correctly', () => {
-  render(<Button label="Click Here" buttonType={Button.ButtonType.danger} />)
+  render(<Button buttonType="danger">Click Here</Button>)
   expect(screen.getByLabelText('Click Here').classList.contains('danger')).toBe(
     true,
   )
 })
 
 test('renders link button correctly', () => {
-  render(<Button label="Click Here" buttonType={Button.ButtonType.link} />)
+  render(<Button buttonType="link">Click Here</Button>)
   expect(screen.getByLabelText('Click Here').classList.contains('link')).toBe(
     true,
   )
@@ -50,50 +50,52 @@ test('renders link button correctly', () => {
 
 test('render icon correctly', () => {
   const icon = <div className="icon" data-testid="icon" />
-  render(<Button label="Click Here" icon={icon} />)
+  render(<Button icon={icon}>Click Here</Button>)
   expect(screen.getByTestId('icon')).toBeInTheDocument()
 })
 
 test('call onClick on button click', () => {
   const onClick = jest.fn()
-  render(<Button label="Click Here" onClick={onClick} />)
+  render(<Button onClick={onClick}>Click Here</Button>)
   userEvent.click(screen.getByText('Click Here'))
   expect(onClick).toHaveBeenCalled()
 })
 
 test('forward ref to the button', () => {
   const ref = createRef<HTMLButtonElement>()
-  render(<Button label="Click Here" ref={ref} />)
+  render(<Button ref={ref}>Click Here</Button>)
   expect(ref.current?.tagName).toBe('BUTTON')
 })
 
 test('render spinner on loading', () => {
-  render(<Button label="Click Me" loading />)
+  render(<Button loading>Click Me</Button>)
   expect(screen.getByTestId('button-spinner')).toBeInTheDocument()
 })
 
 test('disables button on loading', () => {
   const onClick = jest.fn()
 
-  render(<Button label="Click Me" loading onClick={onClick} />)
+  render(
+    <Button loading onClick={onClick}>
+      Click Me
+    </Button>,
+  )
   userEvent.click(screen.getByText('Click Me'))
   expect(onClick).not.toHaveBeenCalled()
 })
 
 test('render icon before label by default', () => {
-  render(<Button label="Click Me" icon={<div data-testid="button-icon" />} />)
+  render(<Button icon={<div data-testid="button-icon" />}>Click Me</Button>)
   expect(screen.getByTestId('button-icon').nextSibling).toHaveTextContent(
     'Click Me',
   )
 })
 
-test('render icon after label when iconPlacement is afterLabel', () => {
+test('render icon after label when iconPlacement is afterText', () => {
   render(
-    <Button
-      label="Click Me"
-      icon={<div data-testid="button-icon" />}
-      iconPlacement={Button.IconPlacement.afterLabel}
-    />,
+    <Button icon={<div data-testid="button-icon" />} iconPlacement="afterText">
+      Click Me
+    </Button>,
   )
   expect(screen.getByTestId('button-icon').previousSibling).toHaveTextContent(
     'Click Me',
@@ -101,7 +103,7 @@ test('render icon after label when iconPlacement is afterLabel', () => {
 })
 
 test('render default disabled button correctly', () => {
-  render(<Button label="Click Me" disabled />)
+  render(<Button disabled>Click Me</Button>)
   expect(screen.getByRole('button')).toHaveClass(
     'border-gray-400 text-gray-400',
   )
@@ -109,18 +111,18 @@ test('render default disabled button correctly', () => {
 
 test('render primary disabled button correctly', () => {
   render(
-    <Button label="Click Me" disabled buttonType={Button.ButtonType.primary} />,
+    <Button disabled buttonType="primary">
+      Click Me
+    </Button>,
   )
   expect(screen.getByRole('button')).toHaveClass('bg-gray-400 text-white')
 })
 
 test('render danger disabled button correctly', () => {
   render(
-    <Button
-      label="Don't Click Me"
-      disabled
-      buttonType={Button.ButtonType.danger}
-    />,
+    <Button disabled buttonType="danger">
+      Don&apos;t Click Me
+    </Button>,
   )
   expect(screen.getByRole('button')).toHaveClass(
     'border-gray-400 text-gray-400',
@@ -129,7 +131,9 @@ test('render danger disabled button correctly', () => {
 
 test('render link disabled button correctly', () => {
   render(
-    <Button label="Click Me" disabled buttonType={Button.ButtonType.link} />,
+    <Button disabled buttonType="link">
+      Click Me
+    </Button>,
   )
   expect(screen.getByRole('button')).toHaveClass('text-gray-400')
 })

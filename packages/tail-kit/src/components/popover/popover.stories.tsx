@@ -37,16 +37,13 @@ export function DefaultPopover() {
               className="object-cover w-16 h-16 rounded-full"
             />
             <Button
-              label={following ? 'Following' : 'Follow'}
-              buttonType={
-                following
-                  ? Button.ButtonType.primary
-                  : Button.ButtonType.default
-              }
+              buttonType={following ? 'primary' : 'default'}
               onClick={() => {
                 setFollowing((prevState) => !prevState)
               }}
-            />
+            >
+              {following ? 'Following' : 'Follow'}
+            </Button>
           </div>
           <div className="text-base font-medium text-gray-800">
             {user.name.first} {user.name.last}
@@ -112,16 +109,13 @@ export function PopoverTriggeredWithClickEvent() {
               className="object-cover w-16 h-16 rounded-full"
             />
             <Button
-              label={following ? 'Following' : 'Follow'}
-              buttonType={
-                following
-                  ? Button.ButtonType.primary
-                  : Button.ButtonType.default
-              }
+              buttonType={following ? 'primary' : 'default'}
               onClick={() => {
                 setFollowing((prevState) => !prevState)
               }}
-            />
+            >
+              {following ? 'Following' : 'Follow'}
+            </Button>
           </div>
           <div className="text-base font-medium text-gray-800">
             {user.name.first} {user.name.last}
@@ -172,16 +166,17 @@ export function ControlledPopover() {
             To close the Popover, click on the close button
           </div>
           <Button
-            label="Close Popover"
-            buttonType={Button.ButtonType.danger}
+            buttonType="danger"
             onClick={() => {
               setPopoverVisible(false)
             }}
-          />
+          >
+            Close Popover
+          </Button>
         </div>
       }
     >
-      <Button label="Click to open Popover" />
+      <Button>Click to open Popover</Button>
     </Popover>
   )
 }

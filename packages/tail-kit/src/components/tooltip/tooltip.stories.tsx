@@ -30,11 +30,9 @@ export function TooltipWithIcon() {
       title="User once deleted cannot be restored"
       icon={<HiExclamationCircle className="w-5 h-5 text-red-500" />}
     >
-      <Button
-        buttonType={Button.ButtonType.danger}
-        icon={<HiOutlineTrash />}
-        label="Delete User"
-      />
+      <Button buttonType="danger" icon={<HiOutlineTrash />}>
+        Delete User
+      </Button>
     </Tooltip>
   )
 }
@@ -43,34 +41,34 @@ export function TooltipWithExplicitPlacement() {
   return (
     <div className="flex items-center mx-auto my-20 space-x-2 w-min-content">
       <Tooltip title="Left" placement="left">
-        <Button label="Left" className="w-20" />
+        <Button className="w-20">Left</Button>
       </Tooltip>
       <div className="space-y-16">
         <div className="flex space-x-4">
           <Tooltip title="Top Left" placement="topLeft">
-            <Button label="Top Left" className="w-32" />
+            <Button className="w-32">Top Left</Button>
           </Tooltip>
           <Tooltip title="Top" placement="top">
-            <Button label="Top" className="w-32" />
+            <Button className="w-32">Top</Button>
           </Tooltip>
           <Tooltip title="Top Right" placement="topRight">
-            <Button label="Top Right" className="w-32" />
+            <Button className="w-32">Top Right</Button>
           </Tooltip>
         </div>
         <div className="flex space-x-4">
           <Tooltip title="Bottom Left" placement="bottomLeft">
-            <Button label="Bottom Left" className="w-32" />
+            <Button className="w-32">Bottom Left</Button>
           </Tooltip>
           <Tooltip title="Bottom" placement="bottom">
-            <Button label="Bottom" className="w-32" />
+            <Button className="w-32">Bottom</Button>
           </Tooltip>
           <Tooltip title="Bottom Right" placement="bottomRight">
-            <Button label="Bottom Right" className="w-32" />
+            <Button className="w-32">Bottom Right</Button>
           </Tooltip>
         </div>
       </div>
       <Tooltip title="Right" placement="right">
-        <Button label="Right" className="w-20" />
+        <Button className="w-20">Right</Button>
       </Tooltip>
     </div>
   )
@@ -84,11 +82,9 @@ export function TooltipWithLightBackground() {
       icon={<HiCheckCircle className="w-5 h-5 text-green-500" />}
       placement="top"
     >
-      <Button
-        icon={<HiShoppingCart />}
-        label="Place Order"
-        buttonType={Button.ButtonType.primary}
-      />
+      <Button icon={<HiShoppingCart />} buttonType="primary">
+        Place Order
+      </Button>
     </Tooltip>
   )
 }
@@ -99,7 +95,7 @@ export function TooltipWithoutPointingArrow() {
       title="Download the file in your Google Drive"
       pointingArrow={false}
     >
-      <Button icon={<HiOutlineDownload />} label="Download" />
+      <Button icon={<HiOutlineDownload />}>Download </Button>
     </Tooltip>
   )
 }

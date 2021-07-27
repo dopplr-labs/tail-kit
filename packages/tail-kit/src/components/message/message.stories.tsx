@@ -24,11 +24,9 @@ export function NormalMessage() {
   }
 
   return (
-    <Button
-      label="Display Simple Message"
-      buttonType={Button.ButtonType.primary}
-      onClick={showToast}
-    />
+    <Button buttonType="primary" onClick={showToast}>
+      Display Simple Message
+    </Button>
   )
 }
 
@@ -49,9 +47,9 @@ export function DifferentTypesOfMessages() {
 
   return (
     <div className="flex items-center space-x-4">
-      <Button label="Success" onClick={success} />
-      <Button label="Warning" onClick={warning} />
-      <Button label="Error" onClick={error} />
+      <Button onClick={success}>Success</Button>
+      <Button onClick={warning}>Warning</Button>
+      <Button onClick={error}>Error</Button>
     </div>
   )
 }
@@ -66,7 +64,7 @@ export function CustomDismissTime() {
     )
   }
 
-  return <Button label="Custom Dismiss Time" onClick={success} />
+  return <Button onClick={success}>Custom Dismiss Time</Button>
 }
 
 export function DispalyLoadingIndicator() {
@@ -76,7 +74,7 @@ export function DispalyLoadingIndicator() {
     message.loading('Saving changes. Please wait!!')
   }
 
-  return <Button label="Display Loading Indicator" onClick={loading} />
+  return <Button onClick={loading}>Display Loading Indicator</Button>
 }
 
 export function MessageWithCustomIcon() {
@@ -96,5 +94,5 @@ export function MessageWithCustomIcon() {
       icon,
     })
   }
-  return <Button label="Message with custom icon" onClick={renderMessage} />
+  return <Button onClick={renderMessage}>Message with custom icon</Button>
 }

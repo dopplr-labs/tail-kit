@@ -30,7 +30,7 @@ export function DisbaledSwitch() {
   return (
     <div className="flex items-center space-x-3">
       <Switch disabled={disable} />
-      <Button label="Toggle Disabled" onClick={() => setDisable(!disable)} />
+      <Button onClick={() => setDisable(!disable)}>Toggle Disabled</Button>
     </div>
   )
 }

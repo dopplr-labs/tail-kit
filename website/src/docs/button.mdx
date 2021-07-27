@@ -14,15 +14,15 @@ Base component to render **button**.
 
 Button can be of type
 
-- **primary** `Button.ButtonType.primary` solid filled button (with primary background color), to be used for primary actions
-- **default** `Button.ButtonType.default` bordered button (primary color) and text in primary color, to be used for secondary actions
-- **danger** `Button.ButtonType.danger` bordered button with error color, to be used in case of presenting any delete action to user
-- **link** `Button.ButtonType.link` button without any border, can be used to render menu icons where we don't want to show users any button border
+- `primary` - solid filled button (with primary background color), to be used for primary actions
+- `default` - bordered button (primary color) and text in primary color, to be used for secondary actions
+- `danger` - bordered button with error color, to be used in case of presenting any delete action to user
+- `link` - button without any border, can be used to render menu icons where we don't want to show users any button border
 
-Generally the **icon** is placed before the button label. But that can also be changed, by configuring `iconPlacement` prop to be
+Generally the **icon** is placed before the button text. But that can also be changed, by configuring `iconPlacement` prop to be
 
-- `Button.IconPlacement.beforeLabel` rendering the button icon before the label
-- `Button.IconPlacement.afterLabel` rendering the button icon after the label
+- `beforeText` - rendering the button icon before the text
+- `afterText` - rendering the button icon after the text
 
 ## Usage
 
@@ -36,37 +36,29 @@ import { Button } from '@tail-kit/tail-kit'
 
 <Playground>
   <div className="flex items-center space-x-4">
-    <Button label="Default Button" />
-    <Button buttonType={Button.ButtonType.primary} label="Primary Button" />
-    <Button buttonType={Button.ButtonType.danger} label="Danger Button" />
-    <Button buttonType={Button.ButtonType.link} label="Link Button" />
+    <Button>Default Button</Button>
+    <Button buttonType="primary">Primary Button</Button>
+    <Button buttonType="danger">Danger Button</Button>
+    <Button buttonType="link">Link Button</Button>
   </div>
 </Playground>
 
 ### Default Button With Icon
 
 <Playground  scope={{ HiShieldCheck }}>
-  <Button label="Update Password" icon={<HiShieldCheck />} />
+  <Button icon={<HiShieldCheck />}>Update Password</Button>
 </Playground>
 
 ### Primary Loading Button
 
 <Playground>
-  <Button
-    label="Creating Blog"
-    loading
-    buttonType={Button.ButtonType.primary}
-  />
+  <Button loading buttonType="primary">Creating Blog</Button>
 </Playground>
 
 ### Danger Button with Icon
 
 <Playground scope={{ HiOutlineTrash }}>
-  <Button
-    buttonType={Button.ButtonType.danger}
-    label="Delete User"
-    icon={<HiOutlineTrash />}
-  />
+  <Button buttonType="danger" icon={<HiOutlineTrash />}>Delete User</Button>
 </Playground>
 
 ### Building components
@@ -82,7 +74,7 @@ import { Button } from '@tail-kit/tail-kit'
           onClick={() => {
             setCount(prevCount => prevCount - 1)
           }}
-          buttonType={Button.ButtonType.danger}
+          buttonType="danger"
         />
         <span className="tabular-nums">{count}</span>
         <Button

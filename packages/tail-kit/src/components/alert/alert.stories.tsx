@@ -80,11 +80,10 @@ export function AlertWithAction() {
       closable
       actions={
         <>
-          <Alert.AlertButton
-            label="OK"
-            buttonType={AlertButton.ButtonType.primary}
-          />
-          <Alert.AlertButton label="Ignore" />
+          <Alert.AlertButton buttonType={AlertButton.ButtonType.primary}>
+            OK
+          </Alert.AlertButton>
+          <Alert.AlertButton>Ignore</Alert.AlertButton>
         </>
       }
     />
@@ -109,11 +108,10 @@ export function ErrorAlertWithAction() {
       icon={<HiExclamationCircle />}
       actions={
         <>
-          <Alert.AlertButton
-            label="OK"
-            buttonType={Alert.AlertButton.ButtonType.primary}
-          />
-          <Alert.AlertButton label="Ignore" />
+          <Alert.AlertButton buttonType={Alert.AlertButton.ButtonType.primary}>
+            OK
+          </Alert.AlertButton>
+          <Alert.AlertButton>Ignore</Alert.AlertButton>
         </>
       }
     />

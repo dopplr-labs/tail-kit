@@ -40,8 +40,8 @@ function RenderButton({
 
   return (
     <>
-      <Button label="Click Me" onClick={renderMessage} />
-      <Button label="Delete Message" onClick={deleteMessage} />
+      <Button onClick={renderMessage}>Click Me</Button>
+      <Button onClick={deleteMessage}>Delete Message</Button>
     </>
   )
 }

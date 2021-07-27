@@ -63,11 +63,12 @@ export function MenuWithinAModal() {
   return (
     <>
       <Button
-        label="Click To Open Modal"
         onClick={() => {
           setModalVisible(true)
         }}
-      />
+      >
+        Click To Open Modal
+      </Button>
       <Modal
         visible={modalVisible}
         onRequestClose={() => {
@@ -83,7 +84,7 @@ export function MenuWithinAModal() {
           nisi.
         </div>
         <Menu
-          trigger={<Button icon={<HiOutlineChevronDown />} label="Show Menu" />}
+          trigger={<Button icon={<HiOutlineChevronDown />}>Show Menu</Button>}
         >
           <Menu.MenuItem label="Share Blog" icon={<HiOutlineShare />} />
           <Menu.MenuItem label="Edit Blog" icon={<HiOutlinePencilAlt />} />
@@ -99,12 +100,7 @@ export function MenuWithExplicitPlacement() {
   return (
     <div className="flex items-center justify-center h-80">
       <Menu
-        trigger={
-          <Button
-            icon={<HiOutlineDotsVertical />}
-            buttonType={Button.ButtonType.link}
-          />
-        }
+        trigger={<Button icon={<HiOutlineDotsVertical />} buttonType="link" />}
         horizontalPlacement={Menu.HorizontalPlacement.right}
         verticalPlacement={Menu.VerticalPlacement.top}
       >

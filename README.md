@@ -59,11 +59,12 @@ export default function App() {
         }}
       />
       <Button
-        label="Login"
         className="w-full"
-        buttonType={Button.ButtonType.primary}
+        buttonType="primary"
         disabled={!email || !password}
-      />
+      >
+        Login
+      </Button>
     </div>
   )
 }

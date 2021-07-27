@@ -152,7 +152,7 @@ export function AvatarsInNavbar() {
             </Tooltip>
           ))}
         </Avatar.Group>
-        <Button label="Share" buttonType={Button.ButtonType.primary} />
+        <Button buttonType="primary">Share</Button>
       </div>
     </div>
   )

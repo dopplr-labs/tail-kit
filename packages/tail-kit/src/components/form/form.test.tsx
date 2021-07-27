@@ -52,7 +52,7 @@ test('error message renders correctly', async () => {
       >
         <Input />
       </Form.Item>
-      <Button type="submit" label="Submit" />
+      <Button type="submit">Submit</Button>
     </Form>,
   )
   fireEvent.click(screen.getByText('Submit'))
@@ -92,7 +92,7 @@ test('checkbox works correctly in form', async () => {
       <Form.Item name="checkbox" valuePropName="checked">
         <Checkbox label="Remember me" />
       </Form.Item>
-      <Button label="Submit" />
+      <Button>Submit</Button>
     </Form>,
   )
   fireEvent.click(screen.getByText('Remember me'))
@@ -114,11 +114,9 @@ test('children as function works correctly with form', async () => {
           >
             <Input />
           </Form.Item>
-          <Button
-            label="Submit"
-            buttonType={Button.ButtonType.primary}
-            disabled={!isDirty || !isValid}
-          />
+          <Button buttonType="primary" disabled={!isDirty || !isValid}>
+            Submit
+          </Button>
         </>
       )}
     </Form>,
@@ -154,7 +152,7 @@ test('Layouting works correctly for form', () => {
         <Checkbox label="Remember Me" />
       </Form.Item>
       <Form.Item {...tailLayout}>
-        <Button label="Submit" type="submit" />
+        <Button type="submit">Submit</Button>
       </Form.Item>
     </Form>,
   )

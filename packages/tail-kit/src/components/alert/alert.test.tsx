@@ -70,7 +70,7 @@ test('renders actions correctly', () => {
       content="Your trial period has already completed. Add your payment detials to continue using Indshine"
       actions={
         <>
-          <Alert.AlertButton label="Pay Now" />
+          <Alert.AlertButton>Pay Now</Alert.AlertButton>
         </>
       }
     />,
@@ -86,7 +86,9 @@ test('renders actions button background correctly', () => {
       content="Your trial period has already completed. Add your payment detials to continue using Indshine"
       actions={
         <>
-          <Alert.AlertButton label="Pay Now" buttonType={ButtonType.primary} />
+          <Alert.AlertButton buttonType={ButtonType.primary}>
+            Pay Now
+          </Alert.AlertButton>
         </>
       }
     />,

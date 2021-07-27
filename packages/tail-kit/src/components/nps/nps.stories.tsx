@@ -56,7 +56,7 @@ export function WithCustomMessage() {
   return (
     <div className="flex flex-col items-center justify-center space-y-3">
       <NPSInput onSubmit={handleSubmit} message={message} key={reset} />
-      <Button label="Reset" onClick={handleClick} />
+      <Button onClick={handleClick}>Reset</Button>
     </div>
   )
 }

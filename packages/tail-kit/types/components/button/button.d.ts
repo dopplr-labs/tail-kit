@@ -9,9 +9,9 @@ export declare enum ButtonType {
 /** Placement of icon with respect to button label */
 export declare enum IconPlacement {
   /** icon would be render after the button text */
-  afterLabel = 'afterLabel',
+  afterText = 'afterText',
   /** icon would be render before the button text */
-  beforeLabel = 'beforeLabel',
+  beforeText = 'beforeText',
 }
 /**
  * Button properties
@@ -52,8 +52,8 @@ export declare type ButtonProps = Omit<
  *  Generally the **icon** is placed before the button label. But that can also be changed, by configuring
  * `iconPlacement` prop to be
  *
- *  * `Button.IconPlacement.beforeLabel` rendering the button icon before the label
- *  * `Button.IconPlacement.afterLabel` rendering the button icon after the label
+ *  * `Button.IconPlacement.beforeText` rendering the button icon before the label
+ *  * `Button.IconPlacement.afterText` rendering the button icon after the label
  */
 export declare const Button: React.ForwardRefExoticComponent<
   Pick<

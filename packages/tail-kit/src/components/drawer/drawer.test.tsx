@@ -97,7 +97,7 @@ test('bottom placement drawer renders correctly', () => {
 
 test('footer inside drawer renders correctly', () => {
   render(
-    <Drawer visible footer={<Button label="Cancel" />}>
+    <Drawer visible footer={<Button>Cancel</Button>}>
       <p>Some Contents...</p>
     </Drawer>,
   )

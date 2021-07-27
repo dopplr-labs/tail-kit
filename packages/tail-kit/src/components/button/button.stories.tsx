@@ -16,11 +16,11 @@ export default {
 } as Meta
 
 export function DefaultButton() {
-  return <Button label="Login" />
+  return <Button>Login</Button>
 }
 
 export function DefaultButtonWithIcon() {
-  return <Button label="Update Password" icon={<HiShieldCheck />} />
+  return <Button icon={<HiShieldCheck />}>Update Password</Button>
 }
 
 export function DefaultIconButton() {
@@ -32,83 +32,69 @@ export function DefaultIconLoadingButton() {
 }
 
 export function DefaultLoadingButton() {
-  return <Button label="Submitting" loading />
+  return <Button loading>Submitting</Button>
 }
 
-export function DefaultButtonWithIconAfterLabel() {
+export function DefaultButtonWithIconafterText() {
   return (
-    <Button
-      label="Next Step"
-      icon={<HiOutlineChevronRight />}
-      iconPlacement={Button.IconPlacement.afterLabel}
-    />
+    <Button icon={<HiOutlineChevronRight />} iconPlacement="afterText">
+      Next Step
+    </Button>
   )
 }
 
 export function PrimaryButton() {
-  return (
-    <Button buttonType={Button.ButtonType.primary} label="Create Account" />
-  )
+  return <Button buttonType="primary">Create Account</Button>
 }
 
 export function PrimaryButtonWithIcon() {
   return (
-    <Button
-      buttonType={Button.ButtonType.primary}
-      label="Create Account"
-      icon={<HiCheckCircle />}
-    />
+    <Button buttonType="primary" icon={<HiCheckCircle />}>
+      Create Account
+    </Button>
   )
 }
 
 export function PrimaryLoadingButton() {
   return (
-    <Button
-      label="Creating Blog"
-      loading
-      buttonType={Button.ButtonType.primary}
-    />
+    <Button loading buttonType="primary">
+      Creating Blog
+    </Button>
   )
 }
 
 export function DangerButton() {
-  return (
-    <Button buttonType={Button.ButtonType.danger} label="Delete Repository" />
-  )
+  return <Button buttonType="danger">Delete Repository</Button>
 }
 
 export function DangerButtonWithIcon() {
   return (
-    <Button
-      buttonType={Button.ButtonType.danger}
-      label="Delete User"
-      icon={<HiOutlineTrash />}
-    />
+    <Button buttonType="danger" icon={<HiOutlineTrash />}>
+      Delete User
+    </Button>
   )
 }
 
 export function DangerLoadingButton() {
   return (
-    <Button
-      buttonType={Button.ButtonType.danger}
-      label="Deleting Repository"
-      loading
-    />
+    <Button buttonType="danger" loading>
+      Deleting Repository
+    </Button>
   )
 }
 
 export function LinkButtonWithIcon() {
   return (
-    <Button
-      buttonType={Button.ButtonType.link}
-      label="Edit Post"
-      icon={<HiOutlinePencilAlt />}
-    />
+    <Button buttonType="link" icon={<HiOutlinePencilAlt />}>
+      Edit Post
+    </Button>
   )
 }
 
 export function LinkLoadingButton() {
   return (
-    <Button buttonType={Button.ButtonType.link} label="Updating Post" loading />
+    <Button buttonType="link" loading>
+      Updating Post
+    </Button>
   )
 }

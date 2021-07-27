@@ -111,19 +111,21 @@ export function Modal({
             {actions ?? (
               <>
                 <Button
-                  label="Cancel"
-                  buttonType={Button.ButtonType.default}
+                  buttonType="default"
                   onClick={onCancel ?? onRequestClose}
                   tabIndex={visible ? 0 : -1}
                   {...cancelButtonProps}
-                />
+                >
+                  {cancelButtonProps?.children ?? 'Cancel'}
+                </Button>
                 <Button
-                  label="OK"
-                  buttonType={Button.ButtonType.primary}
+                  buttonType="primary"
                   onClick={onOK ?? onRequestClose}
                   tabIndex={visible ? 0 : -1}
                   {...okButtonProps}
-                />
+                >
+                  {okButtonProps?.children ?? 'OK'}
+                </Button>
               </>
             )}
           </div>

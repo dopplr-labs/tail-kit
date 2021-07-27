@@ -26,11 +26,9 @@ export function BasicDrawer() {
   }
   return (
     <>
-      <Button
-        label="Open"
-        buttonType={Button.ButtonType.primary}
-        onClick={showDrawer}
-      />
+      <Button buttonType="primary" onClick={showDrawer}>
+        Open
+      </Button>
       <Drawer visible={visible} title="Basic Drawer" onRequestClose={onClose}>
         <p>Some Contents...</p>
         <p>Some Contents...</p>
@@ -73,11 +71,9 @@ export function CustomPlacement() {
           defaultValue="right"
           onChange={handlePlacement}
         />
-        <Button
-          label="Open"
-          buttonType={Button.ButtonType.primary}
-          onClick={showDrawer}
-        />
+        <Button buttonType="primary" onClick={showDrawer}>
+          Open
+        </Button>
       </div>
       <Drawer
         visible={visible}
@@ -118,11 +114,9 @@ export function SubmitFormInDrawer() {
   }
   return (
     <>
-      <Button
-        label="New Employee"
-        icon={<HiOutlinePlus />}
-        onClick={showDrawer}
-      />
+      <Button icon={<HiOutlinePlus />} onClick={showDrawer}>
+        New Employee
+      </Button>
       <Drawer
         visible={visible}
         title="Create a new employee account"
@@ -131,12 +125,10 @@ export function SubmitFormInDrawer() {
         size={560}
         footer={
           <div className="flex items-center justify-end gap-x-3">
-            <Button label="Cancel" onClick={onClose} />
-            <Button
-              label="Submit"
-              buttonType={Button.ButtonType.primary}
-              onClick={onDrawerSubmit}
-            />
+            <Button onClick={onClose}>Cancel</Button>
+            <Button buttonType="primary" onClick={onDrawerSubmit}>
+              Submit
+            </Button>
           </div>
         }
       >

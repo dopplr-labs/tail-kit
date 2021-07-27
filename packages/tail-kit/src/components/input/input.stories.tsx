@@ -18,11 +18,9 @@ export function InputWithIcon() {
     <div className="space-y-4 w-80">
       <Input placeholder="Email" icon={<HiOutlineAtSymbol />} />
       <Input placeholder="Password" icon={<HiOutlineKey />} type="password" />
-      <Button
-        label="Login"
-        className="w-full"
-        buttonType={Button.ButtonType.primary}
-      />
+      <Button className="w-full" buttonType="primary">
+        Login
+      </Button>
     </div>
   )
 }

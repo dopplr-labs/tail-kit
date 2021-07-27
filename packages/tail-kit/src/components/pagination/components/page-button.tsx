@@ -12,12 +12,11 @@ export default function PageButton({
 }) {
   return (
     <Button
-      label={page.toString()}
-      buttonType={
-        selected === page ? Button.ButtonType.primary : Button.ButtonType.link
-      }
+      buttonType={selected === page ? 'primary' : 'link'}
       className="page-button"
       onClick={onClick}
-    />
+    >
+      {page.toString()}
+    </Button>
   )
 }

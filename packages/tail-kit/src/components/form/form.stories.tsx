@@ -61,12 +61,9 @@ export function Basic() {
         <Checkbox label="Remember Me" />
       </Form.Item>
       <Form.Item {...tailLayout}>
-        <Button
-          label="Submit"
-          className="w-full"
-          type="submit"
-          buttonType={Button.ButtonType.primary}
-        />
+        <Button className="w-full" type="submit" buttonType="primary">
+          Submit
+        </Button>
       </Form.Item>
     </Form>
   )
@@ -108,11 +105,9 @@ export function FormLayout() {
         <Input placeholder="input placeholder" />
       </Form.Item>
       <Form.Item {...buttonLayout}>
-        <Button
-          type="submit"
-          buttonType={Button.ButtonType.primary}
-          label="Submit"
-        />
+        <Button className="w-full" type="submit" buttonType="primary">
+          Submit
+        </Button>
       </Form.Item>
     </Form>
   )
@@ -175,12 +170,10 @@ export function TwoColumnForm() {
           />
         </Form.Item>
         <div className="flex justify-end space-x-4">
-          <Button label="Cancel" />
-          <Button
-            type="submit"
-            buttonType={Button.ButtonType.primary}
-            label="Submit"
-          />
+          <Button>Cancel</Button>
+          <Button type="submit" buttonType="primary">
+            Submit
+          </Button>
         </div>
       </Form>
     </>
@@ -252,11 +245,9 @@ export function Notifications() {
         </Form.Item>
       </div>
       <div className="flex justify-end px-4 py-2 bg-gray-50">
-        <Button
-          label="Save"
-          type="submit"
-          buttonType={Button.ButtonType.primary}
-        />
+        <Button type="submit" buttonType="primary">
+          Save
+        </Button>
       </div>
     </Form>
   )
@@ -287,10 +278,12 @@ export function InlineLoginForm() {
             />
           </Form.Item>
           <Button
-            label="Login"
-            buttonType={Button.ButtonType.primary}
+            type="submit"
+            buttonType="primary"
             disabled={!isDirty || !isValid}
-          />
+          >
+            Submit
+          </Button>
         </>
       )}
     </Form>
@@ -351,11 +344,13 @@ export function AsyncForm() {
             </div>
           </div>
           <Button
-            label="Let' s Talk"
+            type="submit"
+            buttonType="primary"
             className="w-full"
-            buttonType={Button.ButtonType.primary}
             loading={isSubmitting}
-          />
+          >
+            Let&apos; s Talk
+          </Button>
         </>
       )}
     </Form>
@@ -383,15 +378,13 @@ export function FormInModal() {
   }
   return (
     <>
-      <Button
-        label="Create Project"
-        buttonType={Button.ButtonType.primary}
-        onClick={openModal}
-      />
+      <Button buttonType="primary" onClick={openModal}>
+        Create Project
+      </Button>
       <Modal
         title="Create a new project"
         visible={show}
-        okButtonProps={{ label: 'Create' }}
+        okButtonProps={{ children: 'Create' }}
         onRequestClose={closeModal}
         onOK={onOk}
       >
