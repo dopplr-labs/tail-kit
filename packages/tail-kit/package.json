@@ -24,7 +24,6 @@
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
     "storybook": "start-storybook -p 6006 -s ./.storybook",
-    "build-storybook": "build-storybook -s ./.storybook",
     "prepare": "yarn build",
     "commit": "cz",
     "semantic-release": "semantic-release"
