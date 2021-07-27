@@ -2,7 +2,13 @@ import constate from 'constate'
 import { HeadingNode } from 'plugins/rehype-heading'
 import { useEffect, useMemo, useState } from 'react'
 
-function useHeadings({ headings }: { headings: HeadingNode[] }) {
+function useHeadings({
+  headings,
+  offsetTop = 0,
+}: {
+  headings: HeadingNode[]
+  offsetTop?: number
+}) {
   const [positions, setPositions] = useState<{
     [key: string]: number
   }>({})
@@ -31,7 +37,6 @@ function useHeadings({ headings }: { headings: HeadingNode[] }) {
       })
 
       return () => {
-        console.log('destruct')
         items.forEach((item) => {
           observer.unobserve(item)
         })
@@ -42,7 +47,7 @@ function useHeadings({ headings }: { headings: HeadingNode[] }) {
   )
 
   const activeHeading = Object.entries(positions)
-    .filter(([, position]) => position > -32)
+    .filter(([, position]) => position > offsetTop)
     .sort(([, positionA], [, positionB]) => positionA - positionB)?.[0]?.[0]
 
   return {

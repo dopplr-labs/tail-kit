@@ -18,6 +18,7 @@ import Wrapper from 'components/wrapper'
 import PropsTable from 'components/props-table'
 import Playground from 'components/playground'
 import PageNav from 'components/page-nav'
+import CodeBlock from 'components/code-block'
 
 type DocPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -44,6 +45,7 @@ export default function DocPage({
                 wrapper: Wrapper,
                 Playground: Playground as React.ComponentType,
                 PropsTable,
+                pre: CodeBlock,
               }}
             />
           </PropsContext.Provider>

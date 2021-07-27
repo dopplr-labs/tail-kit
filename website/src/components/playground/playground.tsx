@@ -58,7 +58,7 @@ export function Playground({ code, scope = {} }: PlaygroundProps) {
               </button>
             </div>
             {codeVisible ? (
-              <LiveEditor className="!font-mono text-xs leading-5 rounded-b-md live-editor" />
+              <LiveEditor className="!font-mono text-sm leading-6 rounded-b-md live-editor" />
             ) : null}
           </div>
         </div>
