@@ -1,18 +1,4 @@
 import React from 'react'
-/** Button types */
-export declare enum ButtonType {
-  primary = 'primary',
-  default = 'default',
-  danger = 'danger',
-  link = 'link',
-}
-/** Placement of icon with respect to button label */
-export declare enum IconPlacement {
-  /** icon would be render after the button text */
-  afterText = 'afterText',
-  /** icon would be render before the button text */
-  beforeText = 'beforeText',
-}
 /**
  * Button properties
  */
@@ -24,13 +10,13 @@ export declare type ButtonProps = Omit<
   'children'
 > & {
   /** text rendered inside button */
-  label?: string
+  children?: string
   /** icon rendered */
   icon?: JSX.Element
   /** placement of icon with respect to label, whether it should be before label or after label */
-  iconPlacement?: IconPlacement
+  iconPlacement?: 'afterText' | 'beforeText'
   /** type of the button */
-  buttonType?: ButtonType
+  buttonType?: 'primary' | 'default' | 'danger' | 'link'
   /** show loading spinner in the button, if there is a icon present, it would render instead of the icon */
   loading?: boolean
   /** additional class applied to button */
@@ -43,17 +29,17 @@ export declare type ButtonProps = Omit<
  *
  * `Button` can be of type
  *
- *   * **primary** `Button.ButtonType.primary` solid filled button (with primary background color), to be used for primary actions
- *   * **default** `Button.ButtonType.default` bordered button (primary color) and text in primary color, to be used for secondary actions
- *   * **danger** `Button.ButtonType.danger` bordered button with error color, to be used in case of presenting any delete action to user
- *   * **link** `Button.ButtonType.link` button without any border, can be used to render menu icons where we don't want to show users any button border
+ *   * **primary** `primary` solid filled button (with primary background color), to be used for primary actions
+ *   * **default** `default` bordered button (primary color) and text in primary color, to be used for secondary actions
+ *   * **danger** `danger` bordered button with error color, to be used in case of presenting any delete action to user
+ *   * **link** `link` button without any border, can be used to render menu icons where we don't want to show users any button border
  *
  *
  *  Generally the **icon** is placed before the button label. But that can also be changed, by configuring
  * `iconPlacement` prop to be
  *
- *  * `Button.IconPlacement.beforeText` rendering the button icon before the label
- *  * `Button.IconPlacement.afterText` rendering the button icon after the label
+ *  * `beforeText` rendering the button icon before the label
+ *  * `afterText` rendering the button icon after the label
  */
 export declare const Button: React.ForwardRefExoticComponent<
   Pick<
@@ -65,13 +51,13 @@ export declare const Button: React.ForwardRefExoticComponent<
       'children'
     > & {
       /** text rendered inside button */
-      label?: string
+      children?: string
       /** icon rendered */
       icon?: JSX.Element
       /** placement of icon with respect to label, whether it should be before label or after label */
-      iconPlacement?: IconPlacement
+      iconPlacement?: 'afterText' | 'beforeText'
       /** type of the button */
-      buttonType?: ButtonType
+      buttonType?: 'primary' | 'default' | 'danger' | 'link'
       /** show loading spinner in the button, if there is a icon present, it would render instead of the icon */
       loading?: boolean
       /** additional class applied to button */
@@ -83,7 +69,6 @@ export declare const Button: React.ForwardRefExoticComponent<
     | 'hidden'
     | 'dir'
     | 'form'
-    | 'label'
     | 'slot'
     | 'style'
     | 'title'
@@ -92,6 +77,7 @@ export declare const Button: React.ForwardRefExoticComponent<
     | 'icon'
     | 'translate'
     | 'prefix'
+    | 'children'
     | 'key'
     | 'className'
     | 'autoFocus'
@@ -351,7 +337,4 @@ export declare const Button: React.ForwardRefExoticComponent<
     | 'buttonType'
   > &
     React.RefAttributes<HTMLButtonElement>
-> & {
-  ButtonType: typeof ButtonType
-  IconPlacement: typeof IconPlacement
-}
+>

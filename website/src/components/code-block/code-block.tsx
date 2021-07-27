@@ -2,7 +2,7 @@ import React, { Children } from 'react'
 import Highlight, { defaultProps, Language } from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/vsDark'
 import clsx from 'clsx'
-import { CopyButton } from 'components/copy-button/copy-button'
+import CopyButton from 'components/copy-button'
 import format from 'utils/format'
 
 type CodeBlockProps = {

@@ -16,7 +16,6 @@
     "dev-css": "postcss --watch src/styles/index.css --output dist/tail-kit.css",
     "dev": "concurrently yarn:dev-lib",
     "build-lib": "rollup --config --environment NODE_ENV:production",
-    "build-visualize": "rollup --config --environment NODE_ENV:production --visualize",
     "build-types": "tsc --jsx react --declaration --emitDeclarationOnly --esModuleInterop --allowSyntheticDefaultImports --moduleResolution node --baseUrl src --outDir types src/index.ts",
     "build-css": "postcss src/styles/index.css -o dist/tail-kit.css",
     "build": "concurrently yarn:build-*",
