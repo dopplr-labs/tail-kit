@@ -2,12 +2,7 @@ import constate from 'constate'
 import { HeadingNode } from 'plugins/rehype-heading'
 import { useEffect, useRef, useState } from 'react'
 
-function useHeadings({
-  headings,
-}: {
-  headings: HeadingNode[]
-  container: HTMLDivElement
-}) {
+function useHeadings({ headings }: { headings: HeadingNode[] }) {
   const [activeHeading, setActiveHeading] = useState<string | undefined>(
     undefined,
   )

@@ -1,70 +1,100 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import {
   GetStaticPathsResult,
   GetStaticPropsContext,
   GetStaticPropsResult,
   InferGetStaticPropsType,
 } from 'next'
+import Head from 'next/head'
 import * as path from 'path'
 import * as fs from 'fs'
-import { bundleMDX } from 'mdx-bundler'
 import { getMDXComponent } from 'mdx-bundler/client'
-import { withCustomConfig, PropItem } from 'react-docgen-typescript'
+import { PropItem } from 'react-docgen-typescript'
+import { HeadingsProvider } from 'hooks/use-headings'
+import compileMdx from 'utils/compile-mdx'
+import getComponentProps from 'utils/get-component-props'
+import { HeadingNode } from 'plugins/rehype-heading'
 import PropsContext from 'contexts/props-context'
-import PropsTable from 'components/props-table'
-import Playground from 'components/playground'
-import rehypePlayground from 'plugins/rehype-playground'
-import rehypeHeading, { HeadingNode } from 'plugins/rehype-heading'
-import Head from 'next/head'
 import Heading from 'components/heading'
 import Wrapper from 'components/wrapper'
-import { HeadingsProvider } from 'hooks/use-headings'
+import PropsTable from 'components/props-table'
+import Playground from 'components/playground'
 
 type DocPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-function Doc({ code, frontmatter, componentProps, headings }: DocPageProps) {
-  const container = useRef<HTMLDivElement | null>(null)
-
+export default function DocPage({
+  code,
+  frontmatter,
+  componentProps,
+  headings,
+}: DocPageProps) {
   const Component = useMemo(() => getMDXComponent(code), [code])
 
   return (
     <>
       <Head>
+        {/* @TODO: Add og:meta tags for better SEO */}
         <title>{frontmatter.title} - Documentation</title>
       </Head>
-      <div className="max-w-screen-lg p-8 mx-auto space-y-6" ref={container}>
-        <HeadingsProvider
-          headings={[
-            ...headings,
-            ...headings.flatMap((heading) => heading.children),
-          ]}
-          container={container.current}
-        >
-          <PropsContext.Provider value={{ props: componentProps }}>
-            <Component
-              components={{
-                wrapper: Wrapper,
-                Playground: Playground as React.ComponentType,
-                PropsTable,
-              }}
-            />
-          </PropsContext.Provider>
-          <div className="fixed top-20 right-[120px] space-y-4">
+
+      <div className="max-w-screen-lg p-8 mx-auto space-y-6">
+        <PropsContext.Provider value={{ props: componentProps }}>
+          <Component
+            components={{
+              wrapper: Wrapper,
+              Playground: Playground as React.ComponentType,
+              PropsTable,
+            }}
+          />
+        </PropsContext.Provider>
+
+        <div className="fixed top-20 right-[120px] space-y-4">
+          <HeadingsProvider
+            headings={[
+              ...headings,
+              ...headings.flatMap((heading) => heading.children),
+            ]}
+          >
             {headings.map((heading) => (
               <Heading heading={heading} key={heading.slug} />
             ))}
-          </div>
-        </HeadingsProvider>
+          </HeadingsProvider>
+        </div>
       </div>
     </>
   )
 }
 
-export default function DocPage({ id, ...restProps }: DocPageProps) {
-  if (!id) {
-    return null
+export async function getStaticProps(
+  ctx: GetStaticPropsContext,
+): Promise<
+  GetStaticPropsResult<{
+    id: string
+    code: string
+    frontmatter: { [key: string]: string }
+    componentProps: PropItem[]
+    headings: HeadingNode[]
+  }>
+> {
+  const { id } = ctx.params as { id: string }
+
+  // path of the mdx file (relative to `src/docs` directory)
+  const docPath = `${id}.mdx`
+  const { headings, code, frontmatter } = await compileMdx(docPath)
+
+  // generate prop type definitions
+  const { componentPath, component: componentName } = frontmatter
+  const componentProps = getComponentProps(componentPath, componentName)
+
+  return {
+    props: {
+      id,
+      code,
+      frontmatter,
+      componentProps,
+      headings,
+    },
   }
-  return <Doc id={id} {...restProps} />
 }
 
 export async function getStaticPaths(): Promise<
@@ -80,74 +110,4 @@ export async function getStaticPaths(): Promise<
     })),
     fallback: process.env.NODE_ENV === 'development',
   }
-}
-
-export async function getStaticProps(
-  ctx: GetStaticPropsContext,
-): Promise<
-  GetStaticPropsResult<{
-    id: string
-    code: string
-    frontmatter: { [key: string]: string }
-    componentProps: PropItem[]
-    headings: HeadingNode[]
-  }>
-> {
-  const { id } = ctx.params
-
-  const cwd = process.cwd()
-  const docsDir = path.resolve(cwd, 'src/docs')
-  const docPath = path.join(docsDir, `${id}.mdx`)
-  const content = fs.readFileSync(docPath, 'utf8')
-
-  const headings: HeadingNode[] = []
-
-  // compile mdx
-  const { code, frontmatter } = await bundleMDX(content, {
-    xdmOptions: (options) => {
-      options.rehypePlugins = [
-        ...(options.rehypePlugins ?? []),
-        rehypePlayground,
-        require('rehype-slug'),
-        rehypeHeading(headings),
-      ]
-      return options
-    },
-  })
-
-  // generate prop type definitions
-  const { componentPath, component } = frontmatter
-  const compiler = withCustomConfig(
-    path.join(cwd, '../packages/tail-kit/tsconfig.json'),
-    {},
-  )
-  const output = compiler.parse(
-    path.join(cwd, '../packages/tail-kit', componentPath),
-  )
-  const allProps = output.find((item) => item.displayName === component)?.props
-  const componentProps =
-    Object.values(allProps).filter(({ declarations }) =>
-      declarations?.find(({ fileName }) => fileName?.includes(componentPath)),
-    ) ?? []
-
-  return {
-    props: {
-      id: 'button',
-      code,
-      frontmatter: frontmatter ?? {},
-      componentProps: componentProps.map(validate),
-      headings,
-    },
-  }
-}
-
-function validate<T extends object>(input: T): T {
-  for (const key of Object.keys(input)) {
-    if (typeof input[key] === 'undefined') {
-      input[key] = null
-    } else if (typeof input[key] === 'object' && input[key] !== null) {
-      validate(input[key])
-    }
-  }
-  return input
 }
