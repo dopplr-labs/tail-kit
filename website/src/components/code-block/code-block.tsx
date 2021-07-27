@@ -1,8 +1,8 @@
-import React, { Children, useRef, useState } from 'react'
+import React, { Children } from 'react'
 import Highlight, { defaultProps, Language } from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/nightOwl'
 import clsx from 'clsx'
-import copy from 'copy-to-clipboard'
+import { CopyButton } from 'components/copy-button/copy-button'
 
 type CodeBlockProps = {
   children: React.ReactNode
@@ -12,9 +12,6 @@ type CodeBlockProps = {
  * Component to render code blocks using prism-react-renderer.
  */
 export function CodeBlock({ children }: CodeBlockProps) {
-  const [codeCopied, setCodeCopied] = useState(false)
-  const timeout = useRef(null)
-
   const codeChild = Children.toArray(children).find(
     // @ts-ignore
     (child) => child.type === 'code',
@@ -49,23 +46,7 @@ export function CodeBlock({ children }: CodeBlockProps) {
             </div>
           ))}
 
-          <button
-            className="absolute top-0 px-2 py-1 font-sans text-xs text-gray-800 border rounded-b-md bg-gray-50 right-4"
-            onClick={() => {
-              copy(codeContent)
-
-              if (timeout.current) {
-                window.clearTimeout(timeout.current)
-              }
-
-              setCodeCopied(true)
-              timeout.current = setTimeout(() => {
-                setCodeCopied(false)
-              }, 3000)
-            }}
-          >
-            {codeCopied ? 'Copied' : 'Copy Code'}
-          </button>
+          <CopyButton code={codeContent} className="absolute top-0 right-4" />
         </pre>
       )}
     </Highlight>

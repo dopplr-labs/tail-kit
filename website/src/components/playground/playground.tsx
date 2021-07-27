@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
+import clsx from 'clsx'
 import { LiveProvider, LivePreview, LiveEditor, LiveError } from 'react-live'
 import { HiPencil } from 'react-icons/hi'
 import * as tailKit from '@tail-kit/tail-kit'
 import theme from 'prism-react-renderer/themes/nightOwl'
-import copy from 'copy-to-clipboard'
-import clsx from 'clsx'
+import { CopyButton } from 'components/copy-button/copy-button'
 
 type PlaygroundProps = {
   code?: string
@@ -18,8 +18,6 @@ export function Playground({
   editable = false,
 }: PlaygroundProps) {
   const [codeVisible, setCodeVisible] = useState(true)
-  const [codeCopied, setCodeCopied] = useState(false)
-  const timeout = useRef(null)
 
   if (!code) {
     return null
@@ -42,25 +40,7 @@ export function Playground({
           <div className="relative">
             {/* Toolbar */}
             <div className="absolute top-0 z-20 flex items-center justify-end w-full px-4 space-x-4">
-              {codeVisible ? (
-                <button
-                  className="px-2 py-1 text-xs border rounded-b-md bg-gray-50"
-                  onClick={() => {
-                    copy(code)
-
-                    if (timeout.current) {
-                      window.clearTimeout(timeout.current)
-                    }
-
-                    setCodeCopied(true)
-                    timeout.current = setTimeout(() => {
-                      setCodeCopied(false)
-                    }, 3000)
-                  }}
-                >
-                  {codeCopied ? 'Copied' : 'Copy Code'}
-                </button>
-              ) : null}
+              {codeVisible ? <CopyButton code={code} /> : null}
               <button
                 className="px-2 py-1 text-xs border rounded-b-md bg-gray-50"
                 onClick={() => {

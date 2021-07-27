@@ -3,5 +3,6 @@
 **/types/*
 **/coverage/*
 **/storybook-static/*
+**/out/*
 **/*.json
 **/*.css
