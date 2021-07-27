@@ -13,6 +13,7 @@
     "test:ci": "lerna run test:ci",
     "lint": "eslint --no-error-on-unmatched-pattern --fix packages/**/*.{ts,tsx,js,jsx} website/**/*.{ts,tsx,js,jsx}",
     "format": "prettier --no-error-on-unmatched-pattern --write packages/**/*.{ts,tsx,js,jsx,css,json} website/**/*.{ts,tsx,js,jsx,css,json} *.{ts,js,json}",
+    "prebuild-storybook": "yarn bootstrap",
     "build-storybook": "cd packages/tail-kit/ && yarn build && cd ../../website && yarn build && cp -a out ../storybook-static"
   },
   "devDependencies": {
