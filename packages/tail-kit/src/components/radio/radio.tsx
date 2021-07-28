@@ -68,14 +68,16 @@ export const Radio = forwardRef(
         >
           <div
             className={clsx(
-              'w-2 h-2 rounded-full opacity-0 transition-opacity duration-300',
+              'w-2 h-2 rounded-full transition-opacity duration-300',
               checkedState && !disabled && !error
                 ? 'bg-blue-500 opacity-100'
-                : undefined,
+                : 'opacity-0',
               checkedState && error && !disabled
                 ? 'bg-red-500 opacity-100'
-                : undefined,
-              checkedState && disabled ? 'bg-gray-400 opacity-100' : undefined,
+                : 'opacity-0',
+              checkedState && disabled
+                ? 'bg-gray-400 opacity-100'
+                : 'opacity-0',
             )}
           />
         </div>

@@ -46,11 +46,12 @@ export function Modal({
   visible,
   onRequestClose,
   actions,
-  portalParent = document.body,
+  portalParent = typeof window !== 'undefined' ? document.body : undefined,
 }: ModalProps) {
   const portalContainer = useMemoOne(() => {
-    const container = document.createElement('div')
-    container.classList.add('modal-portal-container')
+    const container =
+      typeof window !== 'undefined' ? document.createElement('div') : undefined
+    container?.classList.add('modal-portal-container')
     return container
   }, [])
 
@@ -74,6 +75,10 @@ export function Modal({
     }
   }, [visible])
 
+  if (!portalContainer) {
+    return null
+  }
+
   return createPortal(
     <CSSTransition
       in={visible}
@@ -81,13 +86,13 @@ export function Modal({
       classNames="modal"
       unmountOnExit
       onEnter={() => {
-        if (!portalParent.contains(portalContainer)) {
-          portalParent.appendChild(portalContainer)
+        if (portalContainer && !portalParent?.contains(portalContainer)) {
+          portalParent?.appendChild(portalContainer)
         }
       }}
       onExited={() => {
-        if (portalParent.contains(portalContainer)) {
-          portalParent.removeChild(portalContainer)
+        if (portalContainer && portalParent?.contains(portalContainer)) {
+          portalParent?.removeChild(portalContainer)
         }
       }}
     >

@@ -77,13 +77,19 @@ export function MessageProvider({
   children,
   defaultDismissTime = 3000,
 }: MessageProviderProps) {
-  const toastContainer = useRef<HTMLDivElement>(document.createElement('div'))
+  const toastContainer = useRef<HTMLDivElement | undefined>(
+    typeof window !== 'undefined' ? document.createElement('div') : undefined,
+  )
 
   useLayoutEffect(() => {
     const container = toastContainer.current
-    document.body.appendChild(container)
+    if (container) {
+      document.body.appendChild(container)
+    }
     return () => {
-      document.body.removeChild(container)
+      if (container) {
+        document.body.removeChild(container)
+      }
     }
   }, [])
 
@@ -123,6 +129,10 @@ export function MessageProvider({
   const warning = dispatchMessage(MessageTypes.WARNING)
   const error = dispatchMessage(MessageTypes.ERROR)
   const loading = dispatchMessage(MessageTypes.LOADING)
+
+  if (!toastContainer.current) {
+    return null
+  }
 
   return (
     <>

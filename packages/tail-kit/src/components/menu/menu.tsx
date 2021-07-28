@@ -60,7 +60,7 @@ export type MenuProps = {
 export function Menu({
   trigger,
   children,
-  portalParent = document.body,
+  portalParent = typeof window !== 'undefined' ? document.body : undefined,
   verticalPlacement = MenuVerticalPlacement.bottom,
   horizontalPlacement = MenuHorizontalPlacement.left,
 }: MenuProps) {

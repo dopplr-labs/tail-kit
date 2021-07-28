@@ -60,7 +60,7 @@ export function Drawer({
   footer,
   onRequestClose,
   placement = DrawerPlacement.right,
-  portalParent = document.body,
+  portalParent = typeof window !== 'undefined' ? document.body : undefined,
   size = 256,
   title = '',
   visible,
@@ -68,8 +68,9 @@ export function Drawer({
   style,
 }: DrawerProps) {
   const portalContainer = useMemoOne(() => {
-    const container = document.createElement('div')
-    container.classList.add('drawer-portal-container')
+    const container =
+      typeof window !== 'undefined' ? document.createElement('div') : undefined
+    container?.classList.add('drawer-portal-container')
     return container
   }, [])
 
@@ -84,10 +85,14 @@ export function Drawer({
   })
 
   useEffect(() => {
-    portalParent.appendChild(portalContainer)
+    if (portalContainer) {
+      portalParent?.appendChild(portalContainer)
+    }
 
     return () => {
-      portalParent.removeChild(portalContainer)
+      if (portalContainer) {
+        portalParent?.removeChild(portalContainer)
+      }
     }
   }, [portalContainer, portalParent])
 
@@ -116,6 +121,10 @@ export function Drawer({
   ) {
     height = isNumber(size) ? `${size}px` : '256px'
     width = '100%'
+  }
+
+  if (!portalContainer) {
+    return null
   }
 
   return createPortal(

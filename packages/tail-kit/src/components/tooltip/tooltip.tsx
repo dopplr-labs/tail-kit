@@ -60,7 +60,7 @@ export function Tooltip({
   tooltipCloseDelay = 100,
   pointingArrow = true,
   children,
-  portalParent = document.body,
+  portalParent = typeof window !== 'undefined' ? document.body : undefined,
 }: TooltipProps) {
   const [tooltipVisible, setTooltipVisible] = useState(false)
 

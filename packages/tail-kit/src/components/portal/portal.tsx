@@ -50,18 +50,19 @@ export function Portal({
   offsetVertical = 12,
   onContentMount,
   onContentUnmount,
-  portalParent = document.body,
+  portalParent = typeof window !== 'undefined' ? document.body : undefined,
 }: PortalProps) {
   const portalContainer = useMemoOne(() => {
-    const container = document.createElement('div')
-    container.classList.add('portal-container')
+    const container =
+      typeof window !== 'undefined' ? document.createElement('div') : undefined
+    container?.classList.add('portal-container')
     return container
   }, [])
 
   useEffect(() => {
     return () => {
-      if (portalParent.contains(portalContainer)) {
-        portalParent.removeChild(portalContainer)
+      if (portalContainer && portalParent?.contains(portalContainer)) {
+        portalParent?.removeChild(portalContainer)
       }
     }
   }, [portalContainer, portalParent])
@@ -95,6 +96,10 @@ export function Portal({
     </div>
   )
 
+  if (!portalContainer) {
+    return null
+  }
+
   return (
     <>
       {contentVisibility === ContentVisibility.INVISIBLE ? (
@@ -108,13 +113,17 @@ export function Portal({
             classNames="portal-content"
             unmountOnExit
             onEnter={() => {
-              portalParent.appendChild(portalContainer)
-              onContentMount?.()
+              if (portalParent && portalContainer) {
+                portalParent.appendChild(portalContainer)
+                onContentMount?.()
+              }
             }}
             onExited={() => {
-              portalParent.removeChild(portalContainer)
-              setContentContainerPosition(undefined)
-              onContentUnmount?.()
+              if (portalParent && portalContainer) {
+                portalParent.removeChild(portalContainer)
+                setContentContainerPosition(undefined)
+                onContentUnmount?.()
+              }
             }}
           >
             <div
