@@ -35,7 +35,7 @@ export default function DocPage({
     <>
       <Head>
         {/* @TODO: Add og:meta tags for better SEO */}
-        <title>{frontmatter.title} - Documentation</title>
+        <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
       <div className="flex items-start max-w-screen-lg p-8 mx-auto space-x-16">

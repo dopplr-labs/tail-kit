@@ -13,7 +13,7 @@ import { AlertContext } from './alert-context'
  * Alert properties
  */
 export type AlertProps = {
-  /** Type of the alert which can be either `AlertType.error` or `AlertType.warning` or `AlertType.success` or `AlertType.info` */
+  /** Type of the alert to use predefined icons and styles */
   type?: 'info' | 'success' | 'warning' | 'error'
   /** Alert title */
   title: React.ReactNode
