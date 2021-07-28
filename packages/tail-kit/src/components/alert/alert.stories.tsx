@@ -1,8 +1,7 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import { HiBookmark, HiBell, HiExclamationCircle } from 'react-icons/hi'
-import { Alert, AlertType } from './alert'
-import { AlertButton } from './alert-button'
+import Alert from '.'
 
 export default { title: 'Feedback/Alert', component: Alert } as Meta
 
@@ -14,19 +13,13 @@ export function SuccessAlert() {
   const title = 'Order placed'
   const content =
     'Lorem ipsum dolor sit amet consectetur adipsicing elit. Aliquid pariatur, ipsum similique veniam.'
-  return <Alert type={AlertType.success} title={title} content={content} />
+  return <Alert type="success" title={title} content={content} />
 }
 
 export function WarningAlert() {
   const content =
     'Lorem ipsum dolor sit amet consectetur adipsicing elit. Aliquid pariatur, ipsum similique veniam.'
-  return (
-    <Alert
-      type={AlertType.warning}
-      title="Attention needed"
-      content={content}
-    />
-  )
+  return <Alert type="warning" title="Attention needed" content={content} />
 }
 
 export function ErrorAlert() {
@@ -39,7 +32,7 @@ export function ErrorAlert() {
       </li>
     </ul>
   )
-  return <Alert type={AlertType.error} title={title} content={content} />
+  return <Alert type="error" title={title} content={content} />
 }
 
 export function AlertWithOnlyTitle() {
@@ -55,7 +48,7 @@ export function AlertWithOnlyTitle() {
 export function AlertWithCustomIcon() {
   return (
     <Alert
-      type={AlertType.success}
+      type="success"
       icon={<HiBookmark />}
       title="This webpage is now bookmarked"
     />
@@ -80,10 +73,8 @@ export function AlertWithAction() {
       closable
       actions={
         <>
-          <Alert.AlertButton buttonType={AlertButton.ButtonType.primary}>
-            OK
-          </Alert.AlertButton>
-          <Alert.AlertButton>Ignore</Alert.AlertButton>
+          <Alert.Button buttonType="primary">OK</Alert.Button>
+          <Alert.Button>Ignore</Alert.Button>
         </>
       }
     />
@@ -101,17 +92,15 @@ export function ErrorAlertWithAction() {
   )
   return (
     <Alert
-      type={AlertType.error}
+      type="error"
       title="There were 2 errors with your submission"
       content={content}
       closable
       icon={<HiExclamationCircle />}
       actions={
         <>
-          <Alert.AlertButton buttonType={Alert.AlertButton.ButtonType.primary}>
-            OK
-          </Alert.AlertButton>
-          <Alert.AlertButton>Ignore</Alert.AlertButton>
+          <Alert.Button buttonType="default">OK</Alert.Button>
+          <Alert.Button>Ignore</Alert.Button>
         </>
       }
     />

@@ -1,0 +1,171 @@
+---
+title: 'Alert'
+route: 'docs/alert'
+component: 'Alert'
+componentPath: 'src/components/alert/alert.tsx'
+---
+
+import { Alert } from '@tail-kit/tail-kit'
+import { HiBookmark, HiBell, HiExclamationCircle } from 'react-icons/hi'
+
+# Alert
+
+Alert component is used to show feedback and alert messages to users.
+
+Alert component provides following four types of alerts:
+
+- `info` - used to show information messages
+- `success` - used to show success messages like successful order placement
+- `warning` - used to show warning messages
+- `error` - used to show error messages like payment failed
+
+## Usage
+
+The Alert component can be imported using
+
+```jsx
+import { Alert } from '@tail-kit/tail-kit'
+```
+
+### Info Alert
+
+<Playground>
+  <Alert title="Some additional information" />
+</Playground>
+
+### Success Alert
+
+<Playground>
+  {function SuccessAlert() {
+    const title = 'Order placed'
+    const content =
+      'Your order has been placed successfully. You can expect to recieve your order by 26th August'
+    return <Alert type="success" title={title} content={content} />
+  }}
+</Playground>
+
+### Warning Alert
+
+<Playground>
+  {function WarningAlert() {
+    const content =
+      'Lorem ipsum dolor sit amet consectetur adipsicing elit. Aliquid pariatur, ipsum similique veniam.'
+    return <Alert type="warning" title="Attention needed" content={content} />
+  }}
+</Playground>
+
+### Error Alert
+
+<Playground>
+  {function ErrorAlert() {
+    const title = 'There were 2 errors with your submission'
+    const content = (
+      <ul className="ml-4 list-disc">
+        <li>Your password must be at least 8 characters</li>
+        <li>
+          Your password must included at least one pro wrestling finishing move
+        </li>
+      </ul>
+    )
+    return <Alert type="error" title={title} content={content} />
+  }}
+</Playground>
+
+### Title Only Alert
+
+<Playground>
+  {function AlertWithOnlyTitle() {
+    const [showAlert, setShowAlert] = React.useState(true)
+    function handleClose() {
+      setShowAlert(false)
+    }
+    return (
+      showAlert && (
+        <Alert
+          closable
+          icon={false}
+          title="The quick, brown fox jumps over a lazy dog."
+          onClose={handleClose}
+        />
+      )
+    )
+  }}
+</Playground>
+
+### Alert With Custom icon
+
+<Playground scope={{ HiBookmark }}>
+  {function AlertWithCustomIcon() {
+    return (
+      <Alert
+        type="success"
+        icon={<HiBookmark />}
+        title="This webpage is now bookmarked"
+      />
+    )
+  }}
+</Playground>
+
+### Alert With action
+
+<Playground scope={{ HiBell }}>
+  {function AlertWithAction() {
+    const content = (
+      <div className="space-y-2">
+        <p>Also you can change the message by changing the Message knob</p>
+        <ul className="ml-4 list-disc">
+          <li>623 KC will be refunded by your payment card</li>
+          <li>623 KC will be refunded by your payment card</li>
+        </ul>
+      </div>
+    )
+    return (
+      <Alert
+        title="You can change the title by changing the Title knob"
+        content={content}
+        icon={<HiBell />}
+        closable
+        actions={
+          <>
+            <Alert.Button buttonType="primary">OK</Alert.Button>
+            <Alert.Button>Ignore</Alert.Button>
+          </>
+        }
+      />
+    )
+  }}
+</Playground>
+
+### Error Alert With action
+
+<Playground scope={{ HiExclamationCircle }}>
+  {function ErrorAlertWithAction() {
+    const content = (
+      <ul className="ml-4 list-disc">
+        <li>Your password must be at least 8 characters</li>
+        <li>
+          Your password must included at least one pro wrestling finishing move
+        </li>
+      </ul>
+    )
+    return (
+      <Alert
+        type="error"
+        title="There were 2 errors with your submission"
+        content={content}
+        closable
+        icon={<HiExclamationCircle />}
+        actions={
+          <>
+            <Alert.Button buttonType="primary">OK</Alert.Button>
+            <Alert.Button>Ignore</Alert.Button>
+          </>
+        }
+      />
+    )
+  }}
+</Playground>
+
+## Alert Props
+
+<PropsTable />

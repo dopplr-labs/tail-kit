@@ -7,22 +7,14 @@ import {
   HiExclamation,
   HiX,
 } from 'react-icons/hi'
-import { AlertButton } from './alert-button'
 import { AlertContext } from './alert-context'
-
-export enum AlertType {
-  info = 'info',
-  success = 'success',
-  warning = 'warning',
-  error = 'error',
-}
 
 /**
  * Alert properties
  */
 export type AlertProps = {
-  /** Type of the alert which can be either `AlertType.error` or `AlertType.warning` or `AlertType.success` or `AlertType.info` */
-  type?: AlertType
+  /** Type of the alert to use predefined icons and styles */
+  type?: 'info' | 'success' | 'warning' | 'error'
   /** Alert title */
   title: React.ReactNode
   /** Alert content */
@@ -43,7 +35,7 @@ export type AlertProps = {
 
 /** Alert component to render `info`, `warning`, `success` and `error` messages */
 export function Alert({
-  type = AlertType.info,
+  type = 'info',
   title,
   content,
   icon,
@@ -55,13 +47,13 @@ export function Alert({
 }: AlertProps) {
   // Get base color for icon and Alert.Button styles
   const baseColor = useMemo(() => {
-    if (type === AlertType.info) {
+    if (type === 'info') {
       return 'blue'
-    } else if (type === AlertType.success) {
+    } else if (type === 'success') {
       return 'green'
-    } else if (type === AlertType.warning) {
+    } else if (type === 'warning') {
       return 'yellow'
-    } else if (type === AlertType.error) {
+    } else if (type === 'error') {
       return 'red'
     }
     return 'blue'
@@ -77,28 +69,28 @@ export function Alert({
       return cloneElement(icon, { className: `w-5 h-5 text-${baseColor}-400` })
     }
 
-    if (type === AlertType.info) {
+    if (type === 'info') {
       return (
         <HiInformationCircle
           className={`w-5 h-5 text-${baseColor}-400`}
           data-testid="info-icon"
         />
       )
-    } else if (type === AlertType.success) {
+    } else if (type === 'success') {
       return (
         <HiCheckCircle
           className={`w-5 h-5 text-${baseColor}-400`}
           data-testid="success-icon"
         />
       )
-    } else if (type === AlertType.warning) {
+    } else if (type === 'warning') {
       return (
         <HiExclamation
           className={`w-5 h-5 text-${baseColor}-400`}
           data-testid="warning-icon"
         />
       )
-    } else if (type === AlertType.error) {
+    } else if (type === 'error') {
       return (
         <HiXCircle
           className={`w-5 h-5 text-${baseColor}-400`}
@@ -140,5 +132,3 @@ export function Alert({
     </div>
   )
 }
-
-Alert.AlertButton = AlertButton

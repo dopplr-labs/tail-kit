@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { Alert, AlertType } from './alert'
-import { ButtonType } from './alert-button'
+import Alert from '.'
 
 test('render alert title correctly', () => {
   render(<Alert title="Alert Title" />)
@@ -19,21 +18,18 @@ test('render info icon correctly', () => {
 })
 
 test('render success icon correctly', () => {
-  render(<Alert type={AlertType.success} title="Order Placed" />)
+  render(<Alert type="success" title="Order Placed" />)
   expect(screen.getByTestId('success-icon')).toBeInTheDocument()
 })
 
 test('render warning icon correctly', () => {
-  render(<Alert type={AlertType.warning} title="Attention needed" />)
+  render(<Alert type="warning" title="Attention needed" />)
   expect(screen.getByTestId('warning-icon')).toBeInTheDocument()
 })
 
 test('render error icon correctly', () => {
   render(
-    <Alert
-      type={AlertType.error}
-      title="There are 2 errors in your form submission"
-    />,
+    <Alert type="error" title="There are 2 errors in your form submission" />,
   )
   expect(screen.getByTestId('error-icon')).toBeInTheDocument()
 })
@@ -65,14 +61,10 @@ test('renders without any icon correctly ', () => {
 test('renders actions correctly', () => {
   render(
     <Alert
-      type={AlertType.warning}
+      type="warning"
       title="Attention needed"
       content="Your trial period has already completed. Add your payment detials to continue using Indshine"
-      actions={
-        <>
-          <Alert.AlertButton>Pay Now</Alert.AlertButton>
-        </>
-      }
+      actions={<Alert.Button>Pay Now</Alert.Button>}
     />,
   )
   expect(screen.getByText('Pay Now')).toBeInTheDocument()
@@ -81,16 +73,10 @@ test('renders actions correctly', () => {
 test('renders actions button background correctly', () => {
   render(
     <Alert
-      type={AlertType.warning}
+      type="warning"
       title="Attention needed"
       content="Your trial period has already completed. Add your payment detials to continue using Indshine"
-      actions={
-        <>
-          <Alert.AlertButton buttonType={ButtonType.primary}>
-            Pay Now
-          </Alert.AlertButton>
-        </>
-      }
+      actions={<Alert.Button buttonType="primary">Pay Now</Alert.Button>}
     />,
   )
   expect(screen.getByText('Pay Now').parentElement).toHaveClass(

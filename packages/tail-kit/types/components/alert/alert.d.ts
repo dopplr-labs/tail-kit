@@ -1,16 +1,10 @@
 import React from 'react'
-export declare enum AlertType {
-  info = 'info',
-  success = 'success',
-  warning = 'warning',
-  error = 'error',
-}
 /**
  * Alert properties
  */
 export declare type AlertProps = {
   /** Type of the alert which can be either `AlertType.error` or `AlertType.warning` or `AlertType.success` or `AlertType.info` */
-  type?: AlertType
+  type?: 'info' | 'success' | 'warning' | 'error'
   /** Alert title */
   title: React.ReactNode
   /** Alert content */
@@ -40,13 +34,3 @@ export declare function Alert({
   className,
   style,
 }: AlertProps): JSX.Element
-export declare namespace Alert {
-  var AlertButton: React.ForwardRefExoticComponent<
-    Omit<import('../button/button').ButtonProps, 'ref' | 'buttonType'> & {
-      buttonType?: import('./alert-button').ButtonType
-      className?: string
-    } & React.RefAttributes<HTMLButtonElement>
-  > & {
-    ButtonType: typeof import('./alert-button').ButtonType
-  }
-}

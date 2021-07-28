@@ -4,28 +4,19 @@ import Button from 'components/button'
 import { ButtonProps } from 'components/button/button'
 import { AlertContext } from './alert-context'
 
-export enum ButtonType {
-  primary = 'primary',
-  default = 'default',
-}
-
 export type AlertButtonProps = Omit<ButtonProps, 'buttonType' | 'ref'> & {
-  buttonType?: ButtonType
+  buttonType?: 'primary' | 'default'
   className?: string
 }
 
-const AlertButtonComponent = forwardRef(
+export const AlertButton = forwardRef(
   (
-    {
-      buttonType = ButtonType.default,
-      className,
-      ...restProps
-    }: AlertButtonProps,
+    { buttonType = 'default', className, ...restProps }: AlertButtonProps,
     ref: React.Ref<HTMLButtonElement>,
   ) => {
     const { baseColor } = useContext(AlertContext)
     const buttonClasses =
-      buttonType === ButtonType.primary
+      buttonType === 'primary'
         ? `alert-button-primary-${baseColor}`
         : `alert-button-default-${baseColor}`
     return (
@@ -38,8 +29,5 @@ const AlertButtonComponent = forwardRef(
     )
   },
 )
-AlertButtonComponent.displayName = 'AlertButton'
 
-export const AlertButton = Object.assign(AlertButtonComponent, {
-  ButtonType: ButtonType,
-})
+AlertButton.displayName = 'AlertButton'
