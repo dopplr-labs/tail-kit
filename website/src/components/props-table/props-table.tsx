@@ -20,11 +20,8 @@ export function PropsTable({ of }: PropsTableProps) {
         </tr>
       </thead>
       <tbody className="border rounded-md">
-        {componentProps.map((prop, index) => (
-          <tr
-            key={prop.name}
-            className={index % 2 === 0 ? 'bg-gray-50' : undefined}
-          >
+        {componentProps.map((prop) => (
+          <tr key={prop.name} className="odd:bg-gray-50">
             <td className="p-4 font-mono font-bold text-left">{prop.name}</td>
             <td className="p-4 font-medium text-left">
               <div>{prop.description}</div>
