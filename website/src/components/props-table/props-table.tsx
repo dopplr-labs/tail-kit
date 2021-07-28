@@ -1,8 +1,13 @@
 import React, { useContext } from 'react'
 import PropsContext from 'contexts/props-context'
 
-export function PropsTable() {
+type PropsTableProps = {
+  of: string
+}
+
+export function PropsTable({ of }: PropsTableProps) {
   const { props } = useContext(PropsContext)
+  const componentProps = props[of]
   return (
     <table className="w-full text-sm text-gray-800 props-table">
       <thead>
@@ -15,7 +20,7 @@ export function PropsTable() {
         </tr>
       </thead>
       <tbody className="border rounded-md">
-        {props.map((prop, index) => (
+        {componentProps.map((prop, index) => (
           <tr
             key={prop.name}
             className={index % 2 === 0 ? 'bg-gray-50' : undefined}

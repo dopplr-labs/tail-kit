@@ -11,7 +11,7 @@ import * as fs from 'fs'
 import { getMDXComponent } from 'mdx-bundler/client'
 import { PropItem } from 'react-docgen-typescript'
 import compileMdx from 'utils/compile-mdx'
-import getComponentProps from 'utils/get-component-props'
+import { getComponentsProps } from 'utils/get-component-props'
 import { HeadingNode } from 'plugins/rehype-heading'
 import PropsContext from 'contexts/props-context'
 import Wrapper from 'components/wrapper'
@@ -26,7 +26,7 @@ type DocPageProps = InferGetStaticPropsType<typeof getStaticProps>
 export default function DocPage({
   code,
   frontmatter,
-  componentProps,
+  componentsProps,
   headings,
 }: DocPageProps) {
   const Component = useMemo(() => getMDXComponent(code), [code])
@@ -40,12 +40,12 @@ export default function DocPage({
 
       <div className="flex items-start max-w-screen-lg p-8 mx-auto space-x-16">
         <div className="space-y-6">
-          <PropsContext.Provider value={{ props: componentProps }}>
+          <PropsContext.Provider value={{ props: componentsProps }}>
             <Component
               components={{
                 wrapper: Wrapper,
                 Playground: Playground as React.ComponentType,
-                PropsTable,
+                PropsTable: PropsTable as React.ComponentType,
                 pre: CodeBlock,
                 h2: PageHeadingH2,
                 h3: PageHeadingH3,
@@ -64,7 +64,7 @@ export async function getStaticProps(ctx: GetStaticPropsContext): Promise<
     id: string
     code: string
     frontmatter: { [key: string]: string }
-    componentProps: PropItem[]
+    componentsProps: { [key: string]: PropItem[] }
     headings: HeadingNode[]
   }>
 > {
@@ -75,15 +75,15 @@ export async function getStaticProps(ctx: GetStaticPropsContext): Promise<
   const { headings, code, frontmatter } = await compileMdx(docPath)
 
   // generate prop type definitions
-  const { componentPath, component: componentName } = frontmatter
-  const componentProps = getComponentProps(componentPath, componentName)
+  const { components } = frontmatter
+  const componentsProps = getComponentsProps(components)
 
   return {
     props: {
       id,
       code,
       frontmatter,
-      componentProps,
+      componentsProps,
       headings,
     },
   }

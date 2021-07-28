@@ -3,13 +3,35 @@ import { PropItem, withCustomConfig } from 'react-docgen-typescript'
 import sanitize from './sanitize'
 
 /**
+ * Function to get the props of all the components. It is just a wrapper around
+ * `getComponentProps` that takes care of getting component props.
+ *
+ * @see getComponentProps
+ *
+ * @param componentData - the list of component path and name
+ */
+export function getComponentsProps(
+  componentData: { name: string; path: string }[],
+): {
+  [key: string]: PropItem[]
+} {
+  const props: { [key: string]: PropItem[] } = {}
+
+  componentData.forEach(({ name, path }) => {
+    props[name] = getComponentProps(path, name)
+  })
+
+  return props
+}
+
+/**
  * Function to get the props of a component. It is used to render the `PropsTable` component
  * present in the .mdx file
  *
  * @param componentPath - path to the component file (relative to the `tail-kit` package root)
  * @param componentName - name of the component
  */
-export default function getComponentProps(
+export function getComponentProps(
   componentPath: string,
   componentName: string,
 ): PropItem[] {
@@ -34,8 +56,9 @@ export default function getComponentProps(
   const output = compiler.parse(resolvedComponentPath)
 
   // filter props corresponding to the component
-  const allProps = output.find((item) => item.displayName === componentName)
-    ?.props
+  const allProps = output.find(
+    (item) => item.displayName === componentName,
+  )?.props
 
   // the props may contain all the prop definitions including the ones provided by react
   // for example in case of type Props = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {foo: string}
