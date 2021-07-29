@@ -68,16 +68,19 @@ export const Radio = forwardRef(
         >
           <div
             className={clsx(
-              'w-2 h-2 rounded-full transition-opacity duration-300',
-              checkedState && !disabled && !error
-                ? 'bg-blue-500 opacity-100'
-                : 'opacity-0',
-              checkedState && error && !disabled
-                ? 'bg-red-500 opacity-100'
-                : 'opacity-0',
-              checkedState && disabled
-                ? 'bg-gray-400 opacity-100'
-                : 'opacity-0',
+              'w-2 h-2 rounded-full',
+              (() => {
+                if (checkedState) {
+                  if (disabled) {
+                    return 'bg-gray-400'
+                  }
+                  if (error) {
+                    return 'bg-red-500'
+                  }
+                  return 'bg-blue-500'
+                }
+                return undefined
+              })(),
             )}
           />
         </div>
