@@ -3,6 +3,8 @@ title: 'Alert'
 components:
   - name: 'Alert'
     path: 'src/components/alert/alert.tsx'
+  - name: 'AlertButton'
+    path: 'src/components/alert/alert-button.tsx'
 ---
 
 import { Alert } from '@tail-kit/tail-kit'
@@ -18,6 +20,8 @@ Alert component provides following four types of alerts:
 - `success` - used to show success messages like successful order placement
 - `warning` - used to show warning messages
 - `error` - used to show error messages like payment failed
+
+Alert also provides it's own Button component which is basically a wrapper of [Button](/button) component.
 
 ## Usage
 
@@ -108,6 +112,9 @@ import { Alert } from '@tail-kit/tail-kit'
 
 ### Alert With action
 
+You can also use [Button](/button) component in the actions prop of `Alert` component.
+`Alert.Button` internally uses the same baseColor as of the `Alert` component using context API.
+
 <Playground scope={{ HiBell }}>
   {function AlertWithAction() {
     const content = (
@@ -169,3 +176,9 @@ import { Alert } from '@tail-kit/tail-kit'
 ## Alert Props
 
 <PropsTable of="Alert" />
+
+## Alert Button Props
+
+Apart from the following props, the Alert Button component accepts all the props of the [Button](/button) component.
+
+<PropsTable of="AlertButton" />
