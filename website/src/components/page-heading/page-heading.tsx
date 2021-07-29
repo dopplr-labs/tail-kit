@@ -30,8 +30,9 @@ export function PageHeading({ id, children, type }: PageHeadingProps) {
   return (
     <div className="relative group">
       <a
+        aria-label="anchor"
         href={`#${id}`}
-        className="absolute top-1/2 -translate-y-1/2 left-0 translate-x-[calc(-100%-12px)] tranform opacity-0 group-hover:opacity-100 duration-100 transition-opacity"
+        className="absolute top-1/2 -translate-y-1/2 left-0 translate-x-[calc(-100%-10px)] opacity-0 group-hover:opacity-100 duration-100 transition-opacity"
       >
         <HiLink size={20} />
       </a>

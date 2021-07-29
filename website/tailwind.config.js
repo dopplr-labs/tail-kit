@@ -7,6 +7,9 @@ module.exports = {
       fontFamily: {
         mono: ['Fira Mono', ...defaultTheme.fontFamily.mono],
       },
+      size: {
+        '8xl': '90rem',
+      },
     },
   },
   purge: ['./src/**/*.{ts,tsx}'],
