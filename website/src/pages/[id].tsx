@@ -1,19 +1,20 @@
 import React, { useMemo } from 'react'
+import Head from 'next/head'
+import { getMDXComponent } from 'mdx-bundler/client'
+import { PropItem } from 'react-docgen-typescript'
 import {
   GetStaticPathsResult,
   GetStaticPropsContext,
   GetStaticPropsResult,
   InferGetStaticPropsType,
 } from 'next'
-import Head from 'next/head'
 import * as path from 'path'
 import * as fs from 'fs'
-import { getMDXComponent } from 'mdx-bundler/client'
-import { PropItem } from 'react-docgen-typescript'
 import compileMdx from 'utils/compile-mdx'
 import { getComponentsProps } from 'utils/get-component-props'
 import { HeadingNode } from 'plugins/rehype-heading'
 import PropsContext from 'contexts/props-context'
+import Navbar from 'components/navbar'
 import Wrapper from 'components/wrapper'
 import PropsTable from 'components/props-table'
 import Playground from 'components/playground'
@@ -38,22 +39,35 @@ export default function DocPage({
         <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
-      <div className="flex items-start max-w-screen-lg p-8 mx-auto space-x-16">
-        <div className="space-y-6">
-          <PropsContext.Provider value={{ props: componentsProps }}>
-            <Component
-              components={{
-                wrapper: Wrapper,
-                Playground: Playground as React.ComponentType,
-                PropsTable: PropsTable as React.ComponentType,
-                pre: CodeBlock,
-                h2: PageHeadingH2,
-                h3: PageHeadingH3,
-              }}
-            />
-          </PropsContext.Provider>
+      <Navbar />
+      <div className="flex flex-1 w-full max-w-8xl">
+        <div
+          id="sidebar"
+          className="fixed inset-0 z-40 flex-none hidden w-full h-full bg-black bg-opacity-25 lg:bg-white lg:h-auto lg:static xl:w-72 lg:w-64 lg:block lg:overflow-y-visible"
+        />
+        <div className="flex-auto w-full min-w-0 lg:overflow-visible lg:static lg:max-h-full">
+          <div className="flex w-full">
+            <div className="flex-auto min-w-0 px-4 pt-10 pb-24 sm:px-6 xl:px-10 lg:pb-16">
+              <div className="space-y-6">
+                <PropsContext.Provider value={{ props: componentsProps }}>
+                  <Component
+                    components={{
+                      wrapper: Wrapper,
+                      Playground: Playground as React.ComponentType,
+                      PropsTable: PropsTable as React.ComponentType,
+                      pre: CodeBlock,
+                      h2: PageHeadingH2,
+                      h3: PageHeadingH3,
+                    }}
+                  />
+                </PropsContext.Provider>
+              </div>
+            </div>
+            <div className="flex-none hidden w-64 pt-10 pl-8 mr-8 xl:block">
+              <PageNav headings={headings} className="sticky top-24" />
+            </div>
+          </div>
         </div>
-        <PageNav headings={headings} className="sticky flex-shrink-0 top-8" />
       </div>
     </>
   )
