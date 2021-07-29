@@ -3,6 +3,7 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import '@tail-kit/tail-kit/dist/tail-kit.css'
 import 'styles/index.css'
+import Navbar from 'components/navbar'
 
 export default function DocsApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,6 +12,7 @@ export default function DocsApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/tail-kit-logo.png" type="image/png" />
         <title>Tail Kit Documentation</title>
       </Head>
+      <Navbar />
       <Component {...pageProps} />
     </>
   )

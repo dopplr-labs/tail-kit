@@ -14,7 +14,6 @@ import compileMdx from 'utils/compile-mdx'
 import { getComponentsProps } from 'utils/get-component-props'
 import { HeadingNode } from 'plugins/rehype-heading'
 import PropsContext from 'contexts/props-context'
-import Navbar from 'components/navbar'
 import Wrapper from 'components/wrapper'
 import PropsTable from 'components/props-table'
 import Playground from 'components/playground'
@@ -39,7 +38,6 @@ export default function DocPage({
         <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
-      <Navbar />
       <div className="flex flex-1 w-full max-w-8xl">
         <div
           id="sidebar"
@@ -73,7 +71,9 @@ export default function DocPage({
   )
 }
 
-export async function getStaticProps(ctx: GetStaticPropsContext): Promise<
+export async function getStaticProps(
+  ctx: GetStaticPropsContext,
+): Promise<
   GetStaticPropsResult<{
     id: string
     code: string

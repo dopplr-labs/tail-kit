@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <nav
       id="navbar"
-      className="sticky top-0 z-40 flex items-center flex-none w-full mx-auto bg-white border-b lg:z-50 max-w-8xl"
+      className="sticky top-0 z-40 flex items-center flex-none w-full mx-auto bg-gray-100 bg-opacity-50 lg:z-50 max-w-8xl backdrop-filter backdrop-blur-md"
     >
       <div className="flex-shrink-0 px-6 py-3 xl:px-8 xl:w-72 lg:w-64">
         <img src="brand-image.png" className="w-24" />
