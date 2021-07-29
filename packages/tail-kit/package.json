@@ -1,5 +1,6 @@
 {
   "name": "@tail-kit/tail-kit",
+  "private": true,
   "version": "0.1.14",
   "description": "UI-Kit made with tailwindcss",
   "main": "dist/index.js",
@@ -11,7 +12,8 @@
     "tailwindcss"
   ],
   "scripts": {
-    "prebuild": "rimraf dist types",
+    "clean": "rimraf dist types",
+    "prebuild": "yarn clean",
     "dev-lib": "rollup --watch --config --environment NODE_ENV:production",
     "dev-css": "postcss --watch src/styles/index.css --output dist/tail-kit.css",
     "dev": "concurrently yarn:dev-lib",
