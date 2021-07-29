@@ -1,6 +1,8 @@
-node_modules/*
-dist/*
-coverage/*
-storybook-static/*
+**/node_modules/*
+**/dist/*
+**/types/*
+**/coverage/*
+**/storybook-static/*
+**/out/*
 **/*.json
 **/*.css

@@ -1,0 +1,104 @@
+---
+title: 'Button'
+components:
+  - name: 'Button'
+    path: 'src/components/button/button.tsx'
+---
+
+import { Button } from '@tail-kit/tail-kit'
+import { HiShieldCheck, HiPlus, HiMinus, HiOutlineTrash } from 'react-icons/hi'
+
+# Button
+
+Base component to render **button**.
+
+Button can be of type
+
+- `primary` - solid filled button (with primary background color), to be used for primary actions
+- `default` - bordered button (primary color) and text in primary color, to be used for secondary actions
+- `danger` - bordered button with error color, to be used in case of presenting any delete action to user
+- `link` - button without any border, can be used to render menu icons where we don't want to show users any button border
+
+Generally the **icon** is placed before the button text. But that can also be changed, by configuring `iconPlacement` prop to be
+
+- `beforeText` - rendering the button icon before the text
+- `afterText` - rendering the button icon after the text
+
+## Usage
+
+The Button component can be imported using
+
+```jsx
+import { Button } from '@tail-kit/tail-kit'
+```
+
+### Button Types
+
+<Playground>
+  <div className="flex items-center space-x-4">
+    <Button>Default Button</Button>
+    <Button buttonType="primary">Primary Button</Button>
+    <Button buttonType="danger">Danger Button</Button>
+    <Button buttonType="link">Link Button</Button>
+  </div>
+</Playground>
+
+### Default Button With Icon
+
+<Playground  scope={{ HiShieldCheck }}>
+  <Button icon={<HiShieldCheck />}>
+    Update Password
+  </Button>
+</Playground>
+
+### Primary Loading Button
+
+<Playground>
+  <Button loading buttonType="primary">
+    Creating Blog
+  </Button>
+</Playground>
+
+### Simple loading button
+
+<Playground>
+  <Button loading />
+</Playground>
+
+### Danger Button with Icon
+
+<Playground scope={{ HiOutlineTrash }}>
+  <Button buttonType="danger" icon={<HiOutlineTrash />}>
+    Delete User
+  </Button>
+</Playground>
+
+### Simple counter
+
+<Playground scope={{ HiPlus, HiMinus }} editable>
+  {function Counter() {
+    const [count, setCount] = React.useState(0)
+
+    return (
+      <div className="flex items-center space-x-4">
+        <Button
+          icon={<HiMinus />}
+          onClick={() => {
+            setCount(prevCount => prevCount - 1)
+          }}
+        />
+        <span className="tabular-nums">{count}</span>
+        <Button
+          icon={<HiPlus />}
+          onClick={() => {
+            setCount(prevCount => prevCount + 1)
+          }}
+        />
+      </div>
+    )
+  }}
+</Playground>
+
+## Button Props
+
+<PropsTable of="Button" />
