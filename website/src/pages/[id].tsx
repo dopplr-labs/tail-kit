@@ -20,6 +20,7 @@ import Playground from 'components/playground'
 import PageNav from 'components/page-nav'
 import CodeBlock from 'components/code-block'
 import { PageHeadingH2, PageHeadingH3 } from 'components/page-heading'
+import DocShell from 'components/doc-shell'
 
 type DocPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -38,42 +39,33 @@ export default function DocPage({
         <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
-      <div className="flex flex-1 w-full max-w-8xl">
-        <div
-          id="sidebar"
-          className="fixed inset-0 z-40 flex-none hidden w-full h-full bg-black bg-opacity-25 lg:bg-white lg:h-auto lg:static xl:w-72 lg:w-64 lg:block lg:overflow-y-visible"
-        />
-        <div className="flex-auto w-full min-w-0 lg:overflow-visible lg:static lg:max-h-full">
-          <div className="flex w-full">
-            <div className="flex-auto min-w-0 px-4 pt-10 pb-24 sm:px-6 xl:px-10 lg:pb-16">
-              <div className="space-y-6">
-                <PropsContext.Provider value={{ props: componentsProps }}>
-                  <Component
-                    components={{
-                      wrapper: Wrapper,
-                      Playground: Playground as React.ComponentType,
-                      PropsTable: PropsTable as React.ComponentType,
-                      pre: CodeBlock,
-                      h2: PageHeadingH2,
-                      h3: PageHeadingH3,
-                    }}
-                  />
-                </PropsContext.Provider>
-              </div>
-            </div>
-            <div className="flex-none hidden w-64 pt-10 pl-8 mr-8 xl:block">
-              <PageNav headings={headings} className="sticky top-24" />
-            </div>
+      <DocShell>
+        <div className="px-4 pt-10 pb-24 sm:px-6 xl:px-10 lg:pb-16">
+          <div className="space-y-6">
+            <PropsContext.Provider value={{ props: componentsProps }}>
+              <Component
+                components={{
+                  wrapper: Wrapper,
+                  Playground: Playground as React.ComponentType,
+                  PropsTable: PropsTable as React.ComponentType,
+                  pre: CodeBlock,
+                  h2: PageHeadingH2,
+                  h3: PageHeadingH3,
+                }}
+              />
+            </PropsContext.Provider>
           </div>
         </div>
-      </div>
+        <PageNav
+          headings={headings}
+          className="sticky top-0 flex-none hidden w-64 pt-10 pl-8 mr-8 overflow-y-auto xl:block"
+        />
+      </DocShell>
     </>
   )
 }
 
-export async function getStaticProps(
-  ctx: GetStaticPropsContext,
-): Promise<
+export async function getStaticProps(ctx: GetStaticPropsContext): Promise<
   GetStaticPropsResult<{
     id: string
     code: string
