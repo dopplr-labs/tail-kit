@@ -5,7 +5,6 @@
 ![Tests](https://github.com/dopplr-labs/tail-kit/workflows/tests/badge.svg)
 [![codecov](https://codecov.io/gh/dopplr-labs/tail-kit/branch/develop/graph/badge.svg)](https://codecov.io/gh/dopplr-labs/tail-kit)
 [![NPM ](https://img.shields.io/npm/v/@tail-kit/tail-kit)](https://www.npmjs.com/package/@tail-kit/tail-kit)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5b78b9f1-1ae8-425f-a7ce-3b994ab2ba20/deploy-status)](https://app.netlify.com/sites/tail-kit/deploys)
 
 UI kit built using `tailwindcss`
 
