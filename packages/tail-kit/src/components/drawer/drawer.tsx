@@ -7,13 +7,6 @@ import { HiOutlineX } from 'react-icons/hi'
 import useOutsideClick from 'hooks/use-outside-click'
 import isNumber from 'utils/isNumber'
 
-export enum DrawerPlacement {
-  left = 'left',
-  right = 'right',
-  top = 'top',
-  bottom = 'bottom',
-}
-
 /**
  * Drawer component properties
  */
@@ -29,7 +22,7 @@ export type DrawerProps = {
   /** title of the drawer */
   title?: string
   /** The placement of the Drawer */
-  placement?: DrawerPlacement
+  placement?: 'left' | 'right' | 'top' | 'bottom'
   /** parent of the portal container */
   portalParent?: HTMLElement
   /** Define the size of drawer (width in case of left or right placement and height in case of top or bottom placement) */
@@ -59,7 +52,7 @@ export function Drawer({
   closable = false,
   footer,
   onRequestClose,
-  placement = DrawerPlacement.right,
+  placement = 'right',
   portalParent = typeof window !== 'undefined' ? document.body : undefined,
   size = 256,
   title = '',
@@ -97,28 +90,22 @@ export function Drawer({
   }, [portalContainer, portalParent])
 
   let placementClasses
-  if (placement === DrawerPlacement.right) {
+  if (placement === 'right') {
     placementClasses = 'top-0 right-0'
-  } else if (placement === DrawerPlacement.left) {
+  } else if (placement === 'left') {
     placementClasses = 'top-0 left-0'
-  } else if (placement === DrawerPlacement.top) {
+  } else if (placement === 'top') {
     placementClasses = 'top-0 left-0'
-  } else if (placement === DrawerPlacement.bottom) {
+  } else if (placement === 'bottom') {
     placementClasses = 'bottom-0 left-0'
   }
 
   let height: string | undefined
   let width: string | undefined
-  if (
-    placement === DrawerPlacement.right ||
-    placement === DrawerPlacement.left
-  ) {
+  if (placement === 'right' || placement === 'left') {
     height = '100%'
     width = isNumber(size) ? `${size}px` : '256px'
-  } else if (
-    placement === DrawerPlacement.top ||
-    placement === DrawerPlacement.bottom
-  ) {
+  } else if (placement === 'top' || placement === 'bottom') {
     height = isNumber(size) ? `${size}px` : '256px'
     width = '100%'
   }
@@ -180,5 +167,3 @@ export function Drawer({
     portalContainer,
   )
 }
-
-Drawer.DrawerPlacement = DrawerPlacement
