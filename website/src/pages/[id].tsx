@@ -25,6 +25,7 @@ import DocShell from 'components/doc-shell'
 type DocPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export default function DocPage({
+  id,
   code,
   frontmatter,
   componentsProps,
@@ -39,8 +40,8 @@ export default function DocPage({
         <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
-      <DocShell>
-        <div className="px-4 pt-10 pb-24 sm:px-6 xl:px-10 lg:pb-16">
+      <DocShell currentPath={id}>
+        <div className="px-4 pt-10 sm:px-6 xl:px-10">
           <div className="space-y-6">
             <PropsContext.Provider value={{ props: componentsProps }}>
               <Component

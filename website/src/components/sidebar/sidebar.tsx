@@ -1,11 +1,16 @@
 import React from 'react'
+import clsx from 'clsx'
 import { routes } from 'configs/docs-sidebar.json'
 
-export default function Sidebar() {
+type SidebarProps = {
+  currentPath: string
+}
+
+export default function Sidebar({ currentPath }: SidebarProps) {
   return (
     <div
       id="sidebar"
-      className="flex-none px-1 pt-6 pb-10 overflow-y-auto border-r sm:px-3 xl:px-5 lg:w-64 lg:pt-8"
+      className="flex-none hidden px-1 pt-6 pb-10 overflow-y-auto border-r lg:block sm:px-3 xl:px-5 lg:w-64 lg:pt-8"
     >
       <ul className="px-2 space-y-6 text-base lg:text-sm">
         {routes.map((route) => (
@@ -16,7 +21,15 @@ export default function Sidebar() {
             <ul className="ml-2 space-y-3">
               {route.routes.map((route) => (
                 <li key={route.title}>
-                  <a href={route.path} className="font-medium text-gray-600">
+                  <a
+                    href={route.path}
+                    className={clsx(
+                      'font-medium',
+                      route.path === `/${currentPath}`
+                        ? 'text-blue-500'
+                        : 'text-gray-600',
+                    )}
+                  >
                     {route.title}
                   </a>
                 </li>
