@@ -9,7 +9,7 @@
 
 UI kit built using `tailwindcss`
 
-Demo - https://tail-kit.netlify.app
+Demo - https://tail-kit.web.app/
 
 ---
 
