@@ -18,4 +18,11 @@ module.exports = withMDX({
       },
     ]
   },
+  headers: async () => [
+    {
+      source: '/:id',
+      // Allow search engines to index the page
+      headers: [{ key: 'x-robots-tag', value: 'all' }],
+    },
+  ],
 })
