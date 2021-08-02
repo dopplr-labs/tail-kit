@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react'
+import Head from 'next/head'
+import { getMDXComponent } from 'mdx-bundler/client'
+import { PropItem } from 'react-docgen-typescript'
 import {
   GetStaticPathsResult,
   GetStaticPropsContext,
   GetStaticPropsResult,
   InferGetStaticPropsType,
 } from 'next'
-import Head from 'next/head'
 import * as path from 'path'
 import * as fs from 'fs'
-import { getMDXComponent } from 'mdx-bundler/client'
-import { PropItem } from 'react-docgen-typescript'
 import compileMdx from 'utils/compile-mdx'
 import { getComponentsProps } from 'utils/get-component-props'
 import { HeadingNode } from 'plugins/rehype-heading'
@@ -38,8 +38,8 @@ export default function DocPage({
         <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
-      <div className="flex items-start max-w-screen-lg p-8 mx-auto space-x-16">
-        <div className="space-y-6">
+      <div className="flex items-start space-x-4">
+        <div className="space-y-8">
           <PropsContext.Provider value={{ props: componentsProps }}>
             <Component
               components={{
@@ -53,7 +53,10 @@ export default function DocPage({
             />
           </PropsContext.Provider>
         </div>
-        <PageNav headings={headings} className="sticky flex-shrink-0 top-8" />
+        <PageNav
+          headings={headings}
+          className="sticky flex-none hidden w-64 pt-10 pl-8 mr-8 overflow-y-auto top-4 lg:top-8 xl:block"
+        />
       </div>
     </>
   )

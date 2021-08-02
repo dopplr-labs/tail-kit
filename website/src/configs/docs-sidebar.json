@@ -1,0 +1,47 @@
+{
+  "routes": [
+    {
+      "title": "Feedback",
+      "routes": [
+        { "title": "Alert", "path": "/alert" },
+        { "title": "Drawer", "path": "/drawer" },
+        { "title": "Message", "path": "/message" },
+        { "title": "Modal", "path": "/modal" }
+      ]
+    },
+    {
+      "title": "Data Display",
+      "routes": [
+        { "title": "Avatar", "path": "/avatar" },
+        { "title": "Popover", "path": "/popover" },
+        { "title": "Tooltip", "path": "/tooltip" }
+      ]
+    },
+    {
+      "title": "General",
+      "routes": [{ "title": "Button", "path": "/button" }]
+    },
+    {
+      "title": "Data Entry",
+      "routes": [
+        { "title": "Checkbox", "path": "/checkbox" },
+        { "title": "Date Picker", "path": "/date-picker" },
+        { "title": "Form", "path": "/form" },
+        { "title": "Input", "path": "/input" },
+        { "title": "Input Number", "path": "/input-number" },
+        { "title": "Menu", "path": "/menu" },
+        { "title": "Radio", "path": "/radio" },
+        { "title": "Select", "path": "/select" },
+        { "title": "Switch", "path": "/switch" }
+      ]
+    },
+    { "title": "Survey", "routes": [{ "title": "NPS", "path": "/nps" }] },
+    {
+      "title": "Navigation",
+      "routes": [
+        { "title": "Pagination", "path": "/pagination" },
+        { "title": "Tabs", "path": "/tabs" }
+      ]
+    }
+  ]
+}

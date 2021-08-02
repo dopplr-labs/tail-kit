@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Button from 'components/button'
-import { Drawer, DrawerPlacement } from './drawer'
+import { Drawer } from './drawer'
 
 jest.mock('react-transition-group', () => {
   const FakeTransition = jest.fn(({ children }) => children)
@@ -68,7 +68,7 @@ test('close button of drawer working correctly', () => {
 
 test('left placement drawer renders correctly', () => {
   render(
-    <Drawer visible closable placement={DrawerPlacement.left}>
+    <Drawer visible closable placement="left">
       <p>Some Contents...</p>
     </Drawer>,
   )
@@ -77,7 +77,7 @@ test('left placement drawer renders correctly', () => {
 
 test('top placement drawer renders correctly', () => {
   render(
-    <Drawer visible closable placement={DrawerPlacement.top}>
+    <Drawer visible closable placement="top">
       <p>Some Contents...</p>
     </Drawer>,
   )
@@ -86,7 +86,7 @@ test('top placement drawer renders correctly', () => {
 
 test('bottom placement drawer renders correctly', () => {
   render(
-    <Drawer visible closable placement={DrawerPlacement.bottom}>
+    <Drawer visible closable placement="bottom">
       <p>Some Contents...</p>
     </Drawer>,
   )

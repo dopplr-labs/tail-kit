@@ -7,7 +7,7 @@ import Form from 'components/form'
 import { HiOutlinePlus } from 'react-icons/hi'
 import Input from 'components/input'
 import Select from 'components/select'
-import { Drawer, DrawerPlacement } from './drawer'
+import { Drawer } from './drawer'
 
 export default {
   title: 'Feedback/Drawer',
@@ -39,8 +39,9 @@ export function BasicDrawer() {
 }
 
 export function CustomPlacement() {
+  type PlacementTypes = 'top' | 'right' | 'bottom' | 'left'
   const [visible, setVisible] = useState(false)
-  const [placement, setPlacement] = useState(DrawerPlacement.right)
+  const [placement, setPlacement] = useState<PlacementTypes>('right')
   const options = ['top', 'right', 'bottom', 'left']
 
   function showDrawer() {
@@ -52,15 +53,7 @@ export function CustomPlacement() {
   }
 
   function handlePlacement(checkedValue: string) {
-    if (checkedValue === 'right') {
-      setPlacement(DrawerPlacement.right)
-    } else if (checkedValue === 'left') {
-      setPlacement(DrawerPlacement.left)
-    } else if (checkedValue === 'top') {
-      setPlacement(DrawerPlacement.top)
-    } else if (checkedValue === 'bottom') {
-      setPlacement(DrawerPlacement.bottom)
-    }
+    setPlacement(checkedValue as PlacementTypes)
   }
 
   return (

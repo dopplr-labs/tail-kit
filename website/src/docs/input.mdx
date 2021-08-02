@@ -1,0 +1,49 @@
+---
+title: 'Input'
+components:
+  - name: 'Input'
+    path: 'src/components/input/input.tsx'
+---
+
+import { Input, Button } from '@tail-kit/tail-kit'
+import { HiOutlineAtSymbol, HiOutlineKey } from 'react-icons/hi'
+
+# Input
+
+Input component to get user input, usually for form input or search fields.
+
+## Usage
+
+The Input component can be imported using
+
+```jsx
+import { Input } from '@tail-kit/tail-kit'
+```
+
+### Default Input
+
+<Playground>
+  <Input className="w-80" placeholder="How are you feeling today?" />
+</Playground>
+
+### Input with Icon
+
+<Playground scope={{ HiOutlineAtSymbol, HiOutlineKey }}>
+  <div className="space-y-4 w-80">
+    <Input placeholder="Email" icon={<HiOutlineAtSymbol />} />
+    <Input placeholder="Password" icon={<HiOutlineKey />} type="password" />
+    <Button className="w-full" buttonType="primary">
+      Login
+    </Button>
+  </div>
+</Playground>
+
+### Input with Default Value
+
+<Playground>
+  <Input defaultValue="My name is " className="w-80" />
+</Playground>
+
+## Input Props
+
+<PropsTable of="Input" />

@@ -6,6 +6,7 @@ export type InputProps = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > & {
+  /** Provide icon to render inside Input component */
   icon?: JSX.Element
   inputClassName?: string
   inputStyle?: React.CSSProperties
@@ -33,7 +34,7 @@ export const Input = forwardRef(
     return (
       <div
         className={clsx(
-          'px-3 py-2 focus-within:shadow-outline rounded-md border flex items-center space-x-3 text-gray-400',
+          'px-3 py-2 focus-within:ring-2 rounded-md border flex items-center space-x-3 text-gray-400',
           className,
         )}
         style={style}

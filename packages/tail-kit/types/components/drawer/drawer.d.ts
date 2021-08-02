@@ -1,10 +1,4 @@
 import React from 'react'
-export declare enum DrawerPlacement {
-  left = 'left',
-  right = 'right',
-  top = 'top',
-  bottom = 'bottom',
-}
 /**
  * Drawer component properties
  */
@@ -20,7 +14,7 @@ export declare type DrawerProps = {
   /** title of the drawer */
   title?: string
   /** The placement of the Drawer */
-  placement?: DrawerPlacement
+  placement?: 'left' | 'right' | 'top' | 'bottom'
   /** parent of the portal container */
   portalParent?: HTMLElement
   /** Define the size of drawer (width in case of left or right placement and height in case of top or bottom placement) */
@@ -56,6 +50,3 @@ export declare function Drawer({
   className,
   style,
 }: DrawerProps): React.ReactPortal
-export declare namespace Drawer {
-  var DrawerPlacement: typeof import('./drawer').DrawerPlacement
-}

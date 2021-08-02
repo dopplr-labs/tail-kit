@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { createElement } from 'react'
 import { HiLink } from 'react-icons/hi'
 
 type PageHeadingProps = {
@@ -8,35 +8,22 @@ type PageHeadingProps = {
 }
 
 export function PageHeading({ id, children, type }: PageHeadingProps) {
-  const content = useMemo(
-    function renderHeading() {
-      if (type === 'h1') {
-        return <h1 id={id}>{children}</h1>
-      }
-
-      if (type === 'h2') {
-        return <h2 id={id}>{children}</h2>
-      }
-
-      if (type === 'h3') {
-        return <h3 id={id}>{children}</h3>
-      }
-
-      return null
+  return createElement(
+    type,
+    {
+      id,
+      className: 'flex items-center space-x-2 group',
     },
-    [id, children, type],
-  )
-
-  return (
-    <div className="relative group">
+    <>
+      <span>{children}</span>
       <a
+        aria-label="anchor"
         href={`#${id}`}
-        className="absolute top-1/2 -translate-y-1/2 left-0 translate-x-[calc(-100%-12px)] tranform opacity-0 group-hover:opacity-100 duration-100 transition-opacity"
+        className="transition-opacity duration-100 opacity-0 group-hover:opacity-100"
       >
         <HiLink size={20} />
       </a>
-      {content}
-    </div>
+    </>,
   )
 }
 
