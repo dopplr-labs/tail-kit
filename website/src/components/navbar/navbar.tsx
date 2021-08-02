@@ -3,7 +3,10 @@ import { HiExternalLink } from 'react-icons/hi'
 
 export default function Navbar() {
   return (
-    <nav id="navbar" className="flex items-center w-full border-b">
+    <nav
+      id="navbar"
+      className="fixed top-0 left-0 right-0 z-40 flex items-center w-full bg-white bg-opacity-50 border-b backdrop-filter backdrop-blur-md"
+    >
       <div className="flex-shrink-0 px-6 py-3">
         <img src="brand-image.png" className="w-24" alt="tail-kit logo" />
       </div>

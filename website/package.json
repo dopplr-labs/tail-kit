@@ -32,6 +32,7 @@
     "esbuild": "^0.12.15",
     "mdx-bundler": "^5.1.2",
     "postcss": "^8.3.6",
+    "prettier": "^2.3.2",
     "react-docgen-typescript": "^2.0.0",
     "tailwindcss": "^2.2.7"
   },

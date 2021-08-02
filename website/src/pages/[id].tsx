@@ -20,12 +20,10 @@ import Playground from 'components/playground'
 import PageNav from 'components/page-nav'
 import CodeBlock from 'components/code-block'
 import { PageHeadingH2, PageHeadingH3 } from 'components/page-heading'
-import DocShell from 'components/doc-shell'
 
 type DocPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export default function DocPage({
-  id,
   code,
   frontmatter,
   componentsProps,
@@ -40,28 +38,26 @@ export default function DocPage({
         <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
-      <DocShell currentPath={id}>
-        <div className="px-4 pt-10 sm:px-6 xl:px-10">
-          <div className="space-y-6">
-            <PropsContext.Provider value={{ props: componentsProps }}>
-              <Component
-                components={{
-                  wrapper: Wrapper,
-                  Playground: Playground as React.ComponentType,
-                  PropsTable: PropsTable as React.ComponentType,
-                  pre: CodeBlock,
-                  h2: PageHeadingH2,
-                  h3: PageHeadingH3,
-                }}
-              />
-            </PropsContext.Provider>
-          </div>
+      <div className="px-4 py-4 lg:px-4 lg:py-8">
+        <div className="space-y-6">
+          <PropsContext.Provider value={{ props: componentsProps }}>
+            <Component
+              components={{
+                wrapper: Wrapper,
+                Playground: Playground as React.ComponentType,
+                PropsTable: PropsTable as React.ComponentType,
+                pre: CodeBlock,
+                h2: PageHeadingH2,
+                h3: PageHeadingH3,
+              }}
+            />
+          </PropsContext.Provider>
         </div>
-        <PageNav
-          headings={headings}
-          className="sticky top-0 flex-none hidden w-64 pt-10 pl-8 mr-8 overflow-y-auto xl:block"
-        />
-      </DocShell>
+      </div>
+      <PageNav
+        headings={headings}
+        className="sticky top-0 flex-none hidden w-64 pt-10 pl-8 mr-8 overflow-y-auto xl:block"
+      />
     </>
   )
 }
