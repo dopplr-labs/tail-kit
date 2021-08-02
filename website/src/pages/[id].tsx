@@ -38,8 +38,8 @@ export default function DocPage({
         <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
-      <div className="px-4 py-4 lg:px-4 lg:py-8">
-        <div className="space-y-6">
+      <div className="flex items-start space-x-4">
+        <div className="space-y-8">
           <PropsContext.Provider value={{ props: componentsProps }}>
             <Component
               components={{
@@ -53,11 +53,11 @@ export default function DocPage({
             />
           </PropsContext.Provider>
         </div>
+        <PageNav
+          headings={headings}
+          className="sticky flex-none hidden w-64 pt-10 pl-8 mr-8 overflow-y-auto top-4 lg:top-8 xl:block"
+        />
       </div>
-      <PageNav
-        headings={headings}
-        className="sticky top-0 flex-none hidden w-64 pt-10 pl-8 mr-8 overflow-y-auto xl:block"
-      />
     </>
   )
 }

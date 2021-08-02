@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function Home() {
   return (
-    <div>
-      <h1>Home Page</h1>
+    <div className="prose-sm lg:prose">
+      <h1>@tail-kit/tail-kit Documentation</h1>
     </div>
   )
 }

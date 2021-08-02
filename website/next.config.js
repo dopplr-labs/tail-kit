@@ -8,16 +8,6 @@ module.exports = withMDX({
   eslint: {
     ignoreDuringBuilds: true,
   },
-  redirects: () => {
-    return [
-      // @TODO: Remove redirects once the home page is done
-      {
-        source: '/',
-        destination: '/button',
-        permanent: false,
-      },
-    ]
-  },
   headers: async () => [
     {
       source: '/:id',
