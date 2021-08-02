@@ -30,7 +30,9 @@ export function Wrapper({ children }: WrapperProps) {
       if (childrenToBeWrapped.length > 0) {
         // if so, wrap them with a div having `prose` class and add them to the items to render
         itemsToRender.push(
-          <div className="prose !max-w-full">{childrenToBeWrapped}</div>,
+          <div className="prose-sm lg:prose !max-w-full">
+            {childrenToBeWrapped}
+          </div>,
         )
       }
       // reset the children to be wrapped
@@ -48,7 +50,9 @@ export function Wrapper({ children }: WrapperProps) {
   // so we need to wrap them with a div having `prose` class and push into items to render
   if (childrenToBeWrapped.length > 0) {
     itemsToRender.push(
-      <div className="prose !max-w-full">{childrenToBeWrapped}</div>,
+      <div className="prose-sm lg:prose !max-w-full">
+        {childrenToBeWrapped}
+      </div>,
     )
   }
 
