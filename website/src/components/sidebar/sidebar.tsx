@@ -1,23 +1,25 @@
 import React from 'react'
 import clsx from 'clsx'
 import data from 'configs/docs-sidebar.json'
+import { useRouter } from 'next/router'
 
 const routes = data.routes
 
 type SidebarProps = {
-  currentPath: string
+  className?: string
+  style?: React.CSSProperties
 }
 
-export default function Sidebar({ currentPath }: SidebarProps) {
+export default function Sidebar({ className, style }: SidebarProps) {
+  const { query } = useRouter()
+  const { id: currentPath } = query as { id?: string }
+
   return (
-    <div
-      id="sidebar"
-      className="flex-none hidden w-64 p-4 overflow-y-auto border-r lg:block"
-    >
-      <ul className="space-y-4 text-base lg:text-sm">
+    <div id="sidebar" className={clsx(className)} style={style}>
+      <ul className="space-y-4 text-sm lg:text-sm">
         {routes.map((route) => (
           <li key={route.title}>
-            <h4 className="mb-3 font-semibold tracking-wide text-gray-800 uppercase lg:text-xs">
+            <h4 className="mb-3 font-semibold tracking-wide text-gray-800 uppercase">
               {route.title}
             </h4>
             <ul className="space-y-1">

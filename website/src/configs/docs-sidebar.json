@@ -1,6 +1,10 @@
 {
   "routes": [
     {
+      "title": "General",
+      "routes": [{ "title": "Button", "path": "/button" }]
+    },
+    {
       "title": "Feedback",
       "routes": [
         { "title": "Alert", "path": "/alert" },
@@ -16,10 +20,6 @@
         { "title": "Popover", "path": "/popover" },
         { "title": "Tooltip", "path": "/tooltip" }
       ]
-    },
-    {
-      "title": "General",
-      "routes": [{ "title": "Button", "path": "/button" }]
     },
     {
       "title": "Data Entry",

@@ -38,7 +38,7 @@ export default function DocPage({
         <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
-      <div className="flex items-start space-x-4">
+      <div className="flex items-start">
         <div className="space-y-8">
           <PropsContext.Provider value={{ props: componentsProps }}>
             <Component
@@ -55,14 +55,16 @@ export default function DocPage({
         </div>
         <PageNav
           headings={headings}
-          className="sticky flex-none hidden w-64 pt-10 pl-8 mr-8 overflow-y-auto top-4 lg:top-8 xl:block"
+          className="sticky flex-none hidden w-64 pt-10 pl-8 ml-4 overflow-y-auto top-4 lg:top-8 xl:block"
         />
       </div>
     </>
   )
 }
 
-export async function getStaticProps(ctx: GetStaticPropsContext): Promise<
+export async function getStaticProps(
+  ctx: GetStaticPropsContext,
+): Promise<
   GetStaticPropsResult<{
     id: string
     code: string
