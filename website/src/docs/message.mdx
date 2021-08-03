@@ -1,0 +1,160 @@
+---
+title: 'Message'
+components:
+  - name: 'MessageProvider'
+    path: 'src/components/message/message.tsx'
+---
+
+import { MessageProvider, useMessage } from '@tail-kit/tail-kit'
+import { HiOutlineCurrencyRupee } from 'react-icons/hi'
+
+# Message
+
+Display global messages as feedback in response to user operations. Message component is mostly used
+
+- To provide feedback such as success, warning, error, etc.
+- A message is displayed at top and center and will be dismissed automatically, as a non-interrupting light-weight prompt.
+- Mostly useful to notify user for success or error API response
+
+## Usage
+
+Wrap your `<App />` within `<MessageProvider />` component, like
+
+```jsx
+import { MessageProvider } from '@tail-kit/tail-kit'
+
+export default function App() {
+  return (
+    <MessageProvider>
+      <App />
+    </MessageProvider>
+  )
+}
+```
+
+Import `useMessage` and use it to display a message.
+`useMessage` provides you 2 methods which you can access using `const {message, removeMessage} = useMessage()`
+
+```jsx
+import { useMessage } from '@tail-kit/tail-kit'
+
+export default function SomeComponent() {
+  const { message, removeMessage } = useMessage()
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('/api/some-endpoint')
+        // do something with response
+        message.success('Successfully fetched data')
+      } catch (error) {
+        message.error(`Error occured while fetching data: ${error}`)
+      }
+    }
+    fetchData()
+  }, [])
+
+  return (
+    // return something awesome ...
+    null
+  )
+}
+```
+
+There are 5 different types of messages available to user. You can pass the string which you want to render in `Message` component as argument.
+
+- `message.info()`
+- `message.success()`
+- `message.warning()`
+- `message.error()`
+- `message.loading()`
+
+Use `removeMessage` method to programmatically remove a message. `removeMessage()` takes the id of `Message` component you want to remove.
+All `message` methods return the id of the message which you can use with `removeMessage` method.
+
+### Basic Message
+
+<Playground>
+  {function NormalMessage() {
+    const { message } = useMessage()
+    function showToast() {
+      message.info('This is a normal message')
+    }
+    return (
+      <Button buttonType="primary" onClick={showToast}>
+        Display Simple Message
+      </Button>
+    )
+  }}
+</Playground>
+
+### Types of Messages
+
+<Playground>
+  {function TypesOfMessages() {
+    const { message } = useMessage()
+    function success() {
+      message.success('This is a success message')
+    }
+    function warning() {
+      message.warning('This is a warning message')
+    }
+    function error() {
+      message.error('This is an error message')
+    }
+    return (
+      <div className="flex items-center space-x-4">
+        <Button onClick={success}>Success</Button>
+        <Button onClick={warning}>Warning</Button>
+        <Button onClick={error}>Error</Button>
+      </div>
+    )
+  }}
+</Playground>
+
+### Custom Dismiss Time
+
+<Playground>
+  {function CustomDismissTime() {
+    const { message } = useMessage()
+    function success() {
+      message.success(
+        'This is a prompt message for success, and it will disappear in 10 seconds',
+        { dismissTime: 5000 },
+      )
+    }
+    return <Button onClick={success}>Custom Dismiss Time</Button>
+  }}
+</Playground>
+
+### Display Loading Indicator
+
+<Playground>
+  {function LoadingIndication() {
+    const { message } = useMessage()
+    function loading() {
+      message.loading('Saving changes. Please wait!!')
+    }
+    return <Button onClick={loading}>Display Loading Indicator</Button>
+  }}
+</Playground>
+
+### Message With Custom icon
+
+<Playground scope={{ HiOutlineCurrencyRupee }}>
+  {function CustomIcon() {
+    const { message } = useMessage()
+    const icon = React.useMemo(
+      () => <HiOutlineCurrencyRupee className="text-green-500 w-5 h-5" />,
+      [],
+    )
+    function renderMessage() {
+      message.info('You will recieve refund in 5-7 days!!!', { icon })
+    }
+    return <Button onClick={renderMessage}>Custom Icon</Button>
+  }}
+</Playground>
+
+## MessageProvider Props
+
+<PropsTable of="MessageProvider" />
