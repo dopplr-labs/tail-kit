@@ -15,7 +15,7 @@ export function PropsTable({ of }: PropsTableProps) {
 
   if (isMobile) {
     return (
-      <div className="border rounded-md">
+      <div className="border divide-y rounded-md">
         {componentProps.map((prop) => (
           <div key={prop.name} className="p-3 text-sm odd:bg-gray-50">
             <div className="mb-2 font-mono font-bold">{prop.name}</div>

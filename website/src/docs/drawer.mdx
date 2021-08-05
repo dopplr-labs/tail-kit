@@ -72,11 +72,12 @@ import { Drawer } from '@tail-kit/tail-kit'
     }
     return (
       <>
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center flex-wrap">
           <Radio.RadioGroup
             options={options}
             defaultValue="right"
             onChange={handlePlacement}
+            className="mr-6 mb-4 lg:mb-0"
           />
           <Button buttonType="primary" onClick={showDrawer}>
             Open

@@ -30,6 +30,7 @@ export default function Navbar() {
               setSideBarOpen(false)
             }}
             closable
+            title="Tail Kit"
             placement="left"
           >
             <Sidebar />

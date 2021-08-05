@@ -38,8 +38,8 @@ export default function DocPage({
         <title>{frontmatter.title} | Tail Kit</title>
       </Head>
 
-      <div className="flex items-start">
-        <div className="space-y-8">
+      <div className="lg:flex lg:items-start">
+        <div className="w-full space-y-8 lg:w-auto lg:flex-1">
           <PropsContext.Provider value={{ props: componentsProps }}>
             <Component
               components={{

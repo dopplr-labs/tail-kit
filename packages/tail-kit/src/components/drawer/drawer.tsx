@@ -150,7 +150,7 @@ export function Drawer({
           ) : null}
 
           {title ? (
-            <div className="px-6 py-3 font-medium text-gray-900 border-b">
+            <div className="px-4 py-3 font-medium text-gray-900 border-b">
               {title}
             </div>
           ) : null}

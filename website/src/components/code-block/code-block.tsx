@@ -28,28 +28,35 @@ export function CodeBlock({ children }: CodeBlockProps) {
   const codeContent = format(codeChild.props.children)
 
   return (
-    <Highlight
-      {...defaultProps}
-      code={codeContent}
-      language={language as Language}
-      theme={theme}
-    >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre
-          className={clsx('text-sm relative p-4', className)}
-          style={{ ...style }}
-        >
-          {tokens.map((line, i) => (
-            <div key={i} {...getLineProps({ line, key: i })}>
-              {line.map((token, key) => (
-                <span key={key} {...getTokenProps({ token, key })} />
-              ))}
-            </div>
-          ))}
-
-          <CopyButton code={codeContent} className="absolute top-0 right-4" />
-        </pre>
-      )}
-    </Highlight>
+    <div className="relative">
+      <Highlight
+        {...defaultProps}
+        code={codeContent}
+        language={language as Language}
+        theme={theme}
+      >
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <pre
+            className={clsx(
+              'text-xs lg:text-sm relative p-4 overflow-auto max-w-full',
+              className,
+            )}
+            style={{ ...style }}
+          >
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </pre>
+        )}
+      </Highlight>
+      <CopyButton
+        code={codeContent}
+        className="absolute top-0 hidden right-4 lg:block"
+      />
+    </div>
   )
 }
