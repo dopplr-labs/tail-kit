@@ -115,9 +115,11 @@ export function MessageProvider({
         { id: messageId, title, type, icon: options?.icon },
       ])
 
-      setTimeout(() => {
-        removeMessage(messageId)
-      }, options?.dismissTime ?? defaultDismissTime)
+      if (options?.dismissTime !== 0) {
+        setTimeout(() => {
+          removeMessage(messageId)
+        }, options?.dismissTime ?? defaultDismissTime)
+      }
 
       return messageId
     },
