@@ -22,3 +22,5 @@ export const MessageContext = createContext<{
   },
   removeMessage: () => {},
 })
+
+MessageContext.displayName = 'MessageContext'

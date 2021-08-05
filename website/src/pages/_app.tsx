@@ -2,6 +2,7 @@ import React from 'react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import '@tail-kit/tail-kit/dist/tail-kit.css'
+import { MessageProvider } from '@tail-kit/tail-kit'
 import 'styles/index.css'
 import DocShell from 'components/doc-shell'
 import { DeviceSizeProvider } from 'hooks/use-device-size'
@@ -15,9 +16,11 @@ export default function DocsApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <DeviceSizeProvider>
-        <DocShell>
-          <Component {...pageProps} />
-        </DocShell>
+        <MessageProvider>
+          <DocShell>
+            <Component {...pageProps} />
+          </DocShell>
+        </MessageProvider>
       </DeviceSizeProvider>
     </>
   )

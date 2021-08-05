@@ -8,11 +8,4 @@ module.exports = withMDX({
   eslint: {
     ignoreDuringBuilds: true,
   },
-  headers: async () => [
-    {
-      source: '/:id',
-      // Allow search engines to index the page
-      headers: [{ key: 'x-robots-tag', value: 'all' }],
-    },
-  ],
 })

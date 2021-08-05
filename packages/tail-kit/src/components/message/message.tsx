@@ -1,7 +1,7 @@
 import React, {
   useCallback,
   useContext,
-  useLayoutEffect,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -81,7 +81,7 @@ export function MessageProvider({
     typeof window !== 'undefined' ? document.createElement('div') : undefined,
   )
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const container = toastContainer.current
     if (container) {
       document.body.appendChild(container)
@@ -115,9 +115,11 @@ export function MessageProvider({
         { id: messageId, title, type, icon: options?.icon },
       ])
 
-      setTimeout(() => {
-        removeMessage(messageId)
-      }, options?.dismissTime ?? defaultDismissTime)
+      if (options?.dismissTime !== 0) {
+        setTimeout(() => {
+          removeMessage(messageId)
+        }, options?.dismissTime ?? defaultDismissTime)
+      }
 
       return messageId
     },
@@ -131,7 +133,7 @@ export function MessageProvider({
   const loading = dispatchMessage(MessageTypes.LOADING)
 
   if (!toastContainer.current) {
-    return null
+    return children
   }
 
   return (
@@ -145,7 +147,7 @@ export function MessageProvider({
         {children}
       </MessageContext.Provider>
       {createPortal(
-        <TransitionGroup className="fixed inset-0 z-10 flex flex-col items-center justify-start px-4 py-6 space-y-4 pointer-events-none">
+        <TransitionGroup className="fixed inset-0 z-50 flex flex-col items-center justify-start px-4 py-6 space-y-4 pointer-events-none">
           {messages.map((message) => (
             <CSSTransition
               timeout={200}
