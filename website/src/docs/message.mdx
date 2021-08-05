@@ -114,13 +114,13 @@ All `message` methods return the id of the message which you can use with `remov
 
 ### Custom Dismiss Time
 
-<Playground>
+<Playground editable>
   {function CustomDismissTime() {
     const { message } = useMessage()
     function success() {
       message.success(
         'This is a prompt message for success, and it will disappear in 10 seconds',
-        { dismissTime: 5000 },
+        { dismissTime: 10000 },
       )
     }
     return <Button onClick={success}>Custom Dismiss Time</Button>
@@ -152,6 +152,28 @@ All `message` methods return the id of the message which you can use with `remov
       message.info('You will recieve refund in 5-7 days!!!', { icon })
     }
     return <Button onClick={renderMessage}>Custom Icon</Button>
+  }}
+</Playground>
+
+### Remove Message programmatically
+
+Message will not be removed automatically if provided dismissTime is 0. You can remove a message by calling `removeMessage(id)`
+
+<Playground editable>
+  {function RemoveMessage() {
+    const { message, removeMessage } = useMessage()
+    const messageId = React.useRef()
+    function showToast() {
+      messageId.current = message.info('Removing message programatically', {
+        dismissTime: 0,
+      })
+      setTimeout(() => removeMessage(messageId.current), 5000)
+    }
+    return (
+      <Button buttonType="primary" onClick={showToast}>
+        Show Message
+      </Button>
+    )
   }}
 </Playground>
 
