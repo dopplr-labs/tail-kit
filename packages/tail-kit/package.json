@@ -1,7 +1,6 @@
 {
   "name": "@tail-kit/tail-kit",
-  "private": true,
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "UI-Kit made with tailwindcss",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
