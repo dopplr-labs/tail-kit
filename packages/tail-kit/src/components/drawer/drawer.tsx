@@ -20,7 +20,7 @@ export type DrawerProps = {
   /** function called when the user is closing the drawer, either by clicking on cancel button or overlay */
   onRequestClose?: () => void
   /** title of the drawer */
-  title?: string
+  title?: React.ReactNode
   /** The placement of the Drawer */
   placement?: 'left' | 'right' | 'top' | 'bottom'
   /** parent of the portal container */
@@ -149,15 +149,13 @@ export function Drawer({
             </button>
           ) : null}
 
-          <div>
-            {title ? (
-              <div className="px-6 py-3 font-medium text-gray-900 border-b">
-                {title}
-              </div>
-            ) : null}
-            <div className="p-6 overflow-auto text-sm text-gray-700 scrollable">
-              {children}
+          {title ? (
+            <div className="px-4 py-3 font-medium text-gray-900 border-b">
+              {title}
             </div>
+          ) : null}
+          <div className="flex-1 overflow-auto text-sm text-gray-700 scrollable">
+            <div className="p-4 lg:p-6">{children}</div>
           </div>
 
           {footer ? <div className="px-4 py-3 border-t">{footer}</div> : null}

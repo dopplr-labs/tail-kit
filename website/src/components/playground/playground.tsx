@@ -33,14 +33,17 @@ export function Playground({
     >
       <div>
         <div className="border rounded-md">
-          <LivePreview className="relative p-4" />
+          <LivePreview className="relative p-4 overflow-auto" />
 
           <div className="relative">
-            <CopyButton code={code} className="absolute top-0 z-20 right-4" />
+            <CopyButton
+              code={code}
+              className="absolute top-0 z-20 hidden right-4 lg:block"
+            />
 
             <LiveEditor
               className={clsx(
-                '!font-mono text-sm live-editor',
+                '!font-mono text-xs lg:text-sm live-editor',
                 !editable ? 'rounded-b-md' : undefined,
               )}
               disabled={!editable}

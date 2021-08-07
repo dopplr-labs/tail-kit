@@ -9,6 +9,6 @@ module.exports = {
       },
     },
   },
-  purge: ['./src/**/*.{ts,tsx}'],
+  purge: ['./src/**/*.{ts,tsx,mdx}'],
   plugins: [require('@tailwindcss/typography')],
 }
