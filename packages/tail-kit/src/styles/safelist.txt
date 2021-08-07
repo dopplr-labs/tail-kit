@@ -33,3 +33,9 @@ lg:col-start-6
 lg:col-start-7
 lg:col-start-8
 lg:col-start-9
+
+max-w-screen-sm
+max-w-screen-md
+max-w-screen-lg
+max-w-screen-xl
+max-w-screen-2xl

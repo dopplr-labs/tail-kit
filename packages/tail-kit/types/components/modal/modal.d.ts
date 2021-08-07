@@ -8,7 +8,7 @@ declare type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
  */
 export declare type ModalProps = {
   /** title of the modal */
-  title?: string
+  title?: React.ReactNode
   /** content rendered inside the modal */
   children: React.ReactNode
   /** function called on "OK" button click */
@@ -25,6 +25,8 @@ export declare type ModalProps = {
   onRequestClose?: () => void
   /** custom actions button instead of OK and Cancel */
   actions?: React.ReactNode
+  /** Show dividers on top and bottom of Modal children  */
+  dividers?: boolean
   /** parent of the portal container */
   portalParent?: HTMLElement
 }
@@ -38,6 +40,7 @@ export declare function Modal({
   visible,
   onRequestClose,
   actions,
+  dividers,
   portalParent,
 }: ModalProps): React.ReactPortal
 export {}

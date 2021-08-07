@@ -1,9 +1,11 @@
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef, useMemo } from 'react'
+import { createPortal } from 'react-dom'
+import clsx from 'clsx'
+import { CSSTransition } from 'react-transition-group'
 import { useMemoOne } from 'use-memo-one'
 import Button from 'components/button'
 import { ButtonProps } from 'components/button/button'
-import { createPortal } from 'react-dom'
-import { CSSTransition } from 'react-transition-group'
+
 import useOutsideClick from 'hooks/use-outside-click'
 
 type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
@@ -15,7 +17,7 @@ type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
  */
 export type ModalProps = {
   /** title of the modal */
-  title?: string
+  title?: React.ReactNode
   /** content rendered inside the modal */
   children: React.ReactNode
   /** function called on "OK" button click */
@@ -32,12 +34,16 @@ export type ModalProps = {
   onRequestClose?: () => void
   /** custom actions button instead of OK and Cancel */
   actions?: React.ReactNode
+  /** Show dividers on top and bottom of Modal children  */
+  dividers?: boolean
+  /** Change maxWidth of modal using breakpoints */
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   /** parent of the portal container */
   portalParent?: HTMLElement
 }
 
 export function Modal({
-  title = '',
+  title,
   children,
   onOK,
   onCancel,
@@ -46,6 +52,8 @@ export function Modal({
   visible,
   onRequestClose,
   actions,
+  dividers = false,
+  maxWidth = 'sm',
   portalParent = typeof window !== 'undefined' ? document.body : undefined,
 }: ModalProps) {
   const portalContainer = useMemoOne(() => {
@@ -75,6 +83,20 @@ export function Modal({
     }
   }, [visible])
 
+  const modalTitle = useMemo(() => {
+    if (!title) {
+      return null
+    }
+    if (typeof title === 'string') {
+      return (
+        <div className="px-4 py-3 text-lg font-semibold text-gray-900">
+          {title}
+        </div>
+      )
+    }
+    return title
+  }, [title])
+
   if (!portalContainer) {
     return null
   }
@@ -101,15 +123,16 @@ export function Modal({
         data-testid="modal-overlay"
       >
         <div
-          className="flex flex-col w-full max-w-screen-sm max-h-full overflow-hidden bg-white rounded-md shadow-2xl"
+          className={`flex flex-col w-full max-w-screen-${maxWidth} max-h-full overflow-hidden bg-white rounded-md shadow-2xl`}
           ref={contentContainer}
         >
-          {title ? (
-            <div className="px-4 py-3 text-lg font-semibold text-gray-900 border-b">
-              {title}
-            </div>
-          ) : null}
-          <div className="flex-1 p-4 overflow-auto text-sm text-gray-700 border-b scrollable">
+          {modalTitle}
+          <div
+            className={clsx(
+              'flex-1 px-4 overflow-auto text-sm text-gray-700 scrollable',
+              dividers ? 'border-t border-b py-4' : 'py-2',
+            )}
+          >
             {children}
           </div>
           <div className="flex items-center justify-end px-4 py-3 space-x-4">
