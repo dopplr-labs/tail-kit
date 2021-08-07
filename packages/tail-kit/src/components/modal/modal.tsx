@@ -127,7 +127,23 @@ export function Modal({
         data-testid="modal-overlay"
       >
         <div
-          className={`relative flex flex-col w-full max-w-screen-${maxWidth} max-h-full overflow-hidden bg-white rounded-md shadow-2xl`}
+          className={clsx(
+            'relative flex flex-col w-full max-h-full overflow-hidden bg-white rounded-md shadow-2xl',
+            (() => {
+              switch (maxWidth) {
+                case 'sm':
+                  return 'max-w-screen-sm'
+                case 'md':
+                  return 'max-w-screen-md'
+                case 'lg':
+                  return 'max-w-screen-lg'
+                case 'xl':
+                  return 'max-w-screen-xl'
+                case '2xl':
+                  return 'max-w-screen-2xl'
+              }
+            })(),
+          )}
           ref={contentContainer}
         >
           {closable ? (
