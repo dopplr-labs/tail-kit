@@ -29,6 +29,7 @@ import { Modal } from '@tail-kit/tail-kit'
           visible={visible}
           onRequestClose={() => setVisible(false)}
           title="Default Modal"
+          closable
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida
           lorem nec velit egestas, quis varius mi condimentum. Nulla risus
@@ -138,6 +139,7 @@ import { Modal } from '@tail-kit/tail-kit'
           onRequestClose={() => setVisible(false)}
           title="Default Modal"
           dividers
+          closable
         >
           <div className="mb-4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
@@ -154,6 +156,7 @@ import { Modal } from '@tail-kit/tail-kit'
             onRequestClose={() => setNestedModalVisible(false)}
             title="Nested Modal"
             dividers
+            closable
           >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
             gravida lorem nec velit egestas, quis varius mi condimentum. Nulla

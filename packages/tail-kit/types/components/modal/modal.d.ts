@@ -11,6 +11,8 @@ export declare type ModalProps = {
   title?: React.ReactNode
   /** content rendered inside the modal */
   children: React.ReactNode
+  /** Whether a close (x) button is visible on top right of the Drawer dialog or not */
+  closable?: boolean
   /** function called on "OK" button click */
   onOK?: (event: React.MouseEvent<HTMLButtonElement>) => void
   /** function called on "Cancel" button click */
@@ -27,12 +29,15 @@ export declare type ModalProps = {
   actions?: React.ReactNode
   /** Show dividers on top and bottom of Modal children  */
   dividers?: boolean
+  /** Change maxWidth of modal using breakpoints */
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   /** parent of the portal container */
   portalParent?: HTMLElement
 }
 export declare function Modal({
   title,
   children,
+  closable,
   onOK,
   onCancel,
   okButtonProps,
@@ -41,6 +46,7 @@ export declare function Modal({
   onRequestClose,
   actions,
   dividers,
+  maxWidth,
   portalParent,
 }: ModalProps): React.ReactPortal
 export {}

@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import clsx from 'clsx'
 import { CSSTransition } from 'react-transition-group'
 import { useMemoOne } from 'use-memo-one'
+import { HiOutlineX } from 'react-icons/hi'
 import Button from 'components/button'
 import { ButtonProps } from 'components/button/button'
 
@@ -20,6 +21,8 @@ export type ModalProps = {
   title?: React.ReactNode
   /** content rendered inside the modal */
   children: React.ReactNode
+  /** Whether a close (x) button is visible on top right of the Modal or not */
+  closable?: boolean
   /** function called on "OK" button click */
   onOK?: (event: React.MouseEvent<HTMLButtonElement>) => void
   /** function called on "Cancel" button click */
@@ -45,6 +48,7 @@ export type ModalProps = {
 export function Modal({
   title,
   children,
+  closable = false,
   onOK,
   onCancel,
   okButtonProps,
@@ -123,9 +127,17 @@ export function Modal({
         data-testid="modal-overlay"
       >
         <div
-          className={`flex flex-col w-full max-w-screen-${maxWidth} max-h-full overflow-hidden bg-white rounded-md shadow-2xl`}
+          className={`relative flex flex-col w-full max-w-screen-${maxWidth} max-h-full overflow-hidden bg-white rounded-md shadow-2xl`}
           ref={contentContainer}
         >
+          {closable ? (
+            <Button
+              className="absolute top-0 right-0 mt-2 mr-3"
+              buttonType="link"
+              icon={<HiOutlineX />}
+              onClick={onRequestClose}
+            />
+          ) : null}
           {modalTitle}
           <div
             className={clsx(
