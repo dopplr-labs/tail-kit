@@ -30,14 +30,20 @@ export default function Navbar() {
               setSideBarOpen(false)
             }}
             closable
-            title="Tail Kit"
+            title={
+              <img src="brand-image.png" className="w-24" alt="tail-kit logo" />
+            }
             placement="left"
           >
             <Sidebar />
           </Drawer>
         </>
       ) : null}
-      <img src="brand-image.png" className="w-24" alt="tail-kit logo" />
+      <img
+        src="brand-image.png"
+        className="hidden lg:block lg:w-24"
+        alt="tail-kit logo"
+      />
       <div className="flex-1" />
       <a
         href="https://github.com/dopplr-labs/tail-kit"

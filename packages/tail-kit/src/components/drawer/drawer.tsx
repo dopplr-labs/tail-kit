@@ -20,7 +20,7 @@ export type DrawerProps = {
   /** function called when the user is closing the drawer, either by clicking on cancel button or overlay */
   onRequestClose?: () => void
   /** title of the drawer */
-  title?: string
+  title?: React.ReactNode
   /** The placement of the Drawer */
   placement?: 'left' | 'right' | 'top' | 'bottom'
   /** parent of the portal container */
