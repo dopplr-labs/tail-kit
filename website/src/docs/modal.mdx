@@ -53,6 +53,7 @@ import { Modal } from '@tail-kit/tail-kit'
           visible={visible}
           onRequestClose={() => setVisible(false)}
           title="Default Modal"
+          dividers
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida
           lorem nec velit egestas, quis varius mi condimentum. Nulla risus
@@ -136,6 +137,7 @@ import { Modal } from '@tail-kit/tail-kit'
           visible={visible}
           onRequestClose={() => setVisible(false)}
           title="Default Modal"
+          dividers
         >
           <div className="mb-4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
@@ -151,6 +153,7 @@ import { Modal } from '@tail-kit/tail-kit'
             visible={nestedModalVisible}
             onRequestClose={() => setNestedModalVisible(false)}
             title="Nested Modal"
+            dividers
           >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
             gravida lorem nec velit egestas, quis varius mi condimentum. Nulla
@@ -158,6 +161,77 @@ import { Modal } from '@tail-kit/tail-kit'
             porta purus eu ex hendrerit sagittis. Vestibulum eget mattis tellus,
             a dapibus nisi.
           </Modal>
+        </Modal>
+      </>
+    )
+  }}
+</Playground>
+
+### Alert Modal
+
+<Playground editable>
+  {function AlertModal() {
+    const [visible, setVisible] = React.useState(false)
+    const modalTitle = React.useMemo(() => {
+      return (
+        <p className="px-6 pt-4 pb-3 text-xl font-semibold text-gray-900">
+          Use Google's location service?
+        </p>
+      )
+    }, [])
+    return (
+      <>
+        <Button onClick={() => setVisible(true)}>Open Modal</Button>
+        <Modal
+          visible={visible}
+          onRequestClose={() => setVisible(false)}
+          title={modalTitle}
+          okButtonProps={{ children: 'AGREE', buttonType: 'link' }}
+          cancelButtonProps={{ children: 'DISAGREE', buttonType: 'link' }}
+        >
+          <p className="text-base px-2 text-gray-600">
+            Let Google help apps determine location. This means sending
+            anonymous location data to Google, even when no apps are running.
+          </p>
+        </Modal>
+      </>
+    )
+  }}
+</Playground>
+
+### Optional Sizes
+
+<Playground>
+  {function OptionalSizes() {
+    const [visible, setVisible] = React.useState(false)
+    const [size, setSize] = React.useState('sm')
+    const options = [
+      { label: 'sm: 640px', value: 'sm' },
+      { label: 'md: 768px', value: 'md' },
+      { label: 'lg: 1024px', value: 'lg' },
+      { label: 'xl: 1280px', value: 'xl' },
+      { label: '2xl: 1536px', value: '2xl' },
+    ]
+    return (
+      <>
+        <Button onClick={() => setVisible(true)}>Open Modal</Button>
+        <Modal
+          visible={visible}
+          onRequestClose={() => setVisible(false)}
+          maxWidth={size}
+          title="Optional sizes"
+        >
+          <div className="flex flex-col space-y-4 items-center">
+            <p className="text-lg">
+              You can set the maximum width of this modal.
+            </p>
+            <Select
+              className="w-48"
+              options={options}
+              value={size}
+              onChange={setSize}
+            />
+          </div>
         </Modal>
       </>
     )
