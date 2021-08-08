@@ -144,6 +144,7 @@ export function Modal({
               }
             })(),
           )}
+          role="dialog"
           ref={contentContainer}
         >
           {closable ? (
