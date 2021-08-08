@@ -53,3 +53,59 @@ test('closes the modal on overlay click', () => {
   userEvent.click(screen.getByTestId('modal-overlay'))
   expect(onRequestClose).toBeCalled()
 })
+
+test('closes the modal on close button click', () => {
+  const onRequestClose = jest.fn()
+  render(
+    <Modal visible onRequestClose={onRequestClose} closable actions={false}>
+      <div>Modal Content</div>
+    </Modal>,
+  )
+  userEvent.click(screen.getByRole('button'))
+  expect(onRequestClose).toBeCalled()
+})
+
+test('render custom title on modal', () => {
+  render(
+    <Modal visible title={<p className="text-red-500">Modal Title</p>}>
+      <div />
+    </Modal>,
+  )
+  expect(screen.getByText('Modal Title')).toHaveClass('text-red-500')
+})
+
+test('using maxWidth "md" to change modal width working correctly', () => {
+  render(
+    <Modal visible maxWidth="md">
+      <div />
+    </Modal>,
+  )
+  expect(screen.getByRole('dialog')).toHaveClass('max-w-screen-md')
+})
+
+test('using maxWidth "lg" to change modal width working correctly', () => {
+  render(
+    <Modal visible maxWidth="lg">
+      <div />
+    </Modal>,
+  )
+  expect(screen.getByRole('dialog')).toHaveClass('max-w-screen-lg')
+})
+
+test('using maxWidth "xl" to change modal width working correctly', () => {
+  render(
+    <Modal visible maxWidth="xl">
+      <div />
+    </Modal>,
+  )
+  expect(screen.getByRole('dialog')).toHaveClass('max-w-screen-xl')
+})
+
+test('using maxWidth "2xl" to change modal width working correctly', () => {
+  render(
+    <Modal visible maxWidth="2xl">
+      <div />
+    </Modal>,
+  )
+  expect(screen.getByRole('dialog')).toHaveClass('max-w-screen-2xl')
+})

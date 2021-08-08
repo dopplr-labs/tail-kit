@@ -8,9 +8,11 @@ declare type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
  */
 export declare type ModalProps = {
   /** title of the modal */
-  title?: string
+  title?: React.ReactNode
   /** content rendered inside the modal */
   children: React.ReactNode
+  /** Whether a close (x) button is visible on top right of the Drawer dialog or not */
+  closable?: boolean
   /** function called on "OK" button click */
   onOK?: (event: React.MouseEvent<HTMLButtonElement>) => void
   /** function called on "Cancel" button click */
@@ -25,12 +27,17 @@ export declare type ModalProps = {
   onRequestClose?: () => void
   /** custom actions button instead of OK and Cancel */
   actions?: React.ReactNode
+  /** Show dividers on top and bottom of Modal children  */
+  dividers?: boolean
+  /** Change maxWidth of modal using breakpoints */
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   /** parent of the portal container */
   portalParent?: HTMLElement
 }
 export declare function Modal({
   title,
   children,
+  closable,
   onOK,
   onCancel,
   okButtonProps,
@@ -38,6 +45,8 @@ export declare function Modal({
   visible,
   onRequestClose,
   actions,
+  dividers,
+  maxWidth,
   portalParent,
 }: ModalProps): React.ReactPortal
 export {}
