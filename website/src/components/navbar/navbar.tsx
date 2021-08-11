@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { HiExternalLink, HiMenu } from 'react-icons/hi'
+import { HiMenu } from 'react-icons/hi'
+import { RiGithubFill } from 'react-icons/ri'
 import { Button, Drawer } from '@tail-kit/tail-kit'
 import Sidebar from 'components/sidebar'
 import { useDeviceSizeContext } from 'hooks/use-device-size'
@@ -12,7 +13,7 @@ export default function Navbar() {
   return (
     <nav
       id="navbar"
-      className="fixed top-0 left-0 right-0 z-40 flex items-center w-full px-2 py-2.5 space-x-2 bg-white bg-opacity-50 border-b lg:px-3 lg:space-x-4 backdrop-filter backdrop-blur-md"
+      className="fixed top-0 left-0 w-full flex items-center z-40 px-2 py-2.5 space-x-2 bg-white bg-opacity-50 border-b lg:px-3 lg:space-x-4 backdrop-filter backdrop-blur-md"
     >
       {isMobile ? (
         <>
@@ -49,12 +50,10 @@ export default function Navbar() {
         href="https://github.com/dopplr-labs/tail-kit"
         target="_blank"
         rel="noopenner noreferrer"
-        className="flex items-center text-sm font-medium focus:outline-none group"
+        className="flex items-center space-x-2 text-sm font-medium text-gray-700 focus:outline-none"
       >
-        <span className="mr-1 text-gray-700 group-hover:text-gray-800">
-          Github
-        </span>
-        <HiExternalLink className="w-4 h-4 text-gray-400 group-hover:text-gray-700" />
+        <RiGithubFill size={24} />
+        <span className="font-medium">Github</span>
       </a>
     </nav>
   )

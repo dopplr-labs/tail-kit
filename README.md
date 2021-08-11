@@ -14,16 +14,16 @@ Demo - https://tail-kit.web.app/
 
 ## Installation
 
-Install tail-kit using
+`@tail-kit/tail-kit` depends on additional libraries like `react-icons` and `react-hook-form`. So install tail-kit using
 
 ```sh
-yarn add @tail-kit/tail-kit
+yarn add @tail-kit/tail-kit react-icons react-hook-form
 ```
 
 or
 
 ```sh
-npm install @tail-kit/tail-kit
+npm install @tail-kit/tail-kit react-icons react-hook-form --save
 ```
 
 ## Contributing
