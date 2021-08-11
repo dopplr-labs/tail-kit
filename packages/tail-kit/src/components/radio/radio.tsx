@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react'
 import clsx from 'clsx'
-import { hideVisually } from 'polished'
 import useSyncedState from 'hooks/use-synced-states'
 
 /**
@@ -93,7 +92,7 @@ export const Radio = forwardRef(
             onChange?.(event)
           }}
           disabled={disabled}
-          style={hideVisually()}
+          className="sr-only"
           ref={ref}
         />
         {label ? (
