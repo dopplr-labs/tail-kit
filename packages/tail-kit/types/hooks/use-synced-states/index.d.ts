@@ -1,2 +1,2 @@
-import { useSyncedState } from './use-synced-states'
-export default useSyncedState
+import { useSyncedState } from './use-synced-states';
+export default useSyncedState;
