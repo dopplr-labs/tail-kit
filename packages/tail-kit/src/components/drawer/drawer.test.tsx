@@ -66,35 +66,6 @@ test('close button of drawer working correctly', () => {
   expect(onRequestClose).toBeCalled()
 })
 
-test('left placement drawer renders correctly', () => {
-  render(
-    <Drawer visible closable placement="left">
-      <p>Some Contents...</p>
-    </Drawer>,
-  )
-  expect(screen.getByRole('button').parentElement).toHaveClass('top-0 left-0')
-})
-
-test('top placement drawer renders correctly', () => {
-  render(
-    <Drawer visible closable placement="top">
-      <p>Some Contents...</p>
-    </Drawer>,
-  )
-  expect(screen.getByRole('button').parentElement).toHaveClass('top-0 left-0')
-})
-
-test('bottom placement drawer renders correctly', () => {
-  render(
-    <Drawer visible closable placement="bottom">
-      <p>Some Contents...</p>
-    </Drawer>,
-  )
-  expect(screen.getByRole('button').parentElement).toHaveClass(
-    'bottom-0 left-0',
-  )
-})
-
 test('footer inside drawer renders correctly', () => {
   render(
     <Drawer visible footer={<Button>Cancel</Button>}>

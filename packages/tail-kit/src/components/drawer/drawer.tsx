@@ -141,7 +141,7 @@ export function Drawer({
           style={{ ...style, width, height }}
           ref={contentContainer}
         >
-          {title ? (
+          {title || closable ? (
             <div className="relative flex items-center py-2 pl-4 pr-3 font-medium text-gray-900 border-b min-h-[56px]">
               <div className="flex-1 truncate">{title}</div>
               {closable ? (
