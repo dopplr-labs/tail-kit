@@ -40,7 +40,7 @@ test('toggles popover visibliby on click', async () => {
       <Popover
         title="Popover Title"
         content="Popover Content"
-        triggerEvent={Popover.PopoverTriggerEvent.click}
+        triggerEvent="click"
       >
         <div>Trigger</div>
       </Popover>

@@ -65,18 +65,16 @@ export declare const Button: React.ForwardRefExoticComponent<
       /** button styles */
       style?: React.CSSProperties
     },
-    | 'loading'
     | 'hidden'
-    | 'dir'
-    | 'form'
-    | 'slot'
-    | 'style'
-    | 'title'
-    | 'disabled'
     | 'color'
+    | 'style'
     | 'icon'
+    | 'disabled'
     | 'translate'
     | 'prefix'
+    | 'form'
+    | 'slot'
+    | 'title'
     | 'children'
     | 'key'
     | 'type'
@@ -96,6 +94,7 @@ export declare const Button: React.ForwardRefExoticComponent<
     | 'accessKey'
     | 'contentEditable'
     | 'contextMenu'
+    | 'dir'
     | 'draggable'
     | 'id'
     | 'lang'
@@ -335,6 +334,7 @@ export declare const Button: React.ForwardRefExoticComponent<
     | 'onTransitionEndCapture'
     | 'iconPlacement'
     | 'buttonType'
+    | 'loading'
   > &
     React.RefAttributes<HTMLButtonElement>
 >

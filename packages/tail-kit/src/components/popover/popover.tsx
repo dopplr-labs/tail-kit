@@ -20,11 +20,6 @@ const PopoverPlacements: {
 
 type OnVisibilityChange = (visible: boolean) => void
 
-export enum PopoverTriggerEvent {
-  click = 'CLICK',
-  hover = 'HOVER',
-}
-
 export type PopoverProps = {
   /** Title shown in the popover */
   title?: React.ReactNode
@@ -54,7 +49,7 @@ export type PopoverProps = {
   /**
    * Event triggering the visiblity of popover. Whether is should be visible on hover or click
    */
-  triggerEvent?: PopoverTriggerEvent
+  triggerEvent?: 'click' | 'hover'
   /** parent of the portal container */
   portalParent?: HTMLElement
   /** Content for which the tooltip is to be shown */
@@ -75,7 +70,7 @@ export function Popover({
   closeDelay = 100,
   visible,
   onVisibilityChange,
-  triggerEvent = PopoverTriggerEvent.hover,
+  triggerEvent = 'hover',
   children,
   portalParent,
 }: PopoverProps) {
@@ -121,7 +116,7 @@ export function Popover({
   const contentContainer = useRef<HTMLDivElement | null>(null)
 
   useOutsideClick({
-    active: isVisible && triggerEvent === PopoverTriggerEvent.click,
+    active: isVisible && triggerEvent === 'click',
     onClick: handleOutsideClick,
     containers: useMemoOne(() => [trigger, contentContainer], []),
   })
@@ -131,21 +126,9 @@ export function Popover({
       <div
         ref={trigger}
         className="inline-block"
-        onMouseEnter={
-          triggerEvent === PopoverTriggerEvent.hover
-            ? handleMouseEnter
-            : undefined
-        }
-        onMouseLeave={
-          triggerEvent === PopoverTriggerEvent.hover
-            ? handleMouseLeave
-            : undefined
-        }
-        onClick={
-          triggerEvent === PopoverTriggerEvent.click
-            ? handleTriggerClick
-            : undefined
-        }
+        onMouseEnter={triggerEvent === 'hover' ? handleMouseEnter : undefined}
+        onMouseLeave={triggerEvent === 'hover' ? handleMouseLeave : undefined}
+        onClick={triggerEvent === 'click' ? handleTriggerClick : undefined}
       >
         {children}
       </div>
@@ -199,20 +182,16 @@ export function Popover({
                   'relative z-10 rounded-md font-medium bg-white text-gray-800',
                 )}
                 onMouseEnter={
-                  triggerEvent === PopoverTriggerEvent.hover
-                    ? handleMouseEnter
-                    : undefined
+                  triggerEvent === 'hover' ? handleMouseEnter : undefined
                 }
                 onMouseLeave={
-                  triggerEvent === PopoverTriggerEvent.hover
-                    ? handleMouseLeave
-                    : undefined
+                  triggerEvent === 'hover' ? handleMouseLeave : undefined
                 }
               >
                 {title ? (
                   <div className="px-4 py-2 border-b">{title}</div>
                 ) : null}
-                <div className="px-4 py-3">{content}</div>
+                {content}
               </div>
             </div>
           )
@@ -221,5 +200,3 @@ export function Popover({
     </>
   )
 }
-
-Popover.PopoverTriggerEvent = PopoverTriggerEvent

@@ -1,2 +1,2 @@
-import { NPSInput } from './nps'
-export default NPSInput
+import { NPSInput } from './nps';
+export default NPSInput;
