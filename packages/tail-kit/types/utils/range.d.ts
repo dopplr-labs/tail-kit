@@ -7,5 +7,5 @@
  * @param step - the value to increment or decrement by
  * @returns array of numbers
  */
-declare function range(start: number, end?: number, step?: number): number[];
-export default range;
+declare function range(start: number, end?: number, step?: number): number[]
+export default range

@@ -1,2 +1,2 @@
-import { Popover } from './popover';
-export default Popover;
+import { Popover } from './popover'
+export default Popover
