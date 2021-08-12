@@ -1,9 +1,12 @@
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef, useMemo } from 'react'
+import { createPortal } from 'react-dom'
+import clsx from 'clsx'
+import { CSSTransition } from 'react-transition-group'
 import { useMemoOne } from 'use-memo-one'
+import { HiOutlineX } from 'react-icons/hi'
 import Button from 'components/button'
 import { ButtonProps } from 'components/button/button'
-import { createPortal } from 'react-dom'
-import { CSSTransition } from 'react-transition-group'
+
 import useOutsideClick from 'hooks/use-outside-click'
 
 type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
@@ -15,9 +18,11 @@ type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
  */
 export type ModalProps = {
   /** title of the modal */
-  title?: string
+  title?: React.ReactNode
   /** content rendered inside the modal */
   children: React.ReactNode
+  /** Whether a close (x) button is visible on top right of the Modal or not */
+  closable?: boolean
   /** function called on "OK" button click */
   onOK?: (event: React.MouseEvent<HTMLButtonElement>) => void
   /** function called on "Cancel" button click */
@@ -32,13 +37,18 @@ export type ModalProps = {
   onRequestClose?: () => void
   /** custom actions button instead of OK and Cancel */
   actions?: React.ReactNode
+  /** Show dividers on top and bottom of Modal children  */
+  dividers?: boolean
+  /** Change maxWidth of modal using breakpoints */
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   /** parent of the portal container */
   portalParent?: HTMLElement
 }
 
 export function Modal({
-  title = '',
+  title,
   children,
+  closable = false,
   onOK,
   onCancel,
   okButtonProps,
@@ -46,6 +56,8 @@ export function Modal({
   visible,
   onRequestClose,
   actions,
+  dividers = false,
+  maxWidth = 'sm',
   portalParent = typeof window !== 'undefined' ? document.body : undefined,
 }: ModalProps) {
   const portalContainer = useMemoOne(() => {
@@ -75,6 +87,20 @@ export function Modal({
     }
   }, [visible])
 
+  const modalTitle = useMemo(() => {
+    if (!title) {
+      return null
+    }
+    if (typeof title === 'string') {
+      return (
+        <div className="px-4 py-3 text-lg font-semibold text-gray-900">
+          {title}
+        </div>
+      )
+    }
+    return title
+  }, [title])
+
   if (!portalContainer) {
     return null
   }
@@ -101,15 +127,41 @@ export function Modal({
         data-testid="modal-overlay"
       >
         <div
-          className="flex flex-col w-full max-w-screen-sm max-h-full overflow-hidden bg-white rounded-md shadow-2xl"
+          className={clsx(
+            'relative flex flex-col w-full max-h-full overflow-hidden bg-white rounded-md shadow-2xl',
+            (() => {
+              switch (maxWidth) {
+                case 'sm':
+                  return 'max-w-screen-sm'
+                case 'md':
+                  return 'max-w-screen-md'
+                case 'lg':
+                  return 'max-w-screen-lg'
+                case 'xl':
+                  return 'max-w-screen-xl'
+                case '2xl':
+                  return 'max-w-screen-2xl'
+              }
+            })(),
+          )}
+          role="dialog"
           ref={contentContainer}
         >
-          {title ? (
-            <div className="px-4 py-3 text-lg font-semibold text-gray-900 border-b">
-              {title}
-            </div>
+          {closable ? (
+            <Button
+              className="absolute top-0 right-0 mt-2 mr-3"
+              buttonType="link"
+              icon={<HiOutlineX />}
+              onClick={onRequestClose}
+            />
           ) : null}
-          <div className="flex-1 p-4 overflow-auto text-sm text-gray-700 border-b scrollable">
+          {modalTitle}
+          <div
+            className={clsx(
+              'flex-1 px-4 overflow-auto text-sm text-gray-700 scrollable',
+              dividers ? 'border-t border-b py-4' : 'py-2',
+            )}
+          >
             {children}
           </div>
           <div className="flex items-center justify-end px-4 py-3 space-x-4">

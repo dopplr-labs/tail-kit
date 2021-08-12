@@ -14,59 +14,16 @@ Demo - https://tail-kit.web.app/
 
 ## Installation
 
-Install tail-kit using
+`@tail-kit/tail-kit` depends on additional libraries like `react-icons` and `react-hook-form`. So install tail-kit using
 
 ```sh
-yarn add @tail-kit/tail-kit
+yarn add @tail-kit/tail-kit react-icons react-hook-form
 ```
 
 or
 
 ```sh
-npm install @tail-kit/tail-kit
-```
-
-## Usage
-
-```jsx
-import React, { useState } from 'react'
-import { Button, Input, AtSymbolOutline, KeyOutline } from '@tail-kit/tail-kit'
-// import the css or add it to the index.html file
-import '@tail-kit/tail-kit/dist/tail-kit.css'
-
-export default function App() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  return (
-    <div className="space-y-4 w-80">
-      <Input
-        placeholder="Email"
-        icon={<AtSymbolOutline />}
-        value={email}
-        onChange={(event) => {
-          setEmail(event.target.value)
-        }}
-      />
-      <Input
-        placeholder="Password"
-        icon={<KeyOutline />}
-        type="password"
-        value={password}
-        onChange={(event) => {
-          setPassword(event.target.value)
-        }}
-      />
-      <Button
-        className="w-full"
-        buttonType="primary"
-        disabled={!email || !password}
-      >
-        Login
-      </Button>
-    </div>
-  )
-}
+npm install @tail-kit/tail-kit react-icons react-hook-form --save
 ```
 
 ## Contributing

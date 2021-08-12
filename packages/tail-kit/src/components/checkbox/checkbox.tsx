@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react'
 import clsx from 'clsx'
-import { hideVisually } from 'polished'
 import { HiOutlineCheck } from 'react-icons/hi'
 import useSyncedState from 'hooks/use-synced-states'
 
@@ -90,7 +89,7 @@ export const Checkbox = forwardRef(
             }
           }}
           disabled={disabled}
-          style={hideVisually()}
+          className="sr-only"
           ref={ref}
           {...restProps}
         />

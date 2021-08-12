@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import useSyncedState from 'hooks/use-synced-states'
+import clsx from 'clsx'
 import { Radio } from './radio'
 
 export type RadioOptions = {
@@ -52,7 +53,10 @@ export function RadioGroup({
   )
 
   return (
-    <div className="flex items-center space-x-8">
+    <div
+      className={clsx('flex items-center space-x-8', className)}
+      style={style}
+    >
       {radioOptions.map((option) => (
         <Radio
           key={option.label}
@@ -64,8 +68,6 @@ export function RadioGroup({
             setCheckedValue(event.target.value)
             onChange?.(event.target.value)
           }}
-          className={className}
-          style={style}
         />
       ))}
     </div>

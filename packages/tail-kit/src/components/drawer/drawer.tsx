@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import { HiOutlineX } from 'react-icons/hi'
+import Button from 'components/button'
 import useOutsideClick from 'hooks/use-outside-click'
 import isNumber from 'utils/isNumber'
 
@@ -140,18 +141,16 @@ export function Drawer({
           style={{ ...style, width, height }}
           ref={contentContainer}
         >
-          {closable ? (
-            <button
-              className="absolute top-0 right-0 p-1 mt-3 mr-3 rounded-md focus:outline-none focus:ring-2"
-              onClick={onRequestClose}
-            >
-              <HiOutlineX className="w-4 h-4" />
-            </button>
-          ) : null}
-
-          {title ? (
-            <div className="px-4 py-3 font-medium text-gray-900 border-b">
-              {title}
+          {title || closable ? (
+            <div className="relative flex items-center py-2 pl-4 pr-3 font-medium text-gray-900 border-b min-h-[56px]">
+              <div className="flex-1 truncate">{title}</div>
+              {closable ? (
+                <Button
+                  buttonType="link"
+                  icon={<HiOutlineX />}
+                  onClick={onRequestClose}
+                />
+              ) : null}
             </div>
           ) : null}
           <div className="flex-1 overflow-auto text-sm text-gray-700 scrollable">
