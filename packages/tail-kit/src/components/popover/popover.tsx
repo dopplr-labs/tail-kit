@@ -178,9 +178,7 @@ export function Popover({
                 )}
               />
               <div
-                className={clsx(
-                  'relative z-10 rounded-md font-medium bg-white text-gray-800',
-                )}
+                className="relative z-10 font-medium text-gray-800 bg-white rounded-md"
                 onMouseEnter={
                   triggerEvent === 'hover' ? handleMouseEnter : undefined
                 }
