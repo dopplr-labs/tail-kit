@@ -50,6 +50,8 @@ export type PopoverProps = {
    * Event triggering the visiblity of popover. Whether is should be visible on hover or click
    */
   triggerEvent?: 'click' | 'hover'
+  /** Hide Arrow pointer of Popover */
+  hideArrow?: boolean
   /** parent of the portal container */
   portalParent?: HTMLElement
   /** Content for which the tooltip is to be shown */
@@ -71,6 +73,7 @@ export function Popover({
   visible,
   onVisibilityChange,
   triggerEvent = 'hover',
+  hideArrow = false,
   children,
   portalParent,
 }: PopoverProps) {
@@ -154,29 +157,31 @@ export function Popover({
           const [verticalPlacement, horizontalPlacement] = containerPlacement
           return (
             <div className="relative rounded-md shadow" ref={contentContainer}>
-              <div
-                className={clsx(
-                  'absolute w-3 h-3 transform rotate-45 shadow rounded-sm bg-white',
-                  verticalPlacement === VerticalPlacement.center
-                    ? 'top-1/2 -translate-y-1/2'
-                    : verticalPlacement === VerticalPlacement.top
-                    ? 'bottom-0 translate-y-1/2 mb-px'
-                    : verticalPlacement === VerticalPlacement.bottom
-                    ? 'top-0 -translate-y-1/2 mt-px'
-                    : undefined,
-                  horizontalPlacement === HorizontalPlacement.left
-                    ? 'right-0 translate-x-1/2 mr-px'
-                    : horizontalPlacement === HorizontalPlacement.right
-                    ? 'left-0 -translate-x-1/2 ml-px'
-                    : horizontalPlacement === HorizontalPlacement.leftAlign
-                    ? 'left-0 ml-4'
-                    : horizontalPlacement === HorizontalPlacement.rightAlign
-                    ? 'right-0 mr-4'
-                    : horizontalPlacement === HorizontalPlacement.center
-                    ? 'left-1/2 -translate-x-1/2'
-                    : undefined,
-                )}
-              />
+              {!hideArrow && (
+                <div
+                  className={clsx(
+                    'absolute w-3 h-3 transform rotate-45 shadow rounded-sm bg-white',
+                    verticalPlacement === VerticalPlacement.center
+                      ? 'top-1/2 -translate-y-1/2'
+                      : verticalPlacement === VerticalPlacement.top
+                      ? 'bottom-0 translate-y-1/2 mb-px'
+                      : verticalPlacement === VerticalPlacement.bottom
+                      ? 'top-0 -translate-y-1/2 mt-px'
+                      : undefined,
+                    horizontalPlacement === HorizontalPlacement.left
+                      ? 'right-0 translate-x-1/2 mr-px'
+                      : horizontalPlacement === HorizontalPlacement.right
+                      ? 'left-0 -translate-x-1/2 ml-px'
+                      : horizontalPlacement === HorizontalPlacement.leftAlign
+                      ? 'left-0 ml-4'
+                      : horizontalPlacement === HorizontalPlacement.rightAlign
+                      ? 'right-0 mr-4'
+                      : horizontalPlacement === HorizontalPlacement.center
+                      ? 'left-1/2 -translate-x-1/2'
+                      : undefined,
+                  )}
+                />
+              )}
               <div
                 className="relative z-10 font-medium text-gray-800 bg-white rounded-md"
                 onMouseEnter={
