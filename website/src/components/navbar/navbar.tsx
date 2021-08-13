@@ -13,7 +13,8 @@ export default function Navbar() {
   return (
     <nav
       id="navbar"
-      className="fixed top-0 left-0 w-full flex items-center z-40 px-2 py-2.5 space-x-2 bg-white bg-opacity-50 border-b lg:px-3 lg:space-x-4 backdrop-filter backdrop-blur-md"
+      className="fixed top-0 left-0 w-full flex items-center px-2 py-2.5 space-x-2 bg-white bg-opacity-50 border-b lg:px-3 lg:space-x-4 backdrop-filter backdrop-blur-md"
+      style={{ zIndex: 10002 }}
     >
       {isMobile ? (
         <>

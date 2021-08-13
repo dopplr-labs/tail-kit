@@ -1,0 +1,247 @@
+---
+title: 'Popover'
+components:
+  - name: 'Popover'
+    path: 'src/components/popover/popover.tsx'
+---
+
+import { Popover, Avatar } from '@tail-kit/tail-kit'
+import { HiArrowRight } from 'react-icons/hi'
+
+# Popover
+
+Component for rendering _floating card_ popped by hovering on a trigger element. Generally, used for:
+
+- A simple popup menu to provide extra information or operations.
+- Comparing with Tooltip, besides information Popover card can also provide action elements like links and buttons.
+
+## Usage
+
+```jsx
+import { Popover } from '@tail-kit/tail-kit'
+```
+
+### Navbar Dropdown
+
+<Playground editable scope={{ HiArrowRight }}>
+  {function NavbarDropdown() {
+    const options = [
+      {
+        title: 'Designer Search',
+        description: 'Find, contact, and hire designers',
+        icon: 'icons/popover1.svg',
+      },
+      {
+        title: 'List my Job Opening',
+        description: 'The #1 Job board for creatives',
+        icon: 'icons/popover2.svg',
+      },
+      {
+        title: 'Post a Freelance Project',
+        description: 'Board for freelance & contract work',
+        icon: 'icons/popover3.svg',
+      },
+    ]
+    return (
+      <Popover
+        content={
+          <ul className="w-96 p-4">
+            {options.map((option, index) => (
+              <li
+                key={index}
+                className="group flex items-center rounded-lg space-x-4 p-4 hover:bg-gray-100 cursor-pointer"
+              >
+                <img src={option.icon} alt="" className="w-8 h-8 flex-none" />
+                <div className="flex-1 text-sm">
+                  <p className="font-bold text-gray-800 mb-0.5 group-hover:text-pink-600">
+                    {option.title}
+                  </p>
+                  <p className="text-gray-500">{option.description}</p>
+                </div>
+                <HiArrowRight className="text-pink-600 hidden group-hover:block" />
+              </li>
+            ))}
+          </ul>
+        }
+        placement="bottomLeft"
+        hideArrow
+      >
+        <Button buttonType="link" className="text-pink-400">
+          Hire Designers
+        </Button>
+      </Popover>
+    )
+  }}
+</Playground>
+
+### Default Popover
+
+<Playground>
+  {function DefaultPopover() {
+    const user = {
+      name: {
+        first: 'Brad',
+        last: 'Gibson',
+      },
+      username: '@bradgibson',
+      picture: {
+        large: 'https://randomuser.me/api/portraits/men/75.jpg',
+        medium: 'https://randomuser.me/api/portraits/med/men/75.jpg',
+        thumbnail: 'https://randomuser.me/api/portraits/thumb/men/75.jpg',
+      },
+      bio: 'Developing UI-kit by day and using them in personal projects by night',
+      follower: 200,
+      following: 100,
+    }
+    const [following, setFollowing] = React.useState(false)
+    return (
+      <Popover
+        content={
+          <div className="w-64 px-4 py-3">
+            <div className="flex items-center justify-between mb-4">
+              <Avatar src={user.picture.large} size="large" />
+              <Button
+                buttonType={following ? 'primary' : 'default'}
+                onClick={() => {
+                  setFollowing((prevState) => !prevState)
+                }}
+              >
+                {following ? 'Following' : 'Follow'}
+              </Button>
+            </div>
+            <div className="text-base font-medium text-gray-800">
+              {user.name.first} {user.name.last}
+            </div>
+            <div className="mb-2 text-sm text-gray-400">{user.username}</div>
+            <div className="mb-4 text-sm text-gray-600">{user.bio}</div>
+            <div className="text-sm text-gray-500">
+              <span className="mr-1 font-semibold text-gray-800 tabular-nums">
+                {user.follower + (following ? 1 : 0)}
+              </span>
+              <span className="mr-6">Followers</span>
+              <span className="mr-1 font-semibold text-gray-800 tabular-nums">
+                {user.following}
+              </span>
+              <span>Following</span>
+            </div>
+          </div>
+        }
+      >
+        <div className="flex items-center space-x-2">
+          <Avatar src={user.picture.thumbnail} />
+          <div>
+            <div className="text-sm font-medium text-gray-600">
+              {user.name.first} {user.name.last}
+            </div>
+            <div className="text-xs text-gray-400">{user.username}</div>
+          </div>
+        </div>
+      </Popover>
+    )
+  }}
+</Playground>
+
+### Popover Trigger with Click Event
+
+<Playground>
+  {function PopoverTriggerWithClickEvent() {
+    const user = {
+      name: {
+        first: 'Brad',
+        last: 'Gibson',
+      },
+      username: '@bradgibson',
+      picture: {
+        large: 'https://randomuser.me/api/portraits/men/75.jpg',
+        medium: 'https://randomuser.me/api/portraits/med/men/75.jpg',
+        thumbnail: 'https://randomuser.me/api/portraits/thumb/men/75.jpg',
+      },
+      bio: 'Developing UI-kit by day and using them in personal projects by night',
+      follower: 200,
+      following: 100,
+    }
+    const [following, setFollowing] = React.useState(false)
+    return (
+      <Popover
+        triggerEvent="click"
+        content={
+          <div className="w-64 px-4 py-3">
+            <div className="flex items-center justify-between mb-4">
+              <Avatar src={user.picture.large} size="large" />
+              <Button
+                buttonType={following ? 'primary' : 'default'}
+                onClick={() => {
+                  setFollowing((prevState) => !prevState)
+                }}
+              >
+                {following ? 'Following' : 'Follow'}
+              </Button>
+            </div>
+            <div className="text-base font-medium text-gray-800">
+              {user.name.first} {user.name.last}
+            </div>
+            <div className="mb-2 text-sm text-gray-400">{user.username}</div>
+            <div className="mb-4 text-sm text-gray-600">{user.bio}</div>
+            <div className="text-sm text-gray-500">
+              <span className="mr-1 font-semibold text-gray-800 tabular-nums">
+                {user.follower + (following ? 1 : 0)}
+              </span>
+              <span className="mr-6">Followers</span>
+              <span className="mr-1 font-semibold text-gray-800 tabular-nums">
+                {user.following}
+              </span>
+              <span>Following</span>
+            </div>
+          </div>
+        }
+      >
+        <div className="flex items-center space-x-2">
+          <Avatar src={user.picture.thumbnail} />
+          <div>
+            <div className="text-sm font-medium text-gray-600">
+              {user.name.first} {user.name.last}
+            </div>
+            <div className="text-xs text-gray-400">{user.username}</div>
+          </div>
+        </div>
+      </Popover>
+    )
+  }}
+</Playground>
+
+### Controlled Popover
+
+<Playground>
+  {function ControlledPopover() {
+    const [popoverVisible, setPopoverVisible] = React.useState(false)
+    return (
+      <Popover
+        visible={popoverVisible}
+        onVisibilityChange={setPopoverVisible}
+        title="Controlled Popover"
+        triggerEvent="click"
+        content={
+          <div className="w-64 px-4 py-3">
+            <div className="mb-4 text-sm text-gray-600">
+              To close the Popover, click on the close button
+            </div>
+            <Button
+              buttonType="danger"
+              onClick={() => setPopoverVisible(false)}
+            >
+              Close Popover
+            </Button>
+          </div>
+        }
+      >
+        <Button onClick={() => setPopoverVisible(true)}>
+          Click to open Popover
+        </Button>
+      </Popover>
+    )
+  }}
+</Playground>
+
+## Popover Props
+
+<PropsTable of="Popover" />
