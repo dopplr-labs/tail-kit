@@ -74,11 +74,11 @@ export function TooltipWithExplicitPlacement() {
   )
 }
 
-export function TooltipWithLightBackground() {
+export function TooltipWithDarkBackground() {
   return (
     <Tooltip
       title="Place order for items present in cart"
-      inverted={false}
+      inverted
       icon={<HiCheckCircle className="w-5 h-5 text-green-500" />}
       placement="top"
     >
@@ -91,10 +91,7 @@ export function TooltipWithLightBackground() {
 
 export function TooltipWithoutPointingArrow() {
   return (
-    <Tooltip
-      title="Download the file in your Google Drive"
-      pointingArrow={false}
-    >
+    <Tooltip title="Download the file in your Google Drive" hideArrow>
       <Button icon={<HiOutlineDownload />}>Download </Button>
     </Tooltip>
   )
