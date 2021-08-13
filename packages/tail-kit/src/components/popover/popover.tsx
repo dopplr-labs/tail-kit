@@ -180,6 +180,7 @@ export function Popover({
                       ? 'left-1/2 -translate-x-1/2'
                       : undefined,
                   )}
+                  data-testid="popover-arrow"
                 />
               )}
               <div
