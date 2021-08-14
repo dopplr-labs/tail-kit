@@ -139,6 +139,7 @@ export function Tooltip({
                       ? 'left-1/2 -translate-x-1/2'
                       : undefined,
                   )}
+                  data-testid="tooltip-arrow"
                 />
               ) : null}
               <div
