@@ -1,0 +1,151 @@
+---
+title: 'Date Picker'
+components:
+  - name: 'DatePicker'
+    path: 'src/components/date-picker/date-picker.tsx'
+---
+
+import { Alert, Button, DatePicker, Modal, Select } from '@tail-kit/tail-kit'
+import dayjs from 'dayjs'
+
+# Date Picker
+
+Component to render **date picker**.
+
+## Usage
+
+The Date Picker component can be imported using
+
+```jsx
+import { DatePicker } from '@tail-kit/tail-kit'
+```
+
+### Default Date Picker
+
+<Playground>
+  <DatePicker className="w-64" allowClear />
+</Playground>
+
+### Controlled Date Picker
+
+<Playground scope={{ dayjs }}>
+  {function ControlledDatePicker() {
+    const [dateSelected, setDateSelected] = React.useState(undefined)
+    return (
+      <div className="flex items-center space-x-4">
+        <DatePicker
+          className="w-64"
+          allowClear
+          date={dateSelected}
+          onChange={setDateSelected}
+        />
+        {dateSelected ? (
+          <div>
+            <div className="text-xs font-medium text-blue-500">
+              Date Selected
+            </div>
+            <div className="text-sm txt-gray-800">
+              {dayjs(dateSelected).format('DD-MM-YYYY')}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    )
+  }}
+</Playground>
+
+### Date Picker with Date Range
+
+The following example shows a Date Picker with a date range. User is only allowed to select a date within 10 days from the current date.
+
+<Playground scope={{ dayjs }}>
+  {function DatePickerWithDateRange() {
+    const delta = 10
+    return (
+      <DatePicker
+        className="w-64"
+        allowClear
+        startDate={dayjs().subtract(delta, 'day').toDate()}
+        endDate={dayjs().add(delta, 'day').toDate()}
+      />
+    )
+  }}
+</Playground>
+
+### Weekdays Only Date Picker
+
+<Playground scope={{ dayjs }}>
+  <DatePicker
+    className="w-64"
+    allowClear
+    placeholder="Select Week Day"
+    disableDate={(date) => {
+      const day = dayjs(date).day()
+      return day === 6 || day === 0
+    }}
+  />
+</Playground>
+
+### Date Picker with Modal
+
+<Playground scope={{ dayjs }}>
+  {function DatePickerWithModal() {
+    const [modalVisible, setModalVisible] = React.useState(false)
+    return (
+      <>
+        <Button onClick={() => setModalVisible(true)}>
+          Click To Open Modal
+        </Button>
+        <Modal
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+          title="Cron Job"
+          closable
+        >
+          <Alert
+            title="Job Runner"
+            content="Schedule the job in a weekday as you won't want to spend your weekend on debugging"
+            className="mb-4"
+          />
+          <div className="flex space-x-4">
+            <Select
+              placeholder="Select Schedule"
+              options={[
+                {
+                  label: 'Every Minute (* * * * *)',
+                  value: '* * * * *',
+                },
+                {
+                  label: 'Every 15 minutes (*/15 * * * *)',
+                  value: '*/15 * * * *',
+                },
+                {
+                  label: 'Every Hour (0 * * * *)',
+                  value: '0 * * * *',
+                },
+                {
+                  label: 'Every 2 Hours (0 */2 * * *)',
+                  value: '0 */2 * * *',
+                },
+              ]}
+              className="flex-1"
+            />
+            <DatePicker
+              allowClear
+              className="flex-1"
+              placeholder="Select Day"
+              disableDate={(date) => {
+                const day = dayjs(date).day()
+                return day === 6 || day === 0
+              }}
+            />
+          </div>
+        </Modal>
+      </>
+    )
+  }}
+</Playground>
+
+## Date Picker Props
+
+<PropsTable of="DatePicker" />
