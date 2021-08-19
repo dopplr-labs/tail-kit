@@ -86,7 +86,7 @@ test('renders tab at bottom correctly', () => {
         key: `tab-${val + 1}`,
         content: <div>Tab Content {val + 1}</div>,
       }))}
-      position={Tabs.TabPosition.bottom}
+      position="bottom"
     />,
   )
 
@@ -103,7 +103,7 @@ test('renders tab at left correctly', () => {
         key: `tab-${val + 1}`,
         content: <div>Tab Content {val + 1}</div>,
       }))}
-      position={Tabs.TabPosition.left}
+      position="left"
     />,
   )
 
@@ -118,7 +118,7 @@ test('renders tab at right correctly', () => {
         key: `tab-${val + 1}`,
         content: <div>Tab Content {val + 1}</div>,
       }))}
-      position={Tabs.TabPosition.right}
+      position="right"
     />,
   )
 
@@ -135,7 +135,7 @@ test('renders active tab with underline correctly', () => {
         key: `tab-${val + 1}`,
         content: <div>Tab Content {val + 1}</div>,
       }))}
-      position={Tabs.TabPosition.right}
+      position="right"
     />,
   )
 
@@ -152,8 +152,8 @@ test('render active tab in pill correctly', () => {
         key: `tab-${val + 1}`,
         content: <div>Tab Content {val + 1}</div>,
       }))}
-      position={Tabs.TabPosition.right}
-      type={Tabs.TabType.pill}
+      position="right"
+      type="pill"
     />,
   )
 
