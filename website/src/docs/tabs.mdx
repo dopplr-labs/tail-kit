@@ -11,6 +11,7 @@ import {
   HiUsers,
   HiCreditCard,
 } from 'react-icons/hi'
+import { tabsList } from 'constants/tabs-list'
 
 # Tabs
 
@@ -40,91 +41,49 @@ import { Tabs } from '@tail-kit/tail-kit'
 
 ### Tabs with Icon
 
-<Playground scope={{ HiUserCircle, HiOfficeBuilding, HiUsers, HiCreditCard }}>
+<Playground scope={{ tabsList }}>
   {function TabsWithIcon() {
-    const tabsList = [
-      {
-        title: 'My Account',
-        content: 'Account Details',
-        icon: <HiUserCircle className="w-6 h-6" />,
-        key: 'my-account',
-      },
-      {
-        title: 'Company',
-        content: 'Company Details',
-        key: 'company',
-        icon: <HiOfficeBuilding className="w-6 h-6" />,
-      },
-      {
-        title: 'Team Members',
-        content: 'Team Members Details',
-        key: 'team-members',
-        icon: <HiUsers className="w-6 h-6" />,
-      },
-      {
-        title: 'Billing',
-        content: 'Billing Details',
-        key: 'billing',
-        icon: <HiCreditCard className="w-6 h-6" />,
-      },
-    ]
-    const tabs = tabsList.map((tab) => ({
-      key: tab.key,
-      title: tab.title,
-      icon: tab.icon,
-      content: (
-        <>
-          <h1 className="text-base font-semibold text-gray-800">{tab.title}</h1>
-          <div className="text-sm text-gray-700">{tab.content}</div>
-        </>
-      ),
-    }))
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
     return <Tabs tabs={tabs} />
   }}
 </Playground>
 
 ### Tabs with Extra Content
 
-<Playground scope={{ HiUserCircle, HiOfficeBuilding, HiUsers, HiCreditCard }}>
+<Playground scope={{ tabsList }}>
   {function TabsWithExtraContent() {
     const [activeTab, setActiveTab] = React.useState('my-account')
-    const tabsList = [
-      {
-        title: 'My Account',
-        content: 'Account Details',
-        icon: <HiUserCircle className="w-6 h-6" />,
-        key: 'my-account',
-      },
-      {
-        title: 'Company',
-        content: 'Company Details',
-        key: 'company',
-        icon: <HiOfficeBuilding className="w-6 h-6" />,
-      },
-      {
-        title: 'Team Members',
-        content: 'Team Members Details',
-        key: 'team-members',
-        icon: <HiUsers className="w-6 h-6" />,
-      },
-      {
-        title: 'Billing',
-        content: 'Billing Details',
-        key: 'billing',
-        icon: <HiCreditCard className="w-6 h-6" />,
-      },
-    ]
-    const tabs = tabsList.map((tab) => ({
-      key: tab.key,
-      title: tab.title,
-      icon: tab.icon,
-      content: (
-        <>
-          <h1 className="text-base font-semibold text-gray-800">{tab.title}</h1>
-          <div className="text-sm text-gray-700">{tab.content}</div>
-        </>
-      ),
-    }))
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
     return (
       <Tabs
         tab={activeTab}
@@ -150,91 +109,49 @@ import { Tabs } from '@tail-kit/tail-kit'
 
 ### Tabs in Pills
 
-<Playground scope={{ HiUserCircle, HiOfficeBuilding, HiUsers, HiCreditCard }}>
+<Playground scope={{ tabsList }}>
   {function TabsInPills() {
-    const tabsList = [
-      {
-        title: 'My Account',
-        content: 'Account Details',
-        icon: <HiUserCircle className="w-6 h-6" />,
-        key: 'my-account',
-      },
-      {
-        title: 'Company',
-        content: 'Company Details',
-        key: 'company',
-        icon: <HiOfficeBuilding className="w-6 h-6" />,
-      },
-      {
-        title: 'Team Members',
-        content: 'Team Members Details',
-        key: 'team-members',
-        icon: <HiUsers className="w-6 h-6" />,
-      },
-      {
-        title: 'Billing',
-        content: 'Billing Details',
-        key: 'billing',
-        icon: <HiCreditCard className="w-6 h-6" />,
-      },
-    ]
-    const tabs = tabsList.map((tab) => ({
-      key: tab.key,
-      title: tab.title,
-      icon: tab.icon,
-      content: (
-        <>
-          <h1 className="text-base font-semibold text-gray-800">{tab.title}</h1>
-          <div className="text-sm text-gray-700">{tab.content}</div>
-        </>
-      ),
-    }))
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
     return <Tabs type="pill" tabs={tabs} />
   }}
 </Playground>
 
 ### Tabs in Pills with Extra Content
 
-<Playground scope={{ HiUserCircle, HiOfficeBuilding, HiUsers, HiCreditCard }}>
+<Playground scope={{ tabsList }}>
   {function TabsInPillsWithExtraContent() {
     const [activeTab, setActiveTab] = React.useState('my-account')
-    const tabsList = [
-      {
-        title: 'My Account',
-        content: 'Account Details',
-        icon: <HiUserCircle className="w-6 h-6" />,
-        key: 'my-account',
-      },
-      {
-        title: 'Company',
-        content: 'Company Details',
-        key: 'company',
-        icon: <HiOfficeBuilding className="w-6 h-6" />,
-      },
-      {
-        title: 'Team Members',
-        content: 'Team Members Details',
-        key: 'team-members',
-        icon: <HiUsers className="w-6 h-6" />,
-      },
-      {
-        title: 'Billing',
-        content: 'Billing Details',
-        key: 'billing',
-        icon: <HiCreditCard className="w-6 h-6" />,
-      },
-    ]
-    const tabs = tabsList.map((tab) => ({
-      key: tab.key,
-      title: tab.title,
-      icon: tab.icon,
-      content: (
-        <>
-          <h1 className="text-base font-semibold text-gray-800">{tab.title}</h1>
-          <div className="text-sm text-gray-700">{tab.content}</div>
-        </>
-      ),
-    }))
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
     return (
       <Tabs
         type="pill"
@@ -261,10 +178,7 @@ import { Tabs } from '@tail-kit/tail-kit'
 
 ### Tabs Positions and Types
 
-<Playground
-  editable
-  scope={{ HiUserCircle, HiOfficeBuilding, HiUsers, HiCreditCard }}
->
+<Playground editable scope={{ tabsList }}>
   {function TabsPositionAndTypes() {
     const [activeTab, setActiveTab] = React.useState('my-account')
     const [position, setPosition] = React.useState('top')
@@ -279,43 +193,22 @@ import { Tabs } from '@tail-kit/tail-kit'
       { label: 'Underline', value: 'underline' },
       { label: 'Pill', value: 'pill' },
     ]
-    const tabsList = [
-      {
-        title: 'My Account',
-        content: 'Account Details',
-        icon: <HiUserCircle className="w-6 h-6" />,
-        key: 'my-account',
-      },
-      {
-        title: 'Company',
-        content: 'Company Details',
-        key: 'company',
-        icon: <HiOfficeBuilding className="w-6 h-6" />,
-      },
-      {
-        title: 'Team Members',
-        content: 'Team Members Details',
-        key: 'team-members',
-        icon: <HiUsers className="w-6 h-6" />,
-      },
-      {
-        title: 'Billing',
-        content: 'Billing Details',
-        key: 'billing',
-        icon: <HiCreditCard className="w-6 h-6" />,
-      },
-    ]
-    const tabs = tabsList.map((tab) => ({
-      key: tab.key,
-      title: tab.title,
-      icon: tab.icon,
-      content: (
-        <>
-          <h1 className="text-base font-semibold text-gray-800">{tab.title}</h1>
-          <div className="text-sm text-gray-700">{tab.content}</div>
-        </>
-      ),
-    }))
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
     return (
       <>
         <div className="flex items-center mb-6 text-sm">
