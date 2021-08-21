@@ -2,12 +2,12 @@ import React, { useLayoutEffect, useReducer, useRef } from 'react'
 import { useMemoOne } from 'use-memo-one'
 import { useRect } from '@reach/rect'
 import { HiOutlineSelector, HiXCircle } from 'react-icons/hi'
+import clsx from 'clsx'
 import Portal from 'components/portal'
 import { scrollIntoView } from 'utils/dom'
 import useOutsideClick from 'hooks/use-outside-click'
 import useSyncedState from 'hooks/use-synced-states'
 import { Keys } from 'utils/keyboard'
-import clsx from 'clsx'
 import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 import { ActionType, reducer } from './reducer'
 import { OptionType } from './types'
@@ -66,12 +66,17 @@ export function Select({
     typeof option === 'string' ? { value: option, label: option } : option,
   )
 
-  const [selectedValue, setSelectedValue] = useSyncedState<
-    OptionType | undefined
-  >(optionsList.find((option) => option.value === (value || defaultValue)))
-  let selectedOptionIndex = optionsList.findIndex(
-    (option) => option.value === selectedValue?.value,
+  const [selectedValue, setSelectedValue] = useSyncedState<string | undefined>(
+    value || defaultValue,
   )
+  const selectedOption = optionsList.find(
+    ({ value }) => value === selectedValue,
+  )
+
+  let selectedOptionIndex = optionsList.findIndex(
+    ({ value }) => value === selectedValue,
+  )
+
   // if we can't find the selected option index, then it should be the first
   // non-disabled option
   selectedOptionIndex =
@@ -85,13 +90,15 @@ export function Select({
   })
 
   const triggerContainer = useRef<HTMLButtonElement | null>(null)
-  // compute the triggerRect only when the select is visible
-  const triggerRect = useRect(triggerContainer, open)
+
+  // Computes and observes the bounding client rect of the trigger
+  // Observes only when the Select is open to avoid unnecessary computations
+  const triggerRect = useRect(triggerContainer, { observe: open })
 
   const listContainer = useRef<HTMLUListElement | null>(null)
 
   function selectOptionAndCloseMenu(option: OptionType | undefined) {
-    setSelectedValue(option)
+    setSelectedValue(option?.value)
     onChange?.(option?.value)
     closeMenu()
   }
@@ -240,11 +247,11 @@ export function Select({
         disabled={disabled}
         type="button"
       >
-        {selectedValue ? (
+        {selectedOption ? (
           <>
-            {selectedValue.icon}
+            {selectedOption.icon}
             <span className="truncate whitespace-no-wrap">
-              {selectedValue.label}
+              {selectedOption.label}
             </span>
           </>
         ) : (
@@ -300,7 +307,7 @@ export function Select({
               key={option.value}
               option={option}
               highlighted={index === highlightedIndex}
-              selected={option.value === selectedValue?.value}
+              selected={option.value === selectedValue}
               onMouseEnter={() => {
                 if (!option.disabled) {
                   highlightOptionWithIndex(index)

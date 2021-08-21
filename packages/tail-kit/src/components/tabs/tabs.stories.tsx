@@ -108,11 +108,11 @@ export function TabsWithExtraContent() {
 }
 
 export function TabsInPills() {
-  return <Tabs type={Tabs.TabType.pill} tabs={tabs} />
+  return <Tabs type="pill" tabs={tabs} />
 }
 
 export function TabsWithIconInPills() {
-  return <Tabs type={Tabs.TabType.pill} tabs={tabs} />
+  return <Tabs type="pill" tabs={tabs} />
 }
 
 export function TabsInPillsWithExtraContent() {
@@ -120,7 +120,7 @@ export function TabsInPillsWithExtraContent() {
 
   return (
     <Tabs
-      type={Tabs.TabType.pill}
+      type="pill"
       tab={activeTab}
       onTabChange={setActiveTab}
       extraContent={
@@ -136,7 +136,7 @@ export function TabsAtBottom() {
 
   return (
     <Tabs
-      position={Tabs.TabPosition.bottom}
+      position="bottom"
       tab={activeTab}
       onTabChange={setActiveTab}
       extraContent={
@@ -148,17 +148,11 @@ export function TabsAtBottom() {
 }
 
 export function TabsInPillsAtBottom() {
-  return (
-    <Tabs
-      position={Tabs.TabPosition.bottom}
-      type={Tabs.TabType.pill}
-      tabs={tabs}
-    />
-  )
+  return <Tabs position="bottom" type="pill" tabs={tabs} />
 }
 
 export function TabsAtLeft() {
-  return <Tabs position={Tabs.TabPosition.left} tabs={tabs} />
+  return <Tabs position="left" tabs={tabs} />
 }
 
 export function TabsInPillsAtLeft() {
@@ -169,8 +163,8 @@ export function TabsInPillsAtLeft() {
       className="h-full"
       tab={activeTab}
       onTabChange={setActiveTab}
-      position={Tabs.TabPosition.left}
-      type={Tabs.TabType.pill}
+      position="left"
+      type="pill"
       extraContent={
         <TabChanger activeTab={activeTab} setActiveTab={setActiveTab} />
       }
@@ -185,7 +179,7 @@ export function TabsAtRight() {
   return (
     <Tabs
       className="h-full"
-      position={Tabs.TabPosition.right}
+      position="left"
       tab={activeTab}
       onTabChange={setActiveTab}
       extraContent={
@@ -197,11 +191,5 @@ export function TabsAtRight() {
 }
 
 export function TabsInPillsAtRight() {
-  return (
-    <Tabs
-      position={Tabs.TabPosition.right}
-      type={Tabs.TabType.pill}
-      tabs={tabs}
-    />
-  )
+  return <Tabs position="right" type="pill" tabs={tabs} />
 }

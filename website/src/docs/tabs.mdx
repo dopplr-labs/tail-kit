@@ -1,0 +1,256 @@
+---
+title: 'Tabs'
+components:
+  - name: 'Tabs'
+    path: 'src/components/tabs/tabs.tsx'
+---
+
+import {
+  HiUserCircle,
+  HiOfficeBuilding,
+  HiUsers,
+  HiCreditCard,
+} from 'react-icons/hi'
+import { tabsList } from 'constants/tabs-list'
+
+# Tabs
+
+Component to render **tabs**.
+
+The `Tabs` component can be configured to render the **tabs list** in various styles by changing `position` and `type` parameters.
+
+## Usage
+
+The Tabs component can be imported using
+
+```jsx
+import { Tabs } from '@tail-kit/tail-kit'
+```
+
+### Default Tabs
+
+<Playground>
+  <Tabs
+    tabs={Array.from({ length: 4 }).map((_, i) => ({
+      title: `Tab ${i + 1}`,
+      key: `tab-${i + 1}`,
+      content: <div className="text-sm text-gray-700">Tab Content {i + 1}</div>,
+    }))}
+  />
+</Playground>
+
+### Tabs with Icon
+
+<Playground scope={{ tabsList }}>
+  {function TabsWithIcon() {
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
+    return <Tabs tabs={tabs} />
+  }}
+</Playground>
+
+### Tabs with Extra Content
+
+<Playground scope={{ tabsList }}>
+  {function TabsWithExtraContent() {
+    const [activeTab, setActiveTab] = React.useState('my-account')
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
+    return (
+      <Tabs
+        tab={activeTab}
+        onTabChange={setActiveTab}
+        tabs={tabs}
+        extraContent={
+          <Select
+            value={activeTab}
+            onChange={setActiveTab}
+            className="w-48"
+            options={tabs.map((tab) => ({
+              label: tab.title,
+              value: tab.key,
+              icon: tab.icon,
+            }))}
+            placeholder="Select Tab"
+          />
+        }
+      />
+    )
+  }}
+</Playground>
+
+### Tabs in Pills
+
+<Playground scope={{ tabsList }}>
+  {function TabsInPills() {
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
+    return <Tabs type="pill" tabs={tabs} />
+  }}
+</Playground>
+
+### Tabs in Pills with Extra Content
+
+<Playground scope={{ tabsList }}>
+  {function TabsInPillsWithExtraContent() {
+    const [activeTab, setActiveTab] = React.useState('my-account')
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
+    return (
+      <Tabs
+        type="pill"
+        tab={activeTab}
+        onTabChange={setActiveTab}
+        tabs={tabs}
+        extraContent={
+          <Select
+            value={activeTab}
+            onChange={setActiveTab}
+            className="w-48"
+            options={tabs.map((tab) => ({
+              label: tab.title,
+              value: tab.key,
+              icon: tab.icon,
+            }))}
+            placeholder="Select Tab"
+          />
+        }
+      />
+    )
+  }}
+</Playground>
+
+### Tabs Positions and Types
+
+<Playground editable scope={{ tabsList }}>
+  {function TabsPositionAndTypes() {
+    const [activeTab, setActiveTab] = React.useState('my-account')
+    const [position, setPosition] = React.useState('top')
+    const [tabStyle, setTabStyle] = React.useState('underline')
+    const positionOptions = [
+      { label: 'Top', value: 'top' },
+      { label: 'Bottom', value: 'bottom' },
+      { label: 'Left', value: 'left' },
+      { label: 'Right', value: 'right' },
+    ]
+    const tabStyleOptions = [
+      { label: 'Underline', value: 'underline' },
+      { label: 'Pill', value: 'pill' },
+    ]
+    const tabs = tabsList.map((tab) => {
+      const Icon = tab.icon
+      return {
+        key: tab.key,
+        title: tab.title,
+        icon: <Icon className="w-6 h-6" />,
+        content: (
+          <>
+            <h1 className="text-base font-semibold text-gray-800">
+              {tab.title}
+            </h1>
+            <div className="text-sm text-gray-700">{tab.content}</div>
+          </>
+        ),
+      }
+    })
+    return (
+      <>
+        <div className="flex items-center mb-6 text-sm">
+          <p className="mr-4">Tabs Position:</p>
+          <Radio.RadioGroup
+            value={position}
+            onChange={setPosition}
+            options={positionOptions}
+          />
+          <div className="flex-1" />
+          <p className="mr-4">Tab Style:</p>
+          <Radio.RadioGroup
+            value={tabStyle}
+            onChange={setTabStyle}
+            options={tabStyleOptions}
+          />
+        </div>
+        <Tabs
+          type={tabStyle}
+          position={position}
+          tab={activeTab}
+          onTabChange={setActiveTab}
+          tabs={tabs}
+          extraContent={
+            <Select
+              value={activeTab}
+              onChange={setActiveTab}
+              className="w-48"
+              options={tabs.map((tab) => ({
+                label: tab.title,
+                value: tab.key,
+                icon: tab.icon,
+              }))}
+              placeholder="Select Tab"
+            />
+          }
+        />
+      </>
+    )
+  }}
+</Playground>
+
+## Tabs Props
+
+<PropsTable of="Tabs" />
