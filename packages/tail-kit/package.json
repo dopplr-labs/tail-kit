@@ -1,6 +1,6 @@
 {
   "name": "@tail-kit/tail-kit",
-  "version": "0.1.18",
+  "version": "0.1.20",
   "description": "UI-Kit made with tailwindcss",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -35,7 +35,7 @@
     }
   },
   "dependencies": {
-    "@reach/rect": "^0.15.3",
+    "@reach/rect": "^0.16.0",
     "clsx": "^1.1.1",
     "compute-scroll-into-view": "^1.0.16",
     "dayjs": "^1.9.3",

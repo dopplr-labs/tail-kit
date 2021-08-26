@@ -27,7 +27,7 @@ export type TooltipProps = {
    * It can be one of `topLeft`, `top`, `topRight`, `left`, `right`, `bottomLeft`, `bottom` and `bottomRight`
    */
   placement?: string
-  /** Tooltip theme. When inverted, the tooltip contnt would be shown in dark background */
+  /** Tooltip theme. When inverted, the tooltip content would be shown in dark background */
   inverted?: boolean
   /**
    * The delay in closing the tooltip on mouse leave.
@@ -37,7 +37,7 @@ export type TooltipProps = {
    */
   tooltipCloseDelay?: number
   /** Whether a arrow pointing towards the trigger would be shown or not  */
-  pointingArrow?: boolean
+  hideArrow?: boolean
   /** Content for which the tooltip is to be shown */
   children: React.ReactElement
   /** parent of the portal container */
@@ -56,9 +56,9 @@ export function Tooltip({
   title,
   icon,
   placement = 'right',
-  inverted = true,
+  inverted = false,
   tooltipCloseDelay = 100,
-  pointingArrow = true,
+  hideArrow = false,
   children,
   portalParent = typeof window !== 'undefined' ? document.body : undefined,
 }: TooltipProps) {
@@ -115,7 +115,7 @@ export function Tooltip({
           const [verticalPlacement, horizontalPlacement] = containerPlacement
           return (
             <div className="relative rounded-md shadow">
-              {pointingArrow ? (
+              {!hideArrow ? (
                 <div
                   className={clsx(
                     'absolute w-2 h-2 transform rotate-45 shadow rounded-sm',
@@ -139,6 +139,7 @@ export function Tooltip({
                       ? 'left-1/2 -translate-x-1/2'
                       : undefined,
                   )}
+                  data-testid="tooltip-arrow"
                 />
               ) : null}
               <div

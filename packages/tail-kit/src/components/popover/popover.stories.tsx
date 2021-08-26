@@ -100,7 +100,7 @@ export function PopoverTriggeredWithClickEvent() {
 
   return (
     <Popover
-      triggerEvent={Popover.PopoverTriggerEvent.click}
+      triggerEvent="click"
       content={
         <div className="w-64">
           <div className="flex items-start justify-between mb-4">
@@ -159,7 +159,7 @@ export function ControlledPopover() {
       visible={popoverVisible}
       onVisibilityChange={setPopoverVisible}
       title="Controlled Popopver"
-      triggerEvent={Popover.PopoverTriggerEvent.click}
+      triggerEvent="click"
       content={
         <div className="w-64">
           <div className="mb-4 text-sm text-gray-600">

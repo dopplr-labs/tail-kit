@@ -1,0 +1,60 @@
+---
+title: 'Switch'
+components:
+  - name: 'Switch'
+    path: 'src/components/switch/switch.tsx'
+---
+
+import { Switch } from '@tail-kit/tail-kit'
+
+# Switch
+
+Switch component to render toggle.
+
+## Usage
+
+The Switch component can be imported using
+
+```jsx
+import { Switch } from '@tail-kit/tail-kit'
+```
+
+### Default Switch
+
+<Playground>
+  <Switch />
+</Playground>
+
+### Controlled Switch
+
+<Playground>
+  {function ControlledSwitch() {
+    const [checked, setChecked] = React.useState(false)
+    return (
+      <Switch
+        checked={checked}
+        onChange={(event) => {
+          setChecked(event.target.checked)
+        }}
+      />
+    )
+  }}
+</Playground>
+
+### Disabled Switch
+
+<Playground>
+  {function DisbaledSwitch() {
+    const [disable, setDisable] = React.useState(true)
+    return (
+      <div className="flex items-center space-x-3">
+        <Switch disabled={disable} />
+        <Button onClick={() => setDisable(!disable)}>Toggle Disabled</Button>
+      </div>
+    )
+  }}
+</Playground>
+
+## Switch Props
+
+<PropsTable of="Switch" />

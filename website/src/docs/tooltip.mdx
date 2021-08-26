@@ -1,0 +1,116 @@
+---
+title: 'Tooltip'
+components:
+  - name: 'Tooltip'
+    path: 'src/components/tooltip/tooltip.tsx'
+---
+
+import { Button, Tooltip } from '@tail-kit/tail-kit'
+import {
+  HiOutlinePlus,
+  HiExclamationCircle,
+  HiOutlineTrash,
+  HiCheckCircle,
+  HiShoppingCart,
+  HiOutlineDownload,
+} from 'react-icons/hi'
+
+# Tooltip
+
+Component to show **tooltip**.
+
+- The tip is shown on mouse enter, and is hidden on mouse leave. The Tooltip doesn't support complex text or operations.
+- To provide an explanation of a button/text/operation. It's often used instead of the html title attribute.
+
+## Usage
+
+The Tooltip component can be imported using
+
+```jsx
+import { Tooltip } from '@tail-kit/tail-kit'
+```
+
+### Default Tooltip
+
+<Playground scope={{ HiOutlinePlus }} editable>
+  <Tooltip title="Create a new blog">
+    <Button icon={<HiOutlinePlus />} />
+  </Tooltip>
+</Playground>
+
+### Tooltip with icon
+
+<Playground scope={{ HiExclamationCircle, HiOutlineTrash }}>
+  <Tooltip
+    title="User once deleted cannot be restored"
+    icon={<HiExclamationCircle className="w-5 h-5 text-red-500" />}
+  >
+    <Button buttonType="danger" icon={<HiOutlineTrash />}>
+      Delete User
+    </Button>
+  </Tooltip>
+</Playground>
+
+### Tooltip with Explicit Placement
+
+<Playground>
+  <div className="flex items-center mx-auto my-20 space-x-2 w-min-content">
+    <Tooltip title="Left" placement="left">
+      <Button className="w-20">Left</Button>
+    </Tooltip>
+    <div className="space-y-16">
+      <div className="flex space-x-4">
+        <Tooltip title="Top Left" placement="topLeft">
+          <Button className="w-32">Top Left</Button>
+        </Tooltip>
+        <Tooltip title="Top" placement="top">
+          <Button className="w-32">Top</Button>
+        </Tooltip>
+        <Tooltip title="Top Right" placement="topRight">
+          <Button className="w-32">Top Right</Button>
+        </Tooltip>
+      </div>
+      <div className="flex space-x-4">
+        <Tooltip title="Bottom Left" placement="bottomLeft">
+          <Button className="w-32">Bottom Left</Button>
+        </Tooltip>
+        <Tooltip title="Bottom" placement="bottom">
+          <Button className="w-32">Bottom</Button>
+        </Tooltip>
+        <Tooltip title="Bottom Right" placement="bottomRight">
+          <Button className="w-32">Bottom Right</Button>
+        </Tooltip>
+      </div>
+    </div>
+    <Tooltip title="Right" placement="right">
+      <Button className="w-20">Right</Button>
+    </Tooltip>
+  </div>
+</Playground>
+
+### Tooltip with Dark Background
+
+<Playground scope={{ HiCheckCircle, HiShoppingCart }}>
+  <Tooltip
+    inverted
+    placement="top"
+    title="Place order for items present in cart"
+    icon={<HiCheckCircle className="w-5 h-5 text-green-500" />}
+  >
+    <Button icon={<HiShoppingCart />} buttonType="primary">
+      Place Order
+    </Button>
+  </Tooltip>
+</Playground>
+
+### Tooltip without Pointing Arrow
+
+<Playground scope={{ HiOutlineDownload }}>
+  <Tooltip title="Download the file in your Google Drive" hideArrow>
+    <Button icon={<HiOutlineDownload />}>Download </Button>
+  </Tooltip>
+</Playground>
+
+## Tooltip Props
+
+<PropsTable of="Tooltip" />

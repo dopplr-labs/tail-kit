@@ -28,6 +28,7 @@ test("doesn't close the popover on quickly hovering over the content", async () 
     </Popover>,
   )
   fireEvent.mouseEnter(screen.getByText(/trigger/i))
+  fireEvent.mouseLeave(screen.getByText(/trigger/i))
   fireEvent.mouseEnter(screen.getByText(/popover title/i))
   await waitFor(() => {
     expect(screen.getByText(/popover content/i)).toBeInTheDocument()
@@ -40,7 +41,7 @@ test('toggles popover visibliby on click', async () => {
       <Popover
         title="Popover Title"
         content="Popover Content"
-        triggerEvent={Popover.PopoverTriggerEvent.click}
+        triggerEvent="click"
       >
         <div>Trigger</div>
       </Popover>
@@ -70,4 +71,14 @@ test('calls onVisiblityChange when it behaves as a controlled component', () => 
   )
   fireEvent.mouseEnter(screen.getByText(/trigger/i))
   expect(onVisibilityChange).toBeCalledWith(true)
+})
+
+test('hideArrow prop should not render the Popover Arrow', () => {
+  render(
+    <Popover title="Popover Title" content="Popover Content" hideArrow>
+      <div>Trigger</div>
+    </Popover>,
+  )
+  fireEvent.mouseEnter(screen.getByText(/trigger/i))
+  expect(screen.queryByTestId('popover-arrow')).toBeNull()
 })

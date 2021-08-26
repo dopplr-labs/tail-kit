@@ -20,11 +20,6 @@ const PopoverPlacements: {
 
 type OnVisibilityChange = (visible: boolean) => void
 
-export enum PopoverTriggerEvent {
-  click = 'CLICK',
-  hover = 'HOVER',
-}
-
 export type PopoverProps = {
   /** Title shown in the popover */
   title?: React.ReactNode
@@ -54,7 +49,9 @@ export type PopoverProps = {
   /**
    * Event triggering the visiblity of popover. Whether is should be visible on hover or click
    */
-  triggerEvent?: PopoverTriggerEvent
+  triggerEvent?: 'click' | 'hover'
+  /** Hide Arrow pointer of Popover */
+  hideArrow?: boolean
   /** parent of the portal container */
   portalParent?: HTMLElement
   /** Content for which the tooltip is to be shown */
@@ -75,7 +72,8 @@ export function Popover({
   closeDelay = 100,
   visible,
   onVisibilityChange,
-  triggerEvent = PopoverTriggerEvent.hover,
+  triggerEvent = 'hover',
+  hideArrow = false,
   children,
   portalParent,
 }: PopoverProps) {
@@ -121,7 +119,7 @@ export function Popover({
   const contentContainer = useRef<HTMLDivElement | null>(null)
 
   useOutsideClick({
-    active: isVisible && triggerEvent === PopoverTriggerEvent.click,
+    active: isVisible && triggerEvent === 'click',
     onClick: handleOutsideClick,
     containers: useMemoOne(() => [trigger, contentContainer], []),
   })
@@ -131,21 +129,9 @@ export function Popover({
       <div
         ref={trigger}
         className="inline-block"
-        onMouseEnter={
-          triggerEvent === PopoverTriggerEvent.hover
-            ? handleMouseEnter
-            : undefined
-        }
-        onMouseLeave={
-          triggerEvent === PopoverTriggerEvent.hover
-            ? handleMouseLeave
-            : undefined
-        }
-        onClick={
-          triggerEvent === PopoverTriggerEvent.click
-            ? handleTriggerClick
-            : undefined
-        }
+        onMouseEnter={triggerEvent === 'hover' ? handleMouseEnter : undefined}
+        onMouseLeave={triggerEvent === 'hover' ? handleMouseLeave : undefined}
+        onClick={triggerEvent === 'click' ? handleTriggerClick : undefined}
       >
         {children}
       </div>
@@ -171,48 +157,45 @@ export function Popover({
           const [verticalPlacement, horizontalPlacement] = containerPlacement
           return (
             <div className="relative rounded-md shadow" ref={contentContainer}>
+              {!hideArrow && (
+                <div
+                  className={clsx(
+                    'absolute w-3 h-3 transform rotate-45 shadow rounded-sm bg-white',
+                    verticalPlacement === VerticalPlacement.center
+                      ? 'top-1/2 -translate-y-1/2'
+                      : verticalPlacement === VerticalPlacement.top
+                      ? 'bottom-0 translate-y-1/2 mb-px'
+                      : verticalPlacement === VerticalPlacement.bottom
+                      ? 'top-0 -translate-y-1/2 mt-px'
+                      : undefined,
+                    horizontalPlacement === HorizontalPlacement.left
+                      ? 'right-0 translate-x-1/2 mr-px'
+                      : horizontalPlacement === HorizontalPlacement.right
+                      ? 'left-0 -translate-x-1/2 ml-px'
+                      : horizontalPlacement === HorizontalPlacement.leftAlign
+                      ? 'left-0 ml-4'
+                      : horizontalPlacement === HorizontalPlacement.rightAlign
+                      ? 'right-0 mr-4'
+                      : horizontalPlacement === HorizontalPlacement.center
+                      ? 'left-1/2 -translate-x-1/2'
+                      : undefined,
+                  )}
+                  data-testid="popover-arrow"
+                />
+              )}
               <div
-                className={clsx(
-                  'absolute w-3 h-3 transform rotate-45 shadow rounded-sm bg-white',
-                  verticalPlacement === VerticalPlacement.center
-                    ? 'top-1/2 -translate-y-1/2'
-                    : verticalPlacement === VerticalPlacement.top
-                    ? 'bottom-0 translate-y-1/2 mb-px'
-                    : verticalPlacement === VerticalPlacement.bottom
-                    ? 'top-0 -translate-y-1/2 mt-px'
-                    : undefined,
-                  horizontalPlacement === HorizontalPlacement.left
-                    ? 'right-0 translate-x-1/2 mr-px'
-                    : horizontalPlacement === HorizontalPlacement.right
-                    ? 'left-0 -translate-x-1/2 ml-px'
-                    : horizontalPlacement === HorizontalPlacement.leftAlign
-                    ? 'left-0 ml-4'
-                    : horizontalPlacement === HorizontalPlacement.rightAlign
-                    ? 'right-0 mr-4'
-                    : horizontalPlacement === HorizontalPlacement.center
-                    ? 'left-1/2 -translate-x-1/2'
-                    : undefined,
-                )}
-              />
-              <div
-                className={clsx(
-                  'relative z-10 rounded-md font-medium bg-white text-gray-800',
-                )}
+                className="relative z-10 font-medium text-gray-800 bg-white rounded-md"
                 onMouseEnter={
-                  triggerEvent === PopoverTriggerEvent.hover
-                    ? handleMouseEnter
-                    : undefined
+                  triggerEvent === 'hover' ? handleMouseEnter : undefined
                 }
                 onMouseLeave={
-                  triggerEvent === PopoverTriggerEvent.hover
-                    ? handleMouseLeave
-                    : undefined
+                  triggerEvent === 'hover' ? handleMouseLeave : undefined
                 }
               >
                 {title ? (
                   <div className="px-4 py-2 border-b">{title}</div>
                 ) : null}
-                <div className="px-4 py-3">{content}</div>
+                {content}
               </div>
             </div>
           )
@@ -221,5 +204,3 @@ export function Popover({
     </>
   )
 }
-
-Popover.PopoverTriggerEvent = PopoverTriggerEvent

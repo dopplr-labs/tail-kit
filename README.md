@@ -1,14 +1,33 @@
-<img src="./assets/tail-kit-logo.png" width="100px" />
+<div align="center">
+  <a href="https://tail-kit.web.app/">
+    <img alt="tail-kit logo" src="./assets/tail-kit-logo.png" width="100px" />
+  </a>
+</div>
 
-# tail-kit
+<h1 align="center">tail-kit</h1>
 
-![Tests](https://github.com/dopplr-labs/tail-kit/workflows/tests/badge.svg)
-[![codecov](https://codecov.io/gh/dopplr-labs/tail-kit/branch/develop/graph/badge.svg)](https://codecov.io/gh/dopplr-labs/tail-kit)
-[![NPM ](https://img.shields.io/npm/v/@tail-kit/tail-kit)](https://www.npmjs.com/package/@tail-kit/tail-kit)
+<div align="center">
+  
+  A component library for React, built using `tailwindcss`
+  
+  <a href="https://github.com/dopplr-labs/tail-kit/workflows/tests/badge.svg">
+    <img alt="tests" src="https://github.com/dopplr-labs/tail-kit/workflows/tests/badge.svg" />
+  </a>
+  <a href="https://codecov.io/gh/dopplr-labs/tail-kit">
+    <img alt="code coverage" src="https://codecov.io/gh/dopplr-labs/tail-kit/branch/develop/graph/badge.svg" />
+  </a>
+  <a href="https://www.npmjs.com/package/@tail-kit/tail-kit">
+    <img alt="latest version" src="https://img.shields.io/npm/v/@tail-kit/tail-kit" />
+  </a>
+  <a href="https://npmjs.org/package/@tail-kit/tail-kit">
+    <img alt="types included" src="https://badgen.net/npm/types/@tail-kit/tail-kit" />
+  </a>
+</div>
 
-UI kit built using `tailwindcss`
 
-Demo - https://tail-kit.web.app/
+## Docs
+
+https://tail-kit.web.app/
 
 ---
 

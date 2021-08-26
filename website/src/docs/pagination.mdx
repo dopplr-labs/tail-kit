@@ -1,0 +1,70 @@
+---
+title: 'Pagination'
+components:
+  - name: 'Pagination'
+    path: 'src/components/pagination/pagination.tsx'
+---
+
+# Pagination
+
+A long list can be divided into several pages using Pagination, and only one page will be loaded at a time.
+
+Pagination is useful when:
+
+- The list is too long to fit in the screen,
+- It will take a long time to load/render all the items,
+- If you want to browse the data by navigating through pages.
+
+## Usage
+
+The Pagination component can be imported using
+
+```jsx
+import { Pagination } from '@tail-kit/tail-kit'
+```
+
+### Default Pagination
+
+<Playground>
+  <Pagination total={50} defaultCurrent={3} />
+</Playground>
+
+### With Size Changer
+
+<Playground>
+  <Pagination total={100} defaultCurrent={3} showSizeChanger />
+</Playground>
+
+### With Page Jumper
+
+<Playground>
+  <Pagination total={500} showQuickJumper />
+</Playground>
+
+### Controlled Pagination
+
+<Playground>
+  {function ControlledPagination() {
+    const [current, setCurrent] = React.useState(3)
+    return (
+      <div className="flex flex-col items-start gap-y-4">
+        <span className="ml-4 text-sm text-gray-800">
+          Selected Page: <b>{current}</b>
+        </span>
+        <Pagination
+          total={500}
+          current={current}
+          onChange={(page, pageSize) => {
+            setCurrent(page)
+            console.log({ page, pageSize })
+          }}
+          showSizeChanger
+        />
+      </div>
+    )
+  }}
+</Playground>
+
+## Pagination Props
+
+<PropsTable of="Pagination" />

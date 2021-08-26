@@ -8,18 +8,6 @@ function getTabId() {
   return count++
 }
 
-export enum TabType {
-  pill = 'pill',
-  underline = 'underline',
-}
-
-export enum TabPosition {
-  top = 'top',
-  bottom = 'bottom',
-  left = 'left',
-  right = 'right',
-}
-
 export type Tab = {
   /** Title of the tab */
   title: string
@@ -45,12 +33,12 @@ export type TabsProps = {
    * The type of the tab item rendered inside the tabs list. If it is pill, then it would render
    * the tab title and icon with pills and else the active tab would be underlined
    */
-  type?: TabType
+  type?: 'pill' | 'underline'
   /**
    * The position of the tabs list with respect to the content.
    * By default the tabs list would be rendered over the top of the content.
    */
-  position?: TabPosition
+  position?: 'top' | 'bottom' | 'left' | 'right'
 
   tabs: Tab[]
   /**
@@ -78,8 +66,8 @@ export function Tabs({
   defaultTab: defaultTabKey,
   onTabChange,
   tabs,
-  type = TabType.underline,
-  position = TabPosition.top,
+  type = 'underline',
+  position = 'top',
   extraContent,
   className,
   style,
@@ -99,58 +87,58 @@ export function Tabs({
   // with the first element being tab list and the second being the container
   // so it can be styled with basic flex properties
   const tabsContainerClassName = {
-    [TabPosition.top]: 'flex-col',
+    top: 'flex-col',
     // use col-reverse to render the content at top
-    [TabPosition.bottom]: 'flex-col-reverse',
-    [TabPosition.left]: 'flex-row',
+    bottom: 'flex-col-reverse',
+    left: 'flex-row',
     // use row-reverse to render the content at left
-    [TabPosition.right]: 'flex-row-reverse',
+    right: 'flex-row-reverse',
   }
 
   // tabs list container contians the tabs list and the extra content
   // as the border should be present both below the tabs list and extra content
   // it makes sense to wrap them in another list container
   const tabsListContainerClassNames = {
-    [TabPosition.top]: 'space-x-8 items-end mb-4 border-b ',
-    [TabPosition.bottom]: 'space-x-8 items-top mt-4 border-t',
-    [TabPosition.left]: 'flex-col items-start space-y-6 mr-4 border-r ',
-    [TabPosition.right]: 'flex-col items-start space-y-6 ml-4 border-l',
+    top: 'space-x-8 items-end mb-4 border-b ',
+    bottom: 'space-x-8 items-top mt-4 border-t',
+    left: 'flex-col items-start space-y-6 mr-4 border-r ',
+    right: 'flex-col items-start space-y-6 ml-4 border-l',
   }
 
   const tabsListClassNames = {
-    [TabPosition.top]: 'space-x-8',
-    [TabPosition.bottom]: 'space-x-8 ',
-    [TabPosition.left]: 'flex-col w-full space-y-6',
-    [TabPosition.right]: 'flex-col w-full space-y-6',
+    top: 'space-x-8',
+    bottom: 'space-x-8 ',
+    left: 'flex-col w-full space-y-6',
+    right: 'flex-col w-full space-y-6',
   }
 
   const tabClassNames = {
-    [TabType.underline]: {
+    underline: {
       base: undefined,
       active: 'text-blue-600 border-blue-500 focus:border-blue-700',
       inactive:
         'text-gray-500 border-transparent hover:text-gray-700 focus:text-gray-700',
-      [TabPosition.top]: 'px-1 pb-3 border-b-2 -mb-px',
-      [TabPosition.bottom]: 'px-1 pt-3 border-t-2 -mt-px',
-      [TabPosition.left]: 'py-1 pr-4 border-r-2 -mr-px',
-      [TabPosition.right]: 'py-1 pl-4 border-l-2 -ml-px',
+      top: 'px-1 pb-3 border-b-2 -mb-px',
+      bottom: 'px-1 pt-3 border-t-2 -mt-px',
+      left: 'py-1 pr-4 border-r-2 -mr-px',
+      right: 'py-1 pl-4 border-l-2 -ml-px',
     },
-    [TabType.pill]: {
+    pill: {
       base: 'px-3 py-2 rounded-md',
       active: 'bg-blue-50 text-blue-600 focus:bg-blue-100',
       inactive: 'text-gray-500 hover:bg-gray-100 focus:bg-gray-100',
-      [TabPosition.top]: 'mb-3',
-      [TabPosition.bottom]: 'mt-3',
-      [TabPosition.left]: 'mr-4',
-      [TabPosition.right]: 'ml-4',
+      top: 'mb-3',
+      bottom: 'mt-3',
+      left: 'mr-4',
+      right: 'ml-4',
     },
   }
 
   const extraContentClassNames = {
-    [TabPosition.top]: 'mb-3',
-    [TabPosition.bottom]: 'mt-3',
-    [TabPosition.left]: 'mr-4',
-    [TabPosition.right]: 'ml-4',
+    top: 'mb-3',
+    bottom: 'mt-3',
+    left: 'mr-4',
+    right: 'ml-4',
   }
 
   return (
@@ -215,6 +203,3 @@ export function Tabs({
     </div>
   )
 }
-
-Tabs.TabType = TabType
-Tabs.TabPosition = TabPosition
