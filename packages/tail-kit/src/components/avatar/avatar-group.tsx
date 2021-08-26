@@ -39,21 +39,20 @@ export function AvatarGroup({
     const extraChildren = childrenCount - maxCount
     return (
       <AvatarContext.Provider value={{ size }}>
-        <div className="flex items-center">
-          {React.Children.map(childrenShow, (child, index) => (
-            <div key={index} className="-ml-2 border border-white rounded-full">
-              {child}
-            </div>
-          ))}
+        <div className="flex items-center -space-x-2">
+          {childrenShow}
           <Popover
             content={
-              <div className="flex items-center space-x-1">{childrenHide}</div>
+              <div className="flex items-center px-3 py-2 space-x-2">
+                {childrenHide}
+              </div>
             }
             placement={maxPopoverPlacement}
           >
             <Avatar
               className={clsx(
-                '-ml-2 text-sm border border-white',
+                'border border-white',
+                size === 'small' ? 'text-xs' : 'text-sm',
                 excessAvatarClassName,
               )}
               style={excessAvatarStyle}
@@ -68,16 +67,7 @@ export function AvatarGroup({
 
   return (
     <AvatarContext.Provider value={{ size }}>
-      <div className="flex items-center">
-        {React.Children.map(children, (child, index) => (
-          <div
-            key={index}
-            className="inline-block -ml-2 border border-white rounded-full"
-          >
-            {child}
-          </div>
-        ))}
-      </div>
+      <div className="flex items-center -space-x-2">{children}</div>
     </AvatarContext.Provider>
   )
 }

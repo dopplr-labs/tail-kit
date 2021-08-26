@@ -1,0 +1,156 @@
+---
+title: 'Avatar'
+components:
+  - name: 'Avatar'
+    path: 'src/components/avatar/avatar.tsx'
+  - name: 'AvatarGroup'
+    path: 'src/components/avatar/avatar-group.tsx'
+---
+
+import { Avatar } from '@tail-kit/tail-kit'
+import { FiFigma } from 'react-icons/fi'
+import { HiAnnotation, HiOutlineUser } from 'react-icons/hi'
+import { IoMdHand } from 'react-icons/io'
+import { FaRegComment } from 'react-icons/fa'
+import { AiOutlineEdit, AiOutlineFontSize } from 'react-icons/ai'
+import { users } from 'constants/users'
+
+# Avatar
+
+Avatar can be used to represent users, collaborators or objects.
+You can render `image`, `icon` or `text` inside Avatars.
+
+## Usage
+
+The Avatar component can be imported using
+
+```jsx
+import { Avatar } from '@tail-kit/tail-kit'
+```
+
+### Basic
+
+<Playground scope={{ HiOutlineUser }}>
+  <div className="space-y-4">
+    <div className="flex items-center space-x-4">
+      <Avatar size="large" icon={<HiOutlineUser />} />
+      <Avatar icon={<HiOutlineUser />} />
+      <Avatar size="small" icon={<HiOutlineUser />} />
+    </div>
+    <div className="flex items-center space-x-4">
+      <Avatar shape="square" size="large" icon={<HiOutlineUser />} />
+      <Avatar shape="square" icon={<HiOutlineUser />} />
+      <Avatar shape="square" size="small" icon={<HiOutlineUser />} />
+    </div>
+  </div>
+</Playground>
+
+### Avatar types
+
+<Playground scope={{ HiOutlineUser }}>
+  <div className="flex items-center space-x-4">
+    <Avatar icon={<HiOutlineUser />} />
+    <Avatar>U</Avatar>
+    <Avatar size="large" className="text-sm">
+      USER
+    </Avatar>
+    <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+    <Avatar className="font-semibold text-red-400 bg-red-100">U</Avatar>
+    <Avatar style={{ backgroundColor: '#87d068' }} icon={<HiOutlineUser />} />
+  </div>
+</Playground>
+
+### Avatar Groups
+
+<Playground editable scope={{ HiOutlineUser, HiAnnotation }}>
+  <>
+    <Avatar.Group>
+      <Tooltip title="Brad Gibson" placement="bottom" inverted>
+        <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+      </Tooltip>
+      <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+      <Tooltip title="Unknown User" placement="bottom" inverted>
+        <Avatar
+          style={{ backgroundColor: '#87d068' }}
+          icon={<HiOutlineUser />}
+        />
+      </Tooltip>
+      <Avatar style={{ backgroundColor: '#1890ff' }} icon={<HiAnnotation />} />
+    </Avatar.Group>
+    <div className="my-4 border-t" />
+    <Avatar.Group
+      maxCount={2}
+      excessAvatarStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+    >
+      <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+      <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+      <Avatar style={{ backgroundColor: '#87d068' }} icon={<HiOutlineUser />} />
+      <Avatar style={{ backgroundColor: '#1890ff' }} icon={<HiAnnotation />} />
+    </Avatar.Group>
+    <div className="my-4 border-t" />
+    <Avatar.Group
+      maxCount={2}
+      excessAvatarStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+      size="small"
+      maxPopoverPlacement="bottom"
+    >
+      <Avatar src="https://randomuser.me/api/portraits/thumb/men/75.jpg" />
+      <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+      <Tooltip title="Brad Gibson" placement="bottom" inverted>
+        <Avatar
+          style={{ backgroundColor: '#87d068' }}
+          icon={<HiOutlineUser />}
+        />
+      </Tooltip>
+      <Avatar style={{ backgroundColor: '#1890ff' }} icon={<HiAnnotation />} />
+    </Avatar.Group>
+  </>
+</Playground>
+
+### Avatars in Navbar
+
+<Playground
+  editable
+  scope={{
+    users,
+    AiOutlineEdit,
+    AiOutlineFontSize,
+    FiFigma,
+    IoMdHand,
+    FaRegComment,
+  }}
+>
+  {function Navbar() {
+    return (
+      <div className="flex items-center space-x-4 justify-between w-full px-3 py-2 bg-gray-800 rounded">
+        <FiFigma className="w-6 h-6 text-white" />
+        <div className="h-6 border-r border-white" />
+        <AiOutlineEdit className="w-4 h-4 text-white" />
+        <AiOutlineFontSize className="w-4 h-4 text-white" />
+        <IoMdHand className="w-4 h-4 text-white" />
+        <FaRegComment className="w-4 h-4 text-white" />
+        <div className="flex-1" />
+        <Avatar.Group
+          maxCount={4}
+          excessAvatarStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+          maxPopoverPlacement="bottom"
+        >
+          {users.map((user, index) => (
+            <Tooltip title={user.name} placement="bottom" key={index}>
+              <Avatar src={user.profileImage} />
+            </Tooltip>
+          ))}
+        </Avatar.Group>
+        <Button buttonType="primary">Share</Button>
+      </div>
+    )
+  }}
+</Playground>
+
+## Avatar Props
+
+<PropsTable of="Avatar" />
+
+## Avatar Group Props
+
+<PropsTable of="AvatarGroup" />

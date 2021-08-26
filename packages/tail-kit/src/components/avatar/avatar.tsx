@@ -69,7 +69,7 @@ export function Avatar({
         <img
           src={src}
           className={clsx(
-            'object-cover w-full h-full',
+            'object-cover w-full h-full block',
             shape === 'circle' ? 'rounded-full' : undefined,
           )}
           alt={alt}
