@@ -6,14 +6,14 @@ import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 const TooltipPlacements: {
   [key: string]: [VerticalPlacement, HorizontalPlacement]
 } = {
-  topLeft: [VerticalPlacement.top, HorizontalPlacement.leftAlign],
-  top: [VerticalPlacement.top, HorizontalPlacement.center],
-  topRight: [VerticalPlacement.top, HorizontalPlacement.rightAlign],
-  left: [VerticalPlacement.center, HorizontalPlacement.left],
-  right: [VerticalPlacement.center, HorizontalPlacement.right],
-  bottomLeft: [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
-  bottom: [VerticalPlacement.bottom, HorizontalPlacement.center],
-  bottomRight: [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
+  topLeft: ['top', 'leftAlign'],
+  top: ['top', 'center'],
+  topRight: ['top', 'rightAlign'],
+  left: ['center', 'left'],
+  right: ['center', 'right'],
+  bottomLeft: ['bottom', 'leftAlign'],
+  bottom: ['bottom', 'center'],
+  bottomRight: ['bottom', 'rightAlign'],
 }
 
 export type TooltipProps = {
@@ -97,16 +97,16 @@ export function Tooltip({
         triggerRef={trigger}
         visible={tooltipVisible}
         allowedPlacements={[
-          [VerticalPlacement.top, HorizontalPlacement.leftAlign],
-          [VerticalPlacement.top, HorizontalPlacement.center],
-          [VerticalPlacement.top, HorizontalPlacement.rightAlign],
+          ['top', 'leftAlign'],
+          ['top', 'center'],
+          ['top', 'rightAlign'],
 
-          [VerticalPlacement.center, HorizontalPlacement.left],
-          [VerticalPlacement.center, HorizontalPlacement.right],
+          ['center', 'left'],
+          ['center', 'right'],
 
-          [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
-          [VerticalPlacement.bottom, HorizontalPlacement.center],
-          [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
+          ['bottom', 'leftAlign'],
+          ['bottom', 'center'],
+          ['bottom', 'rightAlign'],
         ]}
         defaultPlacement={TooltipPlacements[placement]}
         portalParent={portalParent}
@@ -120,22 +120,22 @@ export function Tooltip({
                   className={clsx(
                     'absolute w-2 h-2 transform rotate-45 shadow rounded-sm',
                     inverted ? 'bg-gray-700' : 'bg-white',
-                    verticalPlacement === VerticalPlacement.center
+                    verticalPlacement === 'center'
                       ? 'top-1/2 -translate-y-1/2'
-                      : verticalPlacement === VerticalPlacement.top
+                      : verticalPlacement === 'top'
                       ? 'bottom-0 translate-y-1/2 mb-px'
-                      : verticalPlacement === VerticalPlacement.bottom
+                      : verticalPlacement === 'bottom'
                       ? 'top-0 -translate-y-1/2 mt-px'
                       : undefined,
-                    horizontalPlacement === HorizontalPlacement.left
+                    horizontalPlacement === 'left'
                       ? 'right-0 translate-x-1/2 mr-px'
-                      : horizontalPlacement === HorizontalPlacement.right
+                      : horizontalPlacement === 'right'
                       ? 'left-0 -translate-x-1/2 ml-px'
-                      : horizontalPlacement === HorizontalPlacement.leftAlign
+                      : horizontalPlacement === 'leftAlign'
                       ? 'left-0 ml-4'
-                      : horizontalPlacement === HorizontalPlacement.rightAlign
+                      : horizontalPlacement === 'rightAlign'
                       ? 'right-0 mr-4'
-                      : horizontalPlacement === HorizontalPlacement.center
+                      : horizontalPlacement === 'center'
                       ? 'left-1/2 -translate-x-1/2'
                       : undefined,
                   )}

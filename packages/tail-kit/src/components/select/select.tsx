@@ -8,7 +8,6 @@ import { scrollIntoView } from 'utils/dom'
 import useOutsideClick from 'hooks/use-outside-click'
 import useSyncedState from 'hooks/use-synced-states'
 import { Keys } from 'utils/keyboard'
-import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
 import { ActionType, reducer } from './reducer'
 import { OptionType } from './types'
 import { SelectOption } from './components/select-option'
@@ -279,15 +278,12 @@ export function Select({
         triggerRef={triggerContainer}
         visible={open}
         allowedPlacements={[
-          [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
-          [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
-          [VerticalPlacement.top, HorizontalPlacement.leftAlign],
-          [VerticalPlacement.top, HorizontalPlacement.rightAlign],
+          ['bottom', 'leftAlign'],
+          ['bottom', 'rightAlign'],
+          ['top', 'leftAlign'],
+          ['top', 'rightAlign'],
         ]}
-        defaultPlacement={[
-          VerticalPlacement.bottom,
-          HorizontalPlacement.leftAlign,
-        ]}
+        defaultPlacement={['bottom', 'leftAlign']}
         onContentMount={onOptionsMount}
         onContentUnmount={onOptionsUnmount}
         portalParent={portalParent}

@@ -1,24 +1,19 @@
-export enum VerticalPlacement {
-  /** The content container is placed at top of the trigger */
-  top = 'top',
-  /** The content container is placed along with mid position of the trigger */
-  center = 'center',
-  /** The content container is placed at bottom of the trigger */
-  bottom = 'bottom',
-}
+/**
+ * The content container can be vertically placed at `top`, `center` or `bottom` of the trigger.
+ */
+export type VerticalPlacement = 'top' | 'center' | 'bottom'
 
-export enum HorizontalPlacement {
-  /** The content container is placed at left side of the trigger */
-  left = 'left',
-  /** The left position of the content container and trigger co-incide */
-  leftAlign = 'leftAlign',
-  /** The content container is placed along with mid position of the trigger */
-  center = 'center',
-  /** The content container is placed at right side of the trigger */
-  right = 'right',
-  /** The right position of the content container and trigger co-incide */
-  rightAlign = 'rightAlign',
-}
+/**
+ * The content container can be horizontally placed at `left`, `leftAlign`, `center`, `right` or `rightAlign` of the trigger.
+ *  `left` and `right` options are mainly for Tooltip component and renders content container on the either side of trigger.
+ *  `leftAlign` and `rightAlign` options **align** the content container to the either side of the trigger.
+ */
+export type HorizontalPlacement =
+  | 'left'
+  | 'leftAlign'
+  | 'center'
+  | 'right'
+  | 'rightAlign'
 
 export type Placement = [VerticalPlacement, HorizontalPlacement]
 
@@ -110,11 +105,11 @@ export function isVerticalPlacementValid({
   offsetVertical: number
 }): boolean {
   switch (verticalPlacement) {
-    case VerticalPlacement.top: {
+    case 'top': {
       return triggerBCR.top - contentContainerBCR.height - offsetVertical >= 0
     }
 
-    case VerticalPlacement.center: {
+    case 'center': {
       const triggerMidPos = triggerBCR.top + triggerBCR.height / 2
       return (
         triggerMidPos + contentContainerBCR.height / 2 <= window.innerHeight &&
@@ -122,7 +117,7 @@ export function isVerticalPlacementValid({
       )
     }
 
-    case VerticalPlacement.bottom: {
+    case 'bottom': {
       return (
         triggerBCR.bottom + contentContainerBCR.height + offsetVertical <=
         window.innerHeight
@@ -143,15 +138,15 @@ export function isHorizontalPlacementValid({
   offsetHorizontal: number
 }): boolean {
   switch (horizontalPlacement) {
-    case HorizontalPlacement.left: {
+    case 'left': {
       return triggerBCR.left - contentContainerBCR.width - offsetHorizontal >= 0
     }
 
-    case HorizontalPlacement.leftAlign: {
+    case 'leftAlign': {
       return triggerBCR.left + contentContainerBCR.width <= window.innerWidth
     }
 
-    case HorizontalPlacement.center: {
+    case 'center': {
       const triggerMidPos = triggerBCR.left + triggerBCR.width / 2
       return (
         triggerMidPos + contentContainerBCR.width / 2 <= window.innerWidth &&
@@ -159,14 +154,14 @@ export function isHorizontalPlacementValid({
       )
     }
 
-    case HorizontalPlacement.right: {
+    case 'right': {
       return (
         triggerBCR.right + contentContainerBCR.width + offsetHorizontal <=
         window.innerWidth
       )
     }
 
-    case HorizontalPlacement.rightAlign: {
+    case 'rightAlign': {
       return triggerBCR.right - contentContainerBCR.width >= 0
     }
   }
@@ -184,17 +179,17 @@ export function getTopPosition({
   offsetVertical: number
 }): number {
   switch (verticalPlacement) {
-    case VerticalPlacement.top: {
+    case 'top': {
       return triggerBCR.top - contentContainerBCR.height - offsetVertical
     }
 
-    case VerticalPlacement.center: {
+    case 'center': {
       return (
         triggerBCR.top + triggerBCR.height / 2 - contentContainerBCR.height / 2
       )
     }
 
-    case VerticalPlacement.bottom: {
+    case 'bottom': {
       return triggerBCR.bottom + offsetVertical
     }
   }
@@ -212,25 +207,25 @@ export function getLeftPosition({
   offsetHorizontal: number
 }): number {
   switch (horizontalPlacement) {
-    case HorizontalPlacement.left: {
+    case 'left': {
       return triggerBCR.left - contentContainerBCR.width - offsetHorizontal
     }
 
-    case HorizontalPlacement.leftAlign: {
+    case 'leftAlign': {
       return triggerBCR.left
     }
 
-    case HorizontalPlacement.center: {
+    case 'center': {
       return (
         triggerBCR.left + triggerBCR.width / 2 - contentContainerBCR.width / 2
       )
     }
 
-    case HorizontalPlacement.right: {
+    case 'right': {
       return triggerBCR.right + offsetHorizontal
     }
 
-    case HorizontalPlacement.rightAlign: {
+    case 'rightAlign': {
       return triggerBCR.right - contentContainerBCR.width
     }
   }
@@ -251,17 +246,17 @@ export function getTransformOriginClassName(
 
   const [verticalPlacement, horizontalPlacement] = placement
 
-  if (verticalPlacement === VerticalPlacement.top) {
+  if (verticalPlacement === 'top') {
     if (
-      horizontalPlacement === HorizontalPlacement.leftAlign ||
-      horizontalPlacement === HorizontalPlacement.right
+      horizontalPlacement === 'leftAlign' ||
+      horizontalPlacement === 'right'
     ) {
       return 'origin-bottom-left'
     }
 
     if (
-      horizontalPlacement === HorizontalPlacement.rightAlign ||
-      horizontalPlacement === HorizontalPlacement.left
+      horizontalPlacement === 'rightAlign' ||
+      horizontalPlacement === 'left'
     ) {
       return 'origin-bottom-right'
     }
@@ -269,27 +264,27 @@ export function getTransformOriginClassName(
     return 'origin-bottom'
   }
 
-  if (verticalPlacement === VerticalPlacement.center) {
-    if (horizontalPlacement === HorizontalPlacement.left) {
+  if (verticalPlacement === 'center') {
+    if (horizontalPlacement === 'left') {
       return 'origin-right'
     }
 
-    if (horizontalPlacement === HorizontalPlacement.right) {
+    if (horizontalPlacement === 'right') {
       return 'origin-left'
     }
   }
 
-  if (verticalPlacement === VerticalPlacement.bottom) {
+  if (verticalPlacement === 'bottom') {
     if (
-      horizontalPlacement === HorizontalPlacement.leftAlign ||
-      horizontalPlacement === HorizontalPlacement.right
+      horizontalPlacement === 'leftAlign' ||
+      horizontalPlacement === 'right'
     ) {
       return 'origin-top-left'
     }
 
     if (
-      horizontalPlacement === HorizontalPlacement.rightAlign ||
-      horizontalPlacement === HorizontalPlacement.left
+      horizontalPlacement === 'rightAlign' ||
+      horizontalPlacement === 'left'
     ) {
       return 'origin-top-right'
     }

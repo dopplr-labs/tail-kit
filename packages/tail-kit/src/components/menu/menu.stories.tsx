@@ -24,10 +24,10 @@ export default {
 export function DropdownMenu() {
   const menuContent = (
     <>
-      <Menu.MenuItem label="Share Blog" icon={<HiOutlineShare />} />
-      <Menu.MenuItem label="Edit Blog" icon={<HiOutlinePencilAlt />} />
-      <Menu.MenuDivider />
-      <Menu.MenuItem label="Delete Blog" icon={<HiOutlineTrash />} />
+      <Menu.Item label="Share Blog" icon={<HiOutlineShare />} />
+      <Menu.Item label="Edit Blog" icon={<HiOutlinePencilAlt />} />
+      <Menu.Divider />
+      <Menu.Item label="Delete Blog" icon={<HiOutlineTrash />} />
     </>
   )
 
@@ -86,10 +86,10 @@ export function MenuWithinAModal() {
         <Menu
           trigger={<Button icon={<HiOutlineChevronDown />}>Show Menu</Button>}
         >
-          <Menu.MenuItem label="Share Blog" icon={<HiOutlineShare />} />
-          <Menu.MenuItem label="Edit Blog" icon={<HiOutlinePencilAlt />} />
-          <Menu.MenuDivider />
-          <Menu.MenuItem label="Delete Blog" icon={<HiOutlineTrash />} />
+          <Menu.Item label="Share Blog" icon={<HiOutlineShare />} />
+          <Menu.Item label="Edit Blog" icon={<HiOutlinePencilAlt />} />
+          <Menu.Divider />
+          <Menu.Item label="Delete Blog" icon={<HiOutlineTrash />} />
         </Menu>
       </Modal>
     </>
@@ -101,13 +101,13 @@ export function MenuWithExplicitPlacement() {
     <div className="flex items-center justify-center h-80">
       <Menu
         trigger={<Button icon={<HiOutlineDotsVertical />} buttonType="link" />}
-        horizontalPlacement={Menu.HorizontalPlacement.right}
-        verticalPlacement={Menu.VerticalPlacement.top}
+        horizontalPlacement="right"
+        verticalPlacement="top"
       >
-        <Menu.MenuItem label="Profile" icon={<HiOutlineUserCircle />} />
-        <Menu.MenuItem label="Settings" icon={<HiOutlineCog />} />
-        <Menu.MenuDivider />
-        <Menu.MenuItem label="Logout" icon={<HiOutlineLogout />} />
+        <Menu.Item label="Profile" icon={<HiOutlineUserCircle />} />
+        <Menu.Item label="Settings" icon={<HiOutlineCog />} />
+        <Menu.Divider />
+        <Menu.Item label="Logout" icon={<HiOutlineLogout />} />
       </Menu>
     </div>
   )

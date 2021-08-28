@@ -9,17 +9,6 @@ import clsx from 'clsx'
 import Portal from 'components/portal'
 import { useMemoOne } from 'use-memo-one'
 import useOutsideClick from 'hooks/use-outside-click'
-import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
-
-enum MenuVerticalPlacement {
-  top = VerticalPlacement.top,
-  bottom = VerticalPlacement.bottom,
-}
-
-enum MenuHorizontalPlacement {
-  left = HorizontalPlacement.leftAlign,
-  right = HorizontalPlacement.rightAlign,
-}
 
 const MenuContext = createContext<{
   menuVisible: boolean
@@ -40,19 +29,19 @@ export type MenuProps = {
   /** parent of the portal container rendering the menu */
   portalParent?: HTMLElement
   /** vertical placement of the menu item, it could be either
-   * `VerticalPlacement.TOP` (render the menu at top of the trigger)
-   * or `VerticalPlacement.BOTTOM` (render menu at bottom) */
-  verticalPlacement?: MenuVerticalPlacement
+   * `top` (render the menu at top of the trigger)
+   * or `bottom` (render menu at bottom) */
+  verticalPlacement?: 'top' | 'bottom'
   /** horizontal placement of the menu item, it could be either
-   * `HorizontalPlacement.LEFT` (the left position of menu and trigger co-incide)
-   * or `HorizontalPlacement.RIGHT` (the right position of the menu and trigger co-incide) */
-  horizontalPlacement?: MenuHorizontalPlacement
+   * `left` (the left position of menu and trigger co-incide)
+   * or `right` (the right position of the menu and trigger co-incide) */
+  horizontalPlacement?: 'left' | 'right'
 }
 
 /**
  * Component to render **dropdown menu**.
  *
- * Use `Menu.MenuItem` and `Menu.Divider` components to render the drop down content
+ * Use `Menu.Item` and `Menu.Divider` components to render the drop down content
  *
  * If `verticalPlacement` or `horizontalPlacement` is not provided, it would be computed based on the position of
  * trigger and menu content.
@@ -61,14 +50,21 @@ export function Menu({
   trigger,
   children,
   portalParent = typeof window !== 'undefined' ? document.body : undefined,
-  verticalPlacement = MenuVerticalPlacement.bottom,
-  horizontalPlacement = MenuHorizontalPlacement.left,
+  verticalPlacement = 'bottom',
+  horizontalPlacement = 'left',
 }: MenuProps) {
   const [menuVisible, setMenuVisible] = useState(false)
 
   const triggerContainer = useRef<HTMLDivElement | null>(null)
 
   const menuContainer = useRef<HTMLDivElement | null>(null)
+
+  // `leftAlign` and `rightAlign` are used to align the menu and trigger
+  // `left` and `right` options are for tooltip to render content on left or right side of the trigger
+  enum horizontalPlacementOptions {
+    left = 'leftAlign',
+    right = 'rightAlign',
+  }
 
   const menuContent = (
     <div className="py-2 bg-white rounded-md shadow" ref={menuContainer}>
@@ -101,14 +97,15 @@ export function Menu({
         triggerRef={triggerContainer}
         visible={menuVisible}
         portalParent={portalParent}
-        // TODO figure out proper type definitions or convert the enums to strings
-        // @ts-ignore
-        defaultPlacement={[verticalPlacement, horizontalPlacement]}
+        defaultPlacement={[
+          verticalPlacement,
+          horizontalPlacementOptions[horizontalPlacement],
+        ]}
         allowedPlacements={[
-          [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
-          [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
-          [VerticalPlacement.top, HorizontalPlacement.leftAlign],
-          [VerticalPlacement.top, HorizontalPlacement.rightAlign],
+          ['bottom', 'leftAlign'],
+          ['bottom', 'rightAlign'],
+          ['top', 'leftAlign'],
+          ['top', 'rightAlign'],
         ]}
       >
         {menuContent}
@@ -117,10 +114,8 @@ export function Menu({
   )
 }
 
-Menu.HorizontalPlacement = MenuHorizontalPlacement
-Menu.VerticalPlacement = MenuVerticalPlacement
-Menu.MenuItem = MenuItem
-Menu.MenuDivider = MenuDivider
+Menu.Item = MenuItem
+Menu.Divider = MenuDivider
 
 /** Menu item properties */
 export type MenuItemProps = {
