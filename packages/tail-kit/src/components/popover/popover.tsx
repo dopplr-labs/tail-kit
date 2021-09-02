@@ -8,14 +8,14 @@ import { useMemoOne } from 'use-memo-one'
 const PopoverPlacements: {
   [key: string]: [VerticalPlacement, HorizontalPlacement]
 } = {
-  topLeft: [VerticalPlacement.top, HorizontalPlacement.leftAlign],
-  top: [VerticalPlacement.top, HorizontalPlacement.center],
-  topRight: [VerticalPlacement.top, HorizontalPlacement.rightAlign],
-  left: [VerticalPlacement.center, HorizontalPlacement.left],
-  right: [VerticalPlacement.center, HorizontalPlacement.right],
-  bottomLeft: [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
-  bottom: [VerticalPlacement.bottom, HorizontalPlacement.center],
-  bottomRight: [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
+  topLeft: ['top', 'leftAlign'],
+  top: ['top', 'center'],
+  topRight: ['top', 'rightAlign'],
+  left: ['center', 'left'],
+  right: ['center', 'right'],
+  bottomLeft: ['bottom', 'leftAlign'],
+  bottom: ['bottom', 'center'],
+  bottomRight: ['bottom', 'rightAlign'],
 }
 
 type OnVisibilityChange = (visible: boolean) => void
@@ -85,9 +85,9 @@ export function Popover({
     ? onVisibilityChange
     : setPopoverVisible
 
-  const isVisible = (
-    isControlledComponent ? visible : popoverVisible
-  ) as boolean
+  const isVisible = (isControlledComponent
+    ? visible
+    : popoverVisible) as boolean
 
   const timeout = useRef<number | undefined>()
 
@@ -139,16 +139,16 @@ export function Popover({
         triggerRef={trigger}
         visible={isVisible}
         allowedPlacements={[
-          [VerticalPlacement.top, HorizontalPlacement.leftAlign],
-          [VerticalPlacement.top, HorizontalPlacement.center],
-          [VerticalPlacement.top, HorizontalPlacement.rightAlign],
+          ['top', 'leftAlign'],
+          ['top', 'center'],
+          ['top', 'rightAlign'],
 
-          [VerticalPlacement.center, HorizontalPlacement.right],
-          [VerticalPlacement.center, HorizontalPlacement.left],
+          ['center', 'right'],
+          ['center', 'left'],
 
-          [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
-          [VerticalPlacement.bottom, HorizontalPlacement.center],
-          [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
+          ['bottom', 'leftAlign'],
+          ['bottom', 'center'],
+          ['bottom', 'rightAlign'],
         ]}
         defaultPlacement={PopoverPlacements[placement]}
         portalParent={portalParent}
@@ -161,22 +161,22 @@ export function Popover({
                 <div
                   className={clsx(
                     'absolute w-3 h-3 transform rotate-45 shadow rounded-sm bg-white',
-                    verticalPlacement === VerticalPlacement.center
+                    verticalPlacement === 'center'
                       ? 'top-1/2 -translate-y-1/2'
-                      : verticalPlacement === VerticalPlacement.top
+                      : verticalPlacement === 'top'
                       ? 'bottom-0 translate-y-1/2 mb-px'
-                      : verticalPlacement === VerticalPlacement.bottom
+                      : verticalPlacement === 'bottom'
                       ? 'top-0 -translate-y-1/2 mt-px'
                       : undefined,
-                    horizontalPlacement === HorizontalPlacement.left
+                    horizontalPlacement === 'left'
                       ? 'right-0 translate-x-1/2 mr-px'
-                      : horizontalPlacement === HorizontalPlacement.right
+                      : horizontalPlacement === 'right'
                       ? 'left-0 -translate-x-1/2 ml-px'
-                      : horizontalPlacement === HorizontalPlacement.leftAlign
+                      : horizontalPlacement === 'leftAlign'
                       ? 'left-0 ml-4'
-                      : horizontalPlacement === HorizontalPlacement.rightAlign
+                      : horizontalPlacement === 'rightAlign'
                       ? 'right-0 mr-4'
-                      : horizontalPlacement === HorizontalPlacement.center
+                      : horizontalPlacement === 'center'
                       ? 'left-1/2 -translate-x-1/2'
                       : undefined,
                   )}

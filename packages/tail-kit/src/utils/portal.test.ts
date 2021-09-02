@@ -3,11 +3,9 @@ import {
   getPlacement,
   getTopPosition,
   getTransformOriginClassName,
-  HorizontalPlacement,
   isHorizontalPlacementValid,
   isVerticalPlacementValid,
   Placement,
-  VerticalPlacement,
 } from './portal'
 
 function createDOMRect(
@@ -43,7 +41,7 @@ describe('isValidVerticalPlacement', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.top,
+        verticalPlacement: 'top',
       }),
     ).toBe(true)
   })
@@ -57,7 +55,7 @@ describe('isValidVerticalPlacement', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.top,
+        verticalPlacement: 'top',
       }),
     ).toBe(false)
   })
@@ -71,7 +69,7 @@ describe('isValidVerticalPlacement', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.center,
+        verticalPlacement: 'center',
       }),
     ).toBe(true)
   })
@@ -85,7 +83,7 @@ describe('isValidVerticalPlacement', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.center,
+        verticalPlacement: 'center',
       }),
     ).toBe(false)
   })
@@ -99,7 +97,7 @@ describe('isValidVerticalPlacement', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.center,
+        verticalPlacement: 'center',
       }),
     ).toBe(false)
   })
@@ -113,7 +111,7 @@ describe('isValidVerticalPlacement', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.bottom,
+        verticalPlacement: 'bottom',
       }),
     ).toBe(true)
   })
@@ -127,7 +125,7 @@ describe('isValidVerticalPlacement', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.bottom,
+        verticalPlacement: 'bottom',
       }),
     ).toBe(false)
   })
@@ -143,7 +141,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.left,
+        horizontalPlacement: 'left',
       }),
     ).toBe(true)
   })
@@ -157,7 +155,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.left,
+        horizontalPlacement: 'left',
       }),
     ).toBe(false)
   })
@@ -171,7 +169,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.leftAlign,
+        horizontalPlacement: 'leftAlign',
       }),
     ).toBe(true)
   })
@@ -185,7 +183,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.leftAlign,
+        horizontalPlacement: 'leftAlign',
       }),
     ).toBe(false)
   })
@@ -199,7 +197,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.center,
+        horizontalPlacement: 'center',
       }),
     ).toBe(true)
   })
@@ -213,7 +211,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.center,
+        horizontalPlacement: 'center',
       }),
     ).toBe(false)
   })
@@ -227,7 +225,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.center,
+        horizontalPlacement: 'center',
       }),
     ).toBe(false)
   })
@@ -241,7 +239,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.right,
+        horizontalPlacement: 'right',
       }),
     ).toBe(true)
   })
@@ -255,7 +253,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.right,
+        horizontalPlacement: 'right',
       }),
     ).toBe(false)
   })
@@ -269,7 +267,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.rightAlign,
+        horizontalPlacement: 'rightAlign',
       }),
     ).toBe(true)
   })
@@ -283,7 +281,7 @@ describe('isHorizontalPlacementValid', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.rightAlign,
+        horizontalPlacement: 'rightAlign',
       }),
     ).toBe(false)
   })
@@ -295,15 +293,12 @@ describe('getPlacement', () => {
     const contentContainerBCR = createDOMRect(0, 0, 200, 200)
     const offsetHorizontal = 12
     const offsetVertical = 12
-    const defaultPlacement: Placement = [
-      VerticalPlacement.bottom,
-      HorizontalPlacement.leftAlign,
-    ]
+    const defaultPlacement: Placement = ['bottom', 'leftAlign']
     const allowedPlacements: Placement[] = [
-      [VerticalPlacement.top, HorizontalPlacement.leftAlign],
-      [VerticalPlacement.top, HorizontalPlacement.rightAlign],
-      [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
-      [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
+      ['top', 'leftAlign'],
+      ['top', 'rightAlign'],
+      ['bottom', 'leftAlign'],
+      ['bottom', 'rightAlign'],
     ]
     expect(
       getPlacement({
@@ -322,15 +317,12 @@ describe('getPlacement', () => {
     const contentContainerBCR = createDOMRect(0, 0, 200, 200)
     const offsetHorizontal = 12
     const offsetVertical = 12
-    const defaultPlacement: Placement = [
-      VerticalPlacement.top,
-      HorizontalPlacement.leftAlign,
-    ]
+    const defaultPlacement: Placement = ['top', 'leftAlign']
     const allowedPlacements: Placement[] = [
-      [VerticalPlacement.top, HorizontalPlacement.leftAlign],
-      [VerticalPlacement.top, HorizontalPlacement.rightAlign],
-      [VerticalPlacement.bottom, HorizontalPlacement.leftAlign],
-      [VerticalPlacement.bottom, HorizontalPlacement.rightAlign],
+      ['top', 'leftAlign'],
+      ['top', 'rightAlign'],
+      ['bottom', 'leftAlign'],
+      ['bottom', 'rightAlign'],
     ]
     expect(
       getPlacement({
@@ -341,7 +333,7 @@ describe('getPlacement', () => {
         defaultPlacement,
         allowedPlacements,
       }),
-    ).toEqual([VerticalPlacement.bottom, HorizontalPlacement.leftAlign])
+    ).toEqual(['bottom', 'leftAlign'])
   })
 
   test('returns default placement when none of the allowed placement is valid', () => {
@@ -349,13 +341,10 @@ describe('getPlacement', () => {
     const contentContainerBCR = createDOMRect(0, 0, 200, 200)
     const offsetHorizontal = 12
     const offsetVertical = 12
-    const defaultPlacement: Placement = [
-      VerticalPlacement.top,
-      HorizontalPlacement.leftAlign,
-    ]
+    const defaultPlacement: Placement = ['top', 'leftAlign']
     const allowedPlacements: Placement[] = [
-      [VerticalPlacement.top, HorizontalPlacement.leftAlign],
-      [VerticalPlacement.top, HorizontalPlacement.rightAlign],
+      ['top', 'leftAlign'],
+      ['top', 'rightAlign'],
     ]
     expect(
       getPlacement({
@@ -380,7 +369,7 @@ describe('getTopPosition', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.top,
+        verticalPlacement: 'top',
       }),
     )
       // the bottom position of the container is above the top of the trigger along with offset = 400 - 12 = 388px
@@ -397,7 +386,7 @@ describe('getTopPosition', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.center,
+        verticalPlacement: 'center',
       }),
     )
       // the mid position of the trigger is as 100 + 50 = 150px
@@ -415,7 +404,7 @@ describe('getTopPosition', () => {
         triggerBCR,
         contentContainerBCR,
         offsetVertical,
-        verticalPlacement: VerticalPlacement.bottom,
+        verticalPlacement: 'bottom',
       }),
     )
       // the top of the container is below is the bottom of the trigger along with the offset = 120 + 12 = 132px
@@ -433,7 +422,7 @@ describe('getLeftPosition', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.left,
+        horizontalPlacement: 'left',
       }),
     )
       // the right position of the content container would be placed from the left position along with
@@ -451,7 +440,7 @@ describe('getLeftPosition', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.leftAlign,
+        horizontalPlacement: 'leftAlign',
       }),
     )
       // the left position of the content container would co-incide with left position of trigger
@@ -467,7 +456,7 @@ describe('getLeftPosition', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.center,
+        horizontalPlacement: 'center',
       }),
     )
       // the mid position of the trigger is as 100 + 50 = 150px
@@ -485,7 +474,7 @@ describe('getLeftPosition', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.right,
+        horizontalPlacement: 'right',
       }),
     )
       // the left position of the content container would be placed from the right position along with
@@ -502,7 +491,7 @@ describe('getLeftPosition', () => {
         triggerBCR,
         contentContainerBCR,
         offsetHorizontal,
-        horizontalPlacement: HorizontalPlacement.rightAlign,
+        horizontalPlacement: 'rightAlign',
       }),
     )
       // the right position of the content container would co-incide with the right position of trigger
@@ -513,111 +502,67 @@ describe('getLeftPosition', () => {
 
 describe('getTransformOriginClassName', () => {
   test('returns origin-bottom-right when the position is top left', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.top,
-        HorizontalPlacement.left,
-      ]),
-    ).toBe('origin-bottom-right')
+    expect(getTransformOriginClassName(['top', 'left'])).toBe(
+      'origin-bottom-right',
+    )
   })
 
   test('returns origin-bottom-left when the position is top left-align', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.top,
-        HorizontalPlacement.leftAlign,
-      ]),
-    ).toBe('origin-bottom-left')
+    expect(getTransformOriginClassName(['top', 'leftAlign'])).toBe(
+      'origin-bottom-left',
+    )
   })
 
   test('returns origin-bottom when the position is top center', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.top,
-        HorizontalPlacement.center,
-      ]),
-    ).toBe('origin-bottom')
+    expect(getTransformOriginClassName(['top', 'center'])).toBe('origin-bottom')
   })
 
   test('returns origin-bottom-left when the position is top right', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.top,
-        HorizontalPlacement.right,
-      ]),
-    ).toBe('origin-bottom-left')
+    expect(getTransformOriginClassName(['top', 'right'])).toBe(
+      'origin-bottom-left',
+    )
   })
 
   test('returns origin-bottom-right when the position is top right-align', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.top,
-        HorizontalPlacement.rightAlign,
-      ]),
-    ).toBe('origin-bottom-right')
+    expect(getTransformOriginClassName(['top', 'rightAlign'])).toBe(
+      'origin-bottom-right',
+    )
   })
 
   test('returns origin-top-right when the position is bottom left', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.bottom,
-        HorizontalPlacement.left,
-      ]),
-    ).toBe('origin-top-right')
+    expect(getTransformOriginClassName(['bottom', 'left'])).toBe(
+      'origin-top-right',
+    )
   })
 
   test('returns origin-top-left when the position is bottom left-align', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.bottom,
-        HorizontalPlacement.leftAlign,
-      ]),
-    ).toBe('origin-top-left')
+    expect(getTransformOriginClassName(['bottom', 'leftAlign'])).toBe(
+      'origin-top-left',
+    )
   })
 
   test('returns origin-top when the position is bottom center', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.bottom,
-        HorizontalPlacement.center,
-      ]),
-    ).toBe('origin-top')
+    expect(getTransformOriginClassName(['bottom', 'center'])).toBe('origin-top')
   })
 
   test('returns origin-top-left when the position is bottom right', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.bottom,
-        HorizontalPlacement.right,
-      ]),
-    ).toBe('origin-top-left')
+    expect(getTransformOriginClassName(['bottom', 'right'])).toBe(
+      'origin-top-left',
+    )
   })
 
   test('returns origin-top-right when the position is bottom right-align', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.bottom,
-        HorizontalPlacement.rightAlign,
-      ]),
-    ).toBe('origin-top-right')
+    expect(getTransformOriginClassName(['bottom', 'rightAlign'])).toBe(
+      'origin-top-right',
+    )
   })
 
   test('returns origin-right when the position center left', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.center,
-        HorizontalPlacement.left,
-      ]),
-    ).toBe('origin-right')
+    expect(getTransformOriginClassName(['center', 'left'])).toBe('origin-right')
   })
 
   test('returns origin-left when the position center right', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.center,
-        HorizontalPlacement.right,
-      ]),
-    ).toBe('origin-left')
+    expect(getTransformOriginClassName(['center', 'right'])).toBe('origin-left')
   })
 
   test('returns empty class when placement is not defined', () => {
@@ -625,11 +570,6 @@ describe('getTransformOriginClassName', () => {
   })
 
   test('returns empty class when placement is not valid', () => {
-    expect(
-      getTransformOriginClassName([
-        VerticalPlacement.center,
-        HorizontalPlacement.center,
-      ]),
-    ).toBe('')
+    expect(getTransformOriginClassName(['center', 'center'])).toBe('')
   })
 })
