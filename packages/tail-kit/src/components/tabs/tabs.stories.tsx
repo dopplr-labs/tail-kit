@@ -6,8 +6,8 @@ import {
   HiUserCircle,
   HiUsers,
 } from 'react-icons/hi'
-import Select from 'components/select'
-import range from 'utils/range'
+import Select from '../select'
+import range from '../../utils/range'
 import { Tabs } from './tabs'
 
 export default {

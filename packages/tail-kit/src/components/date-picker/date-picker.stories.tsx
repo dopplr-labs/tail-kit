@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import dayjs from 'dayjs'
-import Button from 'components/button'
-import Modal from 'components/modal'
-import Alert from 'components/alert'
-import Select from 'components/select'
+import Button from '../button'
+import Modal from '../modal'
+import Alert from '../alert'
+import Select from '../select'
 import { DatePicker } from './date-picker'
 
 export default {

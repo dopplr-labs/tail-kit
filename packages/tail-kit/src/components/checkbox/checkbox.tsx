@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import clsx from 'clsx'
 import { HiOutlineCheck } from 'react-icons/hi'
-import useSyncedState from 'hooks/use-synced-states'
+import useSyncedState from '../../hooks/use-synced-states'
 
 /**
  * Checkbox properties

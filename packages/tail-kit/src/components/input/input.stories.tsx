@@ -1,7 +1,7 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import { HiOutlineAtSymbol, HiOutlineKey } from 'react-icons/hi'
-import Button from 'components/button'
+import Button from '../button'
 import { Input } from './input'
 
 export default {

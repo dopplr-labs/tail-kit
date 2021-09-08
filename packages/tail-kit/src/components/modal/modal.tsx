@@ -4,10 +4,8 @@ import clsx from 'clsx'
 import { CSSTransition } from 'react-transition-group'
 import { useMemoOne } from 'use-memo-one'
 import { HiOutlineX } from 'react-icons/hi'
-import Button from 'components/button'
-import { ButtonProps } from 'components/button/button'
-
-import useOutsideClick from 'hooks/use-outside-click'
+import Button, { ButtonProps } from '../button'
+import useOutsideClick from '../../hooks/use-outside-click'
 
 type ActionButtonProps = Omit<ButtonProps, 'onClick'> & {
   ref?: React.Ref<HTMLButtonElement>

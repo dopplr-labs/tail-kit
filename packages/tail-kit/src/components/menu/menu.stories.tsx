@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import Button from 'components/button'
 import {
   HiOutlineShare,
   HiOutlinePencilAlt,
@@ -12,7 +11,8 @@ import {
   HiOutlineUserCircle,
   HiOutlineCog,
 } from 'react-icons/hi'
-import Modal from 'components/modal'
+import Button from '../button'
+import Modal from '../modal'
 import { Menu } from './menu'
 import './menu.stories.css'
 

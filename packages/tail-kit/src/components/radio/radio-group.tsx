@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
-import useSyncedState from 'hooks/use-synced-states'
 import clsx from 'clsx'
+import useSyncedState from '../../hooks/use-synced-states'
 import { Radio } from './radio'
 
 export type RadioOptions = {

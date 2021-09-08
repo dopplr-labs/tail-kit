@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import clsx from 'clsx'
-import Portal from 'components/portal'
-import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
+import { HorizontalPlacement, VerticalPlacement } from '../../utils/portal'
+import Portal from '../portal'
 
 const TooltipPlacements: {
   [key: string]: [VerticalPlacement, HorizontalPlacement]

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { dequal } from 'dequal'
-import usePrevious from 'hooks/use-previous'
+import usePrevious from '../use-previous'
 
 export function useSyncedState<T extends any>(
   prop: T,

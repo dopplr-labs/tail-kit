@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
-import useSyncedState from 'hooks/use-synced-states'
 import { useMemoOne } from 'use-memo-one'
+import useSyncedState from '../../hooks/use-synced-states'
 
 let count = 0
 function getTabId() {

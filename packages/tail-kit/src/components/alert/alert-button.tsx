@@ -1,7 +1,6 @@
 import React, { useContext, forwardRef } from 'react'
 import clsx from 'clsx'
-import Button from 'components/button'
-import { ButtonProps } from 'components/button/button'
+import Button, { ButtonProps } from '../button'
 import { AlertContext } from './alert-context'
 
 export type AlertButtonProps = Omit<ButtonProps, 'buttonType' | 'ref'> & {

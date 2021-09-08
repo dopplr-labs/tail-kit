@@ -6,9 +6,9 @@ import React, {
   useContext,
 } from 'react'
 import clsx from 'clsx'
-import Portal from 'components/portal'
 import { useMemoOne } from 'use-memo-one'
-import useOutsideClick from 'hooks/use-outside-click'
+import Portal from '../portal'
+import useOutsideClick from '../../hooks/use-outside-click'
 
 const MenuContext = createContext<{
   menuVisible: boolean

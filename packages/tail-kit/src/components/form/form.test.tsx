@@ -1,10 +1,10 @@
 import React from 'react'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Input from 'components/input'
-import Button from 'components/button'
-import { CheckboxGroup } from 'components/checkbox/checkbox-group'
-import { Checkbox } from 'components/checkbox/checkbox'
+import Input from '../input'
+import Button from '../button'
+import { CheckboxGroup } from '../checkbox/checkbox-group'
+import { Checkbox } from '../checkbox/checkbox'
 import Form from './index'
 
 test('render form correctly', () => {

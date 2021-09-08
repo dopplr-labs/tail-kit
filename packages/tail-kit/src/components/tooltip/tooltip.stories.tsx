@@ -1,5 +1,4 @@
 import { Meta } from '@storybook/react/types-6-0'
-import Button from 'components/button'
 import {
   HiCheckCircle,
   HiExclamationCircle,
@@ -9,6 +8,7 @@ import {
   HiOutlineDownload,
 } from 'react-icons/hi'
 import React from 'react'
+import Button from '../button'
 import { Tooltip } from './tooltip'
 
 export default {

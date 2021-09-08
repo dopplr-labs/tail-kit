@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import Button from 'components/button'
+import Button from '../button'
 import { Popover } from './popover'
 
 export default {
@@ -20,7 +20,8 @@ export function DefaultPopover() {
       medium: 'https://randomuser.me/api/portraits/med/men/75.jpg',
       thumbnail: 'https://randomuser.me/api/portraits/thumb/men/75.jpg',
     },
-    bio: 'Developing UI-kit by day and using them in personal projects by night',
+    bio:
+      'Developing UI-kit by day and using them in personal projects by night',
     follower: 200,
     following: 100,
   }
@@ -91,7 +92,8 @@ export function PopoverTriggeredWithClickEvent() {
       medium: 'https://randomuser.me/api/portraits/med/men/75.jpg',
       thumbnail: 'https://randomuser.me/api/portraits/thumb/men/75.jpg',
     },
-    bio: 'Developing UI-kit by day and using them in personal projects by night',
+    bio:
+      'Developing UI-kit by day and using them in personal projects by night',
     follower: 200,
     following: 100,
   }

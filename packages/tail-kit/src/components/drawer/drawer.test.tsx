@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Button from 'components/button'
+import Button from '../button'
 import { Drawer } from './drawer'
 
 jest.mock('react-transition-group', () => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import Switch from 'components/switch'
+import Switch from '../switch'
 import { InputNumber } from './input-number'
 
 export default {

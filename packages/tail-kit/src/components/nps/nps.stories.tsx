@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import { action } from '@storybook/addon-actions'
-import Button from 'components/button'
+import Button from '../button'
 import { NPSInput } from './nps'
 
 export default {

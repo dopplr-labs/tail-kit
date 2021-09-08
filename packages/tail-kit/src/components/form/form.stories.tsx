@@ -1,19 +1,19 @@
 import React, { useRef, useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import { action } from '@storybook/addon-actions'
-import Button from 'components/button'
-import Input from 'components/input'
-import Select from 'components/select'
-import Checkbox from 'components/checkbox'
-import Switch from 'components/switch'
 import {
   HiOutlineAtSymbol,
   HiOutlineFingerPrint,
   HiOutlineKey,
   HiOutlineUser,
 } from 'react-icons/hi'
-import { RadioGroup } from 'components/radio/radio-group'
-import Modal from 'components/modal'
+import Radio from '../radio'
+import Modal from '../modal'
+import Button from '../button'
+import Input from '../input'
+import Select from '../select'
+import Checkbox from '../checkbox'
+import Switch from '../switch'
 import Form from './index'
 import { LayoutOptions } from './form'
 import { FormItem } from './form-item'
@@ -88,7 +88,7 @@ export function FormLayout() {
   return (
     <Form {...formItemLayout} layout={formLayout} onSubmit={onSubmit}>
       <Form.Item label="Form Layout" name="layout">
-        <RadioGroup
+        <Radio.RadioGroup
           options={radioOptions}
           defaultValue={LayoutOptions.HORIZONTAL}
           onChange={onFormLayoutChange}
@@ -241,7 +241,7 @@ export function Notifications() {
           These are delivered via SMS to your mobile phone.
         </div>
         <Form.Item name="bySMS">
-          <RadioGroup options={radioOptions} />
+          <Radio.RadioGroup options={radioOptions} />
         </Form.Item>
       </div>
       <div className="flex justify-end px-4 py-2 bg-gray-50">
@@ -408,7 +408,7 @@ export function FormInModal() {
             <Input />
           </Form.Item>
           <Form.Item name="type">
-            <RadioGroup options={['Public', 'Private']} />
+            <Radio.RadioGroup options={['Public', 'Private']} />
           </Form.Item>
         </Form>
       </Modal>
