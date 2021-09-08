@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import Button from 'components/button'
 import { Meta } from '@storybook/react/types-6-0'
 import { HiOutlineCurrencyRupee } from 'react-icons/hi'
+import Button from '../button'
 import { MessageProvider, useMessage } from './message'
 
 export default {

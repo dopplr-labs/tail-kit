@@ -4,9 +4,9 @@ import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import { HiOutlineX } from 'react-icons/hi'
-import Button from 'components/button'
-import useOutsideClick from 'hooks/use-outside-click'
-import isNumber from 'utils/isNumber'
+import isNumber from '../../utils/isNumber'
+import useOutsideClick from '../../hooks/use-outside-click'
+import Button from '../button'
 
 /**
  * Drawer component properties

@@ -2,7 +2,7 @@ import React from 'react'
 import { AiOutlineDown } from 'react-icons/ai'
 import { HiAnnotation, HiOutlineUser } from 'react-icons/hi'
 import { render, screen } from '@testing-library/react'
-import Tooltip from 'components/tooltip'
+import Tooltip from '../tooltip'
 import Avatar from '.'
 
 test('render avatar with children correctly', () => {

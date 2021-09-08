@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react'
 import clsx from 'clsx'
-import Portal from 'components/portal'
-import { HorizontalPlacement, VerticalPlacement } from 'utils/portal'
-import useOutsideClick from 'hooks/use-outside-click'
 import { useMemoOne } from 'use-memo-one'
+import useOutsideClick from '../../hooks/use-outside-click'
+import { HorizontalPlacement, VerticalPlacement } from '../../utils/portal'
+import Portal from '../portal'
 
 const PopoverPlacements: {
   [key: string]: [VerticalPlacement, HorizontalPlacement]

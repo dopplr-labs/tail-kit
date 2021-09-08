@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import { action } from '@storybook/addon-actions'
-import Button from 'components/button'
-import Radio from 'components/radio'
-import Form from 'components/form'
 import { HiOutlinePlus } from 'react-icons/hi'
-import Input from 'components/input'
-import Select from 'components/select'
+import Button from '../button'
+import Radio from '../radio'
+import Form from '../form'
+import Input from '../input'
+import Select from '../select'
 import { Drawer } from './drawer'
 
 export default {

@@ -6,7 +6,7 @@ import {
   HorizontalPlacement,
   VerticalPlacement,
   Placement,
-} from 'utils/portal'
+} from '../../utils/portal'
 
 export enum ContentVisibility {
   HIDDEN = 'HIDDEN',
@@ -100,8 +100,7 @@ export function usePortalPosition({
 
   useEffect(() => {
     function setPortalPosition() {
-      const contentContainerBCR =
-        contentContainer.current?.getBoundingClientRect()
+      const contentContainerBCR = contentContainer.current?.getBoundingClientRect()
       const triggerBCR = trigger.current?.getBoundingClientRect()
       if (contentContainerBCR && triggerBCR) {
         const placement = getPlacement({

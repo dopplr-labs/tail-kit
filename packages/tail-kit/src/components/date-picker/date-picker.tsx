@@ -9,10 +9,10 @@ import {
   HiOutlineChevronRight,
   HiXCircle,
 } from 'react-icons/hi'
-import Portal from 'components/portal'
-import useOutsideClick from 'hooks/use-outside-click'
-import { Keys } from 'utils/keyboard'
-import usePrevious from 'hooks/use-previous'
+import usePrevious from '../../hooks/use-previous'
+import { Keys } from '../../utils/keyboard'
+import useOutsideClick from '../../hooks/use-outside-click'
+import Portal from '../portal'
 import { Week } from './components/week'
 import { ActionType, reducer } from './reducer'
 import { getWeeksForMonth, isDateDisabled, isDateEqual } from './utils'

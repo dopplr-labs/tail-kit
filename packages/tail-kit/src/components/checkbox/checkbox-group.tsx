@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import useSyncedState from 'hooks/use-synced-states'
+import useSyncedState from '../../hooks/use-synced-states'
 import { Checkbox } from './checkbox'
 
 export type OptionType = {

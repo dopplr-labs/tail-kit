@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import range from 'utils/range'
 import clsx from 'clsx'
+import range from '../../../utils/range'
 
 const MIN = 0
 const MAX = 10

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import clsx from 'clsx'
-import useSyncedState from 'hooks/use-synced-states'
+import useSyncedState from '../../hooks/use-synced-states'
 
 /**
  * Radio properties

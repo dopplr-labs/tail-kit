@@ -14,7 +14,7 @@ import {
   HiOutlineExclamationCircle,
   HiOutlineXCircle,
 } from 'react-icons/hi'
-import { ButtonSpinner } from 'components/button/button-spinner'
+import { ButtonSpinner } from '../button/button-spinner'
 import { MessageContext } from './message-context'
 
 export enum MessageTypes {

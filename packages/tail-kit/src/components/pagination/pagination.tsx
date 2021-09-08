@@ -1,10 +1,10 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import clsx from 'clsx'
-import Button from 'components/button'
-import Select from 'components/select'
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
-import useSyncedState from 'hooks/use-synced-states'
-import { Keys } from 'utils/keyboard'
+import { Keys } from '../../utils/keyboard'
+import useSyncedState from '../../hooks/use-synced-states'
+import Select from '../select'
+import Button from '../button'
 import PageButton from './components/page-button'
 
 export type OnChangeType = (page: number, pageSize: number) => void

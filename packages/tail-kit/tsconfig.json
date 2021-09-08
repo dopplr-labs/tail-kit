@@ -8,8 +8,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    // allow absolute imports
-    "baseUrl": "src"
+    "forceConsistentCasingInFileNames": true
   }
 }

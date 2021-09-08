@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0'
-import Button from 'components/button'
+import Button from '../button'
 import { Modal } from './modal'
 
 export default { title: 'Feedback/Modal', component: Modal } as Meta

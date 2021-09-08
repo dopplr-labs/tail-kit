@@ -5,8 +5,8 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Button from 'components/button'
 import { HiOutlineCurrencyRupee } from 'react-icons/hi'
+import Button from '../button'
 import { MessageProvider, MessageTypes, useMessage } from './message'
 
 type RenderButtonProps = {

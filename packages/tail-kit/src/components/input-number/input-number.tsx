@@ -1,8 +1,8 @@
 import React, { forwardRef, useMemo } from 'react'
 import clsx from 'clsx'
 import { HiOutlineChevronDown, HiOutlineChevronUp } from 'react-icons/hi'
-import useSyncedState from 'hooks/use-synced-states'
-import useLongPress from 'hooks/use-long-press'
+import useSyncedState from '../../hooks/use-synced-states'
+import useLongPress from '../../hooks/use-long-press'
 
 /**
  * Helper function to compute precision
