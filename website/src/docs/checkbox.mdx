@@ -1,0 +1,139 @@
+---
+title: 'Checkbox'
+components:
+  - name: 'Checkbox'
+    path: 'src/components/checkbox/checkbox.tsx'
+  - name: 'CheckboxGroup'
+    path: 'src/components/checkbox/checkbox-group.tsx'
+---
+
+import { Checkbox } from '@tail-kit/tail-kit'
+
+# Checkbox
+
+Checkbox component to render input type checkbox along with some other properties.
+
+## Usage
+
+The Checkbox component can be imported using
+
+```jsx
+import { Checkbox } from '@tail-kit/tail-kit'
+```
+
+### Default Checkbox
+
+<Playground>
+  <Checkbox label="Remember Me" value="rememberMe" />
+</Playground>
+
+### Disabled Checkbox
+
+<Playground>
+  <div className="flex flex-col space-y-2">
+    <Checkbox disabled={true} label="Unchecked-Disabled" />
+    <Checkbox disabled={true} defaultChecked={true} label="Checked-Disabled" />
+  </div>
+</Playground>
+
+### Checkbox with Error
+
+<Playground>
+  {function CheckboxWithError() {
+    const [termsAgreed, setTermsAgreed] = React.useState(false)
+    return (
+      <Checkbox
+        checked={termsAgreed}
+        onChange={() => setTermsAgreed((prevState) => !prevState)}
+        label="I agree to the terms and conditions"
+        error={!termsAgreed}
+      />
+    )
+  }}
+</Playground>
+
+### Indeterminate Checkbox
+
+<Playground>
+  {function IndeterminateCheckbox() {
+    const options = ['Apple', 'Pear', 'Orange']
+    const [checkedValues, setCheckedValues] = React.useState(['Pear'])
+    const handleChange = (checkedList) => {
+      setCheckedValues(checkedList)
+    }
+    return (
+      <div className="inline-block p-4 space-y-4">
+        <Checkbox
+          label="Check All"
+          checked={
+            checkedValues.length === options.length
+              ? true
+              : checkedValues.length === 0
+              ? false
+              : 'indeterminate'
+          }
+          onChange={(event) => {
+            if (event.target.checked) {
+              setCheckedValues(options)
+            } else {
+              setCheckedValues([])
+            }
+          }}
+        />
+        <div className="border border-gray-200" />
+        <Checkbox.Group
+          options={options}
+          value={checkedValues}
+          onChange={handleChange}
+        />
+      </div>
+    )
+  }}
+</Playground>
+
+### With Checkbox Group
+
+<Playground>
+  {function WithCheckboxGroup() {
+    const plainOptions = ['Apple', 'Pear', 'Orange']
+    const options = plainOptions.map((item) => ({
+      label: item,
+      value: item,
+    }))
+    const optionsWithDisabled = plainOptions.map((item) => ({
+      label: item,
+      value: item,
+      disabled: item === 'Orange',
+    }))
+    const handleChange = (checkedList) => {
+      console.log(checkedList)
+    }
+    return (
+      <div className="space-y-6">
+        <Checkbox.Group
+          options={plainOptions}
+          value={['Apple', 'Orange']}
+          onChange={handleChange}
+        />
+        <Checkbox.Group
+          options={options}
+          value={['Pear']}
+          onChange={handleChange}
+        />
+        <Checkbox.Group
+          options={optionsWithDisabled}
+          value={['Apple']}
+          onChange={handleChange}
+        />
+      </div>
+    )
+  }}
+</Playground>
+
+## Checkbox Props
+
+<PropsTable of="Checkbox" />
+
+## Checkbox.Group Props
+
+<PropsTable of="CheckboxGroup" />
