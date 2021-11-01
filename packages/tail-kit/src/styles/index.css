@@ -4,8 +4,26 @@
 
 @tailwind components;
 
+@layer base {
+  :root {
+    --font-family: 'Inter var', ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Color Palette */
+    --primary-color: theme('colors.blue.600');
+    --error-color: theme('colors.red.500');
+    --disabled-color: theme('colors.gray.400');
+
+    --text-primary-color: theme('colors.gray.800');
+    --text-inverse-color: theme('colors.white');
+    --border-radius-default: theme('borderRadius.md');
+  }
+}
+
 body {
-  @apply font-sans antialiased;
+  @apply antialiased font-default;
 }
 
 .checkbox:focus-within > .checkbox-icon-container {
