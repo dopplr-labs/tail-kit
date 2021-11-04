@@ -21,10 +21,10 @@ test('decrement button working correctly', () => {
 })
 
 test('onChange of input working correctly', () => {
-  const onChange = jest.fn((event) => event.target.value)
+  const onChange = jest.fn((value) => value)
   render(<InputNumber min={0} max={10} onChange={onChange} />)
   userEvent.type(screen.getByTestId('input-number'), '1.25')
   expect(onChange).toBeCalled()
-  expect(onChange.mock.results[3].value).toBe('1.25')
+  expect(onChange.mock.results[3].value).toBe(1.25)
   expect(screen.getByTestId('input-number')).toHaveValue(1.25)
 })
