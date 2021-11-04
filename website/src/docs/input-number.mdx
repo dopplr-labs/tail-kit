@@ -1,0 +1,52 @@
+---
+title: 'Input Number'
+components:
+  - name: 'InputNumber'
+    path: 'src/components/input-number/input-number.tsx'
+---
+
+import { InputNumber } from '@tail-kit/tail-kit'
+
+# Input Number
+
+The `InputNumber` component is similar to Input component, but it has controls for incrementing or decrementing numeric values.
+
+## Usage
+
+The `InputNumber` component can be imported using
+
+```jsx
+import { InputNumber } from '@tail-kit/tail-kit'
+```
+
+### Minimum and Maximum values
+
+Pass the `min` or `max` prop to set an upper and lower limit for the input.
+
+<Playground>
+  <InputNumber className="w-48" defaultValue={3} min={1} max={10} />
+</Playground>
+
+### Step size
+
+<Playground>
+  <InputNumber className="w-48" defaultValue={3} step={0.5} />
+</Playground>
+
+### Disabled Input Number
+
+<Playground>
+  {function DisabledNumberInut() {
+    const [disable, setDisable] = React.useState(true)
+    return (
+      <div className="flex items-center space-x-4">
+        <InputNumber className="w-32" disabled={disable} defaultValue={3} />
+        <Switch value={disable} onChange={() => setDisable((prev) => !prev)} />
+      </div>
+    )
+  }}
+</Playground>
+
+## Input Number Props
+
+<PropsTable of="InputNumber" />
