@@ -4,7 +4,7 @@ type PressHandler = (event: MouseEvent) => void
 
 export function useLongPress<T extends HTMLElement>({
   onPress,
-  delay = 200,
+  delay = 100,
 }: {
   onPress: PressHandler
   delay?: number

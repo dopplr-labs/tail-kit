@@ -3,38 +3,7 @@ import clsx from 'clsx'
 import { HiOutlineChevronDown, HiOutlineChevronUp } from 'react-icons/hi'
 import useSyncedState from '../../hooks/use-synced-states'
 import useLongPress from '../../hooks/use-long-press'
-
-/**
- * Helper function to compute precision
- *
- * @param value The number for which the precision is computed
- */
-function getPrecision(value: number): number {
-  const valueString = String(value)
-  if (valueString.indexOf('.') >= 0) {
-    return valueString.length - valueString.indexOf('.') - 1
-  } else {
-    return 0
-  }
-}
-
-/**
- * Helper function to clamp the value between a min and max boundary
- *
- * @param value The value to be clamped
- * @param min The min boundary value
- * @param max The max boundary value
- */
-function clamp(value: number, min?: number, max?: number) {
-  let outputValue = value
-  if (typeof min !== 'undefined') {
-    outputValue = Math.max(outputValue, min)
-  }
-  if (typeof max !== 'undefined') {
-    outputValue = Math.min(outputValue, max)
-  }
-  return outputValue
-}
+import { getPrecision, clamp } from './utils'
 
 /**
  * InputNumber properties
@@ -61,7 +30,7 @@ export type InputNumberProps = Omit<
   /** To disable input number component */
   disabled?: boolean
   /** The callback triggered when the value is changed */
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChange?: (value: number | string) => void
   /** Additional class applied to the input element */
   className?: string
   /** Additional styles to apply */
@@ -98,14 +67,27 @@ export const InputNumber = forwardRef(
       return Math.max(getPrecision(step), getPrecision(inputValue))
     }, [precisionProp, step, inputValue])
 
+    function updateValue(value: number) {
+      const clampValue = clamp(value, min, max)
+      setInputValue(clampValue)
+      if (onChange) {
+        onChange(clampValue)
+      }
+    }
+
     function increment() {
       const newValue = parseFloat((inputValue + step).toFixed(precision))
-      setInputValue(clamp(newValue, min, max))
+      updateValue(newValue)
     }
 
     function decrement() {
       const newValue = parseFloat((inputValue - step).toFixed(precision))
-      setInputValue(clamp(newValue, min, max))
+      updateValue(newValue)
+    }
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+      const newValue = parseFloat(event.target.value)
+      updateValue(newValue)
     }
 
     const incrementRef = useLongPress<HTMLButtonElement>({ onPress: increment })
@@ -115,7 +97,7 @@ export const InputNumber = forwardRef(
       <div
         className={clsx(
           'flex group items-center justify-between border rounded-md focus-within:shadow-outline overflow-hidden',
-          disabled ? 'cursor-not-allowed' : undefined,
+          { 'cursor-not-allowed': disabled },
           className,
         )}
         style={style}
@@ -128,13 +110,7 @@ export const InputNumber = forwardRef(
           )}
           value={!isNaN(inputValue) ? inputValue : ''}
           step={step}
-          onChange={(event) => {
-            const newValue = parseFloat(event.target.value)
-            setInputValue(clamp(newValue, min, max))
-            if (onChange) {
-              onChange(event)
-            }
-          }}
+          onChange={handleChange}
           disabled={disabled}
           data-testid="input-number"
           {...restProps}
@@ -143,24 +119,22 @@ export const InputNumber = forwardRef(
         <div
           className={clsx(
             'flex flex-col items-center mr-1 text-gray-400 transition-opacity duration-500 opacity-0 group-hover:opacity-100 ',
-            disabled ? 'hidden' : undefined,
+            { hidden: disabled },
           )}
         >
           <button
-            className={clsx(
-              'focus:outline-none',
-              inputValue === max ? 'cursor-not-allowed' : undefined,
-            )}
+            className={clsx('focus:outline-none', {
+              'cursor-not-allowed': inputValue === max,
+            })}
             ref={incrementRef}
             onClick={increment}
           >
             <HiOutlineChevronUp className="w-4 h-4" />
           </button>
           <button
-            className={clsx(
-              'focus:outline-none',
-              inputValue === min ? 'cursor-not-allowed' : undefined,
-            )}
+            className={clsx('focus:outline-none', {
+              'cursor-not-allowed': inputValue === min,
+            })}
             ref={decrementRef}
             onClick={decrement}
           >
