@@ -105,7 +105,7 @@ test('render icon after label when iconPlacement is afterText', () => {
 test('render default disabled button correctly', () => {
   render(<Button disabled>Click Me</Button>)
   expect(screen.getByRole('button')).toHaveClass(
-    'border-gray-400 text-gray-400',
+    'border-disabled text-disabled',
   )
 })
 
@@ -115,7 +115,9 @@ test('render primary disabled button correctly', () => {
       Click Me
     </Button>,
   )
-  expect(screen.getByRole('button')).toHaveClass('bg-gray-400 text-white')
+  expect(screen.getByRole('button')).toHaveClass(
+    'bg-disabled text-text-inverse',
+  )
 })
 
 test('render danger disabled button correctly', () => {
@@ -125,7 +127,7 @@ test('render danger disabled button correctly', () => {
     </Button>,
   )
   expect(screen.getByRole('button')).toHaveClass(
-    'border-gray-400 text-gray-400',
+    'border-disabled text-disabled',
   )
 })
 
@@ -135,5 +137,5 @@ test('render link disabled button correctly', () => {
       Click Me
     </Button>,
   )
-  expect(screen.getByRole('button')).toHaveClass('text-gray-400')
+  expect(screen.getByRole('button')).toHaveClass('text-disabled')
 })
